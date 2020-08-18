@@ -1,0 +1,341 @@
+<html HTML>
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+	
+	Authors: Mani Kumar
+	         Fred Decker
+    
+	This file is part of the DCC++ EX Project for model railroading and more.
+	For more information, visit use at dcc-ex.com
+-->
+    <head>
+        <link href="css/roundslider.min.css" rel="stylesheet" />
+		<link href="css/throttle.css"  rel="stylesheet">
+        <script src="js/jquery-3.2.1.min.js"></script>  
+        <script src="js/jquery-ui.min.js"></script>                                 
+        <script src="js/roundslider.min.js"></script>
+        <script src="js/exwebthrottle.js"></script> 
+<!--
+    NOTE: You can replace the above links with these if you like if you will always run when
+          connected to the internet. Using the links above, they must be installed on your machine.
+          This program will search for them online and import them if you use this method instead.
+        <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.2.1.js"></script>  
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>                                 
+        <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+        <script src="exwebthrottle.js"></script>  		  
+-->
+    </head>
+
+    <body>
+        <div id="rendered-form">
+            <div class="rendered-form">
+                <div Class="details-panel">
+                    <!--div class="row">
+                        <div class="formbuilder-text form-group server-url-wrap column-4">
+                            <label for="server-url" class="formbuilder-text-label">
+                                Server<span class="formbuilder-required">*</span>
+                            </label>
+                            <input type="url" placeholder="Enter Server URL" class="form-control" 
+                            name="server-url" access="false" maxlength="300" id="server-url" required="required" aria-required="true">
+                        </div>
+                        <div class="formbuilder-text form-group column-2">
+                            <label for="server-port" class="formbuilder-text-label">
+                                Port<span class="formbuilder-required">*</span>
+                            </label>
+                            <input type="number" placeholder="Enter Port" class="form-control" name="server-port" access="false" maxlength="300" id="server-port">
+                        </div>
+                        <div class="server-button form-group field-button-submit column-2">
+                            <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
+                                Connect
+                            </button>
+                        </div>
+                        <div class="server-button form-group field-button-submit column-2">
+                            <button type="button" class="btn-default btn" name="button-disconnect" access="false" id="button-disconnect">
+                                Disonnect
+                            </button>
+                        </div>
+                    </div>
+                    <hr-->
+                    <div class="row"> <!-- style="margin: 0 auto; text-align: center;"-->
+                        <div class="formbuilder-text form-group field-ex-email column-3">
+                            <label for="ex-locoid" class="formbuilder-text-label">
+                                Locomitive ID <span class="formbuilder-required">*</span>
+                            </label>
+                            <input type="number" placeholder="CV-01" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
+                        </div>
+                        
+                        <div class="formbuilder-button form-group field-button-submit column-2">
+                            <button type="button" class="btn-default btn" name="getloco" access="false" data-acquired="false"  id="button-getloco">
+                                Acquire
+                            </button>
+                        </div>
+                        <div class="formbuilder-button form-group field-button-submit column-1"></div>
+                        <div class="server-button form-group field-button-submit column-4">
+                            <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
+                                Connect DCC++ EX
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr>
+                </div>              
+
+                <div class="row">
+                    <div style="position: relative;">
+                         <div class="row">
+                            <div class="column-2"></div>
+                            <div class="column-6" id="loco-info" style="text-align: center;">
+                                WELCOME
+                            </div>  
+                            <div class="column-2"></div>                             
+                         </div>          
+                        <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
+                            Hide <span class="arrow up"></span>
+                        </button> 
+                    </div>
+                    <div class="column-6 mobile-100 throttle-container">
+                        <div class="row">
+                            <div class=" column-1">
+                                <div class="flexx">
+                                <button type="button" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
+                                    <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
+                                </button>
+                                </div> 
+                            </div>                           
+                            <div class=" column-6">
+                                <div class="Throttlewrap">
+                                    <div id="throttle">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" column-1">
+                                <div class="flexx">
+                                <button type="button" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
+                                    <span class="right">&nbsp;+&nbsp;</span>
+                                </button> 
+                                </div>
+                            </div>
+                            
+                            <div class=" column-2">
+                                <div class="dir-toggle">
+                                    <button class="dir-btn forward selected" id="dir-f" aria-label="forward" > <span class="arrow-up"></span></button>
+                                    <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button>
+                                    <button class="dir-btn backward" id="dir-b" aria-label="backward"> <span class="arrow-down"></span></button>        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="functionKeys column-4 mobile-100">
+                        <div class="row">
+                            <div class="power-slider">
+                            <label class="switch">
+                                <input type="checkbox" id="power-switch">
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="pow-status">
+                                Power <span id="power-status">Off</span>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f0" id="f0">
+                                    F0
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="press" aria-pressed="false" name="f1" id="f1">
+                                    F1
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="press" aria-pressed="false" name="f2" id="f2">
+                                    F2
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f3" id="f3">
+                                    F3
+                                </button>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f4" access="false" id="f4">
+                                    F4
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f5" access="false" id="f5">
+                                    F5
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f6" access="false" id="f6">
+                                    F6
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f7" access="false" id="f7">
+                                    F7
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f8" access="false" id="f8">
+                                    F8
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f9" access="false" id="f9">
+                                    F9
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f10" access="false" id="f10">
+                                    F10
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f11" access="false" id="f11">
+                                    F11
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f12" access="false" id="f12">
+                                    F12
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f13" access="false" id="f13">
+                                    F13
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f14" access="false" id="f14">
+                                    F14
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f15" access="false" id="f15">
+                                    F15
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f16" access="false" id="f16">
+                                    F16
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f17" access="false" id="f17">
+                                    F17
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f18" access="false" id="f18">
+                                    F18
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f19" access="false" id="f19">
+                                    F19
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f20" access="false" id="f20">
+                                    F20
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f21" access="false" id="f21">
+                                    F21
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f22" access="false" id="f22">
+                                    F22
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f23" access="false" id="f23">
+                                    F23
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f24" access="false" id="f24">
+                                    F24
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f25" access="false" id="f25">
+                                    F25
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f26" access="false" id="f26">
+                                    F26
+                                </button>
+                            </div>
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f27" access="false" id="f27">
+                                    F27
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="formbuilder-button form-group field-button-fn column-2p5">
+                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f28" access="false" id="f28">
+                                    F28
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mobile-margin-top20"> <!-- style="margin: 0 auto; text-align: center;"-->
+                    <div class="formbuilder-text field-ex-email column-7">
+                        <input placeholder="Direct Command" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
+                    </div>
+            
+                    <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
+                        <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
+                            Send
+                        </button>
+                    </div>
+                </div>          
+                <div class="log-msg" id="log-box">
+                </div> 
+            </div>
+        </div>
+    </body>
+
+</html>
+
+
+
