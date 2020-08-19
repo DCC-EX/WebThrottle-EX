@@ -50,8 +50,8 @@
                             <input type="number" placeholder="CV-01" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
                         </div>
                         
-                        <div class="formbuilder-button form-group field-button-submit column-2">
-                            <button type="button" class="btn-default btn" name="getloco" access="false" data-acquired="false"  id="button-getloco">
+                        <div class="formbuilder-button form-group column-2">
+                            <button type="button" class="btn-default btn button-acquire" name="getloco" access="false" data-acquired="false"  id="button-getloco">
                                 Acquire
                             </button>
                         </div>
@@ -113,14 +113,14 @@
                     </div>
                     <div class="functionKeys column-4 mobile-100">
                         <div class="row">
-                            <div class="power-slider">
-                            <label class="switch">
-                                <input type="checkbox" id="power-switch">
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="pow-status">
-                                Power <span id="power-status">Off</span>
-                            </span>
+                            <div class="power-slider column-6 formbuilder-button ">
+                                <label class="switch">
+                                    <input type="checkbox" id="power-switch">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="pow-status">
+                                    Power <span id="power-status">Off</span>
+                                </span>
                             </div>
                         </div>
                         <div class="row">
@@ -294,7 +294,7 @@
                 <hr>
                 <div class="row mobile-margin-top20">
                     <div class="formbuilder-text field-ex-email column-7">
-                        <input placeholder="Direct Command" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
+                        <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
                     </div>
             
                     <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
