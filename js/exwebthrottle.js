@@ -445,8 +445,6 @@ $(".fn-btn").on('mousedown', function() {
             generateFnCommand(clickedBtn);
             console.log("PRESSED HOLD ==> "+clickedBtn.attr('name'));
         }, 100);
-    }else{
-
     }
 }).on('mouseup mouserelease', function() {
     clearInterval(timer);
