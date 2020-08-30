@@ -30,7 +30,7 @@ of your browser above if you don't use Chrome)
 To load the Chrome DevTools to look at logging and be able to manually enter
 "write" commands for testing, click on the Menu (the 3 vertical dots in the 
 upper right hand corner of the Chrome Window), then select "more tools" and 
-then "Developer Tools". Or you can just hit "Cntrl-Shift-I".
+then "Developer Tools". Or you can just hit "Ctrl-Shift-I".
 
 ## Getting started
 
