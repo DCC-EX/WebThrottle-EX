@@ -236,34 +236,49 @@ function displayLog(data){
 
 }
 
-
-$(document).ready(function(){
+function loadButtons(fndata){
+    $("#fn-wrapper").empty();
 
     $.each(fndata, function(key, value){
-        console.log(value.toString());
         isPressed = value[0] != 0 ? true : false;
         btnType = value[1] != 0 ? "press" : "toggle";
         $("#fn-wrapper").append(
-         "<div class='formbuilder-button form-group field-button-fn'> <button type='button' class='btn-default btn fn-btn "+btnType+"' data-type='"+
+         "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
          btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
          value[2]+"</button>"
          +"</div>");
     });
+}
+
+$(document).ready(function(){
+    loadmaps();
+    loadButtons(fndata);
+
+    $("#select-map").change(function () {
+        selectedval = $(this).val();      
+        if(selectedval != -1){
+        data  = getFuncData(selectedval);
+        console.log(data);
+        loadButtons(data);
+        }
+    });
+
 
   $("#edit-labels").on('click', function(){
+      if(getCV()!=0){
       $("#fnModal").show();
       $("#fnModal .fn-modal-content").empty();
-      $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-1 header-col">Function</div> <div class="column-3 header-col">Label</div> <div class="column-2 header-col">Button Type</div></div>');
+      $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-2 header-col">Function</div> <div class="column-4 header-col">Label</div> <div class="column-4 header-col">Button Type</div></div>');
       $.each(fndata, function(key, value){
         isPressed = value[0] != 0 ? true : false;
         btnType = value[1] != 0 ? "press" : "toggle";
         $("#fnModal .fn-modal-content").append('<div class="row edit-row" id="'+key+'">'+ 
-        '<div class="column-1 func-title">'+key +'</div>'+
-        '<div class="column-3"> <input class="fn-input effect-8" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
+        '<div class="column-2 func-title">'+key +'</div>'+
+        '<div class="column-4"> <input class="fn-input effect-8" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
         '<span class="focus-border">'+
         '<i></i>'+
         '</span></div>'+
-        '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
+        '<div class="fn-radio column-4" name="'+key+'Type" id="'+key+'Type">'+
             '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press"/>'+
             '<label for="'+key+'press">Press</label>  &nbsp;'+
             '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" checked/>'+
@@ -271,13 +286,16 @@ $(document).ready(function(){
         '</div>'+
         '</div>');
       });
+    }else{
+        alert("Aquire a locomotive first");
+    }
   });
 
   $("#close-model").on('click', function(){
     $("#fnModal").hide();
   });
 
-  $("#save-fn").on('click', function(){
+  $("#save-fn-map").on('click', function(){
     customFnData = {};
     $(".edit-row").each(function(val){
         key = $(this).find(".func-title").text();
@@ -285,18 +303,13 @@ $(document).ready(function(){
         arr = [ 0, btnType, $(this).children().find(".fn-input").val(), 1 ];
         customFnData[key] = arr;             
     });
-    locoData = [];
-    locoData.push({ id: 23 , fnData: customFnData});
-    console.log(locoData);
-    $("#fnModal").hide();
-    locodata = window.localStorage.getItem('locoData');
-    if( locodata == null ){
-        x = window.localStorage.setItem('locoData', JSON.stringify(locoData));
-        console.log(x);
+    aclocoId = getCV();
+    if(aclocoId !=0){
+        setLocoData({ id: aclocoId , fnData: customFnData});
     }else{
-        console.log(JSON.parse(locodata));
-        window.localStorage.setItem('locoData', null);
+        alert("Aquire a locomotive first");
     }
+    $("#fnModal").hide();
 
   });
     
@@ -494,10 +507,13 @@ $(".fn-btn").on('click', function() {
     clickedBtn = $(this);
     generateFnCommand(clickedBtn);
 });  */
-
+$(document).on('click', '.fn-btn',function() {  
+    console.log("ON CLICK");  
+});
 
 var timer= 0;
-$(".fn-btn").on('mousedown', function() {    
+$(document).on('mousedown', '.fn-btn', function() {  
+    console.log($(this).val);  
     clickedBtn = $(this);
     btnType = clickedBtn.data('type');
     if(btnType == "press"){
@@ -508,7 +524,7 @@ $(".fn-btn").on('mousedown', function() {
             console.log("PRESSED HOLD ==> "+clickedBtn.attr('name'));
         }, 100);
     }
-}).on('mouseup mouserelease', function() {
+}).on('mouseup mouserelease', '.fn-btn', function() {
     clearInterval(timer);
     clickedBtn = $(this);
     btnType = clickedBtn.data('type');
@@ -585,7 +601,7 @@ function sendCommandForF21ToF28(fn, opr){
 // This function will generate commands for each type of function
 function generateFnCommand(clickedBtn){
     
-       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F16)
+       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
        eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
        btnPressed = clickedBtn.attr("aria-pressed");
        //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);

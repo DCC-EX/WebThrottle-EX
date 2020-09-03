@@ -118,7 +118,7 @@
                     </div>
                     <div class="functionKeys column-5 mobile-100">
                         <div class="row mobile-100">
-                            <div class="power-slider column-6 formbuilder-button ">
+                            <div class="power-slider column-5 formbuilder-button ">
                                 <label class="switch">
                                     <input type="checkbox" id="power-switch">
                                     <span class="slider round"></span>
@@ -127,7 +127,16 @@
                                     Power <span id="power-status">Off</span>
                                 </span>
                             </div> 
-                            <div class="note-msg column-4">
+                            <div class="note-msg column-5">
+                                <select id="select-map" class="btn select-map" name="selectMap">
+                                </select>    
+                                
+                                <!--button type="button"  id="load-labels" class="btn load-labels" name="loadLabels">
+                                    Load Map
+                                </button--> &nbsp;
+                                <button type="button"  id="edit-labels" class="btn edit-labels" name="editLabels">
+                                    Edit Labels
+                                </button>
                             </div>
                         </div>
                         <div class="row" id="fn-wrapper">
@@ -163,9 +172,15 @@
                 Content
             </div>
             <div class="fn-modal-footer row">
-                <button type="button" class="btn-default btn save-fn" name="save-fn"  id="save-fn">
+                <button type="button" class="btn-default btn save-fn" name="save-fn"  id="save-fn-map">
                     Save Labels for this Loco
                 </button>
+                <!--button type="button" class="btn-default btn delete-fn" name="delete-fn"  id="wipe-map">
+                    WIPE DATA
+                </button>
+                <button type="button" class="btn-default btn delete-item" name="delete-fn"  id="delete-map">
+                    DELETE 7
+                </button-->
             </div>
           
           </div>
