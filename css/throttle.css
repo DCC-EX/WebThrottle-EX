@@ -1,4 +1,7 @@
 
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
 .column-1{
     float: left;
     width: 10%;
@@ -51,7 +54,7 @@
 
 .rendered-form {
     background: #efefef;
-    max-width: 950px;
+    max-width: 1080px;
     border-radius: 4px;
     box-shadow: 0px 0px 10px 0px #666666;
     font-family: Arial, Helvetica, sans-serif;
@@ -63,6 +66,7 @@
 }
 .rendered-form div {
     box-sizing: border-box;
+    justify-content: center;
 }
 .rendered-form h4 {
     margin: 0;
@@ -118,15 +122,22 @@ label.formbuilder-file-label {
 .formbuilder-button .button-acquire{
     width:100px;
 }
+#fn-wrapper{
+    display: inline-grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    width: 100%;
+}
 .formbuilder-button.field-button-fn{
     text-align: center;
     padding: 8px 0;
+    display: flex;
+    justify-content: center;
 }
-.formbuilder-button.field-button-fn .btn{
+.formbuilder-button.field-button-fn .btn, .save-fn{
     background: #00A3B9;
     padding: 4px 12px;
     width: 80%;
-    margin: 5%;
+    margin: 2%;
     color: #ffffff;
     border: 1px solid #0093a7;
     box-shadow: 0px 1px 2px #9e9e9e;
@@ -135,10 +146,33 @@ label.formbuilder-file-label {
     outline: none;
     border-bottom-width: 2px;
 }
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn{
+.formbuilder-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active{
     background: #00899a; 
     border: 1px solid #006e7c;
     box-shadow: 0 0 0 #9e9e9e;
+}
+.formbuilder-button.field-button-fn .btn.press{
+    background: #7d9900; 
+    border: 1px solid #677e02;
+    box-shadow: 0px 1px 4px #9e9e9e;
+}
+.formbuilder-button.field-button-fn button[aria-pressed="true"].btn.press{
+    background: #677e02; 
+    border: 1px solid #677e02;
+    box-shadow: none;
+}
+.btn.editlabels{
+    background: #c0c0c0;
+    border: 1px solid #a8a8a8;
+    box-shadow: 0px 1px 4px #9e9e9e;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 3px 8px;
+    outline: none;
+}
+.btn.editlabels:active{
+    box-shadow: none;
+    outline: none;
 }
 .btn-hide{
     position: absolute;
@@ -302,9 +336,10 @@ label.formbuilder-file-label {
     overflow: auto;
 }
 .note-msg{
-    padding: 15px 10px; 
-    text-align: right; 
+    padding: 10px 10px;
+    text-align: right;
     font-size: 12px;
+    height: 47px;
 }
 .pow-status{
     display: inline-block;
@@ -371,6 +406,97 @@ input:checked + .slider:before {
   -webkit-transform: translateX(28px);
   -ms-transform: translateX(28px);
   transform: translateX(28px);
+}
+.fn-modal{
+    position: absolute;
+    z-index: 1000;
+    background: #ebebeb;
+    height: 76%;
+    width: 80%;
+    top: 7%;
+    left: 10%;
+    box-shadow: 0px 0px 10px 0px #747474;
+    border-radius: 5px;
+    /*display: none;*/
+}
+
+.fn-modal-header{
+    height: 40px;
+    border-bottom: 1px solid #ddd;
+}
+.fn-modal-content{
+    height: 84%;
+    padding: 2%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    width: 100%;
+    font-size: 13px;
+}
+.fn-modal-footer{
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+.fn-heading{
+    float: left;
+    margin: 11px;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 5px 15px;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .save-fn{
+    margin: 1% 0;
+    width: 30%;
+  }
+  .header-row{
+      padding-bottom: 10px;
+      border-bottom: 1px solid #bdbdbd;
+      margin-bottom: 8px;
+  }
+  .header-col{
+    font-weight: 500;
+    box-sizing: border-box;
+    padding:5px 17px;
+  }
+  .edit-row{
+      padding: 3px;
+      border-bottom: 1px solid #ddd;
+  }
+  .edit-row > div{
+    box-sizing: border-box;
+  }
+  .fn-radio, .fn-radio input[type="radio"], .fn-radio label { 
+      display: inline-block; 
+  }
+  .func-title{
+      text-transform: uppercase;
+  }
+
+.fn-input{
+    color: #333; 
+    width: 100%; box-sizing: 
+    border-box; 
+    letter-spacing: 1px;
+    border: 1px solid #ccc; 
+    padding: 5px 8px; 
+    transition: 0.4s;
+    background: #f8f8f8; 
+}
+.fn-input:active, .fn-input:focus{
+    background: #FFFFFF; 
+    border: 1px solid #00A3B9; 
+    outline: none;
 }
 
 

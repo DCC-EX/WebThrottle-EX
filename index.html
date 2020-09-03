@@ -25,6 +25,8 @@
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                                 
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
+        <script  type="text/javascript" src="js/fnMaster.js"></script> 
+        <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
@@ -123,169 +125,13 @@
                                 </span>
                             </div> 
                             <div class="note-msg column-4">
-                                * Momentory buttons
+                                <button type="button" class="btn-default btn editlabels" name="edit-labels"  id="edit-labels">
+                                    &fnof;x
+                                </button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f0" id="f0">
-                                    F0
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="press" aria-pressed="false" name="f1" id="f1">
-                                    F1*
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="press" aria-pressed="false" name="f2" id="f2">
-                                    F2*
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f3" id="f3">
-                                    F3
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f4" access="false" id="f4">
-                                    F4
-                                </button>
-                            </div>
+                        <div class="row" id="fn-wrapper">
                             
-                        </div>
-                        <div class="row">
-
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f5" access="false" id="f5">
-                                    F5
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f6" access="false" id="f6">
-                                    F6
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f7" access="false" id="f7">
-                                    F7
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f8" access="false" id="f8">
-                                    F8
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f9" access="false" id="f9">
-                                    F9
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f10" access="false" id="f10">
-                                    F10
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f11" access="false" id="f11">
-                                    F11
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f12" access="false" id="f12">
-                                    F12
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f13" access="false" id="f13">
-                                    F13
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f14" access="false" id="f14">
-                                    F14
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">                          
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f15" access="false" id="f15">
-                                    F15
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f16" access="false" id="f16">
-                                    F16
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f17" access="false" id="f17">
-                                    F17
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f18" access="false" id="f18">
-                                    F18
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f19" access="false" id="f19">
-                                    F19
-                                </button>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f20" access="false" id="f20">
-                                    F20
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f21" access="false" id="f21">
-                                    F21
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f22" access="false" id="f22">
-                                    F22
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f23" access="false" id="f23">
-                                    F23
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f24" access="false" id="f24">
-                                    F24
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f25" access="false" id="f25">
-                                    F25
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f26" access="false" id="f26">
-                                    F26
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f27" access="false" id="f27">
-                                    F27
-                                </button>
-                            </div>
-                            <div class="formbuilder-button form-group field-button-fn column-2">
-                                <button type="button" class="btn-default btn fn-btn" data-type="toggle" aria-pressed="false" name="f28" access="false" id="f28">
-                                    F28
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,6 +151,24 @@
                 </div> 
             </div>
         </div>
+        <div id="fnModal" class="fn-modal">
+
+            <!-- Modal content -->
+            
+            <div class="fn-modal-header row">
+             <h4 class="fn-heading" > Edit Labels </h4>    
+             <span class="close" id="close-model">&times;</span>
+            </div>
+            <div class="fn-modal-content">
+                Content
+            </div>
+            <div class="fn-modal-footer row">
+                <button type="button" class="btn-default btn save-fn" name="save-fn"  id="save-fn">
+                    Save Labels for this Loco
+                </button>
+            </div>
+          
+          </div>
     </body>
 
 </html>
