@@ -239,6 +239,68 @@ function displayLog(data){
 
 $(document).ready(function(){
 
+    $.each(fndata, function(key, value){
+        console.log(value.toString());
+        isPressed = value[0] != 0 ? true : false;
+        btnType = value[1] != 0 ? "press" : "toggle";
+        $("#fn-wrapper").append(
+         "<div class='formbuilder-button form-group field-button-fn'> <button type='button' class='btn-default btn fn-btn "+btnType+"' data-type='"+
+         btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
+         value[2]+"</button>"
+         +"</div>");
+    });
+
+  $("#edit-labels").on('click', function(){
+      $("#fnModal").show();
+      $("#fnModal .fn-modal-content").empty();
+      $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-1 header-col">Function</div> <div class="column-3 header-col">Label</div> <div class="column-2 header-col">Button Type</div></div>');
+      $.each(fndata, function(key, value){
+        isPressed = value[0] != 0 ? true : false;
+        btnType = value[1] != 0 ? "press" : "toggle";
+        $("#fnModal .fn-modal-content").append('<div class="row edit-row" id="'+key+'">'+ 
+        '<div class="column-1 func-title">'+key +'</div>'+
+        '<div class="column-3"> <input class="fn-input effect-8" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
+        '<span class="focus-border">'+
+        '<i></i>'+
+        '</span></div>'+
+        '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
+            '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press"/>'+
+            '<label for="'+key+'press">Press</label>  &nbsp;'+
+            '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" checked/>'+
+            '<label for="'+key+'toggle">Toggle</label>'+
+        '</div>'+
+        '</div>');
+      });
+  });
+
+  $("#close-model").on('click', function(){
+    $("#fnModal").hide();
+  });
+
+  $("#save-fn").on('click', function(){
+    customFnData = {};
+    $(".edit-row").each(function(val){
+        key = $(this).find(".func-title").text();
+        btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
+        arr = [ 0, btnType, $(this).children().find(".fn-input").val(), 1 ];
+        customFnData[key] = arr;             
+    });
+    locoData = [];
+    locoData.push({ id: 23 , fnData: customFnData});
+    console.log(locoData);
+    $("#fnModal").hide();
+    locodata = window.localStorage.getItem('locoData');
+    if( locodata == null ){
+        x = window.localStorage.setItem('locoData', JSON.stringify(locoData));
+        console.log(x);
+    }else{
+        console.log(JSON.parse(locodata));
+        window.localStorage.setItem('locoData', null);
+    }
+
+  });
+    
+
     $("#button-connect").on('click',function(){
         toggleServer($(this));
     });
