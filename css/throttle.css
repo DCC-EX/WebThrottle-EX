@@ -2,6 +2,9 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
 }
+hr{
+    border-bottom: 1px solid #ffffff;
+}
 .column-1{
     float: left;
     width: 10%;
@@ -55,6 +58,7 @@ body{
 .rendered-form {
     background: #efefef;
     max-width: 1080px;
+    min-width: 480px;
     border-radius: 4px;
     box-shadow: 0px 0px 10px 0px #666666;
     font-family: Arial, Helvetica, sans-serif;
@@ -161,21 +165,28 @@ label.formbuilder-file-label {
     border: 1px solid #677e02;
     box-shadow: none;
 }
-.btn.edit-labels, .btn.load-labels{
+.btn.edit-labels{
     background: #c0c0c0;
     border: 1px solid #a8a8a8;
     box-shadow: 0px 1px 4px #9e9e9e;
     border-radius: 4px;
     font-size: 14px;
-    padding: 3px 8px;
+    padding: 3px 10px;
     outline: none;
+    vertical-align: middle;
 }
 .btn.edit-labels:active, .btn.load-labels:active{
     box-shadow: none;
     outline: none;
 }
 .select-map{
-    padding: 3px 10px;
+    padding: 5px 3px;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding-bottom: 6px;
+    outline: none;
+    width: 100px;
 }
 .btn-hide{
     position: absolute;
@@ -211,11 +222,13 @@ label.formbuilder-file-label {
 .formbuilder-required {
     color: #da0000;
 }
+
 .rs-control .rs-range-color {
     background-color: #009fd8;
 }
 .rs-control .rs-path-color {
     background-color: #919191;
+    border: none;
 }
 .rs-control .rs-handle {
     background-color: #575555;
@@ -232,7 +245,7 @@ label.formbuilder-file-label {
     text-align: center;
 }
 .throttle-container{
-    height: 360px;
+    min-height: 360px;
     display: flex;
     align-items: center;
 }
@@ -263,6 +276,7 @@ label.formbuilder-file-label {
     border: none;
     border-radius: 80px;
     cursor: pointer;
+    outline: none;
 }
 .dir-btn:active{
     outline: none;
@@ -415,9 +429,9 @@ input:checked + .slider:before {
     z-index: 1000;
     background: #ebebeb;
     height: 76%;
-    width: 60%;
+    width: 64%;
     top: 7%;
-    left: 20%;
+    left: 18%;
     box-shadow: 0px 0px 10px 0px #747474;
     border-radius: 5px;
     display: none;
@@ -460,7 +474,7 @@ input:checked + .slider:before {
   }
   .save-fn{
     margin: 1% 0;
-    width: 50%;
+    width: 30%;
   }
   .header-row{
       padding-bottom: 10px;
@@ -468,7 +482,7 @@ input:checked + .slider:before {
       margin-bottom: 8px;
   }
   .header-col{
-    font-weight: 500;
+    font-weight: 600;
     box-sizing: border-box;
     padding:5px 17px;
   }
@@ -479,12 +493,19 @@ input:checked + .slider:before {
   .edit-row > div{
     box-sizing: border-box;
   }
-  .fn-radio{
+  .fn-radio, .fn-chkbox{
     padding-top: 8px;
   }
-  .fn-radio input[type="radio"], .fn-radio label{ 
-      display: inline-block;
+  .fn-radio input[type="radio"],  
+  .fn-chkbox input[type="checkbox"],
+  .fn-radio label,
+  .fn-chkbox label{
       vertical-align: middle;
+      display: inline-block;
+  }
+  .fn-radio label,
+  .fn-chkbox label{
+    padding-top: 3px;
   }
   .func-title{
       text-transform: uppercase;

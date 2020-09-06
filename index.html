@@ -26,6 +26,7 @@
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                                 
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
         <script  type="text/javascript" src="js/fnMaster.js"></script> 
+        <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
 <!--
@@ -118,7 +119,7 @@
                     </div>
                     <div class="functionKeys column-5 mobile-100">
                         <div class="row mobile-100">
-                            <div class="power-slider column-5 formbuilder-button ">
+                            <div class="power-slider column-4 formbuilder-button ">
                                 <label class="switch">
                                     <input type="checkbox" id="power-switch">
                                     <span class="slider round"></span>
@@ -127,16 +128,21 @@
                                     Power <span id="power-status">Off</span>
                                 </span>
                             </div> 
-                            <div class="note-msg column-5">
+                            <div class="note-msg column-6">
                                 <select id="select-map" class="btn select-map" name="selectMap">
                                 </select>    
                                 
-                                <!--button type="button"  id="load-labels" class="btn load-labels" name="loadLabels">
-                                    Load Map
-                                </button--> &nbsp;
-                                <button type="button"  id="edit-labels" class="btn edit-labels" name="editLabels">
-                                    Edit Labels
-                                </button>
+                                <button type="button"  id="edit-map" class="btn edit-labels" name="editMap">
+                                    &#9998;
+                                </button> &nbsp;|&nbsp;
+                                <button type="button"  id="new-map" class="btn edit-labels" name="newMap">
+                                  <span style="font-size:20px; line-height: 20px; padding: 0 2px;"> + </span>
+                                </button> &nbsp;|&nbsp;
+                                <button type="button"  id="backup-map" class="btn edit-labels" name="backupMap">
+                                    <span style="line-height: 20px; padding: 0 2px;">&#10515;</span>
+                                </button> 
+
+
                             </div>
                         </div>
                         <div class="row" id="fn-wrapper">
@@ -165,7 +171,7 @@
             <!-- Modal content -->
             
             <div class="fn-modal-header row">
-             <h4 class="fn-heading" > Edit Labels </h4>    
+             <h4 class="fn-heading" > New Map </h4>    
              <span class="close" id="close-model">&times;</span>
             </div>
             <div class="fn-modal-content">
@@ -173,13 +179,13 @@
             </div>
             <div class="fn-modal-footer row">
                 <button type="button" class="btn-default btn save-fn" name="save-fn"  id="save-fn-map">
-                    Save Labels for this Loco
+                    Save Map
                 </button>
                 <!--button type="button" class="btn-default btn delete-fn" name="delete-fn"  id="wipe-map">
                     WIPE DATA
                 </button>
                 <button type="button" class="btn-default btn delete-item" name="delete-fn"  id="delete-map">
-                    DELETE 7
+                    DELETE
                 </button-->
             </div>
           

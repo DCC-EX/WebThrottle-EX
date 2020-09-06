@@ -3,27 +3,28 @@
 $(document).ready(function(){
     if (typeof(Storage) !== "undefined") {
       console.log("Your browser issupporting Local Storage");
-      console.log(ifExists(52));
     } else {
       console.log("Sorry !! Your browser is not supporting Local Storage");
     }
 
-    $.each(showWebData(), function() {
-      $("#select-map").append($("<option />").val(this.id).text(this.id));
-    });
-
     $("#wipe-map").on('click', function(){
       window.localStorage.removeItem('locoData');
       console.log("!!!!!!WIPED!!!!!!");
+      loadmaps();
     });
-
-
 
     $("#delete-map").on('click', function(){
-      console.log(showWebData());  
-      deleteFuncData(7);
-      console.log(showWebData());  
+      selectedval = $("#select-map").val();      
+      if(selectedval != "default"){
+        deleteFuncData(selectedval);
+        loadmaps();
+      }
     });
+
+    $("#backup-map").on('click', function(){
+      getBackup();
+    });
+
 });
 
 function setLocoData(data){
@@ -33,36 +34,39 @@ function setLocoData(data){
     console.log(slocodata);
     if(!slocodata){
         curlocodata.push(data);
-        window.localStorage.setItem('locoData', JSON.stringify(curlocodata)); 
+        window.localStorage.setItem('locoData', JSON.stringify(curlocodata));
+        loadmaps();
+        $("#select-map").val(data.mname).trigger("change");
+        //$('#select-map option[value="'+data.mname+'"]').prop('selected', true);
         console.log("NULL");
     }else{
-      if(ifExists(data.id)){
+     if(ifExists(data.mname)){
         slocodata.find(function(item, i){
-          if(item.id == data.id){
+          if(item.mname == data.mname){
             item.fnData=data.fnData;
           }
         });  
       }else{
         slocodata.push(data);
       }
-      window.localStorage.setItem('locoData', JSON.stringify(slocodata));    
+      window.localStorage.setItem('locoData', JSON.stringify(slocodata));
+      loadmaps();
+      $("#select-map").val(data.mname).trigger("change");
     }
-    loadmaps();
-    console.log(showWebData());   
   }
 
 }
 
-function getFuncData(id){
+function getStoredFuncData(name){
   data = JSON.parse(window.localStorage.getItem('locoData'));
   return data.find(function(item, i){
-    if(item.id == id){
+    if(item.mname == name){
       return item.fnData;
     }
-  }).fnData;
+  });
 }
 
-function deleteFuncData(id){
+function deleteFuncData(name){
   var r = confirm("Are you sure on deletion?");
   if (r == true) {
     if (typeof(Storage) !== "undefined") {
@@ -72,7 +76,7 @@ function deleteFuncData(id){
         alert("No Data stored");
       }else{
           data.find(function(item, i){
-            if(item.id != id){
+            if(item.mname != name){
               curlocodata.push(item);
             }
           });    
@@ -84,25 +88,29 @@ function deleteFuncData(id){
 }
 
 
-function showWebData(){
+function getWebData(){
   return JSON.parse(window.localStorage.getItem('locoData'));
 }
 
-function ifExists(id){
+function ifExists(name){
   data = JSON.parse(window.localStorage.getItem('locoData'));
   found = false;
   data.find(function(item, i){
-    if(item.id == id){
+    if(item.mname == name){
       found = true;
     }
   });
   return found;
 }
 
-function loadmaps(){
-  $("#select-map").empty();
-  $("#select-map").append($("<option />").val("-1").text("Map"));
-  $.each(showWebData(), function() {
-    $("#select-map").append($("<option />").val(this.id).text(this.id));
-  });
+function getBackup() {
+  data = window.localStorage.getItem('locoData');
+  const a = document.createElement("a");
+  const file = new Blob([data], {type: 'application/json'});
+  a.href = URL.createObjectURL(file);
+  a.download = "EXthrottleBackup.json";
+  a.click();
 }
+
+
+

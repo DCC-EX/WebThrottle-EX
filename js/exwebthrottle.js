@@ -56,7 +56,6 @@ window.functions = {
     "f28": 0
 };
 
-
 let port;
 let reader;
 let inputDone;
@@ -92,203 +91,178 @@ function getDirection(dir){
     return window.direction;
 }
 
-
-async function connectServer() {
-    // - Request a port and open an asynchronous connection, 
-    //   which prevents the UI from blocking when waiting for
-    //   input, and allows serial to be received by the web page
-    //   whenever it arrives.
-    
-    port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
-    // - Wait for the port to open.
-    await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
-
-    // create a text encoder stream and pipe the stream to port.writeable
-    const encoder = new TextEncoderStream();
-    outputDone = encoder.readable.pipeTo(port.writable);
-    outputStream = encoder.writable;
-
-    // To put the system into a known state and stop it from echoing back the characters that we send it, 
-    // we need to send a CTRL-C and turn off the echo
-    writeToStream('\x03', 'echo(false);');
-
-    // Create an input stream and a reader to read the data. port.readable gets the readable stream
-    // DCC++ commands are text, so we will pipe it through a text decoder. 
-    let decoder = new TextDecoderStream();
-    inputDone = port.readable.pipeTo(decoder.writable);
-    inputStream = decoder.readable
-    //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
-    .pipeThrough(new TransformStream(new JSONTransformer()));
-
-    // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
-    reader = inputStream.getReader();
-    readLoop();
-
-}
-async function readLoop() {
-    while (true) {
-        const { value, done } = await reader.read();
-        // if (value && value.button) { // alternate check and calling a function
-        // buttonPushed(value);
-        if (value) {
-            displayLog(value);
-        }
-        if (done) {
-            console.log('[readLoop] DONE'+done.toString());
-            displayLog('[readLoop] DONE'+done.toString());
-            reader.releaseLock();
-            break;
-        }
-    }
-}
-function writeToStream(...lines) {
-    const writer = outputStream.getWriter();
-    lines.forEach((line) => {
-        writer.write('<' + line + '>' + '\n');
-        displayLog('[SEND]'+line.toString());
+function loadmaps(){
+    $("#select-map").empty();
+    $("#select-map").append($("<option />").val("default").text("Default"));
+    $.each(getWebData(), function() {
+      $("#select-map").append($("<option />").val(this.mname).text(this.mname));
     });
-    writer.releaseLock();
-
-}
-class LineBreakTransformer {
-        constructor() {
-            // A container for holding stream data until it sees a new line.
-            this.container = '';
-        }
-
-        transform(chunk, controller) {
-            // Handle incoming chunk
-            this.container += chunk;                      // add new data to the container 
-            const lines = this.container.split('\r\n');   // look for line breaks and if it finds any
-            this.container = lines.pop();                 // split them into an array
-            lines.forEach(line => controller.enqueue(line)); // iterate parsed lines and send them
-
-        }
-
-        flush(controller) {
-            // When the stream is closed, flush any remaining data
-            controller.enqueue(this.container);
-
-        }
-}
-class JSONTransformer {
-    transform(chunk, controller) {
-        // Attempt to parse JSON content
-        try {
-        controller.enqueue(JSON.parse(chunk));
-        } catch (e) {
-        displayLog(chunk.toString());
-        console.log('No JSON, dumping the raw chunk', chunk);
-        controller.enqueue(chunk);
-        }
-
-    }
-}                   
-async function disconnectServer() {
-    if ($("#power-switch").is(':checked')) {
-	  $("#log-box").append('<br>'+'turn off power'+'<br>');
-	  writeToStream('0');
-	  $("#power-switch").prop('checked', false)
-	  $("#power-status").html('Off');
-	}
-    // Close the input stream (reader).
-    if (reader) {
-        await reader.cancel();  // .cancel is asynchronous so must use await to wave for it to finish
-        await inputDone.catch(() => {});
-        reader = null;
-        inputDone = null;
-		displayLog('close reader');
-    }
-
-    // Close the output stream.
-    if (outputStream) {
-        await outputStream.getWriter().close();
-        await outputDone; // have to wait for  the azync calls to finish and outputDone to close
-        outputStream = null;
-        outputDone = null;
-		displayLog('close outputStream');
-    }
-    // Close the serial port.
-    await port.close();
-    port = null;
-	displayLog('close port');
-
-}
-async function toggleServer(btn) {
-    // If already connected, disconnect
-    if (port) {
-        await disconnectServer();
-        btn.attr('aria-state','Disconnected');
-        btn.html("Connect DCC++ EX");
-        return;
-    }
-
-    // Otherwise, call the connect() routine when the user clicks the connect button
-    await connectServer();
-    btn.attr('aria-state','Connected');
-    btn.html("Disconnect DCC++ EX");
 }
 
-function displayLog(data){
-
-    $("#log-box").append("<br>"+data+"<br>");
-    $("#log-box").animate({scrollTop: $("#log-box").prop("scrollHeight"), duration: 5});
-
-}
-
-function loadButtons(fndata){
+function loadButtons(data){
     $("#fn-wrapper").empty();
-
-    $.each(fndata, function(key, value){
+    $.each(data.fnData, function(key, value){
         isPressed = value[0] != 0 ? true : false;
         btnType = value[1] != 0 ? "press" : "toggle";
-        $("#fn-wrapper").append(
-         "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
-         btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
-         value[2]+"</button>"
-         +"</div>");
+        if(value[3]==1){
+            $("#fn-wrapper").append(
+            "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
+            btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
+            value[2]+"</button>"
+            +"</div>");
+        }
     });
+    // Set height of throttle container according to functions panel
+    $(".throttle-container").height($(".functionKeys").first().height());
+}
+
+function showBtnConfig(data){
+    
+    $("#fnModal").show();
+    $('#fnModal').css({"top":"7%", "left": "18%"});
+    $('#fnModal').draggable();
+    $("#fnModal .fn-modal-content").empty();
+    $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-2 header-col func-title">Map Name</div> <div class="column-5 header-col"><input type="text" class="fn-input" id="map-name" value="'+data.mname+'"/></div> <div class="column-3 header-col"></div></div>');
+    $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-1 header-col">Function</div> <div class="column-4 header-col">Label</div> <div class="column-3 header-col">Button Type</div><div class="column-2 header-col">Visibility</div></div>');
+    $.each(data.fnData, function(key, value){
+        isPressed = value[0] != 0 ? true : false;
+        btnType = value[1] != 0 ? "press" : "toggle";
+        btnpress = value[1] == 1 ? "checked" : "";
+        btnToggle = value[1] == 0 ? "checked" : "";
+        fvisible = value[3] == 1 ? "checked" : "";
+        $("#fnModal .fn-modal-content").append('<div class="row edit-row" id="'+key+'">'+ 
+        '<div class="column-1 func-title">'+key +'</div>'+
+        '<div class="column-4"> <input class="fn-input" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
+        '<span class="focus-border"><i></i></span>'+
+        '</div>'+
+        '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
+            '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press" '+btnpress+'/>'+
+            '<label for="'+key+'press">Press</label>  &nbsp;'+
+            '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" '+btnToggle+'/>'+
+            '<label for="'+key+'toggle">Toggle</label>'+ 
+        '</div>'+
+        '<div class="fn-chkbox column-2" name="'+key+'Visible" id="'+key+'Type">'+
+            '<input type="checkbox" id="'+key+'Visible" name="'+key+'Visible" '+fvisible+'/>'+
+            '<label for="'+key+'Visible">Show</label>  &nbsp;'+
+        '</div>'+
+        '</div>');
+    });
+}
+
+// This function will generate commands for each type of function
+function generateFnCommand(clickedBtn){
+    
+       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
+       eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
+       btnPressed = clickedBtn.attr("aria-pressed");
+       //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);
+    
+       switch(func){
+            case "f0":
+            case "f1":
+            case "f2":
+            case "f3":
+            case "f4":
+            { 
+                if(btnPressed=="true"){ 
+                    sendCommandForF0ToF4(func,1);                
+                }else{ 
+                    sendCommandForF0ToF4(func,0);
+                }
+                break;
+            }
+            case "f5":
+            case "f6":
+            case "f7":
+            case "f8":
+            { 
+                if(btnPressed=="true"){ 
+                    sendCommandForF5ToF8(func,1);                
+                }else{ 
+                    sendCommandForF5ToF8(func,0);
+                }
+                break;
+            }
+            case "f9":
+            case "f10":
+            case "f11":
+            case "f12":
+            { 
+                if(btnPressed=="true"){ 
+                    sendCommandForF9ToF12(func,1);                
+                }else{ 
+                    sendCommandForF9ToF12(func,0);
+                }
+                break;
+            }
+            case "f13":
+            case "f14":
+            case "f15":
+            case "f16":
+            case "f17":
+            case "f18":
+            case "f19":
+            case "f20":
+                { 
+                    if(btnPressed=="true"){ 
+                        sendCommandForF13ToF20(func,1);                
+                    }else{     
+                        sendCommandForF13ToF20(func,0);
+                    }
+                    break;
+            }
+            case "f21":
+            case "f22":
+            case "f23":
+            case "f24":
+            case "f25":
+            case "f26":
+            case "f27":
+            case "f28":
+                { 
+                    if(btnPressed=="true"){ 
+                        sendCommandForF21ToF28(func,1);                
+                    }else{  
+                        sendCommandForF21ToF28(func,0);
+                    }
+                    break;
+            }
+            default:
+            {
+                alert("Invalid Function");
+            }
+
+       }          
 }
 
 $(document).ready(function(){
     loadmaps();
-    loadButtons(fndata);
+    loadButtons({ mname: "default" , fnData: fnMasterData});
+
+    $("#new-map").on('click', function(){
+        
+        $(".fn-heading").html("New Mapping");
+        showBtnConfig({ mname: "" , fnData: fnMasterData});
+    });
 
     $("#select-map").change(function () {
-        selectedval = $(this).val();      
-        if(selectedval != -1){
-        data  = getFuncData(selectedval);
-        console.log(data);
-        loadButtons(data);
+        selectedval = $(this).val();    
+        if(selectedval != "default"){
+            data  = getStoredFuncData(selectedval);
+            loadButtons(data);
+        }else{
+            loadButtons({ mname: "default" , fnData: fnMasterData});
         }
     });
 
-
-  $("#edit-labels").on('click', function(){
-      if(getCV()!=0){
-      $("#fnModal").show();
-      $("#fnModal .fn-modal-content").empty();
-      $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-2 header-col">Function</div> <div class="column-4 header-col">Label</div> <div class="column-4 header-col">Button Type</div></div>');
-      $.each(fndata, function(key, value){
-        isPressed = value[0] != 0 ? true : false;
-        btnType = value[1] != 0 ? "press" : "toggle";
-        $("#fnModal .fn-modal-content").append('<div class="row edit-row" id="'+key+'">'+ 
-        '<div class="column-2 func-title">'+key +'</div>'+
-        '<div class="column-4"> <input class="fn-input effect-8" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
-        '<span class="focus-border">'+
-        '<i></i>'+
-        '</span></div>'+
-        '<div class="fn-radio column-4" name="'+key+'Type" id="'+key+'Type">'+
-            '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press"/>'+
-            '<label for="'+key+'press">Press</label>  &nbsp;'+
-            '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" checked/>'+
-            '<label for="'+key+'toggle">Toggle</label>'+
-        '</div>'+
-        '</div>');
-      });
-    }else{
-        alert("Aquire a locomotive first");
+  $("#edit-map").on('click', function(){
+        $(".fn-heading").html("Edit Mapping");
+        selectedval = $("#select-map").val();      
+        if(selectedval != "default"){
+        data  = getStoredFuncData(selectedval); 
+        showBtnConfig(data);
     }
+    //showBtnConfig();
   });
 
   $("#close-model").on('click', function(){
@@ -296,21 +270,27 @@ $(document).ready(function(){
   });
 
   $("#save-fn-map").on('click', function(){
-    customFnData = {};
-    $(".edit-row").each(function(val){
-        key = $(this).find(".func-title").text();
-        btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
-        arr = [ 0, btnType, $(this).children().find(".fn-input").val(), 1 ];
-        customFnData[key] = arr;             
-    });
-    aclocoId = getCV();
-    if(aclocoId !=0){
-        setLocoData({ id: aclocoId , fnData: customFnData});
+    if(!ifExists()){
+        customFnData = {};
+        $(".edit-row").each(function(val){
+            key = $(this).find(".func-title").text();
+            btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
+            fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
+            arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
+            customFnData[key] = arr;             
+        });
+        mapName = $("#map-name").val();
+        console.log(mapName);
+        if(mapName){
+            setLocoData({ mname: mapName , fnData: customFnData});
+            $("#fnModal").hide();
+        }else{
+            alert("Name is missing!!");
+        }
     }else{
-        alert("Aquire a locomotive first");
+        alert("Map with the Name already exists!! Please change the Map name.."); 
     }
-    $("#fnModal").hide();
-
+    
   });
     
 
@@ -367,23 +347,24 @@ $(document).ready(function(){
         value: speed,
         circleShape: "pie",
         handleShape: "dot",
-        startAngle: 316,
+        startAngle: 315,
         lineCap: "round",
         sliderType: "min-range",
-        handleSize: "+15",
+        showTooltip: false,
+        handleSize: "+18",
         max: "128",
         disabled: true,
         create: function(){
             //console.log("This will trigger just before creation of throttle slider UI");
         },
         start: function(){
-            //console.log("This event triggered when the user starts to drag the handle.");
+            //console.log("This event trigger when the user starts to drag the handle.");
         },
         stop: function(){
-            //console.log("This event triggered when the user stops from sliding the handle / when releasing the handle.");
+            //console.log("This event trigger when the user stops from sliding the handle / when releasing the handle.");
         },
         beforeValueChange: function(){
-            //console.log("This event will be triggered before the value change happens.");
+            //console.log("This event will trigger before the value change happens.");
         },
         update: function(slider){  // can change this to "drage" and write the stream in "change:" instead
             setSpeed(slider.value);
@@ -557,132 +538,10 @@ $("#button-sendCmd").on('click', function(){
 });
 
 
-function sendCommandForF0ToF4(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (128+getFunCurrentVal("f1")*1 + getFunCurrentVal("f2")*2 + getFunCurrentVal("f3")*4  + getFunCurrentVal("f4")*8 + getFunCurrentVal("f0")*16);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
 
-}
-
-function sendCommandForF5ToF8(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (176+getFunCurrentVal("f5")*1 + getFunCurrentVal("f6")*2 + getFunCurrentVal("f7")*4  + getFunCurrentVal("f8")*8);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
-
-}
-
-function sendCommandForF9ToF12(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (160+getFunCurrentVal("f9")*1 + getFunCurrentVal("f10")*2 + getFunCurrentVal("f11")*4  + getFunCurrentVal("f12")*8);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
-
-}
-
-function sendCommandForF13ToF20(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (getFunCurrentVal("f13")*1 + getFunCurrentVal("f14")*2 + getFunCurrentVal("f15")*4  + getFunCurrentVal("f16")*8 + getFunCurrentVal("f17")*16 + getFunCurrentVal("f18")*32 + getFunCurrentVal("f19")*64 + getFunCurrentVal("f20")*128);
-    writeToStream("f "+getCV()+" 222 "+cabval);
-    console.log("Command: "+ "f "+getCV()+" 222 "+cabval);
-
-}
-
-function sendCommandForF21ToF28(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (getFunCurrentVal("f21")*1 + getFunCurrentVal("f22")*2 + getFunCurrentVal("f23")*4  + getFunCurrentVal("f24")*8 + getFunCurrentVal("f25")*16 + getFunCurrentVal("f26")*32 + getFunCurrentVal("f27")*64 + getFunCurrentVal("f28")*128);
-    writeToStream("f "+getCV()+" 223 "+cabval);
-    console.log("Command: "+ "f "+getCV()+" 223 "+cabval);
-
-}
-
-
-// This function will generate commands for each type of function
-function generateFnCommand(clickedBtn){
-    
-       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
-       eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
-       btnPressed = clickedBtn.attr("aria-pressed");
-       //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);
-    
-       switch(func){
-            case "f0":
-            case "f1":
-            case "f2":
-            case "f3":
-            case "f4":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF0ToF4(func,1);                
-                }else{ 
-                    sendCommandForF0ToF4(func,0);
-                }
-                break;
-            }
-            case "f5":
-            case "f6":
-            case "f7":
-            case "f8":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF5ToF8(func,1);                
-                }else{ 
-                    sendCommandForF5ToF8(func,0);
-                }
-                break;
-            }
-            case "f9":
-            case "f10":
-            case "f11":
-            case "f12":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF9ToF12(func,1);                
-                }else{ 
-                    sendCommandForF9ToF12(func,0);
-                }
-                break;
-            }
-            case "f13":
-            case "f14":
-            case "f15":
-            case "f16":
-            case "f17":
-            case "f18":
-            case "f19":
-            case "f20":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF13ToF20(func,1);                
-                    }else{     
-                        sendCommandForF13ToF20(func,0);
-                    }
-                    break;
-            }
-            case "f21":
-            case "f22":
-            case "f23":
-            case "f24":
-            case "f25":
-            case "f26":
-            case "f27":
-            case "f28":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF21ToF28(func,1);                
-                    }else{  
-                        sendCommandForF21ToF28(func,0);
-                    }
-                    break;
-            }
-            default:
-            {
-                alert("Invalid Function");
-            }
-
-       }          
-}
 
 });
 
+$(window).on('load', function(){
+    
+});
