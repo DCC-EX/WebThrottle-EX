@@ -318,7 +318,7 @@ $(document).ready(function(){
 
   $("#save-fn-map").on('click', function(){
     mode = $(this).attr("mode");
-    alert(mode);
+    // alert(mode); // debug line
     if(mode=="new"){
         addNewMap();  
     }else{
