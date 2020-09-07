@@ -5,7 +5,7 @@ Requirements
 Arduino Uno or Mega (clones are allright too)
 Arduino or Deek-Robot Motor Shield (or another DCC++ EX supported motor controller)
 A computer, laptop, or tablet with a USB Serial port
-A Chrome Browser
+A Chromium based Browser (Chrome, Opera, Edge)
 
 Installing exWebThrottle
 
@@ -16,7 +16,7 @@ exwebthrottle.js
 
 Make sure that experimental features are enabled in your chrome web browser by clicking in the address bar and typing:
 
-chrome:/flags
+chrome:/flags (or opera:/flags or edge:/flags for those browsers)
 
 Find "Experimental Web Platform Features" and set it to "enabled"
 
