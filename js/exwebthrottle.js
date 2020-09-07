@@ -149,6 +149,49 @@ function showBtnConfig(data){
     });
 }
 
+function addNewMap(){
+    customFnData = {};
+    $(".edit-row").each(function(val){
+        key = $(this).find(".func-title").text();
+        btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
+        fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
+        arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
+        customFnData[key] = arr;             
+    });
+    mapName = $("#map-name").val();
+    console.log(mapName);
+    if(mapName){
+        setLocoData({ mname: mapName , fnData: customFnData});
+        $("#fnModal").hide();
+    }else{
+        alert("Name is missing!!");
+    }
+}
+
+function editMap(){
+    if(!ifExists()){
+        customFnData = {};
+        $(".edit-row").each(function(val){
+            key = $(this).find(".func-title").text();
+            btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
+            fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
+            arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
+            customFnData[key] = arr;             
+        });
+        mapName = $("#map-name").val();
+        console.log(mapName);
+        if(mapName){
+            setLocoData({ mname: mapName , fnData: customFnData});
+            $("#fnModal").hide();
+        }else{
+            alert("Name is missing!!");
+        }
+    }else{
+        alert("Map with the Name already exists!! Please change the Map name.."); 
+    }
+}
+
+
 // This function will generate commands for each type of function
 function generateFnCommand(clickedBtn){
     
@@ -236,11 +279,14 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
+
+    var mode = 0;
+
     loadmaps();
     loadButtons({ mname: "default" , fnData: fnMasterData});
 
     $("#new-map").on('click', function(){
-        
+        $("#save-fn-map").attr("mode","new");
         $(".fn-heading").html("New Mapping");
         showBtnConfig({ mname: "" , fnData: fnMasterData});
     });
@@ -256,6 +302,7 @@ $(document).ready(function(){
     });
 
   $("#edit-map").on('click', function(){
+        $("#save-fn-map").attr("mode","edit");
         $(".fn-heading").html("Edit Mapping");
         selectedval = $("#select-map").val();      
         if(selectedval != "default"){
@@ -270,29 +317,14 @@ $(document).ready(function(){
   });
 
   $("#save-fn-map").on('click', function(){
-    if(!ifExists()){
-        customFnData = {};
-        $(".edit-row").each(function(val){
-            key = $(this).find(".func-title").text();
-            btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
-            fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
-            arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
-            customFnData[key] = arr;             
-        });
-        mapName = $("#map-name").val();
-        console.log(mapName);
-        if(mapName){
-            setLocoData({ mname: mapName , fnData: customFnData});
-            $("#fnModal").hide();
-        }else{
-            alert("Name is missing!!");
-        }
+    mode = $(this).attr("mode");
+    alert(mode);
+    if(mode=="new"){
+        addNewMap();  
     }else{
-        alert("Map with the Name already exists!! Please change the Map name.."); 
-    }
-    
+        editMap();
+    }  
   });
-    
 
     $("#button-connect").on('click',function(){
         toggleServer($(this));
