@@ -163,6 +163,7 @@ function addNewMap(){
     if(mapName){
         setLocoData({ mname: mapName , fnData: customFnData});
         $("#fnModal").hide();
+        alert('Map Saved Sucessfully');
     }else{
         alert("Name is missing!!");
     }
@@ -183,6 +184,7 @@ function editMap(){
         if(mapName){
             setLocoData({ mname: mapName , fnData: customFnData});
             $("#fnModal").hide();
+            alert('Map Saved Sucessfully');
         }else{
             alert("Name is missing!!");
         }
@@ -306,9 +308,11 @@ $(document).ready(function(){
         $(".fn-heading").html("Edit Mapping");
         selectedval = $("#select-map").val();      
         if(selectedval != "default"){
-        data  = getStoredFuncData(selectedval); 
-        showBtnConfig(data);
-    }
+            data  = getStoredFuncData(selectedval); 
+            showBtnConfig(data);
+        }else{
+            alert("Cannot edit Default mapping!");
+        }
     //showBtnConfig();
   });
 
@@ -563,17 +567,57 @@ $(document).on('mousedown', '.fn-btn', function() {
     }
 });
 
+$("#console-toggle").on('click',function(){
+    pb = $(this).is(':checked');
+    
+    if (pb == true){
+        $("#debug-console").show();
+    } else {
+        $("#debug-console").hide();
+    }
+});
 
 $("#button-sendCmd").on('click', function(){
     cmd = $("#cmd-direct").val();
     writeToStream(cmd);
 });
 
+$("#fs-toggle").on('click', function(){
+    
+    st = $(this).attr('state');
+    var elem = document.documentElement;
+    if(st == 'ws'){
+        $(this).attr('state','fs');     
 
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+          } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            elem.webkitRequestFullscreen();
+          } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+          }
+    }else{
+        $(this).attr('state','ws');  
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+          }
+    }
+});
 
 
 });
+
+
 
 $(window).on('load', function(){
     
 });
+
