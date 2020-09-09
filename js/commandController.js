@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    console.log("Command Controller");
+    console.log("Command Controller loaded");
 });
 
 async function connectServer() {
@@ -92,7 +92,8 @@ class JSONTransformer {
         }
 
     }
-}                   
+} 
+
 async function disconnectServer() {
     if ($("#power-switch").is(':checked')) {
 	  $("#log-box").append('<br>'+'turn off power'+'<br>');
@@ -123,6 +124,8 @@ async function disconnectServer() {
 	displayLog('close port');
 
 }
+
+// Connect or disconnect from the command station
 async function toggleServer(btn) {
     // If already connected, disconnect
     if (port) {
@@ -138,6 +141,7 @@ async function toggleServer(btn) {
     btn.html("Disconnect DCC++ EX");
 }
 
+// Display log of events
 function displayLog(data){
 
     $("#log-box").append("<br>"+data+"<br>");
@@ -145,6 +149,7 @@ function displayLog(data){
 
 }
 
+// Function to generate commands for functions F0 to F4
 function sendCommandForF0ToF4(fn, opr){
     setFunCurrentVal(fn,opr);
     cabval = (128+getFunCurrentVal("f1")*1 + getFunCurrentVal("f2")*2 + getFunCurrentVal("f3")*4  + getFunCurrentVal("f4")*8 + getFunCurrentVal("f0")*16);
@@ -153,6 +158,7 @@ function sendCommandForF0ToF4(fn, opr){
 
 }
 
+// Function to generate commands for functions F5 to F8
 function sendCommandForF5ToF8(fn, opr){
     setFunCurrentVal(fn,opr);
     cabval = (176+getFunCurrentVal("f5")*1 + getFunCurrentVal("f6")*2 + getFunCurrentVal("f7")*4  + getFunCurrentVal("f8")*8);
@@ -161,6 +167,7 @@ function sendCommandForF5ToF8(fn, opr){
 
 }
 
+// Function to generate commands for functions F9 to F12
 function sendCommandForF9ToF12(fn, opr){
     setFunCurrentVal(fn,opr);
     cabval = (160+getFunCurrentVal("f9")*1 + getFunCurrentVal("f10")*2 + getFunCurrentVal("f11")*4  + getFunCurrentVal("f12")*8);
@@ -169,6 +176,7 @@ function sendCommandForF9ToF12(fn, opr){
 
 }
 
+// Function to generate commands for functions F13 to F20
 function sendCommandForF13ToF20(fn, opr){
     setFunCurrentVal(fn,opr);
     cabval = (getFunCurrentVal("f13")*1 + getFunCurrentVal("f14")*2 + getFunCurrentVal("f15")*4  + getFunCurrentVal("f16")*8 + getFunCurrentVal("f17")*16 + getFunCurrentVal("f18")*32 + getFunCurrentVal("f19")*64 + getFunCurrentVal("f20")*128);
@@ -177,6 +185,7 @@ function sendCommandForF13ToF20(fn, opr){
 
 }
 
+// Function to generate commands for functions F21 to F28
 function sendCommandForF21ToF28(fn, opr){
     setFunCurrentVal(fn,opr);
     cabval = (getFunCurrentVal("f21")*1 + getFunCurrentVal("f22")*2 + getFunCurrentVal("f23")*4  + getFunCurrentVal("f24")*8 + getFunCurrentVal("f25")*16 + getFunCurrentVal("f26")*32 + getFunCurrentVal("f27")*64 + getFunCurrentVal("f28")*128);

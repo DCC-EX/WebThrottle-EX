@@ -138,10 +138,16 @@
                                     <div class="dropdown-content">
                                       <a href="#" id="new-map">+ &nbsp;New map</a>
                                       <a href="#" id="edit-map"> &#9998; &nbsp;Edit map</a>
-                                      <!--a href="#" id="delete-map">&#128465; &nbsp;Delete map</a-->
+                                      <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
+                                      <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
+                                      <input id="map-upload" type="file" hidden/>
+                                      <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
                                       <div class="hr"></div>
-                                      <a href="#" id="backup-map"> &#10515;&nbsp; Backup map data</a>
-                                      <!--a href="#" id="restore-map"> &#8593;&nbsp; Restore map data</a-->
+                                      <a href="#" id="backup-map"> &#10514;&nbsp; Export App data</a>
+                                      <a href="#" id="restore-app"> &#10515;&nbsp; Import App data</a>
+                                      <input id="appdata-upload" type="file" hidden/>
+                                      <div class="hr"></div>
+                                      <a href="#" id="wipe-map"> &#10539;&nbsp; Wipe App data</a>
                                     </div>
                                   </div>
                             </div>
@@ -195,12 +201,6 @@
                 <button type="button" mode="new" class="btn-default btn save-fn" name="save-fn"  id="save-fn-map">
                     Save Map
                 </button>
-                <!--button type="button" class="btn-default btn delete-fn" name="delete-fn"  id="wipe-map">
-                    WIPE DATA
-                </button>
-                <button type="button" class="btn-default btn delete-item" name="delete-fn"  id="delete-map">
-                    DELETE
-                </button-->
             </div>
           
           </div>
