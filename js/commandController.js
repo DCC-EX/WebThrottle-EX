@@ -1,18 +1,26 @@
+/*  This is part of the DCC++ EX Project for model railroading and more.
+    For more information, see us at dcc-ex.com.
+    
+    commandController.js
+    
+    Open a serial port and create a stream to read and write data
+    While there is data, we read the results in loop function
+*/
 $(document).ready(function(){
     console.log("Command Controller");
 });
 
+// - Request a port and open an asynchronous connection, 
+//   which prevents the UI from blocking when waiting for
+//   input, and allows serial to be received by the web page
+//   whenever it arrives.
 async function connectServer() {
-    // - Request a port and open an asynchronous connection, 
-    //   which prevents the UI from blocking when waiting for
-    //   input, and allows serial to be received by the web page
-    //   whenever it arrives.
-    
+
     port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
     // - Wait for the port to open.
     await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
 
-    // create a text encoder stream and pipe the stream to port.writeable
+    // create a text encoder output stream and pipe the stream to port.writeable
     const encoder = new TextEncoderStream();
     outputDone = encoder.readable.pipeTo(port.writable);
     outputStream = encoder.writable;
@@ -34,6 +42,10 @@ async function connectServer() {
     readLoop();
 
 }
+
+// While there is still data in the serial buffer us an asynchronous read loop
+// to get the data and place it in the "value" variable. When "done" is true
+// all the data has been read or the port is closed
 async function readLoop() {
     while (true) {
         const { value, done } = await reader.read();
@@ -50,6 +62,7 @@ async function readLoop() {
         }
     }
 }
+
 function writeToStream(...lines) {
     const writer = outputStream.getWriter();
     lines.forEach((line) => {
@@ -59,6 +72,10 @@ function writeToStream(...lines) {
     writer.releaseLock();
 
 }
+
+// Transformer for the Web Serial API. Data comes in as a stream so we
+// need a container to buffer what is coming from the serial port and
+// parse the data into separate lines by looking for the breaks
 class LineBreakTransformer {
         constructor() {
             // A container for holding stream data until it sees a new line.
@@ -80,6 +97,9 @@ class LineBreakTransformer {
 
         }
 }
+
+// Optional transformer for use with the web serial API
+// to parse a JSON file into its component commands
 class JSONTransformer {
     transform(chunk, controller) {
         // Attempt to parse JSON content
@@ -92,7 +112,8 @@ class JSONTransformer {
         }
 
     }
-}                   
+}
+                   
 async function disconnectServer() {
     if ($("#power-switch").is(':checked')) {
 	  $("#log-box").append('<br>'+'turn off power'+'<br>');
