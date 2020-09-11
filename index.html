@@ -66,6 +66,7 @@
                             <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
                                 Connect DCC++ EX
                             </button>
+                            <button class="btn-grey" id="fs-toggle" state="ws">&#10530;</button>
                         </div>
                     </div>
 
@@ -129,20 +130,26 @@
                                 </span>
                             </div> 
                             <div class="note-msg column-6">
-                                <select id="select-map" class="btn select-map" name="selectMap">
+                                <select id="select-map" class="btn select-map" name="selectMap" title="Load a Saved Map">
                                 </select>    
                                 
-                                <button type="button"  id="edit-map" class="btn edit-labels" name="editMap">
-                                    &#9998;
-                                </button> &nbsp;|&nbsp;
-                                <button type="button"  id="new-map" class="btn edit-labels" name="newMap">
-                                  <span style="font-size:20px; line-height: 20px; padding: 0 2px;"> + </span>
-                                </button> &nbsp;|&nbsp;
-                                <button type="button"  id="backup-map" class="btn edit-labels" name="backupMap">
-                                    <span style="line-height: 20px; padding: 0 2px;">&#10515;</span>
-                                </button> 
-
-
+                                <div class="dropdown">
+                                    <button class="dropbtn">Options <span style="font-size:8px;vertical-align: middle;">&#9660;</span></button>
+                                    <div class="dropdown-content">
+                                      <a href="#" id="new-map">+ &nbsp;New map</a>
+                                      <a href="#" id="edit-map"> &#9998; &nbsp;Edit map</a>
+                                      <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
+                                      <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
+                                      <input id="map-upload" type="file" hidden/>
+                                      <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
+                                      <div class="hr"></div>
+                                      <a href="#" id="backup-map"> &#10514;&nbsp; Export App data</a>
+                                      <a href="#" id="restore-app"> &#10515;&nbsp; Import App data</a>
+                                      <input id="appdata-upload" type="file" hidden/>
+                                      <div class="hr"></div>
+                                      <a href="#" id="wipe-map"> &#10539;&nbsp; Wipe App data</a>
+                                    </div>
+                                  </div>
                             </div>
                         </div>
                         <div class="row" id="fn-wrapper">
@@ -150,20 +157,33 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row mobile-margin-top20">
-                    <div class="formbuilder-text field-ex-email column-7">
-                        <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
-                    </div>
-            
-                    <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
-                        <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
-                            Send
-                        </button>
-                    </div>
-                </div>          
-                <div class="log-msg" id="log-box">
-                </div> 
+                <div class="row">
+                    <div class="console-slider column-4">
+                        <label class="debug switch">
+                            <input type="checkbox" id="console-toggle" checked>
+                            <span class="slider round debug-slider"></span>
+                        </label>
+                        <span class="debug-status">
+                            Debug Console
+                        </span>
+                    </div>        
+                </div>
+                <div id="debug-console">
+                    <hr>
+                    <div class="row mobile-margin-top20">
+                        <div class="formbuilder-text field-ex-email column-7">
+                            <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
+                        </div>
+                
+                        <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
+                            <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
+                                Send
+                            </button>
+                        </div>
+                    </div>          
+                    <div class="log-msg" id="log-box">
+                    </div> 
+                </div>
             </div>
         </div>
         <div id="fnModal" class="fn-modal">
@@ -181,12 +201,6 @@
                 <button type="button" mode="new" class="btn-default btn save-fn" name="save-fn"  id="save-fn-map">
                     Save Map
                 </button>
-                <button type="button" class="btn-default btn delete-fn" name="delete-fn"  id="wipe-map">
-                    WIPE DATA
-                </button>
-                <!--button type="button" class="btn-default btn delete-item" name="delete-fn"  id="delete-map">
-                    DELETE
-                </button-->
             </div>
           
           </div>

@@ -65,131 +65,44 @@ let outputStream;
 
 let pressed = false;
 
+// Returns given function current value (0-disable/1-enable)
 function getFunCurrentVal(fun){
     return window.functions[fun];
 }
+// Set given function current value with given value (0/1)
 function setFunCurrentVal(fun, val){
     window.functions[fun]=val;
 }
+// Set given CV value
 function setCV(val){
     window.cv = val;
     console.log("SET LOCO ID :=> "+val);
 }
+// Get stored CV value
 function getCV(){
     return window.cv
 }
+
+// Set Speed value
 function setSpeed(sp){
     window.speed=sp;
 }
+
+// Get Speed value
 function getSpeed(){
     return window.speed;
 }
+
+// Set Direction 
 function setDirection(dir){
     window.direction=dir;
 }
+
+// Get Direction value
 function getDirection(dir){
     return window.direction;
 }
 
-function loadmaps(){
-    $("#select-map").empty();
-    $("#select-map").append($("<option />").val("default").text("Default"));
-    $.each(getWebData(), function() {
-      $("#select-map").append($("<option />").val(this.mname).text(this.mname));
-    });
-}
-
-function loadButtons(data){
-    $("#fn-wrapper").empty();
-    $.each(data.fnData, function(key, value){
-        isPressed = value[0] != 0 ? true : false;
-        btnType = value[1] != 0 ? "press" : "toggle";
-        if(value[3]==1){
-            $("#fn-wrapper").append(
-            "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
-            btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
-            value[2]+"</button>"
-            +"</div>");
-        }
-    });
-    // Set height of throttle container according to functions panel
-    $(".throttle-container").height($(".functionKeys").first().height());
-}
-
-function showBtnConfig(data){
-    
-    $("#fnModal").show();
-    $('#fnModal').css({"top":"7%", "left": "18%"});
-    $('#fnModal').draggable();
-    $("#fnModal .fn-modal-content").empty();
-    $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-2 header-col func-title">Map Name</div> <div class="column-5 header-col"><input type="text" class="fn-input" id="map-name" value="'+data.mname+'"/></div> <div class="column-3 header-col"></div></div>');
-    $("#fnModal .fn-modal-content").append('<div class="row header-row"><div class="column-1 header-col">Function</div> <div class="column-4 header-col">Label</div> <div class="column-3 header-col">Button Type</div><div class="column-2 header-col">Visibility</div></div>');
-    $.each(data.fnData, function(key, value){
-        isPressed = value[0] != 0 ? true : false;
-        btnType = value[1] != 0 ? "press" : "toggle";
-        btnpress = value[1] == 1 ? "checked" : "";
-        btnToggle = value[1] == 0 ? "checked" : "";
-        fvisible = value[3] == 1 ? "checked" : "";
-        $("#fnModal .fn-modal-content").append('<div class="row edit-row" id="'+key+'">'+ 
-        '<div class="column-1 func-title">'+key +'</div>'+
-        '<div class="column-4"> <input class="fn-input" name="'+key+'" id="'+key+'" value="'+value[2]+'"/>'+
-        '<span class="focus-border"><i></i></span>'+
-        '</div>'+
-        '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
-            '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press" '+btnpress+'/>'+
-            '<label for="'+key+'press">Press</label>  &nbsp;'+
-            '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" '+btnToggle+'/>'+
-            '<label for="'+key+'toggle">Toggle</label>'+ 
-        '</div>'+
-        '<div class="fn-chkbox column-2" name="'+key+'Visible" id="'+key+'Type">'+
-            '<input type="checkbox" id="'+key+'Visible" name="'+key+'Visible" '+fvisible+'/>'+
-            '<label for="'+key+'Visible">Show</label>  &nbsp;'+
-        '</div>'+
-        '</div>');
-    });
-}
-
-function addNewMap(){
-    customFnData = {};
-    $(".edit-row").each(function(val){
-        key = $(this).find(".func-title").text();
-        btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
-        fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
-        arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
-        customFnData[key] = arr;             
-    });
-    mapName = $("#map-name").val();
-    console.log(mapName);
-    if(mapName){
-        setLocoData({ mname: mapName , fnData: customFnData});
-        $("#fnModal").hide();
-    }else{
-        alert("Name is missing!!");
-    }
-}
-
-function editMap(){
-    if(!ifExists()){
-        customFnData = {};
-        $(".edit-row").each(function(val){
-            key = $(this).find(".func-title").text();
-            btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
-            fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
-            arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
-            customFnData[key] = arr;             
-        });
-        mapName = $("#map-name").val();
-        console.log(mapName);
-        if(mapName){
-            setLocoData({ mname: mapName , fnData: customFnData});
-            $("#fnModal").hide();
-        }else{
-            alert("Name is missing!!");
-        }
-    }else{
-        alert("Map with the Name already exists!! Please change the Map name.."); 
-    }
-}
 
 
 // This function will generate commands for each type of function
@@ -281,59 +194,21 @@ function generateFnCommand(clickedBtn){
 $(document).ready(function(){
 
     var mode = 0;
-
+    // Load function map and buttons
     loadmaps();
     loadButtons({ mname: "default" , fnData: fnMasterData});
 
-    $("#new-map").on('click', function(){
-        $("#save-fn-map").attr("mode","new");
-        $(".fn-heading").html("New Mapping");
-        showBtnConfig({ mname: "" , fnData: fnMasterData});
-    });
-
-    $("#select-map").change(function () {
-        selectedval = $(this).val();    
-        if(selectedval != "default"){
-            data  = getStoredFuncData(selectedval);
-            loadButtons(data);
-        }else{
-            loadButtons({ mname: "default" , fnData: fnMasterData});
-        }
-    });
-
-  $("#edit-map").on('click', function(){
-        $("#save-fn-map").attr("mode","edit");
-        $(".fn-heading").html("Edit Mapping");
-        selectedval = $("#select-map").val();      
-        if(selectedval != "default"){
-        data  = getStoredFuncData(selectedval); 
-        showBtnConfig(data);
-    }
-    //showBtnConfig();
-  });
-
-  $("#close-model").on('click', function(){
-    $("#fnModal").hide();
-  });
-
-  $("#save-fn-map").on('click', function(){
-    mode = $(this).attr("mode");
-    // alert(mode); // debug line
-    if(mode=="new"){
-        addNewMap();  
-    }else{
-        editMap();
-    }  
-  });
-
+    // Connect command station
     $("#button-connect").on('click',function(){
         toggleServer($(this));
     });
 
+    // Disconnect command station
     $("#button-disconnect").on('click',function(){
         disconnectServer();
     });
 
+     // Aquire loco of given CV
     $("#button-getloco").on('click',function(){
         acButton = $(this);
         isAcquired = $(this).data("acquired");
@@ -361,6 +236,7 @@ $(document).ready(function(){
         }
     });   
 
+    // Switch ON/OFF power of the Command station
     $("#power-switch").on('click',function(){
         pb = $(this).is(':checked');
         
@@ -373,6 +249,7 @@ $(document).ready(function(){
         }
     });
 
+    // Speed (round) Slider allows user to change the speed of the locomotive
     Tht = $("#throttle").roundSlider({
         width: 20,
         radius: 116,
@@ -411,7 +288,7 @@ $(document).ready(function(){
         }
     });
 
-
+    // Allows user to change the direction of the loco and STOP.
     $(".dir-btn").on('click', function(){
         current = $(this);
         dir = current.attr("aria-label");
@@ -451,6 +328,7 @@ $(document).ready(function(){
 
     });
     
+    // Hide/Show the Loco, Connect server fields (on top)
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
@@ -462,6 +340,7 @@ $(document).ready(function(){
        
     });
 
+    // PLUS button. Increases speed on Hold / Tap 
     var tId = 0;
     $("#button-right").on('mousedown', function() { 
         event.stopImmediatePropagation();
@@ -488,7 +367,7 @@ $(document).ready(function(){
         
     });
 
-    
+    // MINUS button. Decreases speed on Hold / Tap 
     var tId = 0;
     $("#button-left").on('mousedown', function() { 
         event.stopImmediatePropagation();
@@ -514,66 +393,95 @@ $(document).ready(function(){
         }
     });
     
-/* OLD SIMPLE FUNCTION FOR HISTORY - will Remove after Testing done
-// Code Starts for Function buttons
-$(".fn-btn").on('click', function() {
-    clickedBtn = $(this);
-    generateFnCommand(clickedBtn);
-});  */
-$(document).on('click', '.fn-btn',function() {  
-    console.log("ON CLICK");  
-});
 
-var timer= 0;
-$(document).on('mousedown', '.fn-btn', function() {  
-    console.log($(this).val);  
-    clickedBtn = $(this);
-    btnType = clickedBtn.data('type');
-    if(btnType == "press"){
-        timer = setInterval(function(){
-            // MOMENTARY HOLD ON
-            clickedBtn.attr("aria-pressed", 'true');
-            generateFnCommand(clickedBtn);
-            console.log("PRESSED HOLD ==> "+clickedBtn.attr('name'));
-        }, 100);
-    }
-}).on('mouseup mouserelease', '.fn-btn', function() {
-    clearInterval(timer);
-    clickedBtn = $(this);
-    btnType = clickedBtn.data('type');
-    btnState = clickedBtn.attr("aria-pressed")
-    if(btnType == "press"){     
-        // MOMENTARY HOLD OFF
-        clickedBtn.attr("aria-pressed", 'false');
-        generateFnCommand(clickedBtn);
-        console.log("RELEASED HOLD  ==> "+clickedBtn.attr('name'));
-        
-    }else{
-        if(btnState=='false'){
-            // TOGGLE ON
-            clickedBtn.attr("aria-pressed", 'true');
-            generateFnCommand(clickedBtn);
-            console.log("TOGGLE ON ==> "+clickedBtn.attr('name'));
-        }else{
-            // TOGGLE OFF
+    // Functions buttons
+    // Send Instructions to generate command depends the type of Button (press/toggle)
+    var timer= 0;
+    $(document).on('mousedown', '.fn-btn', function() {  
+        console.log($(this).val);  
+        clickedBtn = $(this);
+        btnType = clickedBtn.data('type');
+        if(btnType == "press"){
+            timer = setInterval(function(){
+                // MOMENTARY HOLD ON
+                clickedBtn.attr("aria-pressed", 'true');
+                generateFnCommand(clickedBtn);
+                console.log("PRESSED HOLD ==> "+clickedBtn.attr('name'));
+            }, 100);
+        }
+    }).on('mouseup mouserelease', '.fn-btn', function() {
+        clearInterval(timer);
+        clickedBtn = $(this);
+        btnType = clickedBtn.data('type');
+        btnState = clickedBtn.attr("aria-pressed")
+        if(btnType == "press"){     
+            // MOMENTARY HOLD OFF
             clickedBtn.attr("aria-pressed", 'false');
             generateFnCommand(clickedBtn);
-            console.log("TOGGLE OFF ==> "+clickedBtn.attr('name'));
+            console.log("RELEASED HOLD  ==> "+clickedBtn.attr('name'));      
+        }else{
+            if(btnState=='false'){
+                // TOGGLE ON
+                clickedBtn.attr("aria-pressed", 'true');
+                generateFnCommand(clickedBtn);
+                console.log("TOGGLE ON ==> "+clickedBtn.attr('name'));
+            }else{
+                // TOGGLE OFF
+                clickedBtn.attr("aria-pressed", 'false');
+                generateFnCommand(clickedBtn);
+                console.log("TOGGLE OFF ==> "+clickedBtn.attr('name'));
+            }
         }
-    }
+    });
+
+    // Hide/Show the Debug console
+    $("#console-toggle").on('click',function(){
+        pb = $(this).is(':checked');
+        
+        if (pb == true){
+            $("#debug-console").show();
+        } else {
+            $("#debug-console").hide();
+        }
+    });
+
+    // Send command written in console
+    $("#button-sendCmd").on('click', function(){
+        cmd = $("#cmd-direct").val();
+        writeToStream(cmd);
+    });
+
+    // Function to toggle fullScreen viceversa
+    $("#fs-toggle").on('click', function(){ 
+        st = $(this).attr('state');
+        var elem = document.documentElement;
+        if(st == 'ws'){
+            $(this).attr('state','fs');     
+
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        }else{
+            $(this).attr('state','ws');  
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    });
+
+
 });
 
 
-$("#button-sendCmd").on('click', function(){
-    cmd = $("#cmd-direct").val();
-    writeToStream(cmd);
-});
-
-
-
-
-});
-
-$(window).on('load', function(){
-    
-});
