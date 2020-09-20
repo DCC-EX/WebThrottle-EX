@@ -3,10 +3,13 @@ $(document).ready(function(){
 });
 
 async function connectServer() {
+    // Gets values of the connection method selector
     selectMethod = document.getElementById('select-method')
     mode = selectMethod.value;
+    // Disables selector so it can't be changed whilst connected
     selectMethod.disabled = true;
     console.log("Set mode: "+mode)
+    // Checks which method was selected
     if (mode == "serial") {
         try{
             // - Request a port and open an asynchronous connection, 
@@ -44,7 +47,9 @@ async function connectServer() {
             return false;
         }
     } else{
+        // If using the emulator
         emulator = true;
+        // Displays dummy hardware message
         displayLog("DCC++ BASE STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         return true;
     }
@@ -66,6 +71,7 @@ async function readLoop() {
     }
 }
 function writeToStream(...lines) {
+    // Stops data being written to nonexistent port if using emulator
     if (port) {
         const writer = outputStream.getWriter();
         lines.forEach((line) => {
@@ -145,8 +151,10 @@ async function disconnectServer() {
         port = null;
         displayLog('close port');
     } else {
+        // Disables emulator
         emulator = undefined;
     }
+    // Allows a new method to be chosen
     selectMethod.disabled = false;
 }
 
@@ -162,6 +170,7 @@ async function toggleServer(btn) {
 
     // Otherwise, call the connect() routine when the user clicks the connect button
     success = await connectServer();
+    // Checks if the port was opened successfully
     if (success) {
         btn.attr('aria-state','Connected');
         btn.html("Disconnect DCC++ EX");
