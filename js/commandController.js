@@ -8,38 +8,45 @@ async function connectServer() {
     selectMethod.disabled = true;
     console.log("Set mode: "+mode)
     if (mode == "serial") {
-        // - Request a port and open an asynchronous connection, 
-        //   which prevents the UI from blocking when waiting for
-        //   input, and allows serial to be received by the web page
-        //   whenever it arrives.
-        
-        port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
-        // - Wait for the port to open.
-        await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
+        try{
+            // - Request a port and open an asynchronous connection, 
+            //   which prevents the UI from blocking when waiting for
+            //   input, and allows serial to be received by the web page
+            //   whenever it arrives.
+            
+            port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
+            // - Wait for the port to open.
+            await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
 
-        // create a text encoder stream and pipe the stream to port.writeable
-        const encoder = new TextEncoderStream();
-        outputDone = encoder.readable.pipeTo(port.writable);
-        outputStream = encoder.writable;
+            // create a text encoder stream and pipe the stream to port.writeable
+            const encoder = new TextEncoderStream();
+            outputDone = encoder.readable.pipeTo(port.writable);
+            outputStream = encoder.writable;
 
-        // To put the system into a known state and stop it from echoing back the characters that we send it, 
-        // we need to send a CTRL-C and turn off the echo
-        writeToStream('\x03', 'echo(false);');
+            // To put the system into a known state and stop it from echoing back the characters that we send it, 
+            // we need to send a CTRL-C and turn off the echo
+            writeToStream('\x03', 'echo(false);');
 
-        // Create an input stream and a reader to read the data. port.readable gets the readable stream
-        // DCC++ commands are text, so we will pipe it through a text decoder. 
-        let decoder = new TextDecoderStream();
-        inputDone = port.readable.pipeTo(decoder.writable);
-        inputStream = decoder.readable
-        //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
-        .pipeThrough(new TransformStream(new JSONTransformer()));
+            // Create an input stream and a reader to read the data. port.readable gets the readable stream
+            // DCC++ commands are text, so we will pipe it through a text decoder. 
+            let decoder = new TextDecoderStream();
+            inputDone = port.readable.pipeTo(decoder.writable);
+            inputStream = decoder.readable
+            //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
+            .pipeThrough(new TransformStream(new JSONTransformer()));
 
-        // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
-        reader = inputStream.getReader();
-        readLoop();
+            // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
+            reader = inputStream.getReader();
+            readLoop();
+            return true;
+        } catch (err) {
+            console.log("User didn't select a port to connect to")
+            return false;
+        }
     } else{
         emulator = true;
         displayLog("DCC++ BASE STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        return true;
     }
 }
 async function readLoop() {
@@ -154,9 +161,13 @@ async function toggleServer(btn) {
     }
 
     // Otherwise, call the connect() routine when the user clicks the connect button
-    await connectServer();
-    btn.attr('aria-state','Connected');
-    btn.html("Disconnect DCC++ EX");
+    success = await connectServer();
+    if (success) {
+        btn.attr('aria-state','Connected');
+        btn.html("Disconnect DCC++ EX");
+    } else {
+        selectMethod.disabled = false;
+    }
 }
 
 // Display log of events
