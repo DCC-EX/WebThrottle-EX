@@ -15,7 +15,6 @@ $(document).ready(function(){
 //   input, and allows serial to be received by the web page
 //   whenever it arrives.
 async function connectServer() {
-<<<<<<< HEAD
 
     port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
     // - Wait for the port to open.
@@ -42,7 +41,6 @@ async function connectServer() {
     reader = inputStream.getReader();
     readLoop();
 
-=======
     // Gets values of the connection method selector
     selectMethod = document.getElementById('select-method')
     mode = selectMethod.value;
@@ -93,7 +91,6 @@ async function connectServer() {
         displayLog("DCC++ BASE STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         return true;
     }
->>>>>>> 313ce64843b94b762f30a9ef54e7a6d153ff2ef0
 }
 
 // While there is still data in the serial buffer us an asynchronous read loop
