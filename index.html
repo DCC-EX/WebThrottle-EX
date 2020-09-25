@@ -1,0 +1,219 @@
+<html HTML>
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+	
+	Authors: Mani Kumar
+	         Fred Decker
+    
+	This file is part of the DCC++ EX Project for model railroading and more.
+	For more information, visit use at dcc-ex.com
+-->
+    <head>
+        <link href="css/roundslider.min.css" rel="stylesheet" />
+        <link href="css/throttle.css"  rel="stylesheet">
+        <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
+        <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                                 
+        <script  type="text/javascript" src="js/roundslider.min.js"></script>
+        <script  type="text/javascript" src="js/fnMaster.js"></script> 
+        <script  type="text/javascript" src="js/commandController.js"></script>
+        <script  type="text/javascript" src="js/storageController.js"></script> 
+        <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+        
+<!--
+    NOTE: You can replace the above links with these if you like if you will always run when
+          connected to the internet. Using the links above, they must be installed on your machine.
+          This program will search for them online and import them if you use this method instead.
+        <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>  
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>                                 
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+        <script type="text/javascript" src="js/exwebthrottle.js"></script>  		  
+-->
+
+        <title>DCC++ EX Web Throttle</title>
+        <meta name="description" content="Chromium browser based web throttle for a DCC++ EX Command Station to control model trains">
+    </head>
+
+    <body>
+        <div id="rendered-form">
+            <div class="rendered-form">
+                <div Class="details-panel">
+                    <div class="row">
+                        <div class="formbuilder-text form-group field-ex-email column-3">
+                            <label for="ex-locoid" class="formbuilder-text-label">
+                                Locomotive ID <span class="formbuilder-required">*</span>
+                            </label>
+                            <input type="number" placeholder="CV-01" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
+                        </div>
+                        
+                        <div class="formbuilder-button form-group column-2">
+                            <button type="button" class="btn-default btn button-acquire" name="getloco" access="false" data-acquired="false"  id="button-getloco">
+                                Acquire
+                            </button>
+                        </div>
+                        <div class="formbuilder-button form-group field-button-submit column-1"></div>
+                        
+                        <!--<div class="server-button form-group field-button-submit column-4"> -->
+                        <div class="server-button column-4">
+                            <select id="select-method" class="select-map" name="selectMethod" title="Change the connection method">
+                                <option value="serial">Serial</option>
+                                <option value="emulator">Emulator</option>
+                            </select>
+                            <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
+                                Connect DCC++ EX
+                            </button>
+                            <button class="btn-grey" id="fs-toggle" state="ws">&#10530;</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                </div>              
+
+                <div class="row">
+                    <div style="position: relative;">
+                         <div class="row">
+                            <div class="column-2"></div>
+                            <div class="column-6" id="loco-info" style="text-align: center;">
+                                Welcome to DCC++ EX Web Throttle v1.2
+                            </div>  
+                            <div class="column-2"></div>                             
+                         </div>          
+                        <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
+                            Hide <span class="arrow up"></span>
+                        </button> 
+                    </div>
+                    <div class="column-5 mobile-100 throttle-container">
+                        <div class="row mobile-100">
+                            <div class=" column-1">
+                                <div class="flexx">
+                                <button type="button" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
+                                    <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
+                                </button>
+                                </div> 
+                            </div>                           
+                            <div class=" column-6">
+                                <div class="Throttlewrap">
+                                    <div id="throttle">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" column-1">
+                                <div class="flexx">
+                                <button type="button" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
+                                    <span class="right">&nbsp;+&nbsp;</span>
+                                </button> 
+                                </div>
+                            </div>
+                            
+                            <div class=" column-2">
+                                <div class="dir-toggle">
+                                    <button class="dir-btn forward selected" id="dir-f" aria-label="forward" > <span class="arrow-up"></span></button>
+                                    <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button>
+                                    <button class="dir-btn backward" id="dir-b" aria-label="backward"> <span class="arrow-down"></span></button>        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="functionKeys column-5 mobile-100">
+                        <div class="row mobile-100">
+                            <div class="power-slider column-4 formbuilder-button ">
+                                <label class="switch">
+                                    <input type="checkbox" id="power-switch">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="pow-status">
+                                    Power <span id="power-status">Off</span>
+                                </span>
+                            </div> 
+                            <div class="note-msg column-6">
+                                <select id="select-map" class="btn select-map" name="selectMap" title="Load a Saved Map">
+                                </select>    
+                                
+                                <div class="dropdown">
+                                    <button class="dropbtn">Options <span style="font-size:8px;vertical-align: middle;">&#9660;</span></button>
+                                    <div class="dropdown-content">
+                                      <a href="#" id="new-map">+ &nbsp;New map</a>
+                                      <a href="#" id="edit-map"> &#9998; &nbsp;Edit map</a>
+                                      <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
+                                      <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
+                                      <input id="map-upload" type="file" hidden/>
+                                      <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
+                                      <div class="hr"></div>
+                                      <a href="#" id="backup-map"> &#10514;&nbsp; Export App data</a>
+                                      <a href="#" id="restore-app"> &#10515;&nbsp; Import App data</a>
+                                      <input id="appdata-upload" type="file" hidden/>
+                                      <div class="hr"></div>
+                                      <a href="#" id="wipe-map"> &#10539;&nbsp; Wipe App data</a>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row" id="fn-wrapper">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="console-slider column-4">
+                        <label class="debug switch">
+                            <input type="checkbox" id="console-toggle" checked>
+                            <span class="slider round debug-slider"></span>
+                        </label>
+                        <span class="debug-status">
+                            Debug Console
+                        </span>
+                    </div>        
+                </div>
+                <div id="debug-console">
+                    <hr>
+                    <div class="row mobile-margin-top20">
+                        <div class="formbuilder-text field-ex-email column-7">
+                            <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
+                        </div>
+                
+                        <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
+                            <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
+                                Send
+                            </button>
+                        </div>
+                    </div>          
+                    <div class="log-msg" id="log-box">
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div id="fnModal" class="fn-modal">
+
+            <!-- Modal content -->
+            
+            <div class="fn-modal-header row">
+             <h4 class="fn-heading" > New Map </h4>    
+             <span class="close" id="close-model">&times;</span>
+            </div>
+            <div class="fn-modal-content">
+                Content
+            </div>
+            <div class="fn-modal-footer row">
+                <button type="button" mode="new" class="btn-default btn save-fn" name="save-fn"  id="save-fn-map">
+                    Save Map
+                </button>
+            </div>
+          
+          </div>
+    </body>
+
+</html>
+
+
+
