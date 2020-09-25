@@ -1,8 +1,46 @@
+/*  This is part of the DCC++ EX Project for model railroading and more.
+    For more information, see us at dcc-ex.com.
+    
+    commandController.js
+    
+    Open a serial port and create a stream to read and write data
+    While there is data, we read the results in loop function
+*/
 $(document).ready(function(){
     console.log("Command Controller loaded");
 });
 
+// - Request a port and open an asynchronous connection, 
+//   which prevents the UI from blocking when waiting for
+//   input, and allows serial to be received by the web page
+//   whenever it arrives.
 async function connectServer() {
+
+    port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
+    // - Wait for the port to open.
+    await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
+
+    // create a text encoder output stream and pipe the stream to port.writeable
+    const encoder = new TextEncoderStream();
+    outputDone = encoder.readable.pipeTo(port.writable);
+    outputStream = encoder.writable;
+
+    // To put the system into a known state and stop it from echoing back the characters that we send it, 
+    // we need to send a CTRL-C and turn off the echo
+    writeToStream('\x03', 'echo(false);');
+
+    // Create an input stream and a reader to read the data. port.readable gets the readable stream
+    // DCC++ commands are text, so we will pipe it through a text decoder. 
+    let decoder = new TextDecoderStream();
+    inputDone = port.readable.pipeTo(decoder.writable);
+    inputStream = decoder.readable
+    //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
+    .pipeThrough(new TransformStream(new JSONTransformer()));
+
+    // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
+    reader = inputStream.getReader();
+    readLoop();
+
     // Gets values of the connection method selector
     selectMethod = document.getElementById('select-method')
     mode = selectMethod.value;
@@ -54,6 +92,10 @@ async function connectServer() {
         return true;
     }
 }
+
+// While there is still data in the serial buffer us an asynchronous read loop
+// to get the data and place it in the "value" variable. When "done" is true
+// all the data has been read or the port is closed
 async function readLoop() {
     while (true) {
         const { value, done } = await reader.read();
@@ -70,6 +112,7 @@ async function readLoop() {
         }
     }
 }
+
 function writeToStream(...lines) {
     // Stops data being written to nonexistent port if using emulator
     if (port) {
@@ -86,6 +129,10 @@ function writeToStream(...lines) {
     }
 
 }
+
+// Transformer for the Web Serial API. Data comes in as a stream so we
+// need a container to buffer what is coming from the serial port and
+// parse the data into separate lines by looking for the breaks
 class LineBreakTransformer {
         constructor() {
             // A container for holding stream data until it sees a new line.
@@ -107,6 +154,9 @@ class LineBreakTransformer {
 
         }
 }
+
+// Optional transformer for use with the web serial API
+// to parse a JSON file into its component commands
 class JSONTransformer {
     transform(chunk, controller) {
         // Attempt to parse JSON content
