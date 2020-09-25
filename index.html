@@ -21,7 +21,7 @@
 -->
     <head>
         <link href="css/roundslider.min.css" rel="stylesheet" />
-		<link href="css/throttle.css"  rel="stylesheet">
+        <link href="css/throttle.css"  rel="stylesheet">
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                                 
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
@@ -29,6 +29,7 @@
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+        
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
           connected to the internet. Using the links above, they must be installed on your machine.
@@ -62,7 +63,13 @@
                             </button>
                         </div>
                         <div class="formbuilder-button form-group field-button-submit column-1"></div>
-                        <div class="server-button form-group field-button-submit column-4">
+                        
+                        <!--<div class="server-button form-group field-button-submit column-4"> -->
+                        <div class="server-button column-4">
+                            <select id="select-method" class="select-map" name="selectMethod" title="Change the connection method">
+                                <option value="serial">Serial</option>
+                                <option value="emulator">Emulator</option>
+                            </select>
                             <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
                                 Connect DCC++ EX
                             </button>
@@ -76,33 +83,48 @@
                 <div class="row">
                     <div style="position: relative;">
                          <div class="row">
-                            <div class="column-2"></div>
-                            <div class="column-6" id="loco-info" style="text-align: center;">
+                            <div class="console-slider column-3">
+                                <label class="debug switch">
+                                    <input type="checkbox" id="throttle-type">
+                                    <span class="slider round debug-slider"></span>
+                                </label>
+                                <span class="debug-status">
+                                    Use Vertical Slider
+                                </span>
+                            </div>    
+                            <div class="column-4" id="loco-info" style="text-align: center;">
                                 Welcome to DCC++ EX Web Throttle v1.2
                             </div>  
-                            <div class="column-2"></div>                             
+                            <div class="column-3"></div>                             
                          </div>          
                         <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
                             Hide <span class="arrow up"></span>
                         </button> 
                     </div>
                     <div class="column-5 mobile-100 throttle-container">
-                        <div class="row mobile-100">
-                            <div class=" column-1">
-                                <div class="flexx">
+                        <div class="row mobile-100  width100 flexx">
+                            <div class="column-7 flexx">
+                                <div class="flexx btns">
                                 <button type="button" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
                                     <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
                                 </button>
                                 </div> 
-                            </div>                           
-                            <div class=" column-6">
+                            <!-- </div>                            -->
+                            <!-- <div class=" column-6"> -->
                                 <div class="Throttlewrap">
+                                    <div id="vertical-throttle" class="vertical-throttle">                              
+                                        <div id="v-throttle">                                           
+                                        </div>
+                                        <div id="speed-indicator" class="progress-numb">
+                                            0
+                                        </div>
+                                    </div>
                                     <div id="throttle">
                                     </div>
                                 </div>
-                            </div>
-                            <div class=" column-1">
-                                <div class="flexx">
+                            <!-- </div> -->
+                            <!-- <div class=" column-1"> -->
+                                <div class="flexx btns">
                                 <button type="button" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
                                     <span class="right">&nbsp;+&nbsp;</span>
                                 </button> 

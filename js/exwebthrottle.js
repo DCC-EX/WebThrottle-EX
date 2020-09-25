@@ -57,6 +57,7 @@ window.functions = {
 };
 
 let port;
+let emulator;
 let reader;
 let inputDone;
 let outputDone;
@@ -198,6 +199,32 @@ $(document).ready(function(){
     loadmaps();
     loadButtons({ mname: "default" , fnData: fnMasterData});
 
+    $("#v-throttle").slider({
+      orientation: "vertical",
+      min: 0,
+      max: 126,
+      disabled: true,
+      range: "max",
+      slide: function (event, ui) {
+          $("#speed-indicator").html(ui.value);
+            setSpeed(ui.value);
+            writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            $("#throttle").roundSlider("setValue", ui.value);
+      },
+    });
+    $("#vertical-throttle").hide();
+    $("#throttle-type").on("click", function () {
+        pb = $(this).is(":checked");   
+        if (pb == true){
+            $("#vertical-throttle").show();
+            $("#throttle").hide();
+        } else {
+            $("#vertical-throttle").hide();
+            $("#throttle").show();
+        }
+    });
+
     // Connect command station
     $("#button-connect").on('click',function(){
         toggleServer($(this));
@@ -221,6 +248,7 @@ $(document).ready(function(){
                 acButton.data("acquired", true);
                 acButton.html("Release");
                 $("#throttle").roundSlider("enable");
+                $("#v-throttle").slider("enable");
 
             }else{
 
@@ -232,6 +260,8 @@ $(document).ready(function(){
                 acButton.data("acquired", false);
                 acButton.html("Acquire");
                 $("#throttle").roundSlider("disable");
+                $("#v-throttle").slider("disable");
+                $("#v-throttle").slider("option", "value", 0);
             }
         }
     });   
@@ -259,9 +289,10 @@ $(document).ready(function(){
         startAngle: 315,
         lineCap: "round",
         sliderType: "min-range",
-        showTooltip: false,
+        showTooltip: true,
+        editableTooltip: false,
         handleSize: "+18",
-        max: "128",
+        max: "126",
         disabled: true,
         create: function(){
             //console.log("This will trigger just before creation of throttle slider UI");
@@ -278,6 +309,8 @@ $(document).ready(function(){
         update: function(slider){  // can change this to "drage" and write the stream in "change:" instead
             setSpeed(slider.value);
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            $("#v-throttle").slider("option", "value", slider.value);
+            $("#speed-indicator").html(slider.value);
             console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
            // console.log("This event is the combination of 'drag' and 'change' events.");
         },
@@ -322,6 +355,9 @@ $(document).ready(function(){
                 writeToStream("t 01 "+getCV()+" -1 "+dir);
                 $("#throttle").roundSlider("disable");
                 $("#throttle").roundSlider("setValue", 0);
+                $("#v-throttle").slider("option", "value", 0);
+                $("#speed-indicator").html(0);
+                $("#v-throttle").slider("disable");
                 break;
             }
         }
@@ -349,6 +385,8 @@ $(document).ready(function(){
             if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp+speedStep);                       
                 $("#throttle").roundSlider("setValue", getSpeed());
+                 $("#v-throttle").slider("option", "value", getSpeed());
+                 $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
                 sp=0;
             }
@@ -361,6 +399,8 @@ $(document).ready(function(){
         if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp+speedStep);
             $("#throttle").roundSlider("setValue", getSpeed());
+            $("#v-throttle").slider("option", "value", getSpeed());
+            $("#speed-indicator").html(getSpeed());
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
             sp=0;
         }
@@ -376,6 +416,8 @@ $(document).ready(function(){
             if((sp >= 0) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp-speedStep);
                 $("#throttle").roundSlider("setValue", getSpeed());
+                $("#v-throttle").slider("option", "value", getSpeed());
+                $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
                 sp=0;
             }
@@ -388,6 +430,8 @@ $(document).ready(function(){
         if((sp >= 0)&& (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp-speedStep);
             $("#throttle").roundSlider("setValue", getSpeed());
+            $("#v-throttle").slider("option", "value", getSpeed());
+            $("#speed-indicator").html(getSpeed());
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
             sp=0;
         }
