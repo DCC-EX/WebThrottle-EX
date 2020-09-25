@@ -245,10 +245,11 @@ label.formbuilder-file-label {
     width: 112px;
     text-align: center;
 }
-.throttle-container{
+.rendered-form div.throttle-container{
     min-height: 360px;
     display: flex;
     align-items: center;
+    justify-content: right;
 }
 .throttlewrap{
     display: flex;
@@ -340,7 +341,14 @@ label.formbuilder-file-label {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.flexx.btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 340px;
+    max-width: 48px;
+    margin: 0 16px;
 }
 .log-msg{
     height: 80px;
