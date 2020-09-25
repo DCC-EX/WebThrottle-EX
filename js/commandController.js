@@ -3,36 +3,56 @@ $(document).ready(function(){
 });
 
 async function connectServer() {
-    // - Request a port and open an asynchronous connection, 
-    //   which prevents the UI from blocking when waiting for
-    //   input, and allows serial to be received by the web page
-    //   whenever it arrives.
-    
-    port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
-    // - Wait for the port to open.
-    await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
+    // Gets values of the connection method selector
+    selectMethod = document.getElementById('select-method')
+    mode = selectMethod.value;
+    // Disables selector so it can't be changed whilst connected
+    selectMethod.disabled = true;
+    console.log("Set mode: "+mode)
+    // Checks which method was selected
+    if (mode == "serial") {
+        try{
+            // - Request a port and open an asynchronous connection, 
+            //   which prevents the UI from blocking when waiting for
+            //   input, and allows serial to be received by the web page
+            //   whenever it arrives.
+            
+            port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
+            // - Wait for the port to open.
+            await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
 
-    // create a text encoder stream and pipe the stream to port.writeable
-    const encoder = new TextEncoderStream();
-    outputDone = encoder.readable.pipeTo(port.writable);
-    outputStream = encoder.writable;
+            // create a text encoder stream and pipe the stream to port.writeable
+            const encoder = new TextEncoderStream();
+            outputDone = encoder.readable.pipeTo(port.writable);
+            outputStream = encoder.writable;
 
-    // To put the system into a known state and stop it from echoing back the characters that we send it, 
-    // we need to send a CTRL-C and turn off the echo
-    writeToStream('\x03', 'echo(false);');
+            // To put the system into a known state and stop it from echoing back the characters that we send it, 
+            // we need to send a CTRL-C and turn off the echo
+            writeToStream('\x03', 'echo(false);');
 
-    // Create an input stream and a reader to read the data. port.readable gets the readable stream
-    // DCC++ commands are text, so we will pipe it through a text decoder. 
-    let decoder = new TextDecoderStream();
-    inputDone = port.readable.pipeTo(decoder.writable);
-    inputStream = decoder.readable
-    //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
-    .pipeThrough(new TransformStream(new JSONTransformer()));
+            // Create an input stream and a reader to read the data. port.readable gets the readable stream
+            // DCC++ commands are text, so we will pipe it through a text decoder. 
+            let decoder = new TextDecoderStream();
+            inputDone = port.readable.pipeTo(decoder.writable);
+            inputStream = decoder.readable
+            //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
+            .pipeThrough(new TransformStream(new JSONTransformer()));
 
-    // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
-    reader = inputStream.getReader();
-    readLoop();
-
+            // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
+            reader = inputStream.getReader();
+            readLoop();
+            return true;
+        } catch (err) {
+            console.log("User didn't select a port to connect to")
+            return false;
+        }
+    } else{
+        // If using the emulator
+        emulator = true;
+        // Displays dummy hardware message
+        displayLog("DCC++ BASE STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        return true;
+    }
 }
 async function readLoop() {
     while (true) {
@@ -51,12 +71,19 @@ async function readLoop() {
     }
 }
 function writeToStream(...lines) {
-    const writer = outputStream.getWriter();
-    lines.forEach((line) => {
-        writer.write('<' + line + '>' + '\n');
-        displayLog('[SEND]'+line.toString());
-    });
-    writer.releaseLock();
+    // Stops data being written to nonexistent port if using emulator
+    if (port) {
+        const writer = outputStream.getWriter();
+        lines.forEach((line) => {
+            writer.write('<' + line + '>' + '\n');
+            displayLog('[SEND]'+line.toString());
+        });
+        writer.releaseLock();
+    } else {
+        lines.forEach((line) => {
+            displayLog('[SEND]'+line.toString());
+        });
+    }
 
 }
 class LineBreakTransformer {
@@ -100,35 +127,41 @@ async function disconnectServer() {
 	  writeToStream('0');
 	  $("#power-switch").prop('checked', false)
 	  $("#power-status").html('Off');
-	}
+    }
+    if (port) {
     // Close the input stream (reader).
-    if (reader) {
-        await reader.cancel();  // .cancel is asynchronous so must use await to wave for it to finish
-        await inputDone.catch(() => {});
-        reader = null;
-        inputDone = null;
-		displayLog('close reader');
-    }
+        if (reader) {
+            await reader.cancel();  // .cancel is asynchronous so must use await to wave for it to finish
+            await inputDone.catch(() => {});
+            reader = null;
+            inputDone = null;
+            displayLog('close reader');
+        }
 
-    // Close the output stream.
-    if (outputStream) {
-        await outputStream.getWriter().close();
-        await outputDone; // have to wait for  the azync calls to finish and outputDone to close
-        outputStream = null;
-        outputDone = null;
-		displayLog('close outputStream');
+        // Close the output stream.
+        if (outputStream) {
+            await outputStream.getWriter().close();
+            await outputDone; // have to wait for  the azync calls to finish and outputDone to close
+            outputStream = null;
+            outputDone = null;
+            displayLog('close outputStream');
+        }
+        // Close the serial port.
+        await port.close();
+        port = null;
+        displayLog('close port');
+    } else {
+        // Disables emulator
+        emulator = undefined;
     }
-    // Close the serial port.
-    await port.close();
-    port = null;
-	displayLog('close port');
-
+    // Allows a new method to be chosen
+    selectMethod.disabled = false;
 }
 
 // Connect or disconnect from the command station
 async function toggleServer(btn) {
     // If already connected, disconnect
-    if (port) {
+    if (port || emulator) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
         btn.html("Connect DCC++ EX");
@@ -136,9 +169,14 @@ async function toggleServer(btn) {
     }
 
     // Otherwise, call the connect() routine when the user clicks the connect button
-    await connectServer();
-    btn.attr('aria-state','Connected');
-    btn.html("Disconnect DCC++ EX");
+    success = await connectServer();
+    // Checks if the port was opened successfully
+    if (success) {
+        btn.attr('aria-state','Connected');
+        btn.html("Disconnect DCC++ EX");
+    } else {
+        selectMethod.disabled = false;
+    }
 }
 
 // Display log of events

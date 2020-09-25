@@ -21,7 +21,7 @@
 -->
     <head>
         <link href="css/roundslider.min.css" rel="stylesheet" />
-		<link href="css/throttle.css"  rel="stylesheet">
+        <link href="css/throttle.css"  rel="stylesheet">
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                                 
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
@@ -29,6 +29,7 @@
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+        
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
           connected to the internet. Using the links above, they must be installed on your machine.
@@ -62,7 +63,13 @@
                             </button>
                         </div>
                         <div class="formbuilder-button form-group field-button-submit column-1"></div>
-                        <div class="server-button form-group field-button-submit column-4">
+                        
+                        <!--<div class="server-button form-group field-button-submit column-4"> -->
+                        <div class="server-button column-4">
+                            <select id="select-method" class="select-map" name="selectMethod" title="Change the connection method">
+                                <option value="serial">Serial</option>
+                                <option value="emulator">Emulator</option>
+                            </select>
                             <button type="button" class="btn-default btn" aria-state="connected" name="button-connect" access="false" id="button-connect">
                                 Connect DCC++ EX
                             </button>
