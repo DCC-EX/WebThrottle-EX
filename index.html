@@ -54,7 +54,7 @@
                             <label for="ex-locoid" class="formbuilder-text-label">
                                 Locomotive ID <span class="formbuilder-required">*</span>
                             </label>
-                            <input type="number" placeholder="CV-01" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
+                            <input type="number" placeholder="3" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
                         </div>
                         
                         <div class="formbuilder-button form-group column-2">
@@ -197,12 +197,17 @@
                             <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
                         </div>
                 
-                        <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
+                        <div class="formbuilder-button  column-3" style="padding: 5px 5px;">
                             <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
                                 Send
                             </button>
                         </div>
-                    </div>          
+                        <div class="formbuilder-button  column-3" style="padding: 5px 20px;">
+                            <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog">
+                                Clear Log
+                            </button>
+                        </div>
+                    </div>       
                     <div class="log-msg" id="log-box">
                     </div> 
                 </div>

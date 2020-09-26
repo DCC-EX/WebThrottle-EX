@@ -22,10 +22,9 @@ hr{
 }
 .column-3 {
     float: left;
-    width: 30%;
+    width: 15%;
     padding: 5px 15px;
 }
-
 .column-4 {
     float: left;
     width: 40%;

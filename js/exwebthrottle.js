@@ -1,7 +1,7 @@
 /*  
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
+    the Free Software Foundation, either version 3 of the License, or$("#log-box").append("<br>"+data+"<br>");
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -493,6 +493,11 @@ $(document).ready(function(){
     $("#button-sendCmd").on('click', function(){
         cmd = $("#cmd-direct").val();
         writeToStream(cmd);
+    });
+
+    // Clear the console log window
+    $("#button-clearLog").on('click', function(){
+       $("#log-box").html("");
     });
 
     // Function to toggle fullScreen viceversa

@@ -88,7 +88,7 @@ async function connectServer() {
         // If using the emulator
         emulator = true;
         // Displays dummy hardware message
-        displayLog("DCC++ BASE STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         return true;
     }
 }
