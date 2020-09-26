@@ -51,21 +51,23 @@
             <div class="rendered-form">
                 <div Class="details-panel">
                     <div class="row">
-                        <div class="formbuilder-text form-group field-ex-email column-3">
-                            <label for="ex-locoid" class="formbuilder-text-label">
-                                Locomotive ID <span class="formbuilder-required">*</span>
-                            </label>
-                            <input type="number" placeholder="3" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
+                        <div class="column-4">
+                             <div class="row">
+                                <div class="formbuilder-text form-group field-ex-email column-4">
+                                    <label for="ex-locoid" class="formbuilder-text-label">
+                                        Locomotive ID <span class="formbuilder-required">*</span>
+                                    </label>
+                                    <input type="number" placeholder="Enter loco ID" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
+                                </div>
+                                
+                                <div class="formbuilder-button form-group column-3">
+                                    <button type="button" class="btn-default btn button-acquire" name="getloco" access="false" data-acquired="false"  id="button-getloco">
+                                        Acquire
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="formbuilder-button form-group column-2">
-                            <button type="button" class="btn-default btn button-acquire" name="getloco" access="false" data-acquired="false"  id="button-getloco">
-                                Acquire
-                            </button>
-                        </div>
-                        <div class="formbuilder-button form-group field-button-submit column-1"></div>
-                        
-                        <!--<div class="server-button form-group field-button-submit column-4"> -->
+                         <div class="server-button column-2"></div>
                         <div class="server-button column-4">
                             <select id="select-method" class="select-map" name="selectMethod" title="Change the connection method">
                                 <option value="serial">Serial</option>
@@ -77,7 +79,6 @@
                             <button class="btn-grey" id="fs-toggle" state="ws">&#10530;</button>
                         </div>
                     </div>
-
                     <hr>
                 </div>              
 
@@ -96,11 +97,11 @@
                             <div class="column-4" id="loco-info" style="text-align: center;">
                                 Welcome to DCC++ EX Web Throttle <br> <p style="font-size: 12;">Version 1.1.0</p>
                             </div>  
-                            <div class="column-3"></div>                             
-                         </div>          
-                        <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
-                            Hide <span class="arrow up"></span>
-                        </button> 
+                            <div class="column-3">                                    
+                                <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
+                                    Hide <span class="arrow up"></span>
+                                </button> 
+                            </div>
                     </div>
                     <div class="column-5 mobile-100 throttle-container">
                         <div class="row mobile-100  width100 flexx">
