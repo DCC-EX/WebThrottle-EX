@@ -336,6 +336,9 @@ $(document).ready(function(){
                 setDirection(1);
                 $("#throttle").roundSlider("enable");
                 $("#throttle").roundSlider("setValue", getSpeed());
+                $("#v-throttle").slider("enable");
+                $("#v-throttle").slider("option", "value", getSpeed());
+                $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" 1");
                 break;
             }
@@ -344,6 +347,9 @@ $(document).ready(function(){
                 setDirection(0);
                 $("#throttle").roundSlider("enable");
                 $("#throttle").roundSlider("setValue", getSpeed());
+                $("#v-throttle").slider("enable");
+                $("#v-throttle").slider("option", "value", getSpeed());
+                $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" 0");
                 break;
             }

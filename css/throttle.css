@@ -1,79 +1,6 @@
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-}
-hr{
-    border-bottom: 1px solid #ffffff;
-}
-.column-1{
-    float: left;
-    width: 10%;
-    padding: 5px 15px;
-}
-.column-2p5 {
-    float: left;
-    width: 25%;
-    padding: 5px 15px;
-}
-.column-2 {
-    float: left;
-    width: 20%;
-    padding: 5px 15px;
-}
-.column-3 {
-    float: left;
-    width: 15%;
-    padding: 5px 15px;
-}
-.column-4 {
-    float: left;
-    width: 40%;
-    padding: 5px 15px;
-}
-.column-5 {
-    float: left;
-    width: 50%;
-    padding: 5px 15px;
-}
-.column-6{
-    float: left;
-    width: 60%;
-    padding: 5px 15px;
-}
-.column-7 {
-    float: left;
-    width: 70%;
-    padding: 5px 15px;
-}
 
 
-/* Clear floats */
-.row:after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
-.rendered-form {
-    background: #efefef;
-    max-width: 1080px;
-    min-width: 480px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 10px 0px #666666;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0 auto;
-    padding-top: 15px;
-    position: relative;
-    padding-bottom: 1px;
-    border: 1px solid #fbfbfb;
-}
-.rendered-form div {
-    box-sizing: border-box;
-    justify-content: center;
-}
-.rendered-form h4 {
-    margin: 0;
-}
 input.form-control, select.form-control, textarea.form-control {
     width: 100%;
     padding: 5px 8px;
@@ -100,14 +27,18 @@ label.formbuilder-file-label {
     font-weight:400;
     color: #00353D;
 }
+.throttle-heading{
+    text-align: center;
+    margin-top: 10px;
+}
+.throttle-heading p{
+    font-size: 12;
+    margin: 5px;
+}
 .server-button{
     padding-top: 29px;
     text-align: right;
 }
-.formbuilder-button{
-    text-align: left;
-    padding: 29px 0;
-} 
 .formbuilder-button .btn, .server-button .btn{
     background: #00A3B9;
     padding: 4px 12px;
@@ -120,9 +51,16 @@ label.formbuilder-file-label {
     text-align: center;
 }
 .server-button .btn{
-    width:170px;
+    width:180px;
 }
-.formbuilder-button .button-acquire{
+.loco-cv-text{
+    padding-left: 0;
+}
+.acquire-wrap{
+    padding-left: 0;
+    padding-top: 29px;
+}
+.button-acquire{
     width:100px;
 }
 #fn-wrapper{
@@ -165,33 +103,37 @@ label.formbuilder-file-label {
     box-shadow: none;
 }
 .btn-grey{
+    margin-top: 2px;
     background: #dbdbdb;
     border: 1px solid #a8a8a8;
-    box-shadow: 0px 1px 4px #9e9e9e;
+    box-shadow: 0px 0px 1px #9e9e9e;
     border-radius: 4px;
     font-size: 14px;
-    padding: 4px 10px;
+    padding-top: 0px;
     outline: none;
     line-height: 15px;
-    height: 26px;
+    height: 25px;
+    vertical-align: top;
 }
 .btn.edit-labels:active, .btn.load-labels:active{
     box-shadow: none;
     outline: none;
 }
-.select-map{
+.select-control{
     padding: 5px 3px;
     vertical-align: middle;
     border-radius: 5px;
     border: 1px solid #ddd;
     padding-bottom: 6px;
     outline: none;
+}
+.select-map{
     width: 100px;
 }
 .btn-hide{
     position: absolute;
     right: 5px;
-    bottom: 24px;
+    top: -10px;
     padding: 3px 8px;
     font-size: 13px;
     padding-right: 10px;
