@@ -23,7 +23,7 @@ window.speed=0;
 window.direction=1;
 window.server="";
 window.port=4444;
-window.speedStep = 2;
+window.speedStep = 1;
 window.functions = {
     "f0": 0,
     "f1": 0,
@@ -419,7 +419,7 @@ $(document).ready(function(){
         event.stopImmediatePropagation();
         tId = setInterval(function(){
             var sp = getSpeed(sp);
-            if((sp >= 0) && (getDirection() != -1) && (getCV() != 0)){
+            if((sp >= 1) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp-speedStep);
                 $("#throttle").roundSlider("setValue", getSpeed());
                 $("#v-throttle").slider("option", "value", getSpeed());
