@@ -433,7 +433,7 @@ $(document).ready(function(){
     }).on('click',function(){
         event.stopImmediatePropagation();
         var sp = getSpeed(sp);
-        if((sp >= 0)&& (getDirection() != -1) && (getCV() != 0)){
+        if((sp >= 1)&& (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp-speedStep);
             $("#throttle").roundSlider("setValue", getSpeed());
             $("#v-throttle").slider("option", "value", getSpeed());

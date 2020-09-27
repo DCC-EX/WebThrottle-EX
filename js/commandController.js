@@ -207,7 +207,7 @@ async function toggleServer(btn) {
 function displayLog(data){
 
     $("#log-box").append("<br>"+data+"<br>");
-    $("#log-box").animate({scrollTop: $("#log-box").prop("scrollHeight"), duration: 5});
+    $("#log-box").animate({scrollTop: $("#log-box").prop("scrollHeight"), duration: 1});
 
 }
 
