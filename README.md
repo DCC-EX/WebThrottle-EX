@@ -1,6 +1,6 @@
 # DCC++ EX Web Throttle
 
-This is a prototype for a new DCC++ EX Throttle/Controller
+This is a new DCC++ EX Throttle/Controller
 that can connect to the DCC++ EX Commmand Station directly 
 through the USB port of a computer.
 
@@ -16,69 +16,61 @@ To enable the Web Serial API, in your browser URL bar type:
     
 Then set the **#enable-experimental-web-platform-features** flag
 by looking on the page for "Experimental Web Platform Features"
-and click on the "enable" button. (NOTE: Substitute the name
-of your browser above if you don't use Chrome)
+and click on the "enable" button.
 
-## What you’ll need to use and develop this application
+**Note:** Substitute the name of your browser above if you don't use Chrome
+
+## What you’ll need to use this application
 
 * An Arduino Mega or Uno Microcontroller
 * An Arduino Motor Control Shield
 * Chrome version 80 or later
-* Some knowledge of HTML and JavaScript
-* Understanding of how to use the Chrome DevTools
-
-To load the Chrome DevTools to look at logging and be able to manually enter
-"write" commands for testing, click on the Menu (the 3 vertical dots in the 
-upper right hand corner of the Chrome Window), then select "more tools" and 
-then "Developer Tools". Or you can just hit "Ctrl-Shift-I".
 
 ## Getting started
 
 To get started, connect your Command Station to a computer with a USB port
-and a compatible browser installed. Use a USB serial cable from your computer
-to the serial connector on the Arduino. Click on the index.hml file to load the 
+and a compatible browser installed. Use a USB A to B cable from your computer
+to the serial connector on the Arduino. Click on the index.html file to load the 
 webpage. 
-
-If you are using Glitch, find the "throttle-test-new" project and then view the 
-.html file and .js file that have all the code to run this page as a web 
-controller/throttle.
-
-To run the web page, click on the "show" dropdown at the top left and select
-to run the page in a new window or with the code to the left. Once you make
-your selection, a web page should load and you will see three buttons:
-
-* Connect
-* One
-* Two
 
 ## Operation
 
-To use the program, click on the "connect" button. If the program finds
-a compatible device, it will popup a window showing you a selection. It
-may show a line at the top such as "Arduino Mega 2560 (COM3)". Your com
-port may vary. Click on your board and then click the "connect" button.
+To use the program, click on the "connect" button. Once you click this, a popup will 
+show up offering the different devices available, you are looking for a line such as 
+"Arduino Mega 2560 (COM3)". Your COM port may vary and if you are using Linux, it will be something like /dev/USB0. 
+Click on your board and then click the "connect" button. If nothing is shown, check the Command Station is correctly connected to your PC.
 
-Your should then connect to the Command Station and should see the response
-from the command station on the web page under the buttons. You can open
+This will then connect to the Command Station and should see the response
+from the command station on the web page in the Debug Console (if enabled). You can open
 the DevTools window to see more logging.
 
-Once you are connected, you can press button one to send the &lt;s&gt; status
-command and see the status returned from the CS. You can press button Two
-to send the &lt;c&gt; command to read the current on the main track.
+Once you are connected, enter the DCC address of the cab (decoder) you want to control, then press the aquire button. You can now use the slider,
+direction buttons and cab function buttons to control your train! If at any point you want to change cab, just press the release button then type in
+a new address.
 
-Experiment with different commands and we what can be added to read the
-responses and parse them properly.
+You can experiment with different button mappings, as these saved, even when you close the window. These can also be downloaded and imported, along 
+with the rest of the app data.
+
+## Using the Emulator
+
+If you don't have an Arduino, or it isn't currently plugged into your PC, you can use the emulator.
+This replicates the Command Station, meaning you can try the software out. 
+To use it, simply change the dropdown menu next to the "Connect DCC++ EX" button to`Emulator` then press the connect button. That's it, you are ready to
+use the emulator!  
+
+**Note:** The emulator doesn't fully replicate the Command station yet. This means that althought the software works, not all the responses will be showen in
+the debug console. We are currently working on this, so it is something that will be fixed.
 
 ## License
 
 Copyright 2020 DCC-EX
 
-Licensed under the GNU open source licese.
+Licensed under the GNU open source license.
 
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 
-[DCC-EX]: https://dcc-ex.com
+[DCC-EX](https://dcc-ex.com)
 
