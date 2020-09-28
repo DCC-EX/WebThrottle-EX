@@ -104,7 +104,32 @@ function getDirection(dir){
     return window.direction;
 }
 
+function setThrottleScreenUI() {
+  loadmaps();
+  loadButtons({ mname: "default", fnData: fnMasterData });
 
+  // Set saved throttle or use circular throttle as default
+
+  if (getPreference("vThrottle") == null) {
+    setPreference("vThrottle", false);
+  }
+  if (getPreference("vThrottle")) {
+    $("#vertical-throttle").show();
+    $("#throttle").hide();
+    $("#throttle-type").attr("checked", "checked");
+  } else {
+    $("#vertical-throttle").hide();
+    $("#throttle").show();
+  }
+
+  // Show and hide debug console based on prrference set in earlier session
+  if (getPreference("dbugConsole") == null) {
+    setPreference("dbugConsole", true);
+  }
+  getPreference("dbugConsole")
+    ? $("#debug-console").show()
+    : $("#debug-console").hide();
+}
 
 // This function will generate commands for each type of function
 function generateFnCommand(clickedBtn){
@@ -195,9 +220,9 @@ function generateFnCommand(clickedBtn){
 $(document).ready(function(){
 
     var mode = 0;
-    // Load function map and buttons
-    loadmaps();
-    loadButtons({ mname: "default" , fnData: fnMasterData});
+
+    // Load function map, buttons throttle etc
+    setThrottleScreenUI()
 
     $("#v-throttle").slider({
       orientation: "vertical",
@@ -213,15 +238,16 @@ $(document).ready(function(){
             $("#throttle").roundSlider("setValue", ui.value);
       },
     });
-    $("#vertical-throttle").hide();
     $("#throttle-type").on("click", function () {
         pb = $(this).is(":checked");   
         if (pb == true){
             $("#vertical-throttle").show();
             $("#throttle").hide();
+            setPreference("vThrottle", true);
         } else {
             $("#vertical-throttle").hide();
             $("#throttle").show();
+            setPreference("vThrottle", false);
         }
     });
 
@@ -490,8 +516,10 @@ $(document).ready(function(){
         
         if (pb == true){
             $("#debug-console").show();
+            setPreference("dbugConsole", true);
         } else {
             $("#debug-console").hide();
+            setPreference("dbugConsole", false);
         }
     });
 

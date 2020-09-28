@@ -3,7 +3,7 @@ $(document).ready(function(){
               if (typeof(Storage) !== "undefined") {
                 console.log("Your browser is supporting Local Storage");
               } else {
-                console.log("Sorry !! Your browser is not supporting Local Storage");
+                console.log("Sorry !! Your browser is not supporting Local Storage"); 
               }
 
               // Opens NEW MAP window with all fields empty
@@ -241,7 +241,7 @@ function editMap(){
   }
 }
 
-//** */ Saves given data into Local storage**/
+//*** Saves given data into Local storage**/
 // Create new data object if one does not exist
 // Verify if the given Map data already exists and replace it
 // Or Create new map data and inserts it into local storage object
@@ -349,3 +349,45 @@ function importAppData(data){
     $("#select-map").val('default').trigger("change");
   }
 }
+
+// Get a given user preference
+function getPreference(pref){
+    if (window.localStorage.getItem("userpref") != null) {
+      curpref = JSON.parse(window.localStorage.getItem("userpref"));
+      return curpref[pref];
+    } else {
+      return null;
+    }
+}
+
+// Set a given user preference
+function setPreference(pref, val){
+  if (window.localStorage.getItem("userpref") != null){
+    curpref = JSON.parse(window.localStorage.getItem("userpref"));
+  }else{
+    curpref = {};
+  }
+  switch (pref){
+    case "vThrottle": 
+      curpref["vThrottle"] = val;
+      break;
+    case "dbugConsole":
+      curpref["dbugConsole"] = val;
+      break;
+  }
+  setUserPreferences(curpref);
+}
+
+//// Store user preferences in local storage
+function setUserPreferences(pref){
+  if (typeof(Storage) !== "undefined") {  
+    window.localStorage.setItem("userpref", JSON.stringify(pref));  
+  }
+}
+
+/*
+  {
+    "vThrottle": false,
+    "dbugConsole": true
+  }
+*/
