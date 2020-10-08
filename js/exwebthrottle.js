@@ -57,7 +57,7 @@ window.functions = {
 };
 
 let port;
-let emulator;
+let emulatorMode;
 let reader;
 let inputDone;
 let outputDone;

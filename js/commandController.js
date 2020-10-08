@@ -60,7 +60,7 @@ async function connectServer() {
         }
     } else{
         // If using the emulator
-        emulator = true;
+        emulatorMode = true;
         // Displays dummy hardware message
         displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         return true;
@@ -93,12 +93,15 @@ function writeToStream(...lines) {
         const writer = outputStream.getWriter();
         lines.forEach((line) => {
             writer.write('<' + line + '>' + '\n');
+            console.log('<' + line + '>' + '\n')
             displayLog('[SEND]'+line.toString());
         });
         writer.releaseLock();
     } else {
         lines.forEach((line) => {
-            displayLog('[SEND]'+line.toString());
+            displayLog('[SEND] '+line.toString());
+            message = emulator('<' + line + '>' + '\n')
+            displayLog('[RECEIVE] '+message.toString());
         });
     }
 
@@ -176,7 +179,7 @@ async function disconnectServer() {
         displayLog('close port');
     } else {
         // Disables emulator
-        emulator = undefined;
+        emulatorMode = undefined;
     }
     // Allows a new method to be chosen
     selectMethod.disabled = false;
@@ -185,7 +188,7 @@ async function disconnectServer() {
 // Connect or disconnect from the command station
 async function toggleServer(btn) {
     // If already connected, disconnect
-    if (port || emulator) {
+    if (port || emulatorMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
         btn.html("Connect DCC++ EX");
