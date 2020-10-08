@@ -77,7 +77,7 @@ function setFunCurrentVal(fun, val){
 // Set given CV value
 function setCV(val){
     window.cv = val;
-    console.log("SET LOCO ID :=> "+val);
+    console.log("Set Cab Address: "+val);
 }
 // Get stored CV value
 function getCV(){

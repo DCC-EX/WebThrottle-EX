@@ -20,7 +20,7 @@ async function connectServer() {
     mode = selectMethod.value;
     // Disables selector so it can't be changed whilst connected
     selectMethod.disabled = true;
-    console.log("Set mode: "+mode)
+    console.log("Set Mode: "+mode)
     // Checks which method was selected
     if (mode == "serial") {
         try{
@@ -53,6 +53,7 @@ async function connectServer() {
             // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
             reader = inputStream.getReader();
             readLoop();
+            document.getElementById('button-getloco').disabled = false
             return true;
         } catch (err) {
             console.log("User didn't select a port to connect to")
@@ -63,6 +64,7 @@ async function connectServer() {
         emulatorMode = true;
         // Displays dummy hardware message
         displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        document.getElementById('ex-locoid').disabled = false
         return true;
     }
 }
