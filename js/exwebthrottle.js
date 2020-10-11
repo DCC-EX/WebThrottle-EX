@@ -66,6 +66,29 @@ let outputStream;
 
 let pressed = false;
 
+
+// Enables and disables ui elements
+
+function uiDisable (status) {
+    /*document.getElementById('ex-locoid').disabled = status
+    document.getElementById('power-switch').disabled = status
+    document.getElementById('button-sendCmd').disabled = status
+    document.getElementById('dir-f').disabled = status
+    document.getElementById('dir-S').disabled = status*/
+    //document.getElementById('dir-b').disabled = status
+    $("#ex-locoid").prop('disabled', status)
+    $("#power-switch").prop('disabled', status)
+    $("#button-sendCmd").prop('disabled', status)
+    $("#dir-f").prop('disabled', status)
+    $("#dir-S").prop('disabled', status)
+    $("#dir-b").prop('disabled', status)
+    if (status){
+        $("#throttle").roundSlider("disable");
+    } else {
+        $("#throttle").roundSlider("enable");
+    }
+}
+
 // Returns given function current value (0-disable/1-enable)
 function getFunCurrentVal(fun){
     return window.functions[fun];
@@ -568,3 +591,12 @@ $(document).ready(function(){
 });
 
 
+function credits() {
+    authors = ["Fred Decker","Mani Kumar","Matt"]
+    displayLog("Credits:")
+    console.log("Credits:")
+    for (i=0; i<authors.length; i++) {
+        displayLog(authors[i])
+        console.log(authors[i])
+    }
+}

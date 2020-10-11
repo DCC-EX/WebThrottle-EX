@@ -1,6 +1,12 @@
 let lastMessage;
 var turnouts = [];
 function emulator(packet) {
+    console.log(packet)
+    if (packet == "<credits>") {
+        console.log("Credits")
+        return credits()
+    } else {
+    console.log("after if")
     packetKey = packet[1];
     if (packetKey == ' ') {
         packetKey = packet[2];
@@ -14,12 +20,12 @@ function emulator(packet) {
             
         // Track power off
         case ('0') :
-            lastMessage = '<p0>';
+            lastMessage = 'p0';
             return lastMessage;
 
         // Track power on
         case ('1'):
-            lastMessage = '<p1>';
+            lastMessage = 'p1';
             return lastMessage;
 
         // New cab functions
@@ -40,20 +46,20 @@ function emulator(packet) {
                 for (i=0; i<turnouts.length; i++ ) {
                     if (turnouts[i]['id'] == packet[1].substring(0, packet[1].length-1)) {
                         turnouts.splice(i, 1);
-                        return '<O>';
+                        return 'O';
                     }
                 }
-                return '<X>';
+                return 'X';
             } else if (packet.length == 1) {
                 returnList = [];
                 if (turnouts.length > 0) {
                     for (i=0; i<turnouts.length; i++){
-                        returnList.push('< H '+turnouts[i]['id']+' '+turnouts[i]['address']+' '+turnouts[i]['subaddress']+' '+turnouts[i]['throw']+' >');
+                        returnList.push('H '+turnouts[i]['id']+' '+turnouts[i]['address']+' '+turnouts[i]['subaddress']+' '+turnouts[i]['throw']);
                     }
                 return returnList;
                 }
-                return '<X>';
+                return 'X';
             }
-
+        }
     }
 }

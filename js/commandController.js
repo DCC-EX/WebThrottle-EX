@@ -8,6 +8,7 @@
 */
 $(document).ready(function(){
     console.log("Command Controller loaded");
+    uiDisable(true)
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -53,7 +54,7 @@ async function connectServer() {
             // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
             reader = inputStream.getReader();
             readLoop();
-            document.getElementById('button-getloco').disabled = false
+            uiDisable(false)
             return true;
         } catch (err) {
             console.log("User didn't select a port to connect to")
@@ -64,7 +65,7 @@ async function connectServer() {
         emulatorMode = true;
         // Displays dummy hardware message
         displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
-        document.getElementById('ex-locoid').disabled = false
+        uiDisable(false)
         return true;
     }
 }
@@ -102,8 +103,9 @@ function writeToStream(...lines) {
     } else {
         lines.forEach((line) => {
             displayLog('[SEND] '+line.toString());
-            message = emulator('<' + line + '>' + '\n')
-            displayLog('[RECEIVE] '+message.toString());
+            message = emulator('<' + line + '>')
+            console.log('<' + line + '>' + '\n')
+            displayLog('[RECEIVE] '+message);
         });
     }
 
@@ -157,6 +159,7 @@ async function disconnectServer() {
 	  $("#power-switch").prop('checked', false)
 	  $("#power-status").html('Off');
     }
+    uiDisable(true)
     if (port) {
     // Close the input stream (reader).
         if (reader) {
