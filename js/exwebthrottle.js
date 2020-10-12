@@ -13,7 +13,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 	
 	Authors: Fred Decker
-	         Mani Kumar
+             Mani Kumar
+             Matt
 			 
     This is part of the DCC++ EX Project for model railroading and more.
 	For more information, see us at dcc-ex.com.
@@ -145,13 +146,15 @@ function setThrottleScreenUI() {
     $("#throttle").show();
   }
 
-  // Show and hide debug console based on prrference set in earlier session
+  // Show and hide debug console based on preference set in earlier session
   if (getPreference("dbugConsole") == null) {
     setPreference("dbugConsole", true);
   }
   getPreference("dbugConsole")
     ? $("#debug-console").show()
-    : $("#debug-console").hide();
+    ? document.getElementById("console-toggle").checked = true
+    : $("#debug-console").hide()
+    : document.getElementById("console-toggle").checked = false
 }
 
 // This function will generate commands for each type of function
@@ -550,6 +553,7 @@ $(document).ready(function(){
     $("#button-sendCmd").on('click', function(){
         cmd = $("#cmd-direct").val();
         writeToStream(cmd);
+        document.getElementById("cmd-direct").value = ""
     });
 
     // Clear the console log window
@@ -586,7 +590,7 @@ $(document).ready(function(){
             }
         }
     });
-
+    eventListeners();
 
 });
 
@@ -599,4 +603,23 @@ function credits() {
         displayLog(authors[i])
         console.log(authors[i])
     }
+}
+
+function eventListeners(){
+    var cmdDirect = document.getElementById("cmd-direct");
+    var exLocoID = document.getElementById("ex-locoid");  
+    cmdDirect.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // Trigger the button element with a click
+            $('#button-sendCmd').click();
+        }
+    });
+    exLocoID.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // Trigger the button element with a click
+            $('#button-getloco').click();
+        }
+    })
 }

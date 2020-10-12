@@ -15,7 +15,7 @@
 	
 	Authors: Mani Kumar
              Fred Decker
-             Matt (matt-hu)
+             Matt
     
 	This file is part of the DCC++ EX Project for model railroading and more.
 	For more information, visit use at dcc-ex.com
@@ -189,7 +189,7 @@
                 <div class="row">
                     <div class="console-slider column-4" title="Enable the debug console">
                         <label class="debug switch">
-                            <input type="checkbox" id="console-toggle" checked>
+                            <input type="checkbox" id="console-toggle">
                             <span class="slider round debug-slider"></span>
                         </label>
                         <span class="debug-status">
@@ -244,16 +244,21 @@
 </html>
 
 <script>
-    var input = document.getElementById("cmd-direct");
-    input.addEventListener("keyup", function(event) {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.getElementById("button-sendCmd").click();
-        input.value = ""
-    }
+    var cmdDirect = document.getElementById("cmd-direct");
+    var exLocoID = document.getElementById("ex-locoid");  
+    cmdDirect.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // Trigger the button element with a click
+            $('#button-sendCmd').click();
+        }
     });
+    exLocoID.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // Trigger the button element with a click
+            $('#button-getloco').click();
+        }
+    })
 </script>
 

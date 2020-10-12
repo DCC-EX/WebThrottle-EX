@@ -1,9 +1,18 @@
+/*  This is part of the DCC++ EX Project for model railroading and more.
+    For licence information, please see index.html.
+    For more information, see us at dcc-ex.com.
+
+    storageController.js
+
+    Manages the setting storage capabilities
+*/
+
 $(document).ready(function(){
               // This is displays message about Local storage Support of the Local browser
               if (typeof(Storage) !== "undefined") {
-                console.log("Your browser is supporting Local Storage");
+                console.log("Your browser supports Local Storage");
               } else {
-                console.log("Sorry !! Your browser is not supporting Local Storage"); 
+                console.log("Sorry! Your browser does not supporting Local Storage"); 
               }
 
               // Opens NEW MAP window with all fields empty
@@ -64,7 +73,7 @@ $(document).ready(function(){
                   }
               });
 
-              // This remove who;e exthrottle app data but with confirmation
+              // This remove whole exthrottle app data but with confirmation
               $("#wipe-map").on('click', function(){
                 var r = confirm("Are you sure on deletion?");
                 if (r == true) {

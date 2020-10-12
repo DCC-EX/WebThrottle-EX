@@ -1,3 +1,13 @@
+/*  This is part of the DCC++ EX Project for model railroading and more.
+    For licence information, please see index.html.
+    For more information, see us at dcc-ex.com.
+
+    emulator.js
+
+    Allows the software to operate without a Command Station attached. This 
+    file manages the correct response that a Command Station would provide.
+*/
+
 let lastMessage;
 var turnouts = [];
 function emulator(packet) {
