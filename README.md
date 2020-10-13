@@ -58,7 +58,7 @@ This replicates the Command Station, meaning you can try the software out.
 To use it, simply change the dropdown menu next to the "Connect DCC++ EX" button to`Emulator` then press the connect button. That's it, you are ready to
 use the emulator!  
 
-**Note:** The emulator doesn't fully replicate the Command station yet. This means that althought the software works, not all the responses will be shown in
+**Note:** The emulator doesn't fully replicate the Command station yet. This means that although the software works, not all the responses will be shown in
 the debug console. We are currently working on this, so it is something that will be fixed.
 
 ## License

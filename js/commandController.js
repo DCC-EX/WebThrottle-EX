@@ -31,7 +31,7 @@ async function connectServer() {
             
             port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
             // - Wait for the port to open.
-            await port.open({ baudrate: 115200 });         // open the port at the proper supported baud rate
+            await port.open({ baudRate: 115200 });         // open the port at the proper supported baud rate
 
             // create a text encoder output stream and pipe the stream to port.writeable
             const encoder = new TextEncoderStream();

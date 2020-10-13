@@ -9,10 +9,7 @@ A Chromium based Browser (Chrome, Opera, Edge)
 
 Installing exWebThrottle
 
-There are current only 2 files needed to run exWebThrottle:
-
-exwebthrottle.html
-exwebthrottle.js
+You must extract the zip file to a local folder on your computer.
 
 Make sure that experimental features are enabled in your chrome web browser by clicking in the address bar and typing:
 
