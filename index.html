@@ -23,12 +23,14 @@
     <head>
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link href="css/layout.css"  rel="stylesheet">
-        <link href="css/roundslider.min.css" rel="stylesheet" />
+        <link href="css/layout.css"  rel="stylesheet" type="text/css">
+        <link href="css/roundslider.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/throttle.css"  rel="stylesheet">
+        <link href="css/jquery.rotaryswitch.css" rel="stylesheet" type="text/css">
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                       
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
+        <script  type="text/javascript" src="js/jquery.rotaryswitch.js"></script>
         <script  type="text/javascript" src="js/fnMaster.js"></script> 
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
@@ -126,7 +128,9 @@
                                             0
                                         </div>
                                     </div>
-                                    <div id="throttle">
+                                    <div id="knobthrottle">
+                                        <input type="text" class="rotarySwitch" value="0">
+                                        <div id="knob-value" class="knob-value">0</div>
                                     </div>
                                 </div>
                             <!-- </div> -->

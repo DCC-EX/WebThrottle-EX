@@ -91,7 +91,7 @@ function setSpeed(sp){
 
 // Get Speed value
 function getSpeed(){
-    return window.speed;
+    return parseInt(window.speed);
 }
 
 // Set Direction 
@@ -126,9 +126,7 @@ function setThrottleScreenUI() {
   if (getPreference("dbugConsole") == null) {
     setPreference("dbugConsole", true);
   }
-  getPreference("dbugConsole")
-    ? $("#debug-console").show()
-    : $("#debug-console").hide();
+  getPreference("dbugConsole") ? $("#debug-console").show() : $("#debug-console").hide();
 }
 
 // This function will generate commands for each type of function
@@ -235,18 +233,22 @@ $(document).ready(function(){
             setSpeed(ui.value);
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
             console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-            $("#throttle").roundSlider("setValue", ui.value);
+            //$("#throttle").roundSlider("setValue", ui.value);
+            knob.val(ui.value).change();
+            $("#knob-value").html(ui.value);
       },
     });
     $("#throttle-type").on("click", function () {
         pb = $(this).is(":checked");   
         if (pb == true){
             $("#vertical-throttle").show();
-            $("#throttle").hide();
+            //$("#throttle").hide();
+            $("#knobthrottle").hide();
             setPreference("vThrottle", true);
         } else {
             $("#vertical-throttle").hide();
-            $("#throttle").show();
+            //$("#throttle").show();
+            $("#knobthrottle").show();
             setPreference("vThrottle", false);
         }
     });
@@ -273,7 +275,7 @@ $(document).ready(function(){
                 $("#loco-info").html("Acquired Locomotive: "+locoid_input);
                 acButton.data("acquired", true);
                 acButton.html("Release");
-                $("#throttle").roundSlider("enable");
+                //$("#throttle").roundSlider("enable");
                 $("#v-throttle").slider("enable");
 
             }else{
@@ -285,7 +287,7 @@ $(document).ready(function(){
                 $("#loco-info").html("Released Locomotive: "+currentCV);
                 acButton.data("acquired", false);
                 acButton.html("Acquire");
-                $("#throttle").roundSlider("disable");
+                //$("#throttle").roundSlider("disable");
                 $("#v-throttle").slider("disable");
                 $("#v-throttle").slider("option", "value", 0);
             }
@@ -305,6 +307,33 @@ $(document).ready(function(){
         }
     });
 
+    /////////////////////////////////////////*/
+     knob = $(".rotarySwitch").rotaryswitch({
+       minimum: 0,
+       maximum: 126,
+       step: 2,
+       beginDeg: 210,
+       lengthDeg: 290,
+       minimumOverMaximum: true,
+       showMarks: true,
+       themeClass: "big light",
+     });
+
+     knob.on("change", function () {
+       //rotarySwitch3b.val(rotarySwitch3a.val()).change();
+       kval = knob.val();
+       console.log(kval);
+       $("#knob-value").html(kval);
+        setSpeed(kval);
+        writeToStream(
+            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+        );
+        $("#v-throttle").slider("option", "value", kval);
+        $("#speed-indicator").html(kval);
+        console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+     });
+
+    /*
     // Speed (round) Slider allows user to change the speed of the locomotive
     Tht = $("#throttle").roundSlider({
         width: 20,
@@ -345,7 +374,7 @@ $(document).ready(function(){
             //writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
            // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
         }
-    });
+    });*/
 
     // Allows user to change the direction of the loco and STOP.
     $(".dir-btn").on('click', function(){
@@ -360,8 +389,10 @@ $(document).ready(function(){
             case "forward":
             { 
                 setDirection(1);
-                $("#throttle").roundSlider("enable");
-                $("#throttle").roundSlider("setValue", getSpeed());
+                //$("#throttle").roundSlider("enable");
+                //$("#throttle").roundSlider("setValue", getSpeed());
+                knob.val(getSpeed()).change();
+                $("#knob-value").html(getSpeed());
                 $("#v-throttle").slider("enable");
                 $("#v-throttle").slider("option", "value", getSpeed());
                 $("#speed-indicator").html(getSpeed());
@@ -371,8 +402,10 @@ $(document).ready(function(){
             case "backward":
             { 
                 setDirection(0);
-                $("#throttle").roundSlider("enable");
-                $("#throttle").roundSlider("setValue", getSpeed());
+                //$("#throttle").roundSlider("enable");
+                //$("#throttle").roundSlider("setValue", getSpeed());
+                knob.val(getSpeed()).change();
+                $("#knob-value").html(getSpeed());
                 $("#v-throttle").slider("enable");
                 $("#v-throttle").slider("option", "value", getSpeed());
                 $("#speed-indicator").html(getSpeed());
@@ -385,8 +418,10 @@ $(document).ready(function(){
                 //setDirection(-1); //direction = -1;
                 setSpeed(0);
                 writeToStream("t 01 "+getCV()+" -1 "+dir);
-                $("#throttle").roundSlider("disable");
-                $("#throttle").roundSlider("setValue", 0);
+                //$("#throttle").roundSlider("disable");
+                //$("#throttle").roundSlider("setValue", 0);
+                knob.val(0).change();
+                $("#knob-value").html(0);
                 $("#v-throttle").slider("option", "value", 0);
                 $("#speed-indicator").html(0);
                 $("#v-throttle").slider("disable");
@@ -416,7 +451,9 @@ $(document).ready(function(){
             var sp = getSpeed();
             if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp+speedStep);                       
-                $("#throttle").roundSlider("setValue", getSpeed());
+                //$("#throttle").roundSlider("setValue", getSpeed());
+                knob.val(getSpeed()).change();
+                $("#knob-value").html(getSpeed());
                  $("#v-throttle").slider("option", "value", getSpeed());
                  $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
@@ -430,7 +467,9 @@ $(document).ready(function(){
         var sp = getSpeed();
         if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp+speedStep);
-            $("#throttle").roundSlider("setValue", getSpeed());
+            //$("#throttle").roundSlider("setValue", getSpeed());
+            knob.val(getSpeed()).change();
+            $("#knob-value").html(getSpeed());
             $("#v-throttle").slider("option", "value", getSpeed());
             $("#speed-indicator").html(getSpeed());
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
@@ -447,7 +486,9 @@ $(document).ready(function(){
             var sp = getSpeed(sp);
             if((sp >= 1) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp-speedStep);
-                $("#throttle").roundSlider("setValue", getSpeed());
+                //$("#throttle").roundSlider("setValue", getSpeed());
+                knob.val(getSpeed()).change();
+                $("#knob-value").html(getSpeed());
                 $("#v-throttle").slider("option", "value", getSpeed());
                 $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
@@ -461,7 +502,9 @@ $(document).ready(function(){
         var sp = getSpeed(sp);
         if((sp >= 1)&& (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp-speedStep);
-            $("#throttle").roundSlider("setValue", getSpeed());
+            //$("#throttle").roundSlider("setValue", getSpeed());
+            knob.val(getSpeed()).change();
+            $("#knob-value").html(getSpeed());
             $("#v-throttle").slider("option", "value", getSpeed());
             $("#speed-indicator").html(getSpeed());
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());

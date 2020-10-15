@@ -267,12 +267,13 @@ label.formbuilder-file-label {
     outline: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 27px;
-    min-width: 44px;
-    min-height: 44px;
-    background-color: #a8a8a8;
+    font-size: 20px;
+    width: 44px;
+    height: 44px;
+    background-color: #c7c7c7;
     vertical-align: middle;
     text-align: center;
+    border: 4px solid #ddd;
 }
 .btn-speed:hover{
     background: #00A3B9;
@@ -289,7 +290,7 @@ label.formbuilder-file-label {
     align-items: center;
     height: 340px;
     max-width: 48px;
-    margin: 0 16px;
+    margin: 0 5px;
 }
 .log-msg{
     height: 80px;
