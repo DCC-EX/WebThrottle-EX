@@ -1,0 +1,16 @@
+{
+    "short_name": "exWebThrottle",
+    "name": "DCC++ EX Web Throttle",
+    "icons": [
+      {
+        "src": "/images/favicon.ico",
+        "type": "image/ico",
+        "sizes": "48x48"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#fff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#fff"
+  }
