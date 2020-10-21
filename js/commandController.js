@@ -214,10 +214,8 @@ async function toggleServer(btn) {
 
 // Display log of events
 function displayLog(data){
-
     $("#log-box").append("<br>"+data+"<br>");
-    $("#log-box").animate({scrollTop: $("#log-box").prop("scrollHeight"), duration: 1});
-
+    $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 }
 
 // Function to generate commands for functions F0 to F4
