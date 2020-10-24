@@ -367,12 +367,15 @@ function setPreference(pref, val){
   }else{
     curpref = {};
   }
-  switch (pref){
-    case "vThrottle": 
-      curpref["vThrottle"] = val;
+  switch (pref) {
+    case "scontroller":
+      curpref["scontroller"] = val;
       break;
     case "dbugConsole":
       curpref["dbugConsole"] = val;
+      break;
+    case "theme":
+      curpref["theme"] = val;
       break;
   }
   setUserPreferences(curpref);
@@ -387,7 +390,7 @@ function setUserPreferences(pref){
 
 /*
   {
-    "vThrottle": false,
+    "scontroller": 'vertical',
     "dbugConsole": true
   }
 */

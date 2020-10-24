@@ -120,21 +120,25 @@
 .knob-value{
   left: 50%;
   font-size: 30px;
-  POSITION: RELATIVE;
+  position: relative;
   margin-left: -30px;
   width: 60px;
   text-align: center;
   right: auto;
   top: -16px;
+  color: #00bcd6;
+  text-shadow: 0 1px 1px #ffffff, 0px 0px 4px #78efff;
 }
-.btn-speed {
-    border: 3px solid #cecece;
-    box-shadow: 0 0 4px 1px #828282;
-}
-.btn-speed:hover{
-  background-color: #c7c7c7;
-  color: #0e0e0e;
-}
-.btn-speed:active{
-  border: 3px solid  #c7c7c7;
+div#knobthrottle.disabled:before {
+    content: "";
+    height: 200px;
+    background: #ececec;
+    width: 200px;
+    display: inline-block;
+    position: absolute;
+    z-index: 100;
+    opacity: 0.5;
+    margin-left: 36px;
+    border-radius: 100%;
+    margin-top: 36px;
 }

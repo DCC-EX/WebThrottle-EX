@@ -29,7 +29,7 @@ label.formbuilder-file-label {
 }
 .throttle-heading{
     text-align: center;
-    margin-top: 10px;
+    padding-top: 23px;
 }
 .throttle-heading p{
     font-size: 12;
@@ -127,6 +127,17 @@ label.formbuilder-file-label {
     padding-bottom: 6px;
     outline: none;
 }
+.sp-controller{
+    padding-top: 0;
+    font-size: 14px;
+}
+.theme-section{
+    margin-right: 50px;
+    font-size: 14px;
+    width: 150px;
+    float: right;
+    margin-top: -5px;
+}
 .select-map{
     width: 100px;
 }
@@ -203,17 +214,50 @@ label.formbuilder-file-label {
     padding: 10px 24px;
 }
 .dir-toggle{
-    height: 211px;
-    background-color: #919191;
-    width: 40px;
+    height: 219px;
+    background-color: #cecece;
+    width: 48px;
     margin: 64px auto;
     border-radius: 100px;
     -moz-box-shadow:    inset 0 0 5px #000000;
     -webkit-box-shadow: inset 0 0 5px #000000;
     box-shadow:   inset 0 0 5px #000000;
+    position: relative;
+    border: 4px solid #d0d0d0;
+}
+.dir-toggle:before{
+    content: "";
+    left:0;
+    z-index: 0;
+    background:#ddd;
+    position: absolute;
+    padding: 10px;
+    width: 20px;
+    height: 50px;
+    border: none;
+    border-radius: 80px;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition:all .5s ease-in-out;
+    -moz-transition:all .5s ease-in-out;
+    -o-transition:all .5s ease-in-out; 
+    transition:all .5s ease-in-out;
+    box-shadow: 0 4px 4px #5d5d5d;
+}
+.dir-toggle.forward:before{
+    top:0;
+    background: #00ac4d;
+}
+.dir-toggle.stop:before{
+    top: 70px;
+    background: #da0000;
+}
+.dir-toggle.backward:before{
+    top: 141px;
+    background: #00ac4d;
 }
 .dir-btn{
-    background: transparent;
+    position: relative;
     padding: 10px;
     width: 40px;
     height: 70px;
@@ -221,47 +265,32 @@ label.formbuilder-file-label {
     border-radius: 80px;
     cursor: pointer;
     outline: none;
+    background: transparent;
 }
 .dir-btn:active{
     outline: none;
 }
-.dir-btn.stop.selected{
-    background: #da0000;
-    -moz-box-shadow: 0px 0px 3px 0px #333;
-    -webkit-box-shadow: 0px 0px 3px 0px #333;
-    box-shadow: 0px 0px 3px 0px #333;
-}
-.dir-btn.forward.selected, .dir-btn.backward.selected{
-    background: #00ac4d;
-    -moz-box-shadow: 0px 0px 3px 0px #333;
-    -webkit-box-shadow: 0px 0px 3px 0px #333;
-    box-shadow: 0px 0px 3px 0px rgb(104, 102, 102);
-}
-.dir-btn span.stop{
+.dir-btn span{
     display: inline-block;
     height: 16px;
     width:16px;
-    /*background: #da0000;*/
-    background: white;
 }
-.dir-btn span.arrow-up{
-    top: -14px;
-    height: 0px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 13px solid white;
-    /*border-bottom: 22px solid #00ac4d;*/
-    position: relative;
+.dir-btn span.stop{
+    background: #4d4d4d;
+}
+.dir-btn span.arrow-up, .dir-btn span.arrow-down{
+    color: #4d4d4d;
 }
 .dir-btn span.arrow-down{
-    top: 14px;
-    height: 0px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 13px solid white;
-    /*border-top: 22px solid #00ac4d;*/
-    position: relative;
+    margin-top: 10px;
 }
+.dir-btn.selected span.stop{
+    background: #ffffff;
+}
+.dir-btn.selected span.arrow-up, .dir-btn.selected span.arrow-down{
+    color: #ffffff;
+}
+
 .btn-speed{
     border-width: 0;
     outline: none;
@@ -274,7 +303,9 @@ label.formbuilder-file-label {
     vertical-align: middle;
     text-align: center;
     border: 4px solid #ddd;
+    box-shadow: 0 4px 4px #5d5d5d;
 }
+
 .btn-speed:hover{
     background: #00A3B9;
     color: #FFFFFF;
@@ -377,7 +408,7 @@ input:checked + .slider:before {
   transform: translateX(28px);
 }
 .console-slider {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .slider.debug-slider:before{
     height: 13px;
@@ -563,7 +594,10 @@ input:checked + .slider.debug-slider{
   .dropdown:hover .dropbtn {
     background-color: #00899a;
   }
-
+/* Circular Slider Code */
+.circular-throttle{
+    margin: 0 5px;
+}
 /* Vertical Slider Code */
 .vertical-throttle{
     width: 64px;
@@ -580,7 +614,8 @@ input:checked + .slider.debug-slider{
     color: #777;
 }
 .ui-widget.ui-widget-content {
-    border: 1px solid #d3d3d3;
+    border: 5px solid #d3d3d3;
+    box-shadow: 0 0 2px 0px #fff;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
     border: 1px solid #d3d3d3;
@@ -597,7 +632,8 @@ input:checked + .slider.debug-slider{
 	font-size: .7em;
 	display: block;
 	border: 0;
-	background-position: 0 0;
+    background: #cecece;
+    box-shadow: 0 0 3px #8c8c8c inset;
 }
 
 /* support: IE8 - See #6727 */
@@ -624,10 +660,10 @@ input:checked + .slider.debug-slider{
 }
 
 .ui-slider-vertical {
-    width: 24px;
+    width: 28px;
     height: 250px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    border: 5px solid #d3d3d3;
+    border-radius: 16px;
     margin: 0 auto;
     background: rgba(133,226,125,1);
     background-image: -moz-linear-gradient(180deg, rgba(255,0,0,1) 10%, rgba(251,126,0,1) 25%, rgba(250,207,0,1) 40%, rgba(133,226,125,1) 60%, rgba(0,245,249,1) 80%, rgba(0,67,255,1) 100%);
@@ -638,20 +674,21 @@ input:checked + .slider.debug-slider{
 .ui-slider-vertical .ui-slider-handle {
     position: absolute;
     z-index: 2;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     cursor: default;
     -ms-touch-action: none;
     touch-action: none;
-    border: 5px solid #ccc;
-    left: -6px;
+    border: 1px solid #f9f9f9;
+    left: -8px;
     margin-left: 0;
     margin-bottom: -.6em;
     background-color: #efefef;
+    background: linear-gradient(to bottom,#efefef, #e2e2e2);
     border-radius: 100%;
     cursor: move;
-   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 .ui-widget-header{
     background: #dddddd;
@@ -670,6 +707,15 @@ input:checked + .slider.debug-slider{
 .ui-slider-vertical .ui-slider-range-max {
 	top: 0;
 }  
+
+.width100{
+    width: 100%;
+}
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 900px) {
 	.column-4.mobile-100, .column-6.mobile-100, .mobile-100 {
@@ -687,7 +733,7 @@ input:checked + .slider.debug-slider{
         top: 5%;
         left: 5%;
     }
-}
-.width100{
-    width: 100%;
+    .flex-center{
+      display: block;
+    }
 }
