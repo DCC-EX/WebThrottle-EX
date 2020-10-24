@@ -132,7 +132,7 @@ label.formbuilder-file-label {
     font-size: 14px;
 }
 .theme-section{
-    margin-right: 50px;
+    margin-right: 10px;
     font-size: 14px;
     width: 150px;
     float: right;
@@ -143,13 +143,14 @@ label.formbuilder-file-label {
 }
 .btn-hide{
     position: absolute;
-    right: 5px;
+    right: 0;
     top: -10px;
-    padding: 3px 8px;
     font-size: 13px;
     padding-right: 10px;
     border: 1px solid #9a9a9a;
     outline: none;
+    padding-top: 5px;
+    vertical-align: middle;
 }
 .arrow {
     border: solid black;

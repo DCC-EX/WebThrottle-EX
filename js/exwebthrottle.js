@@ -147,25 +147,29 @@ function setThrottleScreenUI() {
 
 // Change the Speed controller type
 function setspeedControllerType(pref){
+  console.log(pref);
   // Set saved throttle or use circular throttle as default
   $(".speedController").hide();
-  switch (pref){
-      case 'vertical':
-        console.log("Vertical Speed Controller");
-        $("#vertical-throttle").show();
-        break;
-      case 'knob':
-        console.log("Knob Speed Controller");
-        $("#knobthrottle").show();
-        break;
-      case 'circular':
-        console.log("Circular Speed Controller");
-        $("#circular-throttle").show();
-        break;
-      case 'default':
-        console.log("Fallback Speed Controller");
-        $("#vertical-throttle").show();
-        setPreference("scontroller", "vertical");
+  switch (pref) {
+    case "vertical":
+      console.log("Vertical Speed Controller");
+      $("#vertical-throttle").show();
+      break;
+    case "knob":
+      console.log("Knob Speed Controller");
+      $("#knobthrottle").show();
+      break;
+    case "circular":
+      console.log("Circular Speed Controller");
+      $("#circular-throttle").show();
+      break;
+    case "default":
+    case null:
+    case undefined:
+      console.log("Fallback Speed Controller");
+      $("#vertical-throttle").show();
+      setPreference("scontroller", "vertical");
+      $("#throttle-selector").val("vertical").trigger("change");
   }
 }
 
