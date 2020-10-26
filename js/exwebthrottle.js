@@ -84,9 +84,13 @@ function uiDisable (status) {
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
     if (status){
-        $("#throttle").roundSlider("disable");
+        //$("#throttle").roundSlider("disable");
+        //toggleThrottleState(false)
+        $("#button-getloco").trigger("click");
     } else {
-        $("#throttle").roundSlider("enable");
+        //$("#throttle").roundSlider("enable");
+        //toggleThrottleState(true)
+        //$("#button-getloco").trigger("click");
     }
 }
 
@@ -150,7 +154,14 @@ function setThrottleScreenUI() {
     if (getPreference("dbugConsole") == null) {
         setPreference("dbugConsole", true);
     }
-    getPreference("dbugConsole") ? $("#debug-console").show() : $("#debug-console").hide();
+    if(getPreference("dbugConsole")) {
+        $("#debug-console").show() 
+        $("#console-toggle").prop("checked", true);
+    }else{
+        $("#debug-console").hide();
+        $("#console-toggle").prop("checked", false);
+    }
+
     $(".dir-toggle").addClass("forward");
 
     // Set theme
@@ -426,13 +437,13 @@ $(document).ready(function(){
        kval = knob.val();
        $("#knob-value").html(kval);
         setSpeed(kval);
-        /*writeToStream(
+        writeToStream(
             "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-        );*/
+        );
         if (oldValue != kval) {
           setSpeedofControllers();
         }
-        console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+        //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
      });
 
     /////////////////////////////////////////////
@@ -454,7 +465,7 @@ $(document).ready(function(){
         update: function(slider){ 
             setSpeed(slider.value);
             setSpeedofControllers();
-            console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
         },
         valueChange: function(slider){
             //setSpeed(slider.value);
@@ -505,10 +516,10 @@ $(document).ready(function(){
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
-            $(this).html( 'Show <span class="arrow down"></span>');
+            $(this).html( '<span class="arrow down"></span>');
         }else{
             $(".details-panel").show();
-            $(this).html( 'Hide <span class="arrow up"></span>');
+            $(this).html( '<span class="arrow up"></span>');
         }
        
     });
@@ -609,7 +620,6 @@ $(document).ready(function(){
     // Hide/Show the Debug console
     $("#console-toggle").on('click',function(){
         pb = $(this).is(':checked');
-        
         if (pb == true){
             $("#debug-console").show();
             setPreference("dbugConsole", true);

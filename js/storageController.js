@@ -161,7 +161,7 @@ function loadButtons(data){
       btnType = value[1] != 0 ? "press" : "toggle";
       if(value[3]==1){
           $("#fn-wrapper").append(
-          "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
+          "<div class='fn-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
           btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
           value[2]+"</button>"
           +"</div>");
