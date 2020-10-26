@@ -62,6 +62,14 @@ label.formbuilder-file-label {
     border-radius: 4px;
     letter-spacing:0.5;
     text-align: center;
+    cursor: pointer;
+}
+.formbuilder-button .btn:active, 
+.server-button .btn:active, 
+.fn-button .btn:active{
+    background: #00899a; 
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
 }
 .formbuilder-button .btn, .server-button .btn{
     white-space: nowrap;
@@ -104,20 +112,20 @@ label.formbuilder-file-label {
     outline: none;
     border-bottom-width: 2px;
 }
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active{
+.fn-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active{
     background: #00899a; 
-    border: 1px solid #3e8e41;
-    box-shadow: 0 0 0 #9e9e9e;
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
 }
-.formbuilder-button.field-button-fn .btn.press{
+.fn-button.field-button-fn .btn.press{
     background: #4CAF50;
     border: 1px solid #3e8e41;
     box-shadow: 0px 1px 4px #9e9e9e;
 }
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn.press{
+.fn-button.field-button-fn button[aria-pressed="true"].btn.press{
     background: #3e8e41; 
-    border: 1px solid #3e8e41;
-    box-shadow: none;
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
 }
 .btn-grey{
     margin-top: 2px;
@@ -143,6 +151,7 @@ label.formbuilder-file-label {
     border: 1px solid #ddd;
     padding-bottom: 6px;
     outline: none;
+    cursor: pointer;
 }
 .sp-controller{
     font-size: 14px;
