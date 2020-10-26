@@ -161,7 +161,7 @@ function loadButtons(data){
       btnType = value[1] != 0 ? "press" : "toggle";
       if(value[3]==1){
           $("#fn-wrapper").append(
-          "<div class='formbuilder-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
+          "<div class='fn-button form-group field-button-fn'> <button class='btn-default btn fn-btn "+btnType+"' data-type='"+
           btnType+"' aria-pressed='"+isPressed+"' name='"+key+"'  id='"+key+"'>"+
           value[2]+"</button>"
           +"</div>");
@@ -376,12 +376,15 @@ function setPreference(pref, val){
   }else{
     curpref = {};
   }
-  switch (pref){
-    case "vThrottle": 
-      curpref["vThrottle"] = val;
+  switch (pref) {
+    case "scontroller":
+      curpref["scontroller"] = val;
       break;
     case "dbugConsole":
       curpref["dbugConsole"] = val;
+      break;
+    case "theme":
+      curpref["theme"] = val;
       break;
   }
   setUserPreferences(curpref);
@@ -396,7 +399,7 @@ function setUserPreferences(pref){
 
 /*
   {
-    "vThrottle": false,
+    "scontroller": 'vertical',
     "dbugConsole": true
   }
 */

@@ -24,12 +24,16 @@
     <head>
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link href="css/layout.css"  rel="stylesheet">
-        <link href="css/roundslider.min.css" rel="stylesheet" />
-        <link href="css/throttle.css"  rel="stylesheet">
+        <link href="css/layout.css"  rel="stylesheet" type="text/css">
+        <link href="css/roundslider.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/throttle.css"  rel="stylesheet" type="text/css">
+        <link href="css/jquery.rotaryswitch.css" rel="stylesheet" type="text/css">
+        <link href="css/icons.css"  rel="stylesheet" type="text/css">
+        <!-- <link href="css/themes/metallic.css"  title="theme" rel="stylesheet" type="text/css"> -->
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                       
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
+        <script  type="text/javascript" src="js/jquery.rotaryswitch.js"></script>
         <script  type="text/javascript" src="js/fnMaster.js"></script> 
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
@@ -82,7 +86,7 @@
                                 <option value="emulator">Emulator</option>
                             </select>
                             <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
-                                Connect DCC++ EX
+                                <span class="con-ind"></span>Connect DCC++ EX
                             </button>
                             <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
                         </div>
@@ -90,26 +94,42 @@
                     <hr>
                 </div>    
                 <div class="row">                 
-                    <div class="console-slider column-3">
-                        <label class="debug switch">
-                            <input type="checkbox" id="throttle-type">
-                            <span class="slider round debug-slider"></span>
-                        </label>
-                        <span class="debug-status">
-                            Use Vertical Slider
+                    <div class="column-3 sp-controller">
+                        <span class="">
+                            Speed Controller
                         </span>
-                    </div>    
-                    <div class="column-4" id="loco-info" style="text-align: center;">
+                        <select id="throttle-selector" class="btn throttle-selector select-control" name="throttleselector" title="Change Throttle Controller">
+                            <option value="vertical"> Vertical </option>
+                            <option value="knob"> Knob </option>
+                            <option value="circular"> Circular </option>
+                        </select>
+                    </div>   
 
+                    <div class="column-4" class="acq-loco-head" style="text-align: center;">
+                        <div class="loco-board">
+                            <span class="nut-effect l"></span>
+                            <span id="loco-info" class="loco-info">Acquire a Locomotive</span>
+                            <span class="nut-effect r"></span>
+                        </div>
                     </div>  
-                    <div class="column-3" style="position: relative;">                                    
-                        <button type="button" class="btn-default btn btn-hide" title="Hide the top bar" name="button-hide" access="false" id="button-hide">
-                            Hide <span class="arrow up"></span>
+                    <div class="column-3" style="position: relative;">
+                        <div class="theme-section">
+                            <span class="">
+                                Theme
+                            </span>
+                            <select id="theme-selector" class="btn theme-selector select-control" name="themeselector" title="Change Theme">
+                                <option value="simple"> Simple </option>
+                                <option value="metallic"> Metallic </option>
+                                <option value="dark"> Dark </option>
+                            </select>  
+                        </div>                               
+                        <button type="button" class="btn-default btn btn-hide" name="button-hide" access="false" id="button-hide">
+                            <span class="arrow up"></span>
                         </button> 
                     </div>
                 </div> 
  
-                <div class="row">
+                <div class="row flex-center">
                     <div class="column-5 mobile-100 throttle-container">
                         <div class="row mobile-100  width100 flexx">
                             <div class="column-7 flexx">
@@ -118,21 +138,22 @@
                                     <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
                                 </button>
                                 </div> 
-                            <!-- </div>                            -->
-                            <!-- <div class=" column-6"> -->
                                 <div class="Throttlewrap">
-                                    <div id="vertical-throttle" class="vertical-throttle">                              
+                                    <div id="vertical-throttle" class="vertical-throttle speedController">                              
                                         <div id="v-throttle">                                           
                                         </div>
                                         <div id="speed-indicator" class="progress-numb">
                                             0
                                         </div>
                                     </div>
-                                    <div id="throttle">
+                                    <div id="knobthrottle" class="speedController">
+                                        <input type="text" class="rotarySwitch" value="0">
+                                        <div id="knob-value" class="knob-value">0</div>
+                                    </div>
+                                    <div id="circular-throttle" class="circular-throttle speedController">
+                                        
                                     </div>
                                 </div>
-                            <!-- </div> -->
-                            <!-- <div class=" column-1"> -->
                                 <div class="flexx btns">
                                 <button type="button" title="Increase speed" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
                                     <span class="right">&nbsp;+&nbsp;</span>
@@ -142,9 +163,9 @@
                             
                             <div class=" column-2">
                                 <div class="dir-toggle">
-                                    <button class="dir-btn forward selected" id="dir-f" aria-label="forward" title="Forward" > <span class="arrow-up"></span></button>
-                                    <button class="dir-btn stop" id="dir-S" aria-label="stop" title="Stop"> <span class="stop"></span></button>
-                                    <button class="dir-btn backward" id="dir-b" aria-label="backward" title="Reverse"> <span class="arrow-down"></span></button>        
+                                    <button class="dir-btn forward selected" id="dir-f" aria-label="forward" ><span class="arrow-up icon-up"></span></button>
+                                    <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button>
+                                    <button class="dir-btn backward" id="dir-b" aria-label="backward"> <span class="arrow-down icon-down"></button>        
                                 </div>
                             </div>
                         </div>
@@ -202,16 +223,16 @@
                 <div id="debug-console" hidden="true">
                     <hr>
                     <div class="row mobile-margin-top20">
-                        <div class="formbuilder-text field-ex-email column-7">
+                        <div class="formbuilder-text column-8">
                             <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
                         </div>
                 
-                        <div class="formbuilder-button  column-1" style="padding: 5px 5px;">
+                        <div class="formbuilder-button column-1">
                             <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
                                 Send
                             </button>
                         </div>
-                        <div class="formbuilder-button  column-2" style="padding: 5px 20px;">
+                        <div class="formbuilder-button  dcmd-clear column-1">
                             <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog">
                                 Clear Log
                             </button>
