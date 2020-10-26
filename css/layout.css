@@ -1,6 +1,9 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
+   font-family: Arial, Helvetica, sans-serif;
+   margin: 0;
+   height: 100vh; 
 }
+
 hr{
     border-bottom: 1px solid #ffffff;
 }
@@ -59,7 +62,11 @@ hr{
     display: block;
     clear: both;
 }
-
+#rendered-form{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
 .rendered-form {
     background: #efefef;
     max-width: 1080px;
