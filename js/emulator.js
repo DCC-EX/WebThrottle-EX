@@ -11,12 +11,10 @@
 let lastMessage;
 var turnouts = [];
 function emulator(packet) {
-    console.log(packet)
     if (packet == "<credits>") {
         console.log("Credits")
         return credits()
     } else {
-    console.log("after if")
     packetKey = packet[1];
     if (packetKey == ' ') {
         packetKey = packet[2];

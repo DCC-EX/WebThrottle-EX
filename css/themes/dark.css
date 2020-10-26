@@ -1,0 +1,167 @@
+body{
+    background: #111111;
+}
+.rendered-form{
+    background: #1b1b1b;
+    background-image: url(../../images/carbon_fibre.png);
+    background-repeat: repeat;
+    color: #fff;
+    background-size: 16px;
+    border: 1px solid #303030;
+    box-shadow: 0px 0px 10px 0px #0c0c0c;
+}
+.rs-control .rs-bg-color{
+    background: #1b1b1b;
+    background-image: url(../../images/carbon_fibre.png);
+    background-repeat: repeat;
+    background-size: 16px;
+}
+.rs-control .rs-range-color{
+   background-color: #00A3B9;
+}
+
+label.formbuilder-text-label, 
+label.formbuilder-select-label, 
+label.formbuilder-textarea-label, 
+label.formbuilder-file-label{
+     color: #ffffff;
+}
+input.form-control, select.form-control, textarea.form-control {
+    border: 1px solid #3b3b3b;
+    border-radius: 4px;
+    background: #282828;
+    color: #ffffff;
+    box-shadow: inset 0px 0px 2px #000000;
+}
+.formbuilder-button .btn, .server-button .btn, .fn-button .btn {
+    box-shadow: 0px 0px 2px #000000;
+}
+.fn-button.field-button-fn .btn.press{
+    border: 1px solid #3e8e41;
+    box-shadow: 0px 0px 2px #000000;
+}
+.fn-button.field-button-fn button[aria-pressed="true"].btn.press{
+    border: 1px solid #3e8e41;
+    box-shadow: none;
+}
+.select-control {
+    border: 1px solid #3b3b3b;
+    border-radius: 4px;
+    background: #282828;
+    color: #ffffff;
+    box-shadow: inset 0px 0px 2px #000000;
+}
+.btn-grey{
+    background: #282828;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #afafaf;
+}
+.btn-hide{
+    background: #282828;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #afafaf; 
+}
+.btn-speed {
+    background: #282828;
+    border: 4px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #afafaf;
+}
+.btn-speed:hover {
+    background: #3f3f3f;
+    color: #FFFFFF;
+}
+.rotaryswitchPlugin.big .mark{
+    background: #111111;
+    box-shadow: inset 0px 0px 2px #000000;
+}
+
+.slider{
+    border: 1px solid #3b3b3b;
+    background: #121212;
+    box-shadow: inset 0px 0px 2px #000000;
+   -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+.slider:before {
+    left: 3px;
+    bottom: 2px;
+    background: #484848;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+}
+input:checked + .slider:before{
+    box-shadow: 0px 0px 2px #b40000;
+    border: 1px solid #ff3a3a;
+}
+input + .slider,
+input:checked + .slider{
+    box-shadow: inset 0px 0px 2px #000000;
+}
+input:checked + .slider.debug-slider{
+    box-shadow: inset 0px 0px 2px #000000;
+}
+input:checked + .slider.debug-slider:before{
+    box-shadow: 0px 0px 2px #00A3B9;
+    border: 1px solid #01b3ca;
+}
+.slider.debug-slider:before {
+    bottom: 1px;
+}
+.knob-value{
+        text-shadow: 0 0px 1px #000000, 0px 0px 4px #31d9f3;
+}
+.log-msg{
+    color: cyan;
+    border: 1px solid #3b3b3b;
+    background: #121212;
+    box-shadow: inset 0px 0px 2px #000000;
+}
+.dir-toggle {
+    background-color: #121212;
+    -moz-box-shadow: inset 0 0 5px #000000;
+    -webkit-box-shadow: inset 0 0 5px #000000;
+    box-shadow: inset 0 0 5px #000000;
+    border: 4px solid #141414;
+}
+.dir-toggle:before{
+    -moz-box-shadow: 0 0 5px #000000;
+    -webkit-box-shadow: 0 0 5px #000000;
+    box-shadow: 0 0 5px #000000;
+}
+
+
+.rotaryswitchPlugin.big.light { 
+  margin: 36px;
+  background: url(../../images/darkmkBigBackground.png) no-repeat;
+  background-size: 100%;
+  background-position: center;
+  display: inline-block;
+}
+
+.rotaryswitchPlugin.big.light .switch { 
+  background: url(../../images/darkmkBigFront.png) no-repeat; 
+  background-size: 93%;
+  background-position: center;
+}
+
+.ui-slider .ui-slider-range {
+    background: #282828;
+    box-shadow: inset 0 0 5px 0px #000;
+
+}
+.ui-widget.ui-widget-content {
+    border: 4px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+}
+.ui-slider-vertical .ui-slider-handle {
+    border: 1px solid #3f3f3f;
+    background-color: #282828;
+    background: linear-gradient(to bottom,#3b3b3b, #282828) ;
+}
+hr {
+    border-color: #3f3f3f;
+}

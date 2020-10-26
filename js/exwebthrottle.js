@@ -56,7 +56,7 @@ window.functions = {
     "f27": 0,
     "f28": 0
 };
-
+window.isStopped = true;
 let port;
 let emulatorMode;
 let reader;
@@ -84,9 +84,13 @@ function uiDisable (status) {
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
     if (status){
-        $("#throttle").roundSlider("disable");
+        //$("#throttle").roundSlider("disable");
+        //toggleThrottleState(false)
+        $("#button-getloco").trigger("click");
     } else {
-        $("#throttle").roundSlider("enable");
+        //$("#throttle").roundSlider("enable");
+        //toggleThrottleState(true)
+        //$("#button-getloco").trigger("click");
     }
 }
 
@@ -115,7 +119,7 @@ function setSpeed(sp){
 
 // Get Speed value
 function getSpeed(){
-    return window.speed;
+    return parseInt(window.speed);
 }
 
 // Set Direction 
@@ -128,33 +132,118 @@ function getDirection(dir){
     return window.direction;
 }
 
+// Handling Disabling functionality for Knob Type throttle (it will not Out of the box) 
+function toggleKnobState(ele, state) {
+    if(!state){
+        ele.addClass("disabled");
+    }else{
+        ele.removeClass("disabled");
+    }
+}
+
+//Initialization routine for Throttle screen
 function setThrottleScreenUI() {
-  loadmaps();
-  loadButtons({ mname: "default", fnData: fnMasterData });
+    loadmaps();
+    loadButtons({ mname: "default", fnData: fnMasterData });
 
+    controller = getPreference("scontroller");
+    $("#throttle-selector").val(controller).trigger("change");
+    setspeedControllerType(controller);
+
+    // Show and hide debug console based on prrference set in earlier session
+    if (getPreference("dbugConsole") == null) {
+        setPreference("dbugConsole", true);
+    }
+    if(getPreference("dbugConsole")) {
+        $("#debug-console").show() 
+        $("#console-toggle").prop("checked", true);
+    }else{
+        $("#debug-console").hide();
+        $("#console-toggle").prop("checked", false);
+    }
+
+    $(".dir-toggle").addClass("forward");
+
+    // Set theme
+    if (getPreference("theme") == null) {
+        setPreference("theme", "simple");
+    }else{
+        theme = getPreference("theme");
+        $("#theme-selector").val(theme).trigger("change");
+        console.log(theme);
+        if (theme != "simple") {
+            $("link[title*='theme']").remove();
+            $("head").append(
+                '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/'+theme+'.css">'
+            );
+        }
+    }
+}
+
+// Change the Speed controller type
+function setspeedControllerType(pref){
+  console.log(pref);
   // Set saved throttle or use circular throttle as default
+  $(".speedController").hide();
+  switch (pref) {
+    case "vertical":
+      console.log("Vertical Speed Controller");
+      $("#vertical-throttle").show();
+      break;
+    case "knob":
+      console.log("Knob Speed Controller");
+      $("#knobthrottle").show();
+      break;
+    case "circular":
+      console.log("Circular Speed Controller");
+      $("#circular-throttle").show();
+      break;
+    case "default":
+    case null:
+    case undefined:
+      console.log("Fallback Speed Controller");
+      $("#vertical-throttle").show();
+      setPreference("scontroller", "vertical");
+      $("#throttle-selector").val("vertical").trigger("change");
+  }
+}
 
-  if (getPreference("vThrottle") == null) {
-    setPreference("vThrottle", false);
-  }
-  if (getPreference("vThrottle")) {
-    $("#vertical-throttle").show();
-    $("#throttle").hide();
-    $("#throttle-type").attr("checked", "checked");
-  } else {
-    $("#vertical-throttle").hide();
-    $("#throttle").show();
-  }
+// Enabling/disabling Speed Controllers
+function toggleThrottleState(state){
+    if(state){
+        $("#circular-throttle").roundSlider("enable");
+        $("#v-throttle").slider("enable");
+        toggleKnobState($("#knobthrottle"), true);
+    }else{
+        $("#circular-throttle").roundSlider("disable");
+        $("#v-throttle").slider("disable");
+        toggleKnobState($("#knobthrottle"), false);
+    }
+}
 
-  // Show and hide debug console based on preference set in earlier session
-  if (getPreference("dbugConsole") == null) {
-    setPreference("dbugConsole", true);
-  }
-  getPreference("dbugConsole")
-    ? $("#debug-console").show()
-    ? document.getElementById("console-toggle").checked = true
-    : $("#debug-console").hide()
-    : document.getElementById("console-toggle").checked = false
+/********************************************************** 
+ * This function will
+    1. Send Speed command
+    2. Set speed value of all the available sliders/controllers
+    3. Set respctive speed number 
+************************************************************/
+function setSpeedofControllers(){
+    spd = getSpeed();
+    
+    if(!isStopped){
+        writeToStream("t 01 " + getCV() + " " + spd + " " + getDirection());
+    }
+    // Circular
+    $("#circular-throttle").roundSlider("setValue", spd);
+
+    // Vertical
+    $("#v-throttle").val(spd).change();  
+    $("#v-throttle").slider("option", "value", spd);
+    $("#speed-indicator").html(spd);
+
+    // Knob
+    $("#knob-value").html(spd);
+    knob.val(spd).change();
 }
 
 // This function will generate commands for each type of function
@@ -244,36 +333,28 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
-
     var mode = 0;
 
     // Load function map, buttons throttle etc
     setThrottleScreenUI()
-
-    $("#v-throttle").slider({
-      orientation: "vertical",
-      min: 0,
-      max: 126,
-      disabled: true,
-      range: "max",
-      slide: function (event, ui) {
-          $("#speed-indicator").html(ui.value);
-            setSpeed(ui.value);
-            writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-            console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-            $("#throttle").roundSlider("setValue", ui.value);
-      },
+    $("#throttle-selector").on("change", function (e) {
+      selectedval = $(this).val();  
+      console.log(selectedval);
+      setPreference("scontroller", selectedval);
+      setspeedControllerType(selectedval);
     });
-    $("#throttle-type").on("click", function () {
-        pb = $(this).is(":checked");   
-        if (pb == true){
-            $("#vertical-throttle").show();
-            $("#throttle").hide();
-            setPreference("vThrottle", true);
-        } else {
-            $("#vertical-throttle").hide();
-            $("#throttle").show();
-            setPreference("vThrottle", false);
+
+    $("#theme-selector").on("change", function (e) {
+        selectedval = $(this).val();
+        console.log(selectedval);
+        setPreference("theme", selectedval); 
+        $("link[title*='theme']").remove();
+        if (selectedval != "simple") {
+          $("head").append(
+            '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/' +
+              selectedval +
+              '.css">'
+          );
         }
     });
 
@@ -299,21 +380,16 @@ $(document).ready(function(){
                 $("#loco-info").html("Acquired Locomotive: "+locoid_input);
                 acButton.data("acquired", true);
                 acButton.html("Release");
-                $("#throttle").roundSlider("enable");
-                $("#v-throttle").slider("enable");
+                toggleThrottleState(true);
 
             }else{
-
                 currentCV = getCV();                     
                 $("#ex-locoid").val(0);
-
                 setCV(0);
                 $("#loco-info").html("Released Locomotive: "+currentCV);
                 acButton.data("acquired", false);
                 acButton.html("Acquire");
-                $("#throttle").roundSlider("disable");
-                $("#v-throttle").slider("disable");
-                $("#v-throttle").slider("option", "value", 0);
+                toggleThrottleState(false);
             }
         }
     });   
@@ -330,9 +406,49 @@ $(document).ready(function(){
             $("#power-status").html('Off');
         }
     });
+    ////////////////////////////////////
+    $("#v-throttle").slider({
+      orientation: "vertical",
+      min: 0,
+      max: 126,
+      disabled: true,
+      range: "max",
+      slide: function (event, ui) {
+        $("#speed-indicator").html(ui.value);
+        setSpeed(ui.value);
+        setSpeedofControllers();
+      },
+    });
 
+    /////////////////////////////////////////*/
+     knob = $(".rotarySwitch").rotaryswitch({
+       minimum: 0,
+       maximum: 126,
+       step: 2,
+       beginDeg: 210,
+       lengthDeg: 295,
+       minimumOverMaximum: true,
+       showMarks: true,
+       themeClass: "big light",
+     });
+     toggleKnobState($("#knobthrottle"), false);
+     knob.on("change", function () {
+       oldValue = getSpeed();
+       kval = knob.val();
+       $("#knob-value").html(kval);
+        setSpeed(kval);
+        writeToStream(
+            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+        );
+        if (oldValue != kval) {
+          setSpeedofControllers();
+        }
+        //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+     });
+
+    /////////////////////////////////////////////
     // Speed (round) Slider allows user to change the speed of the locomotive
-    Tht = $("#throttle").roundSlider({
+    Tht = $("#circular-throttle").roundSlider({
         width: 20,
         radius: 116,
         value: speed,
@@ -346,25 +462,10 @@ $(document).ready(function(){
         handleSize: "+18",
         max: "126",
         disabled: true,
-        create: function(){
-            //console.log("This will trigger just before creation of throttle slider UI");
-        },
-        start: function(){
-            //console.log("This event trigger when the user starts to drag the handle.");
-        },
-        stop: function(){
-            //console.log("This event trigger when the user stops from sliding the handle / when releasing the handle.");
-        },
-        beforeValueChange: function(){
-            //console.log("This event will trigger before the value change happens.");
-        },
-        update: function(slider){  // can change this to "drage" and write the stream in "change:" instead
+        update: function(slider){ 
             setSpeed(slider.value);
-            writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-            $("#v-throttle").slider("option", "value", slider.value);
-            $("#speed-indicator").html(slider.value);
-            console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-           // console.log("This event is the combination of 'drag' and 'change' events.");
+            setSpeedofControllers();
+            //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
         },
         valueChange: function(slider){
             //setSpeed(slider.value);
@@ -375,61 +476,50 @@ $(document).ready(function(){
 
     // Allows user to change the direction of the loco and STOP.
     $(".dir-btn").on('click', function(){
-        current = $(this);
-        dir = current.attr("aria-label");
-        $(".dir-btn").removeClass("selected");
-        current.addClass("selected", 200);
-
-        console.log(dir);
-        // Do direction stuff here
-        switch(dir){
-            case "forward":
-            { 
-                setDirection(1);
-                $("#throttle").roundSlider("enable");
-                $("#throttle").roundSlider("setValue", getSpeed());
-                $("#v-throttle").slider("enable");
-                $("#v-throttle").slider("option", "value", getSpeed());
-                $("#speed-indicator").html(getSpeed());
-                writeToStream("t 01 "+getCV()+" "+getSpeed()+" 1");
-                break;
-            }
-            case "backward":
-            { 
-                setDirection(0);
-                $("#throttle").roundSlider("enable");
-                $("#throttle").roundSlider("setValue", getSpeed());
-                $("#v-throttle").slider("enable");
-                $("#v-throttle").slider("option", "value", getSpeed());
-                $("#speed-indicator").html(getSpeed());
-                writeToStream("t 01 "+getCV()+" "+getSpeed()+" 0");
-                break;
-            }
-            case "stop":
-            { 
-                dir = getDirection();
-                //setDirection(-1); //direction = -1;
-                setSpeed(0);
-                writeToStream("t 01 "+getCV()+" -1 "+dir);
-                $("#throttle").roundSlider("disable");
-                $("#throttle").roundSlider("setValue", 0);
-                $("#v-throttle").slider("option", "value", 0);
-                $("#speed-indicator").html(0);
-                $("#v-throttle").slider("disable");
-                break;
-            }
+      current = $(this);
+      dir = current.attr("aria-label");
+      $(".dir-btn").removeClass("selected");
+      current.addClass("selected", 200);
+      console.log(dir);
+      $(".dir-toggle").removeClass("forward backward  stop");
+      $(".dir-toggle").addClass(dir);
+      
+      // Do direction stuff here
+      switch (dir) {
+        case "forward": {
+          isStopped = false;
+          setDirection(1);
+          setSpeedofControllers();
+          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
+          break;
         }
-
+        case "backward": {
+          isStopped = false;
+          setDirection(0);
+          setSpeedofControllers();
+          isStopped = false;
+          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
+          break;
+        }
+        case "stop": {
+          isStopped = true;
+          dir = getDirection();
+          setSpeed(0);
+          setSpeedofControllers();
+          writeToStream("t 01 " + getCV() + " -1 " + dir);
+          break;
+        }
+      }
     });
     
     // Hide/Show the Loco, Connect server fields (on top)
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
-            $(this).html( 'Show <span class="arrow down"></span>');
+            $(this).html( '<span class="arrow down"></span>');
         }else{
             $(".details-panel").show();
-            $(this).html( 'Hide <span class="arrow up"></span>');
+            $(this).html( '<span class="arrow up"></span>');
         }
        
     });
@@ -441,10 +531,8 @@ $(document).ready(function(){
         tId = setInterval(function(){
             var sp = getSpeed();
             if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
-                setSpeed(sp+speedStep);                       
-                $("#throttle").roundSlider("setValue", getSpeed());
-                 $("#v-throttle").slider("option", "value", getSpeed());
-                 $("#speed-indicator").html(getSpeed());
+                setSpeed(sp+speedStep);
+                setSpeedofControllers();                   
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
                 sp=0;
             }
@@ -456,9 +544,7 @@ $(document).ready(function(){
         var sp = getSpeed();
         if((sp <= 125) && (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp+speedStep);
-            $("#throttle").roundSlider("setValue", getSpeed());
-            $("#v-throttle").slider("option", "value", getSpeed());
-            $("#speed-indicator").html(getSpeed());
+            setSpeedofControllers();
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
             sp=0;
         }
@@ -473,9 +559,6 @@ $(document).ready(function(){
             var sp = getSpeed(sp);
             if((sp >= 1) && (getDirection() != -1) && (getCV() != 0)){
                 setSpeed(sp-speedStep);
-                $("#throttle").roundSlider("setValue", getSpeed());
-                $("#v-throttle").slider("option", "value", getSpeed());
-                $("#speed-indicator").html(getSpeed());
                 writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
                 sp=0;
             }
@@ -487,9 +570,7 @@ $(document).ready(function(){
         var sp = getSpeed(sp);
         if((sp >= 1)&& (getDirection() != -1) && (getCV() != 0)){
             setSpeed(sp-speedStep);
-            $("#throttle").roundSlider("setValue", getSpeed());
-            $("#v-throttle").slider("option", "value", getSpeed());
-            $("#speed-indicator").html(getSpeed());
+            setSpeedofControllers();
             writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
             sp=0;
         }
@@ -539,7 +620,6 @@ $(document).ready(function(){
     // Hide/Show the Debug console
     $("#console-toggle").on('click',function(){
         pb = $(this).is(':checked');
-        
         if (pb == true){
             $("#debug-console").show();
             setPreference("dbugConsole", true);
