@@ -80,7 +80,7 @@ input.form-control, select.form-control, textarea.form-control {
 
 .slider{
     border: 1px solid #3b3b3b;
-    background: #282828;
+    background: #121212;
     box-shadow: inset 0px 0px 2px #000000;
    -webkit-transition: .4s;
     transition: .4s;
