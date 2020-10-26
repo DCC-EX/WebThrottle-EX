@@ -84,9 +84,13 @@ function uiDisable (status) {
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
     if (status){
-        $("#throttle").roundSlider("disable");
+        //$("#throttle").roundSlider("disable");
+        //toggleThrottleState(false)
+        $("#button-getloco").trigger("click");
     } else {
-        $("#throttle").roundSlider("enable");
+        //$("#throttle").roundSlider("enable");
+        //toggleThrottleState(true)
+        //$("#button-getloco").trigger("click");
     }
 }
 
@@ -433,13 +437,13 @@ $(document).ready(function(){
        kval = knob.val();
        $("#knob-value").html(kval);
         setSpeed(kval);
-        /*writeToStream(
+        writeToStream(
             "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-        );*/
+        );
         if (oldValue != kval) {
           setSpeedofControllers();
         }
-        console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+        //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
      });
 
     /////////////////////////////////////////////
@@ -461,7 +465,7 @@ $(document).ready(function(){
         update: function(slider){ 
             setSpeed(slider.value);
             setSpeedofControllers();
-            console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
         },
         valueChange: function(slider){
             //setSpeed(slider.value);
