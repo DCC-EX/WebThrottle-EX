@@ -660,6 +660,19 @@ $(document).ready(function(){
             }
         }
     });
+
+    
+    $("#button-settings").on('mousedown', function(){
+        console.log("settings")
+        $("#body").toggle();
+        $("#settings-window").toggle();
+    }); 
+    $("#button-back").on('mousedown', function(){
+        console.log("settings")
+        $("#body").toggle();
+        $("#settings-window").toggle();
+    }); 
+
     eventListeners();
 
 });
@@ -674,6 +687,9 @@ function credits() {
         console.log(authors[i])
     }
 }
+
+
+
 
 function eventListeners(){
     var cmdDirect = document.getElementById("cmd-direct");
