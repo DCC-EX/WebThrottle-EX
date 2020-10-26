@@ -88,31 +88,13 @@
                                     <option value="emulator">Emulator</option>
                                 </select>
                                 <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
-                                    Connect DCC++ EX
-                                </button>
-                                <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>    
-                    <div class="row">                 
-                        <div class="column-3 sp-controller">
-                            <span class="">
-                                Speed Controller
-                            </span>
-                            <select id="throttle-selector" class="btn throttle-selector select-control" name="throttleselector" title="Change Throttle Controller">
-                                <option value="vertical"> Vertical </option>
-                                <option value="knob"> Knob </option>
-                                <option value="circular"> Circular </option>
-                            </select>
-                            <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
                                 <span class="con-ind"></span>Connect DCC++ EX
                             </button>
                             <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
                         </div>
                     </div>
                     <hr>
-                   
+                    </div>
                     <div class="row">                 
                         <div class="column-3 sp-controller">
                             <span class="">
@@ -131,21 +113,6 @@
                                 <span id="loco-info" class="loco-info">Acquire a Locomotive</span>
                                 <span class="nut-effect r"></span>
                             </div>
-                        </div>  
-                        <div class="column-3" style="position: relative;">
-                            <div class="theme-section">
-                                <span class="">
-                                    Theme
-                                </span>
-                                <select id="theme-selector" class="btn theme-selector select-control" name="themeselector" title="Change Theme">
-                                    <option value="simple"> Simple </option>
-                                    <option value="metallic"> Metallic </option>
-                                    <option value="dark"> Dark (WIP) </option>
-                                </select>  
-                            </div>                               
-                            <button type="button" class="btn-default btn btn-hide" title="Hide the top bar" name="button-hide" access="false" id="button-hide">
-                                <span class="arrow up"></span>
-                            </button> 
                         </div>  
                         <div class="column-3" style="position: relative;">
                             <div class="theme-section">
@@ -177,11 +144,16 @@
                                         <div id="vertical-throttle" class="vertical-throttle speedController">                              
                                             <div id="v-throttle">                                           
                                             </div>
+                                            <div id="speed-indicator" class="progress-numb">
+                                                0
+                                            </div>
+                                        </div>
                                             <div id="knobthrottle" class="speedController">
                                                 <input type="text" class="rotarySwitch" value="0">
                                                 <div id="knob-value" class="knob-value">0</div>
                                             </div>
                                             <div id="circular-throttle" class="circular-throttle speedController">     
+                                            
                                             </div>
                                         </div>
                                         <div class="flexx btns">
@@ -234,43 +206,7 @@
                                     </div>
                                 </div>
                                 <div class="row" id="fn-wrapper">      
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="console-slider column-4" title="Enable the debug console">
-                                <label class="debug switch">
-                                    <input type="checkbox" id="console-toggle">
-                                    <span class="slider round debug-slider"></span>
-                                </label>
-                                <span class="debug-status">
-                                    Debug Console
-                                </span>
-                            </div>
-                            <div class="settings-button">
-                                <button type="button" class="btn-default btn" name="Settings" id="button-settings"">Settings</button>
-                            </div>   
-                        </div>
-                        <div id="debug-console" hidden="true">
-                            <hr>
-                            <div class="row mobile-margin-top20">
-                                <div class="formbuilder-text field-ex-email column-7">
-                                    <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
-                                </div>
-                        
-                                <div class="formbuilder-button  column-1" style="padding: 5px 5px;">
-                                    <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
-                                        Send
-                                    </button>
-                                </div>
-                                <div class="formbuilder-button  column-2" style="padding: 5px 20px;">
-                                    <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog">
-                                        Clear Log
-                                    </button>
-                                </div>
-                            </div>       
-                            <div class="log-msg" id="log-box">
                             </div> 
                         </div>
                     </div>
@@ -304,6 +240,7 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="log-msg" id="log-box"></div>
                     </div>
                 </div>
 
