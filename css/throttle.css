@@ -29,15 +29,28 @@ label.formbuilder-file-label {
 }
 .throttle-heading{
     text-align: center;
-    padding-top: 23px;
+    padding-top: 28px;
+    font-size: 14px;
 }
 .throttle-heading p{
-    font-size: 12;
+    font-size: 12px;
     margin: 5px;
 }
 .server-button{
     padding-top: 29px;
     text-align: right;
+}
+.con-ind{
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background: red;
+    border-radius: 100%;
+    margin-right: 5px;
+    margin-left: -8px;
+}
+.con-ind.connected{
+    background: greenyellow;
 }
 .formbuilder-button .btn, .server-button .btn, .fn-button .btn{
     background: #00A3B9;

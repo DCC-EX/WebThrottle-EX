@@ -197,7 +197,7 @@ async function toggleServer(btn) {
     if (port || emulatorMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
-        btn.html("Connect DCC++ EX");
+        btn.html('<span class="con-ind"></span>Connect DCC++ EX'); //<span id="con-ind"></span>Connect DCC++ EX
         return;
     }
 
@@ -206,7 +206,7 @@ async function toggleServer(btn) {
     // Checks if the port was opened successfully
     if (success) {
         btn.attr('aria-state','Connected');
-        btn.html("Disconnect DCC++ EX");
+        btn.html('<span class="con-ind connected"></span>Disconnect DCC++ EX');
     } else {
         selectMethod.disabled = false;
     }
