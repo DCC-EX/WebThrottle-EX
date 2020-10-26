@@ -39,7 +39,7 @@ label.formbuilder-file-label {
     padding-top: 29px;
     text-align: right;
 }
-.formbuilder-button .btn, .server-button .btn{
+.formbuilder-button .btn, .server-button .btn, .fn-button .btn{
     background: #00A3B9;
     padding: 4px 12px;
     width: 100%;
@@ -50,6 +50,11 @@ label.formbuilder-file-label {
     letter-spacing:0.5;
     text-align: center;
 }
+.formbuilder-button .btn, .server-button .btn{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .server-button .btn{
     width:180px;
 }
@@ -57,7 +62,6 @@ label.formbuilder-file-label {
     padding-left: 0;
 }
 .acquire-wrap{
-    padding-left: 0;
     padding-top: 29px;
 }
 .button-acquire{
@@ -68,9 +72,9 @@ label.formbuilder-file-label {
     grid-template-columns: 25% 25% 25% 25%;
     width: 100%;
 }
-.formbuilder-button.field-button-fn{
+.fn-button.field-button-fn{
     text-align: center;
-    padding: 8px 0;
+    padding: 8px;
     display: flex;
     justify-content: center;
 }

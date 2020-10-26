@@ -44,7 +44,14 @@ hr{
     width: 70%;
     padding: 5px 15px;
 }
-
+.column-8{
+    width: 80%;
+    float: left;
+    padding: 5px 15px;
+}
+.dcmd-clear{
+    padding-left: 0;
+}
 
 /* Clear floats */
 .row:after {

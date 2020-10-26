@@ -49,8 +49,8 @@
   background-color: #efefef;
   background: linear-gradient(to bottom,#efefef, #e2e2e2);
 }
-.formbuilder-button.field-button-fn .btn, .save-fn , 
-.formbuilder-button.field-button-fn .btn.press{
+.fn-button.field-button-fn .btn, .save-fn , 
+.fn-button.field-button-fn .btn.press{
     color: rgb(59, 59, 59);
     border: 1px solid #9e9e9e;
     border-bottom: 4px solid #9e9e9e;
@@ -63,15 +63,15 @@
     cursor: pointer;
 }
 
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn, 
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn.press,
+.fn-button.field-button-fn button[aria-pressed="true"].btn, 
+.fn-button.field-button-fn button[aria-pressed="true"].btn.press,
 .save-fn:active {
     background: -webkit-gradient(linear, left top, left bottom, from(#cfd0da), to(#e2e2e2));
     background: -moz-linear-gradient(top, #bfbfbf, #dcdcdc);
     box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
     border: 1px solid #9e9e9e;
 }
-.formbuilder-button.field-button-fn .btn.press {
+.fn-button.field-button-fn .btn.press {
     color: #005a69;
 }
 
