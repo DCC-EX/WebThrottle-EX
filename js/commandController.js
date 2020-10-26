@@ -1,4 +1,5 @@
 /*  This is part of the DCC++ EX Project for model railroading and more.
+    For licence information, please see index.html
     For more information, see us at dcc-ex.com.
     
     commandController.js
@@ -8,6 +9,7 @@
 */
 $(document).ready(function(){
     console.log("Command Controller loaded");
+    uiDisable(true)
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -20,7 +22,7 @@ async function connectServer() {
     mode = selectMethod.value;
     // Disables selector so it can't be changed whilst connected
     selectMethod.disabled = true;
-    console.log("Set mode: "+mode)
+    console.log("Set Mode: "+mode)
     // Checks which method was selected
     if (mode == "serial") {
         try{
@@ -53,6 +55,7 @@ async function connectServer() {
             // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
             reader = inputStream.getReader();
             readLoop();
+            uiDisable(false)
             return true;
         } catch (err) {
             console.log("User didn't select a port to connect to")
@@ -60,9 +63,10 @@ async function connectServer() {
         }
     } else{
         // If using the emulator
-        emulator = true;
+        emulatorMode = true;
         // Displays dummy hardware message
         displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        uiDisable(false)
         return true;
     }
 }
@@ -93,12 +97,16 @@ function writeToStream(...lines) {
         const writer = outputStream.getWriter();
         lines.forEach((line) => {
             writer.write('<' + line + '>' + '\n');
+            console.log('<' + line + '>' + '\n')
             displayLog('[SEND]'+line.toString());
         });
         writer.releaseLock();
     } else {
         lines.forEach((line) => {
-            displayLog('[SEND]'+line.toString());
+            displayLog('[SEND] '+line.toString());
+            message = emulator('<' + line + '>')
+            console.log('<' + line + '>' + '\n')
+            displayLog('[RECEIVE] '+message);
         });
     }
 
@@ -152,6 +160,7 @@ async function disconnectServer() {
 	  $("#power-switch").prop('checked', false)
 	  $("#power-status").html('Off');
     }
+    uiDisable(true)
     if (port) {
     // Close the input stream (reader).
         if (reader) {
@@ -176,7 +185,7 @@ async function disconnectServer() {
         displayLog('close port');
     } else {
         // Disables emulator
-        emulator = undefined;
+        emulatorMode = undefined;
     }
     // Allows a new method to be chosen
     selectMethod.disabled = false;
@@ -185,7 +194,7 @@ async function disconnectServer() {
 // Connect or disconnect from the command station
 async function toggleServer(btn) {
     // If already connected, disconnect
-    if (port || emulator) {
+    if (port || emulatorMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
         btn.html("Connect DCC++ EX");
