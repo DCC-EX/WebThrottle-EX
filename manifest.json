@@ -3,9 +3,9 @@
     "name": "DCC++ EX Web Throttle",
     "icons": [
       {
-        "src": "/images/favicon.ico",
-        "type": "image/ico",
-        "sizes": "48x48"
+        "src": "/images/full-logo.png",
+        "type": "image/png",
+        "sizes": "176x176"
       }
     ],
     "start_url": "/",

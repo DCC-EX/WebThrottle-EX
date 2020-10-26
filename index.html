@@ -22,6 +22,7 @@
 	For more information, visit use at dcc-ex.com
 -->
     <head>
+        <link rel="manifest" href="/manifest.json">
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link href="css/layout.css"  rel="stylesheet">
@@ -244,6 +245,15 @@
     </body>
 
 </html>
+
+<script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function() {
+              console.log('Service Worker Registered');
+        });
+    }
+</script>
 
 <script>
     var cmdDirect = document.getElementById("cmd-direct");
