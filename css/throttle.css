@@ -29,17 +29,30 @@ label.formbuilder-file-label {
 }
 .throttle-heading{
     text-align: center;
-    padding-top: 23px;
+    padding-top: 28px;
+    font-size: 14px;
 }
 .throttle-heading p{
-    font-size: 12;
+    font-size: 12px;
     margin: 5px;
 }
 .server-button{
     padding-top: 29px;
     text-align: right;
 }
-.formbuilder-button .btn, .server-button .btn{
+.con-ind{
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background: red;
+    border-radius: 100%;
+    margin-right: 5px;
+    margin-left: -8px;
+}
+.con-ind.connected{
+    background: greenyellow;
+}
+.formbuilder-button .btn, .server-button .btn, .fn-button .btn{
     background: #00A3B9;
     padding: 4px 12px;
     width: 100%;
@@ -49,6 +62,19 @@ label.formbuilder-file-label {
     border-radius: 4px;
     letter-spacing:0.5;
     text-align: center;
+    cursor: pointer;
+}
+.formbuilder-button .btn:active, 
+.server-button .btn:active, 
+.fn-button .btn:active{
+    background: #00899a; 
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
+}
+.formbuilder-button .btn, .server-button .btn{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .server-button .btn{
     width:180px;
@@ -57,7 +83,6 @@ label.formbuilder-file-label {
     padding-left: 0;
 }
 .acquire-wrap{
-    padding-left: 0;
     padding-top: 29px;
 }
 .button-acquire{
@@ -68,9 +93,9 @@ label.formbuilder-file-label {
     grid-template-columns: 25% 25% 25% 25%;
     width: 100%;
 }
-.formbuilder-button.field-button-fn{
+.fn-button.field-button-fn{
     text-align: center;
-    padding: 8px 0;
+    padding: 8px;
     display: flex;
     justify-content: center;
 }
@@ -87,20 +112,20 @@ label.formbuilder-file-label {
     outline: none;
     border-bottom-width: 2px;
 }
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active{
+.fn-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active{
     background: #00899a; 
-    border: 1px solid #3e8e41;
-    box-shadow: 0 0 0 #9e9e9e;
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
 }
-.formbuilder-button.field-button-fn .btn.press{
+.fn-button.field-button-fn .btn.press{
     background: #4CAF50;
     border: 1px solid #3e8e41;
     box-shadow: 0px 1px 4px #9e9e9e;
 }
-.formbuilder-button.field-button-fn button[aria-pressed="true"].btn.press{
+.fn-button.field-button-fn button[aria-pressed="true"].btn.press{
     background: #3e8e41; 
-    border: 1px solid #3e8e41;
-    box-shadow: none;
+    border: 1px solid #282828;
+    box-shadow: inset 0 0 3px #282828;
 }
 .btn-grey{
     margin-top: 2px;
@@ -126,9 +151,9 @@ label.formbuilder-file-label {
     border: 1px solid #ddd;
     padding-bottom: 6px;
     outline: none;
+    cursor: pointer;
 }
 .sp-controller{
-    padding-top: 0;
     font-size: 14px;
 }
 .theme-section{
@@ -136,7 +161,6 @@ label.formbuilder-file-label {
     font-size: 14px;
     width: 150px;
     float: right;
-    margin-top: -5px;
 }
 .select-map{
     width: 100px;
@@ -149,7 +173,7 @@ label.formbuilder-file-label {
     padding-right: 10px;
     border: 1px solid #9a9a9a;
     outline: none;
-    padding-top: 5px;
+    padding-top: 3px;
     vertical-align: middle;
 }
 .arrow {
