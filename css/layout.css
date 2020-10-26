@@ -70,7 +70,7 @@ hr{
 .rendered-form {
     background: #efefef;
     max-width: 1080px;
-    min-width: 480px;
+    min-width: 1024px;
     border-radius: 4px;
     box-shadow: 0px 0px 10px 0px #666666;
     font-family: Arial, Helvetica, sans-serif;
