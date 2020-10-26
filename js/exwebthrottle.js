@@ -150,7 +150,14 @@ function setThrottleScreenUI() {
     if (getPreference("dbugConsole") == null) {
         setPreference("dbugConsole", true);
     }
-    getPreference("dbugConsole") ? $("#debug-console").show() : $("#debug-console").hide();
+    if(getPreference("dbugConsole")) {
+        $("#debug-console").show() 
+        $("#console-toggle").prop("checked", true);
+    }else{
+        $("#debug-console").hide();
+        $("#console-toggle").prop("checked", false);
+    }
+
     $(".dir-toggle").addClass("forward");
 
     // Set theme
@@ -505,10 +512,10 @@ $(document).ready(function(){
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
-            $(this).html( 'Show <span class="arrow down"></span>');
+            $(this).html( '<span class="arrow down"></span>');
         }else{
             $(".details-panel").show();
-            $(this).html( 'Hide <span class="arrow up"></span>');
+            $(this).html( '<span class="arrow up"></span>');
         }
        
     });
@@ -609,7 +616,6 @@ $(document).ready(function(){
     // Hide/Show the Debug console
     $("#console-toggle").on('click',function(){
         pb = $(this).is(':checked');
-        
         if (pb == true){
             $("#debug-console").show();
             setPreference("dbugConsole", true);

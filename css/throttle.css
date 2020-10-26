@@ -132,7 +132,6 @@ label.formbuilder-file-label {
     outline: none;
 }
 .sp-controller{
-    padding-top: 0;
     font-size: 14px;
 }
 .theme-section{
@@ -140,7 +139,6 @@ label.formbuilder-file-label {
     font-size: 14px;
     width: 150px;
     float: right;
-    margin-top: -5px;
 }
 .select-map{
     width: 100px;
@@ -153,7 +151,7 @@ label.formbuilder-file-label {
     padding-right: 10px;
     border: 1px solid #9a9a9a;
     outline: none;
-    padding-top: 5px;
+    padding-top: 3px;
     vertical-align: middle;
 }
 .arrow {
