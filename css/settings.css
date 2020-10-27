@@ -23,8 +23,8 @@
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    background: rgba(204, 204, 204, 0.3);
-    border-right: 1px solid #00A3B9;
+    /*background: rgba(204, 204, 204, 0.3);*/
+    border-right: 1px solid #8b8b8b;
     padding: 20px;
 }
 
