@@ -5,7 +5,8 @@
   /* Style the header */
 .settings-heading {
     /*background-color: #666;*/
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: center;
     font-size: 35px;
     /*color: white;*/
@@ -41,6 +42,12 @@
     /*background-color: #f1f1f1;*/
     padding: 10px;
 }
+
+.back-button{
+    text-align: left;
+    padding: 10px;
+}
+
 
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
 @media (max-width: 600px) {

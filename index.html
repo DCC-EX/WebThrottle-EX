@@ -96,7 +96,7 @@
                     <hr>
                     </div>
                     <div class="row">                 
-                        <div class="column-3 sp-controller">
+                        <!--<div class="column-3 sp-controller">
                             <span class="">
                                 Speed Controller
                             </span>
@@ -105,7 +105,7 @@
                                 <option value="knob"> Knob </option>
                                 <option value="circular"> Circular </option>
                             </select>
-                        </div>   
+                        </div>-->
 
                         <div class="column-4" class="acq-loco-head" style="text-align: center;">
                             <div class="loco-board">
@@ -113,9 +113,10 @@
                                 <span id="loco-info" class="loco-info">Acquire a Locomotive</span>
                                 <span class="nut-effect r"></span>
                             </div>
-                        </div>  
+                        </div>
+                        
                         <div class="column-3" style="position: relative;">
-                            <div class="theme-section">
+                            <!--<div class="theme-section">
                                 <span class="">
                                     Theme
                                 </span>
@@ -123,8 +124,8 @@
                                     <option value="simple"> Simple </option>
                                     <option value="metallic"> Metallic </option>
                                     <option value="dark"> Dark </option>
-                                </select>  
-                            </div>                               
+                                </select> 
+                            </div>-->
                             <button type="button" class="btn-default btn btn-hide" title="Hide the top bar" name="button-hide" access="false" id="button-hide">
                                 <span class="arrow up"></span>
                             </button> 
@@ -270,6 +271,28 @@
                                 General
                             </div>
                             <div>
+                                <!--<div class="theme-section">-->
+                                <div>
+                                    <span class="">
+                                        Theme
+                                    </span>
+                                    <select id="theme-selector" class="btn theme-selector select-control" name="themeselector" title="Change Theme">
+                                        <option value="simple"> Simple </option>
+                                        <option value="metallic"> Metallic </option>
+                                        <option value="dark"> Dark </option>
+                                    </select>  
+                                </div>
+                                <!--<div class="column-3 sp-controller">-->
+                                <div>
+                                    <span class="">
+                                        Speed Controller
+                                    </span>
+                                    <select id="throttle-selector" class="btn throttle-selector select-control" name="throttleselector" title="Change Throttle Controller">
+                                        <option value="vertical"> Vertical </option>
+                                        <option value="knob"> Knob </option>
+                                        <option value="circular"> Circular </option>
+                                    </select>
+                                </div>
                                 settings go here
                             </div>
                         </div>
