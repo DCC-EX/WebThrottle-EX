@@ -372,14 +372,16 @@ $(document).ready(function(){
     $("#button-getloco").on('click',function(){
         acButton = $(this);
         isAcquired = $(this).data("acquired");
-        locoid_input = $("#ex-locoid").val();
+        // Parse int only returns number if the string is starting with Number
+        locoid_input = parseInt($("#ex-locoid").val());
+
         if (locoid_input!=0){
             if(isAcquired == false && getCV()==0){ 
                 
                 setCV(locoid_input);
                 $("#loco-info").html("Acquired Locomotive: "+locoid_input);
                 acButton.data("acquired", true);
-                acButton.html("Release");
+                acButton.html('<span class="icon-cross"></span>');
                 toggleThrottleState(true);
 
             }else{
@@ -388,7 +390,7 @@ $(document).ready(function(){
                 setCV(0);
                 $("#loco-info").html("Released Locomotive: "+currentCV);
                 acButton.data("acquired", false);
-                acButton.html("Acquire");
+                acButton.html('<span class="icon-circle-right"></span>');
                 toggleThrottleState(false);
             }
         }
@@ -437,11 +439,12 @@ $(document).ready(function(){
        kval = knob.val();
        $("#knob-value").html(kval);
         setSpeed(kval);
-        writeToStream(
-            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-        );
+        // Below condition is to avoid infinite loop
+        // that triggers change() event indifinitely
         if (oldValue != kval) {
-          setSpeedofControllers();
+            setSpeedofControllers();
+        }else{
+            writeToStream("t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
         }
         //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
      });
