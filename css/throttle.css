@@ -27,9 +27,12 @@ label.formbuilder-file-label {
     font-weight:400;
     color: #00353D;
 }
+.details-panel{
+    margin-top: 8px;
+}
 .throttle-heading{
     text-align: center;
-    padding-top: 28px;
+    padding-top: 20px;
     font-size: 14px;
 }
 .throttle-heading p{
@@ -37,7 +40,7 @@ label.formbuilder-file-label {
     margin: 5px;
 }
 .server-button{
-    padding-top: 29px;
+    padding-top: 24px;
     text-align: right;
 }
 .con-ind{
@@ -91,6 +94,7 @@ label.formbuilder-file-label {
 
 .server-button .btn{
     width:180px;
+    padding: 8px;
 }
 
 .settings-button .btn {
@@ -106,11 +110,13 @@ label.formbuilder-file-label {
     padding-left: 0;
 }
 .acquire-wrap{
-    padding-top: 29px;
+    padding-top: 24px;
+    padding-left: 0;;
 }
 .button-acquire{
     width:100px;
 }
+
 #fn-wrapper{
     display: inline-grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -151,17 +157,17 @@ label.formbuilder-file-label {
     box-shadow: inset 0 0 3px #282828;
 }
 .btn-grey{
-    margin-top: 2px;
     background: #dbdbdb;
     border: 1px solid #a8a8a8;
     box-shadow: 0px 0px 1px #9e9e9e;
     border-radius: 4px;
     font-size: 14px;
-    padding-top: 0px;
+    padding: 8px;
     outline: none;
     line-height: 15px;
-    height: 25px;
+    width: 33px;
     vertical-align: top;
+    height: 33px;
 }
 .btn.edit-labels:active, .btn.load-labels:active{
     box-shadow: none;
@@ -175,6 +181,9 @@ label.formbuilder-file-label {
     padding-bottom: 6px;
     outline: none;
     cursor: pointer;
+}
+.select-xl{
+    padding: 8px;
 }
 .sp-controller{
     font-size: 14px;
@@ -756,6 +765,88 @@ input:checked + .slider.debug-slider{
 	top: 0;
 }  
 
+/* Add Loco Styles */
+
+.loco-list-container{
+    position: relative;
+}
+.loco-list-ctrl{
+    padding:0;
+}
+.loco-list-ctrl input{
+    width: 100%;
+    margin: 0;
+    padding: 5px 8px;
+    border-radius: 4px;
+    background: #ffffff;
+    border: 1px solid #c1c1c1;
+    box-sizing: border-box;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+    height: 34px;
+}
+.formbuilder-button .btn.add-loco-btn{
+    font-size: 12px;
+    padding: 8px 7px;
+    margin-top: -1px;
+}
+.formbuilder-button .btn.acq-loco-btn{
+    padding: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-top: -1px;
+}
+.btn.acq-loco-btn .icon-circle-right{
+    vertical-align: middle;
+    padding-bottom: 1px;
+    display: inline-block;
+}
+.btn.acq-loco-btn .icon-cross{
+    font-size: 10px;
+}
+.add-loco-form::before{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: -12px;
+    left: 200px;
+    width: 0; 
+    height: 0; 
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid cornflowerblue;
+}
+.add-loco-form{
+    width: 380px;
+    display: none;
+    background-color: cornflowerblue;
+    position: absolute;
+    left: 74px;
+    top: 103px;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    z-index: 1000;
+}
+.add-select{
+    height: 30px;
+}
+.ui-autocomplete.res-list{
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    background: #fff;
+}
+.ui-autocomplete.res-list-sm{
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1010;
+}
+
+/* Common Styles*/
 .width100{
     width: 100%;
 }
