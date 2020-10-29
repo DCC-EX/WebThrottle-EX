@@ -672,12 +672,12 @@ $(document).ready(function(){
     });
 
     
-    $("#button-settings").on('mousedown', function(){
+    $("#button-settings").on('click', function(){
         console.log("settings")
         $("#body").toggle();
         $("#settings-window").toggle();
     }); 
-    $("#button-back").on('mousedown', function(){
+    $("#button-back").on('click', function(){
         console.log("settings")
         $("#body").toggle();
         $("#settings-window").toggle();
