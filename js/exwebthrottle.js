@@ -150,7 +150,7 @@ function setThrottleScreenUI() {
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);
 
-    // Show and hide debug console based on prrference set in earlier session
+    // Show and hide debug console based on preference set in earlier session
     if (getPreference("dbugConsole") == null) {
         setPreference("dbugConsole", true);
     }
@@ -334,7 +334,33 @@ function generateFnCommand(clickedBtn){
 
 $(document).ready(function(){
     var mode = 0;
+    // Left Menu
+    $("#nav-open").on("click", function () { 
+        $("#side-menu").show().animate({ left: 0 });
+    });
+    $("#nav-close").on("click", function () {
+        $("#side-menu").animate({ left: -260 }, function(){
+            $("#side-menu").hide();
+        });
+    });
 
+    $("#info-tooltip").tooltip({
+        content:
+          "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+        show: {
+        effect: "slideDown",
+        delay: 100,
+        },
+        classes: {
+          "ui-tooltip": "credits-tooltip",
+        },
+        position: {
+          my: "left top",
+          at: "left bottom",
+        },
+      });
+
+    
     // Load function map, buttons throttle etc
     setThrottleScreenUI()
     $("#throttle-selector").on("change", function (e) {
@@ -519,10 +545,10 @@ $(document).ready(function(){
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
-            $(this).html( '<span class="arrow down"></span>');
+            $(this).html( '<span class="icon-circle-down"></span>');
         }else{
             $(".details-panel").show();
-            $(this).html( '<span class="arrow up"></span>');
+            $(this).html('<span class="icon-circle-up"></span>');
         }
        
     });
