@@ -8,140 +8,159 @@
 */
 
 $(document).ready(function(){
-              // This is displays message about Local storage Support of the Local browser
-              if (typeof(Storage) !== "undefined") {
-                console.log("Your browser supports Local Storage");
-              } else {
-                console.log("Sorry! Your browser does not supporting Local Storage"); 
-              }
+    // This is displays message about Local storage Support of the Local browser
+    if (typeof(Storage) !== "undefined") {
+        console.log("Your browser supports Local Storage");
+    } else {
+        console.log("Sorry! Your browser does not supporting Local Storage"); 
+    }
 
-              // Opens NEW MAP window with all fields empty
-              $("#new-map").on('click', function(){
-                $("#save-fn-map").attr("mode","new");
-                $(".fn-heading").html("New Mapping");
-                showBtnConfig({ mname: "" , fnData: fnMasterData});
-              });
+    // Opens NEW MAP window with all fields empty
+    $("#new-map").on('click', function(){
+        $("#save-fn-map").attr("mode","new");
+        $(".fn-heading").html("New Mapping");
+        showBtnConfig({ mname: "" , fnData: fnMasterData});
+    });
 
-              // This will Load buttons on selecting a map from the select box
-              $("#select-map").change(function () {
-                  selectedval = $(this).val();    
-                  if(selectedval != "default"){
-                      data  = getStoredFuncData(selectedval);
-                      loadButtons(data);
-                  }else{
-                      loadButtons({ mname: "default" , fnData: fnMasterData});
-                  }
-              });
+    // This will Load buttons on selecting a map from the select box
+    $("#select-map").change(function () {
+        selectedval = $(this).val();    
+        if(selectedval != "default"){
+            data  = getStoredFuncData(selectedval);
+            loadButtons(data);
+        }else{
+            loadButtons({ mname: "default" , fnData: fnMasterData});
+        }
+    });
 
-              // Opens MAP window with all fields filled from the selected map that allows editing Map
-              $("#edit-map").on('click', function(){
-                  $("#save-fn-map").attr("mode","edit");
-                  $(".fn-heading").html("Edit Mapping");
-                  selectedval = $("#select-map").val();      
-                  if(selectedval != "default"){
-                      data  = getStoredFuncData(selectedval); 
-                      showBtnConfig(data);
-                  }else{
-                      alert("Cannot edit Default mapping!");
-                  }
-              //showBtnConfig();
-              });
+    // Opens MAP window with all fields filled from the selected map that allows editing Map
+    $("#edit-map").on('click', function(){
+        $("#save-fn-map").attr("mode","edit");
+        $(".fn-heading").html("Edit Mapping");
+        selectedval = $("#select-map").val();      
+        if(selectedval != "default"){
+            data  = getStoredFuncData(selectedval); 
+            showBtnConfig(data);
+        }else{
+            alert("Cannot edit Default mapping!");
+        }
+    //showBtnConfig();
+    });
 
-              // Closes MAP window on clicking X icon
-              $("#close-model").on('click', function(){
-                $("#fnModal").hide();
-              });
+    // Closes MAP window on clicking X icon
+    $("#close-model").on('click', function(){
+    $("#fnModal").hide();
+    });
 
-              //This will check for Save mode (NEW MAP / EDIT MAP) and delegate the functionality
-              $("#save-fn-map").on('click', function(){
-                mode = $(this).attr("mode");
-                // alert(mode); // debug line
-                if(mode=="new"){
-                    addNewMap();  
-                }else{
-                    editMap();
-                }  
-              });
+    //This will check for Save mode (NEW MAP / EDIT MAP) and delegate the functionality
+    $("#save-fn-map").on('click', function(){
+    mode = $(this).attr("mode");
+    // alert(mode); // debug line
+    if(mode=="new"){
+        addNewMap();  
+    }else{
+        editMap();
+    }  
+    });
 
-              //Allows user to download the selected map in .JSON format
-              $("#download-map").on('click', function(){
-                  map = $("#select-map").val();
-                  if (map != 'default'){
-                      downloadMapData(map);
-                  }else{
-                      alert("Please select Custom Map.");
-                  }
-              });
+    //Allows user to download the selected map in .JSON format
+    $("#download-map").on('click', function(){
+        map = $("#select-map").val();
+        if (map != 'default'){
+            downloadMapData(map);
+        }else{
+            alert("Please select Custom Map.");
+        }
+    });
 
-              // This remove whole exthrottle app data but with confirmation
-              $("#wipe-map").on('click', function(){
-                var r = confirm("Are you sure on deletion?");
-                if (r == true) {
-                  window.localStorage.removeItem('locoData');
-                  console.log("!!!!!!WIPED!!!!!!");
-                  loadmaps();
-                }
-              });
+    // This remove whole exthrottle app data but with confirmation
+    $("#wipe-map").on('click', function(){
+        var r = confirm("Are you sure on deletion?");
+        if (r == true) {
+            window.localStorage.removeItem('locoData');
+            console.log("!!!!!!WIPED!!!!!!");
+            loadmaps();
+        }
+    });
 
-              // This allows user to delete currently selected Map
-              $("#delete-map").on('click', function(){
-                selectedval = $("#select-map").val();      
-                if(selectedval != "default"){
-                  deleteFuncData(selectedval);
-                  loadmaps();
-                  $("#select-map").val("default").trigger("change");
-                }
-              });
+    // This allows user to delete currently selected Map
+    $("#delete-map").on('click', function(){
+        selectedval = $("#select-map").val();      
+        if(selectedval != "default"){
+            deleteFuncData(selectedval);
+            loadmaps();
+            $("#select-map").val("default").trigger("change");
+        }
+    });
 
-              // This allows user to download whole exthrottle app data
-              $("#backup-map").on('click', function(){
-                getBackup();
-              });
+    // This allows user to download whole exthrottle app data
+    $("#backup-map").on('click', function(){
+        getBackup();
+    });
 
-              // This allows user to upload previously downloaded Map (JSON format must adhere)
-              $("#restore-map").on('click', function(e){
-                e.preventDefault();
-                $("#map-upload").trigger('click');
-              });
-              // This part of above which is responsible for actual file upload for MAP
-              $("#map-upload").on('change',function(e){
-                var file = e.target.files[0];
-                var field = $(this);
-                var freader = new FileReader();
-                freader.onload =  function(evt){ 
-                  data = JSON.parse(evt.target.result);
-                  setLocoData(data);
-                  field.val('');
-                };
-                freader.readAsText(file);
-              });
+    // This allows user to upload previously downloaded Map (JSON format must adhere)
+    $("#restore-map").on('click', function(e){
+        e.preventDefault();
+        $("#map-upload").trigger('click');
+    });
+    // This part of above which is responsible for actual file upload for MAP
+    $("#map-upload").on('change',function(e){
+        var file = e.target.files[0];
+        var field = $(this);
+        var freader = new FileReader();
+        freader.onload =  function(evt){ 
+            data = JSON.parse(evt.target.result);
+            setLocoData(data);
+            field.val('');
+        };
+        freader.readAsText(file);
+    });
 
-              // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
-              $("#restore-app").on('click', function(e){
-                e.preventDefault();
-                $("#appdata-upload").trigger('click');
-              });
-              // This part of above which is responsible for actual file upload for APP DATA
-              $("#appdata-upload").on('change',function(e){
-                  var file = e.target.files[0];
-                  var field = $(this);
-                  var freader = new FileReader();
-                  freader.onload =  function(evt){ 
-                    data = JSON.parse(evt.target.result);
-                    importAppData(data);
-                    field.val('');
-                  };
-                  freader.readAsText(file);
-              });
+    // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
+    $("#restore-app").on('click', function(e){
+        e.preventDefault();
+        $("#appdata-upload").trigger('click');
+    });
+    // This part of above which is responsible for actual file upload for APP DATA
+    $("#appdata-upload").on('change',function(e){
+        var file = e.target.files[0];
+        var field = $(this);
+        var freader = new FileReader();
+        freader.onload =  function(evt){ 
+        data = JSON.parse(evt.target.result);
+        importAppData(data);
+        field.val('');
+        };
+        freader.readAsText(file);
+    });
 
-              // Set height of throttle container according to functions panel
-              $(".throttle-container").height($(".functionKeys").first().height());
+    // Set height of throttle container according to functions panel
+    $(".throttle-container").height($(".functionKeys").first().height());
 
-              //Temparory function Shows APP DATA in console
-              $("#loco-info").on('click', function(){
-                console.log(getWebData());
-              });
+    //Temparory function Shows APP DATA in console
+    $("#loco-info").on('click', function(){
+        console.log(getWebData());
+    });
 
+    //Functions for the storage page in settings
+
+    $("#backup-app-settings").on('click', function(){
+        getBackup();
+    });
+    
+    $("#restore-app-settings").on('click', function(e){
+        e.preventDefault();
+        $("#appdata-upload").trigger('click');
+    });
+
+    $("#wipe-app-settings").on('click', function(){
+        var r = confirm("Are you sure on deletion?");
+        if (r == true) {
+            window.localStorage.removeItem('locoData');
+            console.log("!!!!!!WIPED!!!!!!");
+            loadmaps();
+        }
+    });
 });
 
 // Load all maps to select box

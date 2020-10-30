@@ -728,6 +728,16 @@ $(document).ready(function(){
 
     eventListeners();
 
+    $("#settings-general").on('click', function(){
+        hideSettings();
+        $("#general-section").show();
+    });
+
+    $("#settings-storage").on('click', function(){
+        hideSettings();
+        $("#storage-section").show();
+    });
+
 });
 
 
@@ -736,6 +746,11 @@ function hideWindows(){
     $("#loco-window").hide();
     $("#fn-map-window").hide();
     $("#settings-window").hide();
+}
+
+function hideSettings(){
+    $("#general-section").hide();
+    $("#storage-section").hide();
 }
 
 function credits() {
