@@ -64,7 +64,7 @@ hr{
 }
 .throttle-heading{
     text-align: center;
-    padding-top:6px;
+    padding-top:5px;
     font-size: 14px;
     display: inline-block;
 }
@@ -74,6 +74,8 @@ hr{
     background: url(../images/WebThrottle.png);
     display: inline-block;
     background-size: 100%;
+    box-shadow: 0 0 3px #989898;
+    border-radius: 6px;
 }
 .throttle-heading p{
     font-size: 12px;
@@ -88,7 +90,7 @@ hr{
     box-shadow: 0 0 4px #aaa;
 }
 #rendered-form{
-    margin-bottom: 20px;
+    margin-bottom: 64px;
     /*display: flex;
     height: 100%;
     align-items: center;*/
@@ -197,4 +199,7 @@ hr{
 }
 .align-center{
     text-align: center;
+}
+.pos-rel{
+    position: relative;
 }
