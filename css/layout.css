@@ -87,11 +87,12 @@ hr{
     border-radius: 4px;
     box-shadow: 0 0 4px #aaa;
 }
-/* #rendered-form{
-    display: flex;
+#rendered-form{
+    margin-bottom: 20px;
+    /*display: flex;
     height: 100%;
-    align-items: center; 
-}*/
+    align-items: center;*/
+}
 .rendered-form {
     background: #efefef;
     max-width: 1080px;

@@ -150,7 +150,7 @@ function setThrottleScreenUI() {
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);
 
-    // Show and hide debug console based on prrference set in earlier session
+    // Show and hide debug console based on preference set in earlier session
     if (getPreference("dbugConsole") == null) {
         setPreference("dbugConsole", true);
     }
