@@ -545,10 +545,12 @@ $(document).ready(function(){
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
+            $(this).css("top",0)
             $(this).html( '<span class="icon-circle-down"></span>');
         }else{
             $(".details-panel").show();
             $(this).html('<span class="icon-circle-up"></span>');
+            $(this).css("top", '-9px');
         }
        
     });
@@ -745,8 +747,6 @@ function credits() {
         console.log(authors[i])
     }
 }
-
-
 
 
 function eventListeners(){

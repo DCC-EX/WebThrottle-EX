@@ -64,7 +64,7 @@ hr{
 }
 .throttle-heading{
     text-align: center;
-    padding-top:6px;
+    padding-top:5px;
     font-size: 14px;
     display: inline-block;
 }
@@ -197,4 +197,7 @@ hr{
 }
 .align-center{
     text-align: center;
+}
+.pos-rel{
+    position: relative;
 }
