@@ -4,12 +4,10 @@
 
   /* Style the header */
 .settings-heading {
-    /*background-color: #666;*/
-    padding-left: 20px;
-    padding-right: 20px;
-    text-align: center;
-    font-size: 35px;
-    /*color: white;*/
+    padding: 20px;
+    text-align: left;
+    font-size: 30px;
+    border-bottom: 1px solid #bbbbbb;
 }
   
 /* Container for flexboxes */
@@ -20,27 +18,61 @@
 
 /* Style the navigation menu */
 .side-panel {
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    /*background: rgba(204, 204, 204, 0.3);*/
-    border-right: 1px solid #8b8b8b;
+    width: 200px;
+    border-right: 1px solid #bbbbbb;
     padding: 20px;
 }
-
+.settings-section{
+    margin-top: 15px;
+}
 /* Style the list inside the menu */
 .side-panel ul {
     list-style-type: none;
+    margin: 5px 0;
     padding: 0;
 }
-
+.side-panel ul li {
+    padding: 10px 5px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+.settings-subheading{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.settings-group{
+    border-radius: 5px;
+    border: 1px solid silver;
+    padding: 10px 20px;
+}
+.setting-entry{
+    margin: 15px 0;
+    display: -webkit-flex;
+    display: flex;
+}
+.setting-label{
+    padding: 5px;
+    font-size: 14px;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.setting-content{
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3;
+}
+.side-panel ul li:hover {
+    background: rgba(4,4,4, 0.05);
+}
 /* Style the content */
 .settings-panel {
     -webkit-flex: 3;
     -ms-flex: 3;
     flex: 3;
-    /*background-color: #f1f1f1;*/
-    padding: 10px;
+    padding: 24px;
 }
 
 .back-button{
