@@ -65,10 +65,10 @@
                 <img src="images/cover.jpg" />
             </header>
             <ul>
-                <li tabindex="0" class="throttle"><span>Throttle</span></li>
-                <li tabindex="0" class="locomotives"><span>Locomotives</span></li>
-                <li tabindex="0" class="function-maps"><span>Function Maps</span></li>
-                <li tabindex="0" class="settings"><span>Settings</span></li>
+                <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
+                <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
+                <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
+                <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
             </ul>
         </nav>
         <div class="topnav">
@@ -91,7 +91,7 @@
         </div>
         <div id="rendered-form">
             <div class="rendered-form">
-                <div id="body">
+                <div id="throttle-window">
                     <div Class="details-panel" id="details-panel">
                         <div class="row">
                             <div class="column-4">
@@ -187,7 +187,7 @@
                         <hr>
                     </div>
                     <div class="row">                 
-                        <div class="column-3 sp-controller">
+                        <!--<div class="column-3 sp-controller">
                             <span class="">
                                 Speed Controller
                             </span>
@@ -196,7 +196,7 @@
                                 <option value="metallic"> Metallic </option>
                                 <option value="dark"> Dark </option>
                             </select>  
-                        </div>                               
+                        </div>-->                               
                         <button type="button" class="btn-default btn btn-hide" title="Hide the top bar" name="button-hide" access="false" id="button-hide">
                             <span class="icon-circle-up"></span>
                         </button> 
@@ -292,10 +292,7 @@
                             <span class="debug-status">
                                 Debug Console
                             </span>
-                        </div>
-                        <div class="settings-button">
-                            <button type="button" class="btn-default btn" name="Settings" id="button-settings"">Settings</button>
-                        </div>    
+                        </div>   
                     </div>
                     <div id="debug-console" hidden="true">
                         <hr>
@@ -319,13 +316,17 @@
                         </div>
                     </div>
                 </div>
-            
+                
+                <div id="loco-window" hidden="true">
+                    Locomotives
+                </div>
+
+                <div id="fn-map-window" hidden="true">
+                    Function Maps
+                </div>
 
                 <div id="settings-window" hidden="true">
                     <div class="row">
-                        <div class="settings-button back-button">
-                            <button type="button" name="back" id="button-back" class="btn btn-default">Back</button>
-                        </div>
                         <div class="settings-heading">
                             Settings
                         </div>
@@ -343,7 +344,7 @@
                             </div>
                             <div>
                                 <!--<div class="theme-section">-->
-                                <div>
+                                <!--<div>
                                     <span class="">
                                         Theme
                                     </span>
@@ -352,8 +353,18 @@
                                         <option value="metallic"> Metallic </option>
                                         <option value="dark"> Dark </option>
                                     </select>  
-                                </div>
+                                </div>-->
                                 <!--<div class="column-3 sp-controller">-->
+                                <div class="column-3 sp-controller">
+                                    <span class="">
+                                        Speed Controller
+                                    </span>
+                                    <select id="theme-selector" class="btn theme-selector select-control" name="themeselector" title="Change Theme">
+                                        <option value="simple"> Simple </option>
+                                        <option value="metallic"> Metallic </option>
+                                        <option value="dark"> Dark </option>
+                                    </select>  
+                                </div>
                                 <div class="row">
                                     <span>
                                         Speed Controller

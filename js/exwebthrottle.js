@@ -700,22 +700,41 @@ $(document).ready(function(){
         }
     });
 
-    
-    $("#button-settings").on('click', function(){
-        console.log("settings")
-        $("#body").toggle();
-        $("#settings-window").toggle();
-    }); 
-    $("#button-back").on('click', function(){
-        console.log("settings")
-        $("#body").toggle();
-        $("#settings-window").toggle();
-    }); 
+    //Handles navigation clicks
+    $("#throttle-nav").on('click', function(){
+        hideWindows();
+        $("#throttle-window").show();
+        $('#nav-close').trigger('click')
+    });
+    $("#loco-nav").on('click', function(){
+        hideWindows();
+        $("#loco-window").show();
+
+        $('#nav-close').trigger('click')
+    });
+    $("#fn-map-nav").on('click', function(){
+        hideWindows();
+        $("#fn-map-window").show();
+        $('#nav-close').trigger('click')
+    });
+    $("#settings-nav").on('click', function(){
+        hideWindows();
+        $("#settings-window").show();
+        $('#nav-close').trigger('click')
+    });
+     
 
     eventListeners();
 
 });
 
+
+function hideWindows(){
+    $("#throttle-window").hide();
+    $("#loco-window").hide();
+    $("#fn-map-window").hide();
+    $("#settings-window").hide();
+}
 
 function credits() {
     authors = ["Fred Decker","Mani Kumar","Matt"]
