@@ -24,12 +24,13 @@
     <head>
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link href="css/jquery-ui.css"  rel="stylesheet" type="text/css">
         <link href="css/layout.css"  rel="stylesheet" type="text/css">
         <link href="css/roundslider.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/throttle.css"  rel="stylesheet" type="text/css">
         <link href="css/jquery.rotaryswitch.css" rel="stylesheet" type="text/css">
         <link href="css/icons.css"  rel="stylesheet" type="text/css">
-        <link href="css/jquery-ui.css"  rel="stylesheet" type="text/css">
+
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                       
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
@@ -57,6 +58,36 @@
     </head>
 
     <body>
+    
+    <nav class="menu" id="side-menu" tabindex="0">
+        <header class="avatar">
+            <button class="nav-btn in" id="nav-close">&times;</button> 
+            <img src="images/cover.jpg" />
+        </header>
+            <ul>
+            <li tabindex="0" class="throttle"><span>Throttle</span></li>
+            <li tabindex="0" class="locomotives"><span>Locomotives</span></li>
+            <li tabindex="0" class="function-maps"><span>Function Maps</span></li>
+            <li tabindex="0" class="settings"><span>Settings</span></li>
+        </ul>
+    </nav>
+    <div class="topnav">
+        <div class="row">
+            <div class="column-2">
+                <button class="nav-btn" id="nav-open">☰</button>
+            </div>
+            <div class="column-6 align-center">
+                <div  class="throttle-heading"> 
+                     <img src="images/WebThrottle.png" />
+                    <!-- <p>Version 1.2.0</p> -->
+                </div>
+            </div>
+            <div class="column-2">
+                <button class="btn-expand" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
+                <button class="btn-info" id="info-tooltip" state="ws" title="Fullscreen"><span class="icon-info"></span></button>
+            </div>
+        </div> 
+    </div>
         <div id="rendered-form">
             <div class="rendered-form">
                 <div Class="details-panel">
@@ -136,9 +167,8 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="column-2 throttle-heading">
-                            DCC++ EX Web Throttle
-                            <p>Version 1.2.0</p>
+                        <div class="column-2 ">
+                            
                         </div>
                         <div class="server-button column-4">
                             <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
@@ -148,7 +178,7 @@
                             <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
                                 <span class="con-ind"></span>Connect DCC++ EX
                             </button>
-                            <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
+                            <!-- <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button> -->
                         </div>
                     </div>
                     <hr>

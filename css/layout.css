@@ -62,10 +62,32 @@ hr{
     display: block;
     clear: both;
 }
+.throttle-heading{
+    text-align: center;
+    padding-top:6px;
+    font-size: 14px;
+    display: inline-block;
+}
+.throttle-heading img{
+    height: 48px;
+}
+.throttle-heading p{
+    font-size: 12px;
+    margin: 5px;
+}
+.ui-widget.ui-widget-content.credits-tooltip{
+    border: 1px solid #ccc;
+    width: 200px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 0 4px #aaa;
+}
 #rendered-form{
-    display: flex;
+    /* display: flex;
     height: 100%;
-    align-items: center;
+    align-items: center; */
+    margin-top: 20px;
 }
 .rendered-form {
     background: #efefef;
@@ -85,4 +107,89 @@ hr{
 }
 .rendered-form h4 {
     margin: 0;
+}
+
+.nav-btn {
+    font-size: 30px;
+    cursor: pointer;
+    color: #666666;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+}
+.nav-btn.in{
+    color:#cccccc;
+    font-size: 40px;
+    position: absolute;
+    right: 0;
+    line-height: 30px;
+}
+.btn-expand, .btn-info{
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666666;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    line-height: 36px;
+}
+.btn-info{
+    padding-top: 14px;
+}
+.nav-btn:hover {
+  color: #000000;
+}
+.nav-btn.in:hover{
+  color: #ffffff;
+}
+.menu {
+	background: #00A3B9;
+	height: 100vh;
+	width: 250px;
+	position: fixed;
+	top: 0;
+	left: 0;
+    z-index: 5;
+    box-shadow: 0 0px 10px #666;
+    border-right: 1px solid #929292;
+    outline: none;
+    left: -260px;
+    display: none;
+}
+.menu .avatar img {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0.5em 0;
+    margin: 0;
+    margin-top: 1em;
+}
+.menu ul  li{
+    padding: 1em;
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: auto 20px;
+    transition: all 0.15s linear;
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+}
+.menu ul  li:hover{
+    background-color:rgba(0,0,0,0.1);
+}
+
+.menu ul  li:focus{
+    border:none;
+}
+.topnav .row div{
+    box-sizing: border-box;
+}
+.align-center{
+    text-align: center;
 }

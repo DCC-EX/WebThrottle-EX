@@ -30,15 +30,6 @@ label.formbuilder-file-label {
 .details-panel{
     margin-top: 8px;
 }
-.throttle-heading{
-    text-align: center;
-    padding-top: 20px;
-    font-size: 14px;
-}
-.throttle-heading p{
-    font-size: 12px;
-    margin: 5px;
-}
 .server-button{
     padding-top: 24px;
     text-align: right;

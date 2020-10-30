@@ -334,7 +334,34 @@ function generateFnCommand(clickedBtn){
 
 $(document).ready(function(){
     var mode = 0;
+    // Left Menu
+    $("#nav-open").on("click", function () { 
+        $("#side-menu").show().animate({ left: 0 });
+    });
+    $("#nav-close").on("click", function () {
+        $("#side-menu").animate({ left: -260 }, function(){
+            $("#side-menu").hide();
+        });
+    });
 
+    $("#info-tooltip").tooltip({
+        content:
+          "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+        // show: {
+        // effect: "slideDown",
+        // delay: 250,
+        // },
+        classes: {
+          "ui-tooltip": "credits-tooltip",
+        },
+        position: {
+          my: "left top",
+          at: "left bottom",
+        },
+      })
+      .tooltip("open");
+
+    
     // Load function map, buttons throttle etc
     setThrottleScreenUI()
     $("#throttle-selector").on("change", function (e) {
