@@ -68,8 +68,12 @@ hr{
     font-size: 14px;
     display: inline-block;
 }
-.throttle-heading img{
+.throttle-heading .wt-logo{
     height: 48px;
+    width: 142px;
+    background: url(../images/WebThrottle.png);
+    display: inline-block;
+    background-size: 100%;
 }
 .throttle-heading p{
     font-size: 12px;
@@ -83,16 +87,15 @@ hr{
     border-radius: 4px;
     box-shadow: 0 0 4px #aaa;
 }
-#rendered-form{
-    /* display: flex;
+/* #rendered-form{
+    display: flex;
     height: 100%;
-    align-items: center; */
-    margin-top: 20px;
-}
+    align-items: center; 
+}*/
 .rendered-form {
     background: #efefef;
     max-width: 1080px;
-    min-width: 1024px;
+    min-width: 680px;
     border-radius: 4px;
     box-shadow: 0px 0px 10px 0px #666666;
     font-family: Arial, Helvetica, sans-serif;

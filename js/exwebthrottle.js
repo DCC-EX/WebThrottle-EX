@@ -347,10 +347,10 @@ $(document).ready(function(){
     $("#info-tooltip").tooltip({
         content:
           "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
-        // show: {
-        // effect: "slideDown",
-        // delay: 250,
-        // },
+        show: {
+        effect: "slideDown",
+        delay: 100,
+        },
         classes: {
           "ui-tooltip": "credits-tooltip",
         },
@@ -358,8 +358,7 @@ $(document).ready(function(){
           my: "left top",
           at: "left bottom",
         },
-      })
-      .tooltip("open");
+      });
 
     
     // Load function map, buttons throttle etc
