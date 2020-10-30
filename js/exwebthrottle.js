@@ -545,10 +545,10 @@ $(document).ready(function(){
     $("#button-hide").on('click',function(){
         if ($(".details-panel").is(":visible")){ 
             $(".details-panel").hide();
-            $(this).html( '<span class="arrow down"></span>');
+            $(this).html( '<span class="icon-circle-down"></span>');
         }else{
             $(".details-panel").show();
-            $(this).html( '<span class="arrow up"></span>');
+            $(this).html('<span class="icon-circle-up"></span>');
         }
        
     });

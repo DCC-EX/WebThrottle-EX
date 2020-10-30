@@ -110,6 +110,9 @@ input.form-control:active, select.form-control:active, textarea.form-control:act
 input.form-control:focus, select.form-control:focus, textarea.form-control:focus{
   background: #ffffff;
 } 
+.formbuilder-button .btn.add-loco-btn {
+    padding-top: 10px;
+}
 .loco-list-ctrl input{
   height: 37px;
 }
