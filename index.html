@@ -94,13 +94,13 @@
                 <div id="throttle-window">
                     <div Class="details-panel" id="details-panel">
                         <div class="row">
-                            <div class="column-4">
+                            <div class="column-5">
                                 <div class="loco-list-container row">
                                     <div class="column-5 loco-list-ctrl">
                                         <label for="ex-locoid" class="formbuilder-text-label">
                                             Locomotive ID <span class="formbuilder-required">*</span>
                                         </label>
-                                        <input id="ex-locoid" class="column-6" type="text" loco-cv="0" name="Locomotives"/>
+                                        <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives"/>
                                     </div>
                                     <div class="column-2 formbuilder-button acquire-wrap">
                                         <button id="button-getloco" class="acq-loco-btn btn" data-acquired="false"> 
@@ -111,48 +111,49 @@
                                         <button id="add-loco" class="add-loco-btn btn"> 
                                             <span class="icon-plus"></span> New 
                                         </button>
-                                    </div>
-                                    <div id="loco-form-content" class="add-loco-form">
-                                        <form id="loco-form" class="form-inline">
-                                            <div>
-                                                Add Locomotive
-                                                <hr>
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="name">Name:</label>
-                                                <input class="column-5" type="text" id="name" placeholder="Enter name" name="name" required>
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="cv">CV:</label>
-                                                <input class="column-5" type="number" id="cv" placeholder="Enter CV" name="cv" required>
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="type">Engine Type:</label>
-                                                <select class="column-5 add-select" id="type" placeholder="Select Type" name="type">
-                                                    <option value="Diesel"> Diesel </option>
-                                                    <option value="Steam"> Steam </option>
-                                                    <option value="Electric"> Electric </option>
-                                                    <option value="Other"> Other </option>
-                                                </select>
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="brand">Brand:</label>
-                                                <input class="column-5" type="text" id="brand" placeholder="Brand Name" name="brand">
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="decoder">Decoder:</label>
-                                                <input class="column-5" type="text" id="decoder" placeholder="Decoder Name" name="decoder">
-                                            </div>
-                                            <div class="row">
-                                                <label class="column-3"for="map">Function map:</label>
-                                                <input id="function-maps" class="column-5" type="text" id="map" placeholder="Select Map" name="map">
-                                            </div>
-                                            <div class="row">
-                                                <div class="column-5"></div>
-                                                <button class="column-5"type="submit">Submit</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        <div id="loco-form-content" class="add-loco-form">
+                                            <form id="loco-form" class="form-inline">
+                                                <div class="add-loco-head">
+                                                    Add Locomotive
+                                                    <hr>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="name">Name:</label>
+                                                    <input class="column-7" type="text" id="name" placeholder="Enter name" name="name" required>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="cv">CV:</label>
+                                                    <input class="column-7" type="number" id="cv" placeholder="Enter CV" name="cv" required>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="type">Engine Type:</label>
+                                                    <select class="column-7 add-select" id="type" placeholder="Select Type" name="type">
+                                                        <option value="Diesel"> Diesel </option>
+                                                        <option value="Steam"> Steam </option>
+                                                        <option value="Electric"> Electric </option>
+                                                        <option value="Other"> Other </option>
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="brand">Brand:</label>
+                                                    <input class="column-7" type="text" id="brand" placeholder="Brand Name" name="brand">
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="decoder">Decoder:</label>
+                                                    <input class="column-7" type="text" id="decoder" placeholder="Decoder Name" name="decoder">
+                                                </div>
+                                                <div class="row">
+                                                    <label class="column-3"for="map">Function map:</label>
+                                                    <input id="function-maps" class="column-7" type="text" id="map" placeholder="Select Map" name="map">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="column-3"></div>
+                                                    <button class="column-4"type="submit">Submit</button>
+                                                    <div class="column-3"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>                                   
                                 </div>
                                 <!--
                                 <div class="row">
@@ -170,10 +171,7 @@
                                         </div>
                                     </div>-->
                             </div>
-                            <div class="column-2 ">
-                                
-                            </div>
-                            <div class="server-button column-4">
+                            <div class="server-button column-5">
                                 <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
                                     <option value="serial">Serial</option>
                                     <option value="emulator">Emulator</option>

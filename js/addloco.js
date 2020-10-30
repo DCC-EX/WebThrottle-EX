@@ -1,19 +1,19 @@
 $(document).ready(function(){
 
     $("#loco-form").on("submit", function (e) {
-    e.preventDefault();
-    data = $(this).serializeArray();
-    console.log(data);
-    $("#loco-form")[0].reset();
-    $("#loco-form-content").css("display", "none");
+        e.preventDefault();
+        data = $(this).serializeArray();
+        console.log(data);
+        $("#loco-form")[0].reset();
+        $("#loco-form-content").css("display", "none");
     });
 
     $("#add-loco").on("click", function () {
-    if ($("#loco-form-content").is(":visible")) {
-        $("#loco-form-content").css("display", "none");
-    } else {
-        $("#loco-form-content").css("display", "inline-block");
-    }
+        if ($("#loco-form-content").is(":visible")) {
+            $("#loco-form-content").css("display", "none");             
+        } else {
+            $("#loco-form-content").css("display", "inline-block");
+        }
     });
 
     $("#ex-locoid")
