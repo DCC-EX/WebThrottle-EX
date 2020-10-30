@@ -175,3 +175,8 @@ hr {
 .nav-btn:hover, .btn-expand:hover, .btn-info:hover{
     color: #fff;
 }
+
+.add-loco-form .add-loco-head, 
+.add-loco-form .row label {
+    color: #333;
+}
