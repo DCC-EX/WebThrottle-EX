@@ -97,7 +97,7 @@
     background: linear-gradient(to bottom,#0299ad, #00A3B9);
     box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
     border: 1px solid #007a8a;
-    height: 30px;
+    height: 36px;
 }
 
 input.form-control, select.form-control, textarea.form-control {

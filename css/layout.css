@@ -120,6 +120,7 @@ hr{
     padding: 10px 15px;
     border: none;
     background: none;
+    line-height: 38px;
 }
 .nav-btn.in{
     color:#cccccc;
@@ -154,7 +155,7 @@ hr{
 	position: fixed;
 	top: 0;
 	left: 0;
-    z-index: 5;
+    z-index: 1020;
     box-shadow: 0 0px 10px #666;
     border-right: 1px solid #929292;
     outline: none;
@@ -191,7 +192,7 @@ hr{
 .menu ul  li:focus{
     border:none;
 }
-.topnav .row div{
+.topnav .row div, .add-loco-form .row label, .add-loco-form .row input{
     box-sizing: border-box;
 }
 .align-center{

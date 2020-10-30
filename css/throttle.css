@@ -133,8 +133,6 @@ label.formbuilder-file-label {
     padding: 8px;
     outline: none;
     line-height: 15px;
-    width: 33px;
-    vertical-align: top;
     height: 33px;
 }
 .btn.edit-labels:active, .btn.load-labels:active{
@@ -723,9 +721,14 @@ input:checked + .slider.debug-slider{
 
 .loco-list-container{
     position: relative;
+    font-size: 13px;
 }
 .loco-list-ctrl{
     padding:0;
+}
+.light-hr{
+    border-bottom: none;
+    border-color: #ddd;
 }
 .loco-list-ctrl input{
     width: 100%;
@@ -763,28 +766,41 @@ input:checked + .slider.debug-slider{
     content: "";
     display: inline-block;
     position: absolute;
-    top: -12px;
-    left: 200px;
+    top: -8px;
+    right: 54px;
     width: 0; 
     height: 0; 
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 12px solid cornflowerblue;
+    border-bottom: 12px solid #ffffff;
 }
 .add-loco-form{
     width: 380px;
     display: none;
-    background-color: cornflowerblue;
+    background-color: #ffffff;
     position: absolute;
-    left: 74px;
-    top: 103px;
-    padding: 15px;
+    left: 0;
+    top: 72px;
+    padding: 20px;
+    padding-bottom: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     z-index: 1000;
+    box-shadow: 0 0 3px #aaaaaa;
+}
+.add-loco-form .add-loco-head{
+    font-size: 16px;
+    padding-bottom: 7px;
+}
+.add-loco-form .row{
+    margin: 10px 0;
+}
+.add-loco-form .row label{
+    padding-left: 0;
 }
 .add-select{
     height: 30px;
+    padding-left: 5px;
 }
 .ui-autocomplete.res-list{
     max-height: 200px;
