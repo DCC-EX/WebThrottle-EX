@@ -26,7 +26,7 @@ $(document).ready(function(){
     $("#select-map").change(function () {
         selectedval = $(this).val();    
         if(selectedval != "default"){
-            data  = getStoredFuncData(selectedval);
+            data  = getStoredMapData(selectedval);
             loadButtons(data);
         }else{
             loadButtons({ mname: "default" , fnData: fnMasterData});
@@ -39,7 +39,7 @@ $(document).ready(function(){
         $(".fn-heading").html("Edit Mapping");
         selectedval = $("#select-map").val();      
         if(selectedval != "default"){
-            data  = getStoredFuncData(selectedval); 
+            data  = getStoredMapData(selectedval); 
             showBtnConfig(data);
         }else{
             alert("Cannot edit Default mapping!");
@@ -49,18 +49,18 @@ $(document).ready(function(){
 
     // Closes MAP window on clicking X icon
     $("#close-model").on('click', function(){
-    $("#fnModal").hide();
+      $("#fnModal").hide();
     });
 
     //This will check for Save mode (NEW MAP / EDIT MAP) and delegate the functionality
     $("#save-fn-map").on('click', function(){
-    mode = $(this).attr("mode");
-    // alert(mode); // debug line
-    if(mode=="new"){
-        addNewMap();  
-    }else{
-        editMap();
-    }  
+      mode = $(this).attr("mode");
+      // alert(mode); // debug line
+      if(mode=="new"){
+          addNewMap();  
+      }else{
+          editMap();
+      }  
     });
 
     //Allows user to download the selected map in .JSON format
@@ -77,7 +77,7 @@ $(document).ready(function(){
     $("#wipe-map").on('click', function(){
         var r = confirm("Are you sure on deletion?");
         if (r == true) {
-            window.localStorage.removeItem('locoData');
+            window.localStorage.removeItem('mapData');
             console.log("!!!!!!WIPED!!!!!!");
             loadmaps();
         }
@@ -110,7 +110,7 @@ $(document).ready(function(){
         var freader = new FileReader();
         freader.onload =  function(evt){ 
             data = JSON.parse(evt.target.result);
-            setLocoData(data);
+            setMapData(data);
             field.val('');
         };
         freader.readAsText(file);
@@ -156,7 +156,7 @@ $(document).ready(function(){
     $("#wipe-app-settings").on('click', function(){
         var r = confirm("Are you sure on deletion?");
         if (r == true) {
-            window.localStorage.removeItem('locoData');
+            window.localStorage.removeItem('mapData');
             console.log("!!!!!!WIPED!!!!!!");
             loadmaps();
         }
@@ -236,7 +236,7 @@ function addNewMap(){
   console.log(mapName);
   if(mapName){
       // Send data to store in Local storage
-      setLocoData({ mname: mapName , fnData: customFnData});
+      setMapData({ mname: mapName , fnData: customFnData});
       $("#fnModal").hide();
       alert('Map Saved Sucessfully');
   }else{
@@ -258,7 +258,7 @@ function editMap(){
       mapName = $("#map-name").val();
       console.log(mapName);
       if(mapName){
-          setLocoData({ mname: mapName , fnData: customFnData});
+          setMapData({ mname: mapName , fnData: customFnData});
           $("#fnModal").hide();
           alert('Map Saved Sucessfully');
       }else{
@@ -274,24 +274,24 @@ function editMap(){
 // Verify if the given Map data already exists and replace it
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
-function setLocoData(data){
+function setMapData(data){
   if (typeof(Storage) !== "undefined") {
-    curlocodata = []; 
-    slocodata = JSON.parse(window.localStorage.getItem('locoData'));
-    if(!slocodata){
-        curlocodata.push(data);
-        window.localStorage.setItem('locoData', JSON.stringify(curlocodata));
+    curmapdata = []; 
+    smapdata = JSON.parse(window.localStorage.getItem('mapData'));
+    if(!smapdata){
+        curmapdata.push(data);
+        window.localStorage.setItem('mapData', JSON.stringify(curmapdata));
     }else{
      if(ifExists(data.mname)){
-        slocodata.find(function(item, i){
+        smapdata.find(function(item, i){
           if(item.mname == data.mname){
             item.fnData=data.fnData;
           }
         });  
       }else{
-        slocodata.push(data);
+        smapdata.push(data);
       }
-      window.localStorage.setItem('locoData', JSON.stringify(slocodata));
+      window.localStorage.setItem('mapData', JSON.stringify(smapdata));
     }
     loadmaps();
     $("#select-map").val(data.mname).trigger("change");
@@ -300,8 +300,8 @@ function setLocoData(data){
 }
 
 //Returns the Map data of given Map name
-function getStoredFuncData(name){
-  data = JSON.parse(window.localStorage.getItem('locoData'));
+function getStoredMapData(name){
+  data = JSON.parse(window.localStorage.getItem('mapData'));
   return data.find(function(item, i){
     if(item.mname == name){
       return item.fnData;
@@ -311,8 +311,8 @@ function getStoredFuncData(name){
 
 //Download the Map data of given Map name
 function downloadMapData(mapName){
-  getStoredFuncData(mapName);
-  data = JSON.stringify(getStoredFuncData(mapName));
+  getStoredMapData(mapName);
+  data = JSON.stringify(getStoredMapData(mapName));
   const a = document.createElement("a");
   const file = new Blob([data], {type: 'application/json'});
   a.href = URL.createObjectURL(file);
@@ -325,17 +325,17 @@ function deleteFuncData(name){
   var r = confirm("Are you sure on deletion?");
   if (r == true) {
     if (typeof(Storage) !== "undefined") {
-      curlocodata = []; 
-      data = JSON.parse(window.localStorage.getItem('locoData'));
+      curmapdata = []; 
+      data = JSON.parse(window.localStorage.getItem('mapData'));
       if(!data){
         alert("No Data stored");
       }else{
           data.find(function(item, i){
             if(item.mname != name){
-              curlocodata.push(item);
+              curmapdata.push(item);
             }
           });    
-          window.localStorage.setItem('locoData', JSON.stringify(curlocodata));    
+          window.localStorage.setItem('mapData', JSON.stringify(curmapdata));    
           console.log("Not NULL");
       }
     } 
@@ -344,12 +344,12 @@ function deleteFuncData(name){
 
 // Returns the AppData of ExWebThrottle
 function getWebData(){
-  return JSON.parse(window.localStorage.getItem('locoData'));
+  return JSON.parse(window.localStorage.getItem('mapData'));
 }
 
 // Returns boolen if the given Map exists in local storage
 function ifExists(name){
-  data = JSON.parse(window.localStorage.getItem('locoData'));
+  data = JSON.parse(window.localStorage.getItem('mapData'));
   found = false;
   data.find(function(item, i){
     if(item.mname == name){
@@ -361,7 +361,7 @@ function ifExists(name){
 
 //Download the whole APP data of EXthrottle
 function getBackup() {
-  data = window.localStorage.getItem('locoData');
+  data = window.localStorage.getItem('mapData');
   const a = document.createElement("a");
   const file = new Blob([data], {type: 'application/json'});
   a.href = URL.createObjectURL(file);
@@ -372,7 +372,7 @@ function getBackup() {
 // Function that is responsible to store imported APP data into local storage
 function importAppData(data){
   if(data){
-    window.localStorage.setItem('locoData', JSON.stringify(data));
+    window.localStorage.setItem('mapData', JSON.stringify(data));
     loadmaps();
     $("#select-map").val('default').trigger("change");
   }
