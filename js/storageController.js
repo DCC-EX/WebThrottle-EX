@@ -139,7 +139,7 @@ $(document).ready(function(){
 
     //Temparory function Shows APP DATA in console
     $("#loco-info").on('click', function(){
-        console.log(getWebData());
+        console.log(getMapData());
     });
 
     //Functions for the storage page in settings
@@ -167,7 +167,7 @@ $(document).ready(function(){
 function loadmaps(){
   $("#select-map").empty();
   $("#select-map").append($("<option />").val("default").text("Default"));
-  $.each(getWebData(), function() {
+  $.each(getMapData(), function() {
     $("#select-map").append($("<option />").val(this.mname).text(this.mname));
   });
 }
@@ -224,6 +224,31 @@ function showBtnConfig(data){
 
 // Saves New Map data to Local storage
 function addNewMap(){
+    customFnData = {};
+    $(".edit-row").each(function (val) {
+      key = $(this).find(".func-title").text();
+      btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1  : 0;
+      fnvisible = $(this).children().find("input[type='checkbox']").prop("checked") ? 1  : 0;
+      arr = [0, btnType, $(this).children().find(".fn-input").val(), fnvisible];
+      customFnData[key] = arr;
+    });
+    mapName = $("#map-name").val();
+    if (!ifExists(mapName)) {
+      if (mapName) {
+        // Send data to store in Local storage
+        setMapData({ mname: mapName, fnData: customFnData });
+        $("#fnModal").hide();
+        alert("Map Saved Sucessfully");
+      } else {
+        alert("Name is missing!!");
+      }
+    } else {
+      alert("Map with the Name already exists!! Please change the Map name..");
+    }
+}
+
+// Saves Edited Map data to local storage
+function editMap(){
   customFnData = {};
   $(".edit-row").each(function(val){
       key = $(this).find(".func-title").text();
@@ -233,39 +258,16 @@ function addNewMap(){
       customFnData[key] = arr;             
   });
   mapName = $("#map-name").val();
-  console.log(mapName);
-  if(mapName){
-      // Send data to store in Local storage
-      setMapData({ mname: mapName , fnData: customFnData});
+  if (!ifExists(mapName)) {
+    if (mapName) {
+      setMapData({ mname: mapName, fnData: customFnData });
       $("#fnModal").hide();
-      alert('Map Saved Sucessfully');
-  }else{
+      alert("Map Saved Sucessfully");
+    } else {
       alert("Name is missing!!");
-  }
-}
-
-// Saves Edited Map data to local storage
-function editMap(){
-  if(!ifExists()){
-      customFnData = {};
-      $(".edit-row").each(function(val){
-          key = $(this).find(".func-title").text();
-          btnType = $(this).children().find("input[type='radio']:checked").val() == "press" ? 1 : 0;
-          fnvisible = $(this).children().find("input[type='checkbox']").prop('checked') ? 1 : 0;
-          arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
-          customFnData[key] = arr;             
-      });
-      mapName = $("#map-name").val();
-      console.log(mapName);
-      if(mapName){
-          setMapData({ mname: mapName , fnData: customFnData});
-          $("#fnModal").hide();
-          alert('Map Saved Sucessfully');
-      }else{
-          alert("Name is missing!!");
-      }
-  }else{
-      alert("Map with the Name already exists!! Please change the Map name.."); 
+    }
+  } else {
+    alert("Map with the Name already exists!! Please change the Map name..");
   }
 }
 
@@ -275,6 +277,7 @@ function editMap(){
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
 function setMapData(data){
+  console.log(data);
   if (typeof(Storage) !== "undefined") {
     curmapdata = []; 
     smapdata = JSON.parse(window.localStorage.getItem('mapData'));
@@ -302,11 +305,15 @@ function setMapData(data){
 //Returns the Map data of given Map name
 function getStoredMapData(name){
   data = JSON.parse(window.localStorage.getItem('mapData'));
-  return data.find(function(item, i){
-    if(item.mname == name){
-      return item.fnData;
-    }
-  });
+  if(data !=null){
+    return data.find(function(item, i){
+      if(item.mname == name){
+        return item.fnData;
+      }
+    });
+  }else{
+    return null;
+  }
 }
 
 //Download the Map data of given Map name
@@ -343,19 +350,23 @@ function deleteFuncData(name){
 }
 
 // Returns the AppData of ExWebThrottle
-function getWebData(){
+function getMapData(){
   return JSON.parse(window.localStorage.getItem('mapData'));
 }
 
 // Returns boolen if the given Map exists in local storage
 function ifExists(name){
   data = JSON.parse(window.localStorage.getItem('mapData'));
+  console.log(data);
   found = false;
-  data.find(function(item, i){
-    if(item.mname == name){
-      found = true;
-    }
-  });
+  if(data != null){
+    data.find(function(item, i){
+      if(item.mname == name){
+        found = true;
+      }
+    });
+    return found;
+  }
   return found;
 }
 
@@ -377,6 +388,34 @@ function importAppData(data){
     $("#select-map").val('default').trigger("change");
   }
 }
+
+/*************************************************/
+/********** Locomotives Data functions ***********/
+/*************************************************/
+
+function saveLocomotive(data){
+  locodata = $(data).arrayToJSON();
+  if (typeof Storage !== "undefined") {
+    curCabList = [];
+    cabData = JSON.parse(window.localStorage.getItem("cabList"));
+    if (!cabData) {
+      curCabList.push(locodata);
+      window.localStorage.setItem("cabList", JSON.stringify(curCabList));
+      return true;
+    } else {
+      cabData.push(locodata);
+      window.localStorage.setItem("cabList", JSON.stringify(cabData));
+      return true;
+    }
+  }
+  return false;
+}
+
+ // Returns the AppData of ExWebThrottle
+function getLocoList(){
+  return JSON.parse(window.localStorage.getItem("cabList"));
+}
+
 
 // Get a given user preference
 function getPreference(pref){
@@ -422,3 +461,20 @@ function setUserPreferences(pref){
     "dbugConsole": true
   }
 */
+
+(function ($) {
+  $.fn.arrayToJSON = function () {
+    var o = {};
+    $.each($(this), function () {
+      if (o[this.name]) {
+        if (!o[this.name].push) {
+          o[this.name] = [o[this.name]];
+        }
+        o[this.name].push(this.value || "");
+      } else {
+        o[this.name] = this.value || "";
+      }
+    });
+    return o;
+  };
+})(jQuery);
