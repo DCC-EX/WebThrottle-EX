@@ -232,7 +232,7 @@ function addNewMap(){
       arr = [0, btnType, $(this).children().find(".fn-input").val(), fnvisible];
       customFnData[key] = arr;
     });
-    mapName = $("#map-name").val();
+    mapName = $.trim($("#map-name").val());
     if (!ifExists(mapName)) {
       if (mapName) {
         // Send data to store in Local storage
@@ -257,8 +257,7 @@ function editMap(){
       arr = [ 0, btnType, $(this).children().find(".fn-input").val(), fnvisible ];
       customFnData[key] = arr;             
   });
-  mapName = $("#map-name").val();
-  if (!ifExists(mapName)) {
+  mapName = $.trim($("#map-name").val());
     if (mapName) {
       setMapData({ mname: mapName, fnData: customFnData });
       $("#fnModal").hide();
@@ -266,9 +265,6 @@ function editMap(){
     } else {
       alert("Name is missing!!");
     }
-  } else {
-    alert("Map with the Name already exists!! Please change the Map name..");
-  }
 }
 
 //*** Saves given data into Local storage**/

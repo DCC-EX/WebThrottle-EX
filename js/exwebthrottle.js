@@ -140,12 +140,40 @@ function toggleKnobState(ele, state) {
         ele.removeClass("disabled");
     }
 }
+function loadMapData(map){
+    console.log(map);
+    data = [];
+    if (map == "Default") {
+      data = { mname: "Default", fnData: fnMasterData };
+    } else {
+      data = getStoredMapData(map);
+    }
+    $("#mapping-panel").empty();
+    $("#mapping-panel").append(
+        '<div class="row settings-group" id="fnhead">' +
+          '<div class="column-2">Function</div>'+
+          '<div class="column-4">Name</div>'+
+          '<div class="column-2">Type</div>' +
+          '<div class="column-2">Visible</div>' +
+        '</div></br>'
+    );
+    $.each(data.fnData, function (key, value) {
+        console.log(key, value);
+      $("#mapping-panel").append(
+        '<div class="row settings-group" id="'+key+'">' +
+          '<div class="column-2">'+key+'</div>'+
+          '<div class="column-4">'+value[2]+'</div>'+
+          '<div class="column-2">'+value[1] +'</div>' +
+          '<div class="column-2">'+value[3] +'</div>' +
+        '</div></br>'
+      );
+    });
 
+}
 //Initialization routine for Throttle screen
 function setThrottleScreenUI() {
     loadmaps();
     loadButtons({ mname: "default", fnData: fnMasterData });
-
     controller = getPreference("scontroller");
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);
@@ -711,13 +739,13 @@ $(document).ready(function(){
     $("#loco-nav").on('click', function(){
         hideWindows();
         $("#loco-window").show();
-
         $('#nav-close').trigger('click')
     });
     $("#fn-map-nav").on('click', function(){
         hideWindows();
         $("#fn-map-window").show();
         $('#nav-close').trigger('click')
+        setFunctionMaps();
     });
     $("#settings-nav").on('click', function(){
         hideWindows();
@@ -725,7 +753,6 @@ $(document).ready(function(){
         $('#nav-close').trigger('click')
     });
      
-
     eventListeners();
 
     $("#settings-general").on('click', function(){
@@ -738,8 +765,26 @@ $(document).ready(function(){
         $("#storage-section").show();
     });
 
+    $(document).on("click", ".map-name", function () {
+        loadMapData($(this).attr("map-val"));
+    });
+
 });
 
+function setFunctionMaps(){
+    maps = getMapData();
+    if (maps != null) {
+        maps.unshift({
+        mname: "Default",
+        fnData: {},
+        });
+    }
+      $("#function-mappings").empty();
+      $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
+      $.each(getMapData(), function () {
+        $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
+      });
+}
 
 function hideWindows(){
     $("#throttle-window").hide();

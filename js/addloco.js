@@ -113,7 +113,7 @@ function getPreparedMaps() {
     return maps;
 }
 
-/** Reference Map Structure */
+/** Reference Map Structure 
 maps = [
     {
         mname: "mkmap",
@@ -130,30 +130,6 @@ locos = [
         type: "Diesel",
         manufacturer: "Kato",
     },
-    {
-        name: "CSX",
-        cv: 4,
-        type: "Diesel",
-        manufacturer: "Kato",
-    },
-    {
-        name: "Santafe",
-        cv: 5,
-        type: "Diesel",
-        manufacturer: "Kato",
-    },
-    {
-        name: "EMD F40",
-        cv: 5,
-        type: "Diesel",
-        manufacturer: "BLI",
-    },
-    {
-        name: "EMD SD50",
-        cv: 56789,
-        type: "Diesel",
-        manufacturer: "BLI",
-    },
 ];
 
-            
+*/

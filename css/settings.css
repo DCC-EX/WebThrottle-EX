@@ -20,7 +20,7 @@
 .side-panel {
     width: 200px;
     border-right: 1px solid #bbbbbb;
-    padding: 20px;
+    padding: 20px 10px;
 }
 .settings-section{
     margin-top: 15px;
@@ -32,7 +32,7 @@
     padding: 0;
 }
 .side-panel ul li {
-    padding: 10px 5px;
+    padding: 10px;
     border-radius: 5px;
     margin: 5px 0;
     cursor: pointer;
