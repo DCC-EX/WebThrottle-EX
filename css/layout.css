@@ -190,7 +190,6 @@ hr{
 .menu ul  li:hover{
     background-color:rgba(0,0,0,0.1);
 }
-
 .menu ul  li:focus{
     border:none;
 }
@@ -202,4 +201,7 @@ hr{
 }
 .pos-rel{
     position: relative;
+}
+.spacer{
+    height: 5px;
 }

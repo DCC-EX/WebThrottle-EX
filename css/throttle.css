@@ -812,19 +812,72 @@ input:checked + .slider.debug-slider{
     padding-left: 5px;
 }
 .ui-autocomplete.res-list{
-    max-height: 200px;
+    max-height: 230px;
     overflow-y: auto;
     overflow-x: hidden;
     height: auto;
     background: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+    margin-top: 1px;
+    padding: 5px 0;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper{
+    padding: 5px 15px;
+    padding-bottom: 8px;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper p{
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper .pill{
+    margin: 0 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper .pill.wrap{
+    max-width:80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper .pill:first-child{
+    margin-left: 0;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper .ac-loco-name{
+    color: #007a8a;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper.ui-state-active .ac-loco-name{
+    color: #ffffff;
+}
+.ui-autocomplete.res-list .ui-menu-item .ui-menu-item-wrapper.ui-state-active{
+    border: 1px solid #00A3B9;
+    background: #00A3B9;
 }
 .ui-autocomplete.res-list-sm{
-    max-height: 100px;
+    max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 1010;
+    background: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+    margin-top: 1px;
+    padding: 5px 0;
 }
-
+.ui-autocomplete.res-list-sm .ui-menu-item .ui-menu-item-wrapper{
+    padding: 10px 15px;
+}
+.ui-autocomplete.res-list-sm .ui-menu-item .ui-menu-item-wrapper p{
+    margin: 0px;
+    font-size: 14px;
+}
+.ui-autocomplete.res-list-sm .ui-menu-item .ui-menu-item-wrapper.ui-state-active{
+    border: 1px solid #00A3B9;
+    background: #00A3B9;
+}
 /* Common Styles*/
 .width100{
     width: 100%;
