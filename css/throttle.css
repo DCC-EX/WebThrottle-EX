@@ -768,7 +768,7 @@ input:checked + .slider.debug-slider{
     padding: 3px;
     display: inline-block;
 }
-.add-loco-form:before{
+/* .add-loco-form:before{
     content: "";
     display: inline-block;
     position: absolute;
@@ -779,20 +779,21 @@ input:checked + .slider.debug-slider{
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
     border-bottom: 12px solid #ffffff;
-}
+} */
 .add-loco-form{
     width: 380px;
     display: none;
     background-color: #ffffff;
     position: absolute;
-    left: 0;
-    top: 72px;
+    left: 50%;
+    top: 100px;
     padding: 20px;
     padding-bottom: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     z-index: 1000;
-    box-shadow: 0 0 3px #aaaaaa;
+    box-shadow: 0 0 6px 1px #686868;
+    margin-left: -170px;
 }
 .add-loco-form .add-loco-head{
     font-size: 16px;
@@ -803,6 +804,7 @@ input:checked + .slider.debug-slider{
 }
 .add-loco-form .row label{
     padding-left: 0;
+    font-size: 14px;
 }
 .add-loco-form .row input{
     padding: 5px 6px;
@@ -877,6 +879,64 @@ input:checked + .slider.debug-slider{
 .ui-autocomplete.res-list-sm .ui-menu-item .ui-menu-item-wrapper.ui-state-active{
     border: 1px solid #00A3B9;
     background: #00A3B9;
+}
+.settings-group .sno{
+    width: 6%;
+    padding-left: 0;
+    padding-top: 1.7%;
+    text-align: center;
+}
+.loco-details p.ac-loco-name{
+    color: #007a8a;
+    font-size: 18px;
+    line-height: 18px;
+}
+.loco-details{
+    padding: 0;
+}
+.loco-details p{
+    margin: 6px 0;
+}
+.loco-details .sub-text p{
+    margin-bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    background: beige;
+    border-radius: 5px;
+    padding: 3px;
+}
+.asst-map .nd,
+.loco-details .sub-text .nd{
+    font-size: 13px;
+    background-color: #dddddd;
+    color: #bbbbbb;
+}
+.loco-details .cv-num{
+    text-align: right;
+}
+.loco-details .cv-num small{
+    opacity: 0.6;
+    font-size: 0.9m;
+    vertical-align: text-bottom;
+    display: inline-block;
+    padding-right: 5px;
+}
+.settings-group .asst-map{
+    padding-top: 2%;
+    font-size: 14px;
+}
+.settings-group .asst-map p{
+    margin: 4px 0;
+}
+.settings-group .asst-map .muted{
+    opacity: 0.6;
+    font-size: 0.75em;
+    vertical-align: text-bottom;
+    display: inline-block;
+}
+.settings-heading .option-btns > div{
+    padding: 0;
+    padding-left: 10px;
 }
 /* Common Styles*/
 .width100{

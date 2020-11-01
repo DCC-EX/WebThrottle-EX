@@ -7,6 +7,7 @@ $(document).ready(function(){
         saveLocomotive(data);
         //console.log("SAVED"+x);
         locoList = getLocoList();
+        loadLocomotives();
         $("#loco-form")[0].reset();
         $("#loco-form-content").css("display", "none");
     });
