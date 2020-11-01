@@ -141,7 +141,6 @@ function toggleKnobState(ele, state) {
     }
 }
 function loadMapData(map){
-    console.log(map);
     data = [];
     if (map == "Default") {
       data = { mname: "Default", fnData: fnMasterData };
@@ -158,7 +157,6 @@ function loadMapData(map){
         '</div></br>'
     );
     $.each(data.fnData, function (key, value) {
-        console.log(key, value);
       $("#mapping-panel").append(
         '<div class="row settings-group" id="'+key+'">' +
           '<div class="column-2">'+key+'</div>'+
@@ -169,6 +167,28 @@ function loadMapData(map){
       );
     });
 
+}
+function loadLocomotives(){
+    locos = getLocoList();
+    $("#locmomotives-panel").empty();
+    $.each(locos, function (key, value) {
+        console.log(key, value);
+      $("#locmomotives-panel").append(
+        '<div class="row settings-group" id="'+key+'">'+
+            '<div class="column-1 sno"><p>'+(key+1)+'</p></div>'+
+            '<div class="column-7 loco-details">'+
+                '<div class="row">'+
+                    '<div class="column-7"><p class="ac-loco-name column-10">' + value.name +'</p></div>'+
+                    '<div class="column-2 cv-num"><p><small>CV </small>'+value.cv+'</p></div>'+
+                '</div>'+
+                '<div class="row sub-text">'+   
+                    '<div class="column-3"><p>'+value.type+'</p></div>'+
+                    '<div class="column-3">'+ (value.decoder == '' ? '<p class="nd">Undefined</p>': '<p>'+value.decoder+'</p>' )+'</div>'+
+                    '<div class="column-3">'+ (value.brand == '' ? '<p class="nd">Undefined</p>': '<p>'+value.brand+'</p>' )+'</div>'+
+            '</div></div>'+
+            '<div class="column-2 asst-map"><p class="muted">Map</p><p class="">' + value.map +'</p></div>'+
+        '</div></br>');      
+    });
 }
 //Initialization routine for Throttle screen
 function setThrottleScreenUI() {
@@ -739,7 +759,8 @@ $(document).ready(function(){
     $("#loco-nav").on('click', function(){
         hideWindows();
         $("#loco-window").show();
-        $('#nav-close').trigger('click')
+        $('#nav-close').trigger('click');
+        loadLocomotives();
     });
     $("#fn-map-nav").on('click', function(){
         hideWindows();
@@ -768,7 +789,6 @@ $(document).ready(function(){
     $(document).on("click", ".map-name", function () {
         loadMapData($(this).attr("map-val"));
     });
-
 });
 
 function setFunctionMaps(){
