@@ -776,6 +776,7 @@ $(document).ready(function(){
      
     eventListeners();
 
+    /*
     $("#settings-general").on('click', function(){
         hideSettings();
         $("#general-section").show();
@@ -784,7 +785,28 @@ $(document).ready(function(){
     $("#settings-storage").on('click', function(){
         hideSettings();
         $("#storage-section").show();
-    });
+    });*/
+
+    $("#settings-general").on('click', function(){
+        /*var target = $('#general-section');
+        if (target.length) {
+            $('#settings-panel').animate({
+                scrollTop: target.offset().top
+            }, 1000);
+
+        }*/
+        $('#general-section')[0].scrollIntoView(true);
+    })
+    $("#settings-storage").on('click', function(){
+        /*var target = $('#storage-section');
+        if (target.length) {
+            $('#settings-panel').animate({
+                scrollTop: target.offset().top
+            }, 1000);
+
+        }*/
+        $('#storage-section')[0].scrollIntoView(true);
+    })
 
     $(document).on("click", ".map-name", function () {
         loadMapData($(this).attr("map-val"));
