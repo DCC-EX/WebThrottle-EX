@@ -1,5 +1,6 @@
 var cacheName = 'exWebThrottle';
 var filesToCache = [
+  '/exWebThrottle/',
   'index.html',
   'images/favicon.ico'
 ];

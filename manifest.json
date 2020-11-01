@@ -8,9 +8,9 @@
         "sizes": "176x176"
       }
     ],
-    "start_url": "/",
+    "start_url": "/exWebThrottle/",
     "background_color": "#fff",
     "display": "standalone",
-    "scope": "/",
+    "scope": "/exWebThrottle/",
     "theme_color": "#fff"
   }
