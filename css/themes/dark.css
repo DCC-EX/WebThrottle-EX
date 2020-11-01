@@ -165,3 +165,18 @@ input:checked + .slider.debug-slider:before{
 hr {
     border-color: #3f3f3f;
 }
+.menu {
+    box-shadow: 0 0px 10px #000000;
+    border-right: 1px solid #2f2f2f;
+}
+.nav-btn, .btn-expand, .btn-info, .btn-hide{
+    color: #afafaf;
+}
+.nav-btn:hover, .btn-expand:hover, .btn-info:hover{
+    color: #fff;
+}
+
+.add-loco-form .add-loco-head, 
+.add-loco-form .row label {
+    color: #333;
+}

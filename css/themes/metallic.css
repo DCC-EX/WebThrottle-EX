@@ -60,7 +60,7 @@
     background: -moz-linear-gradient(top, #efefef, #e2e2e2);
     box-shadow: -1px 2px 4px 2px #c7c7c7; /* 0 0 0px 4px #d8d8d8, 0 0 0px 1px #ddd;*/
     background: linear-gradient(to bottom,#efefef, #e2e2e2);
-    height: 28px;
+    height: 30px;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -74,48 +74,64 @@
     border: 1px solid #9e9e9e;
 }
 .fn-button.field-button-fn .btn.press {
-    color: #005a69;
+  color: #005a69;
 }
 
-.formbuilder-button .btn, .server-button .btn, .fn-button .btnm, .dropbtn{
-    border: 1px solid #007a8a;
-    border-bottom: 4px solid #007a8a;
-    background: -webkit-gradient(linear, left top, left bottom, from(#00b2ca), to(#00A3B9));
-    background: -moz-linear-gradient(top, #00b2ca, #00A3B9);
-    background: linear-gradient(to bottom,#00b2ca, #00A3B9);
-    box-shadow: -1px 2px 4px 2px #c7c7c7; /* 0 0 0px 4px #d8d8d8, 0 0 0px 1px #ddd;*/
-    height: 30px;
-    box-sizing: border-box;
-    text-shadow: 0px 0px 1px #444444;
+.formbuilder-button .btn, .server-button .btn, .fn-button .btn, .dropbtn{
+  border: 1px solid #007a8a;
+  border-bottom: 4px solid #007a8a;
+  background: -webkit-gradient(linear, left top, left bottom, from(#00b2ca), to(#00A3B9));
+  background: -moz-linear-gradient(top, #00b2ca, #00A3B9);
+  background: linear-gradient(to bottom,#00b2ca, #00A3B9);
+  box-shadow: -1px 2px 4px 2px #c7c7c7; /* 0 0 0px 4px #d8d8d8, 0 0 0px 1px #ddd;*/
+  vertical-align: middle;
+  box-sizing: border-box;
+  text-shadow: 0px 0px 1px #444444;
 }
 .formbuilder-button .btn:active ,  
-.server-button .btn:active , 
-.fn-button .btnm:active , 
-.dropbtn:active {
-    background: -webkit-gradient(linear, left top, left bottom, from(#0299ad), to(#00A3B9));
-    background: -moz-linear-gradient(top, #0299ad, #00A3B9);
-    background: linear-gradient(to bottom,#0299ad, #00A3B9);
-    box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
-    border: 1px solid #007a8a;
-    height: 30px;
-}
-
+.server-button .btn:active, .dropbtn:active{
+  background: -webkit-gradient(linear, left top, left bottom, from(#0299ad), to(#00A3B9));
+  background: -moz-linear-gradient(top, #0299ad, #00A3B9);
+  background: linear-gradient(to bottom,#0299ad, #00A3B9);
+  box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #007a8a;
+  height: 28px;
+} 
+ 
+.dropbtn{
+    padding: 5px 8px;
+} 
+.dropbtn:active{
+    padding: 6px 8px;
+} 
+.server-button .btn, .fn-button .btnm, 
 input.form-control, select.form-control, textarea.form-control {
-    padding: 7px 8px;
-    border: 1px solid #9e9e9e;
-    box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
-    background: #fafafa;
+  padding: 7px 8px;
+  vertical-align: middle;
 }
 input.form-control:active, select.form-control:active, textarea.form-control:active,
 input.form-control:focus, select.form-control:focus, textarea.form-control:focus{
   background: #ffffff;
 } 
-.select-control{
-    height: 30px;
-    border: 1px solid #9e9e9e;
-    box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
-    background: #fafafa;
+.formbuilder-button  .btn.acq-loco-btn,
+.server-button .btn,
+.formbuilder-button  .add-loco-btn,
+.formbuilder-button  .btn.acq-loco-btn:active,
+.server-button .btn:active,
+.formbuilder-button  .add-loco-btn:active{
+  height: 34px;
 }
+.select-control{
+  height: 30px;
+  border: 1px solid #9e9e9e;
+  box-shadow: 1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
+  background: #fafafa;
+}
+.select-control.select-xl{
+    height: 36px;
+    margin-top: 1px;
+}
+
 .btn-grey{
     padding: 7px;
     padding-top: 5px;
