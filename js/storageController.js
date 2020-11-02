@@ -24,7 +24,7 @@ $(document).ready(function(){
 
     // This will Load buttons on selecting a map from the select box
     $("#select-map").change(function () {
-        selectedval = $(this).val();    
+        selectedval = $(this).val(); 
         if(selectedval != "default"){
             data  = getStoredMapData(selectedval);
             loadButtons(data);
@@ -78,7 +78,7 @@ $(document).ready(function(){
         var r = confirm("Are you sure on deletion?");
         if (r == true) {
             window.localStorage.removeItem('mapData');
-            console.log("!!!!!!WIPED!!!!!!");
+            console.log("!!!!!!MAPS WIPED!!!!!!");
             loadmaps();
         }
     });
@@ -104,6 +104,7 @@ $(document).ready(function(){
         $("#map-upload").trigger('click');
     });
     // This part of above which is responsible for actual file upload for MAP
+    
     $("#map-upload").on('change',function(e){
         var file = e.target.files[0];
         var field = $(this);
@@ -117,19 +118,21 @@ $(document).ready(function(){
     });
 
     // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
-    $("#restore-app").on('click', function(e){
+    $("#restore-all-maps").on('click', function(e){
         e.preventDefault();
-        $("#appdata-upload").trigger('click');
+        $("#appdata-upload").attr("mode", "mapData");
+        $("#appdata-upload").trigger("click");
     });
     // This part of above which is responsible for actual file upload for APP DATA
     $("#appdata-upload").on('change',function(e){
+        importMode = $("#appdata-upload").attr("mode");
         var file = e.target.files[0];
         var field = $(this);
         var freader = new FileReader();
         freader.onload =  function(evt){ 
-        data = JSON.parse(evt.target.result);
-        importAppData(data);
-        field.val('');
+          data = JSON.parse(evt.target.result);
+          importAppData(data, importMode);
+          field.val('');
         };
         freader.readAsText(file);
     });
@@ -157,7 +160,7 @@ $(document).ready(function(){
         var r = confirm("Are you sure on deletion?");
         if (r == true) {
             window.localStorage.removeItem('mapData');
-            console.log("!!!!!!WIPED!!!!!!");
+            console.log("!!!!!!SETTINGS WIPED!!!!!!");
             loadmaps();
         }
     });
@@ -273,7 +276,6 @@ function editMap(){
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
 function setMapData(data){
-  console.log(data);
   if (typeof(Storage) !== "undefined") {
     curmapdata = []; 
     smapdata = JSON.parse(window.localStorage.getItem('mapData'));
@@ -338,8 +340,7 @@ function deleteFuncData(name){
               curmapdata.push(item);
             }
           });    
-          window.localStorage.setItem('mapData', JSON.stringify(curmapdata));    
-          console.log("Not NULL");
+          window.localStorage.setItem('mapData', JSON.stringify(curmapdata));
       }
     } 
   }
@@ -353,7 +354,6 @@ function getMapData(){
 // Returns boolen if the given Map exists in local storage
 function ifExists(name){
   data = JSON.parse(window.localStorage.getItem('mapData'));
-  console.log(data);
   found = false;
   if(data != null){
     data.find(function(item, i){
@@ -377,11 +377,31 @@ function getBackup() {
 }
 
 // Function that is responsible to store imported APP data into local storage
-function importAppData(data){
-  if(data){
-    window.localStorage.setItem('mapData', JSON.stringify(data));
-    loadmaps();
-    $("#select-map").val('default').trigger("change");
+function importAppData(data, opr){
+  switch (opr) {
+    case "mapData":
+      importMapdata(data);
+      break;
+    case "cabData":
+      importLocoData(data);
+      break;
+  }
+  //$("#appdata-upload").attr("mode", "");
+}
+
+function importMapdata(data){
+    if(data){
+        window.localStorage.setItem('mapData', JSON.stringify(data));
+        loadmaps();
+        $("#select-map").val('default').trigger("change");
+      }
+}
+//Import the Locomotives List data
+function importLocoData(data) {
+  if (data) {
+    window.localStorage.setItem("cabList", JSON.stringify(data));
+    loadLocomotives();
+    locoList = getLocoList();
   }
 }
 
@@ -412,15 +432,30 @@ function getLocoList(){
   return JSON.parse(window.localStorage.getItem("cabList"));
 }
 
+//Download the Locomotives List data
+function downloadCabData(){
+  data = JSON.stringify(getLocoList());
+  const a = document.createElement("a");
+  const file = new Blob([data], {type: 'application/json'});
+  a.href = URL.createObjectURL(file);
+  a.download = "CabList.json";
+  a.click();
+}
+
+
+
+/********************************************/
+/**************  Preferences  ***************/
+/********************************************/
 
 // Get a given user preference
 function getPreference(pref){
-    if (window.localStorage.getItem("userpref") != null) {
-      curpref = JSON.parse(window.localStorage.getItem("userpref"));
-      return curpref[pref];
-    } else {
-      return null;
-    }
+  if (window.localStorage.getItem("userpref") != null) {
+    curpref = JSON.parse(window.localStorage.getItem("userpref"));
+    return curpref[pref];
+  } else {
+    return null;
+  }
 }
 
 // Set a given user preference
