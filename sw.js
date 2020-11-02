@@ -2,7 +2,8 @@ var cacheName = 'exWebThrottle';
 var filesToCache = [
   '/exWebThrottle/',
   'index.html',
-  'images/favicon.ico'
+  'images/favicon.ico',
+  'css/'
 ];
 
 self.addEventListener('install', function(e) {
