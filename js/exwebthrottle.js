@@ -392,9 +392,10 @@ $(document).ready(function(){
         });
     });
 
+    
     $("#info-tooltip").tooltip({
         content:
-          "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+          "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
         show: {
         effect: "slideDown",
         delay: 100,
