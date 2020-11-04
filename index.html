@@ -192,17 +192,7 @@
                         </div>
                         <hr>
                     </div>
-                    <div class="row  pos-rel">                 
-                        <!--<div class="column-3 sp-controller">
-                            <span class="">
-                                Speed Controller
-                            </span>
-                            <select id="theme-selector" class="btn theme-selector select-control" name="themeselector" title="Change Theme">
-                                <option value="simple"> Simple </option>
-                                <option value="metallic"> Metallic </option>
-                                <option value="dark"> Dark </option>
-                            </select>  
-                        </div>-->                               
+                    <div class="row  pos-rel">                                              
                         <button type="button" class="btn-default btn btn-hide" title="Hide the top bar" name="button-hide" access="false" id="button-hide">
                             <span class="icon-circle-up"></span>
                         </button> 
@@ -264,23 +254,14 @@
                                     <div class="note-msg column-6">
                                         <select id="select-map" class="btn select-map select-control" name="selectMap" title="Load a Saved Map">
                                         </select>                                   
-                                        <div class="dropdown">
+                                        <!-- <div class="dropdown">
                                             <button class="dropbtn">Options <span style="font-size:8px;vertical-align: middle;">&#9660;</span></button>
                                             <div class="dropdown-content">
-                                            <a href="#" id="new-map">+ &nbsp;New map</a>
-                                            <a href="#" id="edit-map"> &#9998; &nbsp;Edit map</a>
                                             <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
                                             <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
-                                            <input id="map-upload" type="file" hidden/>
                                             <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
-                                            <div class="hr"></div>
-                                            <a href="#" id="backup-map"> &#10514;&nbsp; Export App data</a>
-                                            <a href="#" id="restore-all-maps"> &#10515;&nbsp; Import App data</a>
-                                            <input id="appdata-upload" mode="" type="file" accept=".json" hidden/>
-                                            <div class="hr"></div>
-                                            <a href="#" id="wipe-map"> &#10539;&nbsp; Wipe App data</a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="row" id="fn-wrapper">
@@ -325,10 +306,10 @@
                 
                 <div id="loco-window" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7">
+                        <div class="column-7 pl0">
                             Locomotives
                         </div>
-                        <div class="column-3">
+                        <div class="column-3 pr0">
                             <div class="option-btns formbuilder-button row">
                                 <div class="column-2">&nbsp;</div> 
                                 <div class="column-4">
@@ -391,7 +372,7 @@
                         </div>
                     </div>
                     <div class="row settings-content">
-                        <div class="settings-panel" id="locmomotives-panel">
+                        <div class="settings-panel" id="locomotives-panel">
                              <div class="settings-group">
                                  Select a Locomotive
                              </div>
@@ -401,10 +382,10 @@
 
                 <div id="fn-map-window" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7">
+                        <div class="column-7 pl0">
                             Function Mappings
                         </div>
-                        <div class="column-3">
+                        <div class="column-3 pr0">
                             <div class="option-btns formbuilder-button row">
                                 <div class="column-2">&nbsp;</div> 
                                 <div class="column-4">
@@ -413,10 +394,10 @@
                                     </button>
                                 </div> 
                                 <div class="column-2">  
-                                    <button class="add-loco-btn btn" title="Export Map" ><span class="icon-upload3"></span></button>
+                                    <button class="add-loco-btn btn" id="export-all-maps" title="Export Map" ><span class="icon-upload3"></span></button>
                                 </div>
                                 <div class="column-2">
-                                    <button class="add-loco-btn btn" title="Import Map"><span class="icon-download3"></span></button>
+                                    <button class="add-loco-btn btn" id="import-all-maps" title="Import Map"><span class="icon-download3"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -427,13 +408,13 @@
                             </ul>
                         </div>
                         <div class="settings-panel" id="mapping-panel">
-                             <div class="settings-group">
-                                 Select a Map
+
+                             <div class="settings-group placeholder">
+                                 <p>Select a Map</p>
                              </div>
                         </div>
                     </div>
                 </div>
-
                 <div id="settings-window" hidden="true">
                     <div class="row">
                         <div class="settings-heading">
@@ -524,11 +505,8 @@
             </div>
         </div>
         
-
         <div id="fnModal" class="fn-modal">
-
-            <!-- Modal content -->
-            
+            <!-- Modal content -->          
             <div class="fn-modal-header row">
              <h4 class="fn-heading" > New Map </h4>    
              <span class="close" id="close-model">&times;</span>
@@ -541,8 +519,10 @@
                     Save Map
                 </button>
             </div>
-          
         </div>
+        <input id="map-upload"  type="file" hidden/>
+        <input id="maps-upload" type="file" hidden/>
+        <input id="cabs-upload" type="file" hidden/>
     </body>
 
 </html>
