@@ -22,8 +22,7 @@ $(document).ready(function(){
     }
   });
 
-  $("#ex-locoid")
-    .autocomplete({
+  $("#ex-locoid").autocomplete({
       delay: 0,
       minLength: 0,
       source: function (request, response) {
@@ -112,8 +111,7 @@ $(document).ready(function(){
 
   $("#import-locolist").on("click", function (e) {
      e.preventDefault();
-     $("#appdata-upload").attr("mode", "cabData");
-     $("#appdata-upload").trigger("click");
+     $("#cabs-upload").trigger("click");
      locoList = getLocoList();
   });
 

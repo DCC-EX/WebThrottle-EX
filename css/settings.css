@@ -66,7 +66,7 @@
     -ms-flex: 3;
     flex: 3;
 }
-.side-panel ul li:hover {
+.side-panel ul li:hover, .side-panel ul li.active {
     background: rgba(4,4,4, 0.05);
 }
 .settings-group.placeholder {
@@ -104,7 +104,7 @@ a.edit-cur-loco, a.option-btn{
 a.edit-cur-loco{
     margin-top: 6px;
 }
-.settings-subheading.row .map-name{
+.settings-subheading.row .map-name-heading{
     padding-top: 8px;
 }
 /* Style the content */
@@ -123,7 +123,9 @@ a.edit-cur-loco{
 .caplitalize{
     text-transform: capitalize;
 }
-
+.waste-bin{
+    font-size: 13px;
+}
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
 @media (max-width: 600px) {
     .settings-content {

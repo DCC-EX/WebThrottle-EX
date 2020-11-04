@@ -462,6 +462,7 @@ input:checked + .slider.debug-slider{
     box-shadow: 0px 0px 10px 0px #747474;
     border-radius: 5px;
     display: none;
+    min-height: 520px;
 }
 
 .fn-modal-header{
@@ -938,6 +939,19 @@ input:checked + .slider.debug-slider{
 .settings-heading .option-btns > div{
     padding: 0;
     padding-left: 10px;
+}
+.maps-content span.pill{
+    background-color: gray;
+    padding: 3px 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+}
+.maps-content span.pill.red{
+    background: #d00000;
+}
+.maps-content span.pill.green{
+    background: #00643a;
 }
 /* Common Styles*/
 .width100{

@@ -249,23 +249,14 @@
                                     <div class="note-msg column-6">
                                         <select id="select-map" class="btn select-map select-control" name="selectMap" title="Load a Saved Map">
                                         </select>                                   
-                                        <div class="dropdown">
+                                        <!-- <div class="dropdown">
                                             <button class="dropbtn">Options <span style="font-size:8px;vertical-align: middle;">&#9660;</span></button>
                                             <div class="dropdown-content">
-                                            <a href="#" id="new-map">+ &nbsp;New map</a>
-                                            <a href="#" id="edit-map"> &#9998; &nbsp;Edit map</a>
                                             <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
                                             <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
-                                            <input id="map-upload" type="file" hidden/>
                                             <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
-                                            <div class="hr"></div>
-                                            <a href="#" id="backup-map"> &#10514;&nbsp; Export App data</a>
-                                            <a href="#" id="restore-all-maps"> &#10515;&nbsp; Import App data</a>
-                                            <input id="appdata-upload" mode="" type="file" accept=".json" hidden/>
-                                            <div class="hr"></div>
-                                            <a href="#" id="wipe-map"> &#10539;&nbsp; Wipe App data</a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="row" id="fn-wrapper">
@@ -398,16 +389,15 @@
                                     </button>
                                 </div> 
                                 <div class="column-2">  
-                                    <button class="add-loco-btn btn" title="Export Map" ><span class="icon-upload3"></span></button>
+                                    <button class="add-loco-btn btn" id="export-all-maps" title="Export Map" ><span class="icon-upload3"></span></button>
                                 </div>
                                 <div class="column-2">
-                                    <button class="add-loco-btn btn" title="Import Map"><span class="icon-download3"></span></button>
+                                    <button class="add-loco-btn btn" id="import-all-maps" title="Import Map"><span class="icon-download3"></span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row settings-content">
-
                         <div class="side-panel">
                             <ul id="function-mappings">
                             </ul>
@@ -420,7 +410,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="settings-window" hidden="true">
                     <div class="row">
                         <div class="settings-heading">
@@ -511,11 +500,8 @@
             </div>
         </div>
         
-
         <div id="fnModal" class="fn-modal">
-
-            <!-- Modal content -->
-            
+            <!-- Modal content -->          
             <div class="fn-modal-header row">
              <h4 class="fn-heading" > New Map </h4>    
              <span class="close" id="close-model">&times;</span>
@@ -528,8 +514,10 @@
                     Save Map
                 </button>
             </div>
-          
         </div>
+        <input id="map-upload"  type="file" hidden/>
+        <input id="maps-upload" type="file" hidden/>
+        <input id="cabs-upload" type="file" hidden/>
     </body>
 
 </html>
