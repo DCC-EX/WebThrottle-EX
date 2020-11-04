@@ -417,16 +417,18 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
-  var mode = 0;
-  // Left Menu
-  $("#nav-open").on("click", function () {
-    $("#side-menu").show().animate({ left: 0 });
-  });
-  $("#nav-close").on("click", function () {
-    $("#side-menu").animate({ left: -260 }, function () {
-      $("#side-menu").hide();
+    var mode = 0;
+    // Left Menu
+    $("#nav-open").on("click", function () { 
+        $("#side-menu").show().animate({ left: 0 });
     });
-  });
+    $("#nav-close").on("click", function () {
+        $("#side-menu").animate({ left: -260 }, function(){
+            $("#side-menu").hide();
+        });
+    });
+
+    
 
   $("#info-tooltip").tooltip({
     content:
