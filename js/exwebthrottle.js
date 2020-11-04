@@ -149,45 +149,79 @@ function loadMapData(map){
     }
     $("#mapping-panel").empty();
     $("#mapping-panel").append(
-        '<div class="row settings-group" id="fnhead">' +
+      '<div class="settings-subheading row">' +
+        '<div class="column-7 pl0"><div class="map-name">' +
+        map +
+        "</div></div>" +
+        '<div class="column-3 pr0">' +
+        '<a href="#" class="option-btn"  id="import-map"> &#8595;</a>' +
+        '<a href="#" class="option-btn"  id="export-cur-map"> &#8593;</a>' +
+        '<a href="#" class="option-btn" id="edit-cur-map">&#9998;</a>' +
+        "</div>" +
+        "</div>"
+    );
+    $("#mapping-panel").append(
+        '<div class="row settings-group fnhead">' +
           '<div class="column-2">Function</div>'+
           '<div class="column-4">Name</div>'+
           '<div class="column-2">Type</div>' +
           '<div class="column-2">Visible</div>' +
-        '</div></br>'
+        '</div>'
     );
+    container = $('<div class="maps-content"></div>').appendTo("#mapping-panel");
     $.each(data.fnData, function (key, value) {
-      $("#mapping-panel").append(
+      container.append(
         '<div class="row settings-group" id="'+key+'">' +
-          '<div class="column-2">'+key+'</div>'+
+          '<div class="column-2 caplitalize">'+key+'</div>'+
           '<div class="column-4">'+value[2]+'</div>'+
-          '<div class="column-2">'+value[1] +'</div>' +
+          '<div class="column-2">'+ (value[1] == 1 ? 'Press' : 'Switch') +'</div>' +
           '<div class="column-2">'+value[3] +'</div>' +
-        '</div></br>'
+        '</div>'
       );
     });
 
 }
 function loadLocomotives(){
     locos = getLocoList();
-    $("#locmomotives-panel").empty();
+    $("#locomotives-panel").empty();
     $.each(locos, function (key, value) {
-        console.log(key, value);
-      $("#locmomotives-panel").append(
-        '<div class="row settings-group" id="'+key+'">'+
-            '<div class="column-1 sno"><p>'+(key+1)+'</p></div>'+
-            '<div class="column-7 loco-details">'+
-                '<div class="row">'+
-                    '<div class="column-7"><p class="ac-loco-name column-10">' + value.name +'</p></div>'+
-                    '<div class="column-2 cv-num"><p><small>CV </small>'+value.cv+'</p></div>'+
-                '</div>'+
-                '<div class="row sub-text">'+   
-                    '<div class="column-3"><p>'+value.type+'</p></div>'+
-                    '<div class="column-3">'+ (value.decoder == '' ? '<p class="nd">Undefined</p>': '<p>'+value.decoder+'</p>' )+'</div>'+
-                    '<div class="column-3">'+ (value.brand == '' ? '<p class="nd">Undefined</p>': '<p>'+value.brand+'</p>' )+'</div>'+
-            '</div></div>'+
-            '<div class="column-2 asst-map"><p class="muted">Map</p><p class="">' + value.map +'</p></div>'+
-        '</div></br>');      
+      $("#locomotives-panel").append(
+        '<div class="row settings-group" id="' +
+          key +
+          '">' +
+          '<div class="column-1 sno"><p>' +
+          (key + 1) +
+          "</p></div>" +
+          '<div class="column-7 loco-details">' +
+          '<div class="row">' +
+          '<div class="column-7"><p class="ac-loco-name column-10">' +
+          value.name +
+          "</p></div>" +
+          '<div class="column-2 cv-num"><p><small>CV </small>' +
+          value.cv +
+          "</p></div>" +
+          "</div>" +
+          '<div class="row sub-text">' +
+          '<div class="column-3"><p>' +
+          value.type +
+          "</p></div>" +
+          '<div class="column-3">' +
+          (value.decoder == ""
+            ? '<p class="nd">Undefined</p>'
+            : "<p>" + value.decoder + "</p>") +
+          "</div>" +
+          '<div class="column-3">' +
+          (value.brand == ""
+            ? '<p class="nd">Undefined</p>'
+            : "<p>" + value.brand + "</p>") +
+          "</div></div></div>" +
+          '<div class="column-2 asst-map"><div class="row">' +
+          '<div class="column-7"><p class="muted">Map</p><p>' +
+          value.map +
+          "</p></div>" +
+          '<div class="column-3 prh"><a href="#" class="edit-cur-loco"> &#9998; </a></div></div>' +
+          "</div></br>"
+      );      
     });
 }
 //Initialization routine for Throttle screen
