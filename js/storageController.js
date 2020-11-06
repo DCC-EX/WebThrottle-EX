@@ -325,7 +325,6 @@ function getStoredMapData(name){
 
 //Download the Map data of given Map name
 function downloadMapData(mapName){
-  getStoredMapData(mapName);
   data = JSON.stringify(getStoredMapData(mapName));
   const a = document.createElement("a");
   const file = new Blob([data], {type: 'application/json'});
@@ -462,17 +461,7 @@ function setPreference(pref, val){
   }else{
     curpref = {};
   }
-  switch (pref) {
-    case "scontroller":
-      curpref["scontroller"] = val;
-      break;
-    case "dbugConsole":
-      curpref["dbugConsole"] = val;
-      break;
-    case "theme":
-      curpref["theme"] = val;
-      break;
-  }
+  curpref[pref] = val;
   setUserPreferences(curpref);
 }
 
