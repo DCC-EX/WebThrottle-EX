@@ -119,14 +119,14 @@ $(document).ready(function(){
     freader.readAsText(file);
   });
 
-  // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
+  // This allows user to upload previously downloaded MAP DATA (JSON format must adhere)
   $(document).on("click", "#import-all-maps", function (e) {
     e.preventDefault();
     //$("#appdata-upload").attr("mode", "mapData");
     $("#maps-upload").trigger("click");
   });
 
-  // This part of above which is responsible for actual file upload for APP DATA
+  // This part of above which is responsible for actual file upload for MAP DATA
   $("#maps-upload").on("change", function (e) {
     var file = e.target.files[0];
     var field = $(this);
@@ -150,13 +150,26 @@ $(document).ready(function(){
   //Functions for the storage page in settings
 
   $("#backup-app-settings").on("click", function () {
-    alert("Needs to implment Backup function");
+    exportAppData();
   });
 
+  // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
   $("#restore-app-settings").on("click", function (e) {
     e.preventDefault();
-    alert("Needs to implment Import App data function");
-    //$("#appdata-upload").trigger('click');
+    $("#app-upload").trigger("click");
+  });
+
+  // This part of above which is responsible for actual file upload for APP DATA
+  $("#app-upload").on("change", function (e) {
+    var file = e.target.files[0];
+    var field = $(this);
+    var freader = new FileReader();
+    freader.onload = function (evt) {
+      data = JSON.parse(evt.target.result);
+      importAppdata(data);
+      field.val("");
+    };
+    freader.readAsText(file);
   });
 
   $("#wipe-app-settings").on("click", function () {
@@ -169,6 +182,7 @@ $(document).ready(function(){
       loadmaps();
     }
   });
+
 });
 
 // Load all maps to select box
@@ -356,7 +370,11 @@ function deleteFuncData(name){
 
 // Returns the AppData of ExWebThrottle
 function getMapData(){
-  return JSON.parse(window.localStorage.getItem('mapData'));
+  if (typeof Storage !== "undefined") {
+    return JSON.parse(window.localStorage.getItem("mapData"));
+  } else {
+    return [];
+  }
 }
 
 // Returns boolen if the given Map exists in local storage
@@ -425,7 +443,11 @@ function saveLocomotive(data){
 
  // Returns the AppData of ExWebThrottle
 function getLocoList(){
-  return JSON.parse(window.localStorage.getItem("cabList"));
+    if (typeof Storage !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("cabList"));
+    }else{
+      return [];
+    }
 }
 
 //Download the Locomotives List data
@@ -472,26 +494,58 @@ function setUserPreferences(pref){
   }
 }
 
-/*
-  {
-    "scontroller": 'vertical',
-    "dbugConsole": true
+function getUserPreferences() {
+  if (typeof Storage !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("userpref"));
+  }else{
+    return [];
   }
-*/
+}
+
+function importPrefData(data) {
+  if (data) {
+    window.localStorage.setItem("userpref", JSON.stringify(data));
+  }
+}
+
+function exportAppData(){
+  jsonObj = [
+    {maps: getMapData()},
+    {locos: getLocoList()},
+    {preferences: getUserPreferences()}
+  ]
+  data = JSON.stringify(jsonObj);
+  const a = document.createElement("a");
+  const file = new Blob([data], { type: "application/json" });
+  a.href = URL.createObjectURL(file);
+  a.download = "AppData.json";
+  a.click();
+  
+}
+
+
+function  importAppdata(data){
+  importMapdata(data[0]["maps"]);
+  importLocoData(data[1]["locos"]);
+  importPrefData(data[2]["preferences"]);
+  setThrottleScreenUI(); 
+}
+
 
 (function ($) {
-  $.fn.arrayToJSON = function () {
-    var o = {};
-    $.each($(this), function () {
-      if (o[this.name]) {
-        if (!o[this.name].push) {
-          o[this.name] = [o[this.name]];
+    $.fn.arrayToJSON = function () {
+      var o = {};
+      $.each($(this), function () {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || "");
+        } else {
+          o[this.name] = this.value || "";
         }
-        o[this.name].push(this.value || "");
-      } else {
-        o[this.name] = this.value || "";
-      }
-    });
-    return o;
-  };
-})(jQuery);
+      });
+      return o;
+    };
+  }
+)(jQuery);
