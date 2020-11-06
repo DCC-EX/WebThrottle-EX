@@ -185,7 +185,14 @@ hr {
     background: #121212;
     box-shadow: inset 0px 0px 2px #000000;
 }
-
+.settings-heading {
+    border-bottom: 1px solid #000000;
+    box-shadow: 0 1px 0px #464646; 
+}
+.side-panel {
+    border-right: 1px solid #000000;
+    box-shadow: 1px 0 #464646; 
+}
 .row.settings-group.fnhead{
     background: #232323;
     box-shadow: 0 1px 1px black;
