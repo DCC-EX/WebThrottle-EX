@@ -927,14 +927,14 @@ function eventListeners(){
     var cmdDirect = document.getElementById("cmd-direct");
     var exLocoID = document.getElementById("ex-locoid");  
     cmdDirect.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-sendCmd').click();
         }
     });
     exLocoID.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-getloco').click();
