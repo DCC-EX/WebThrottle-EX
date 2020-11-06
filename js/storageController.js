@@ -163,7 +163,9 @@ $(document).ready(function(){
     var r = confirm("Are you sure on deletion?");
     if (r == true) {
       window.localStorage.removeItem("mapData");
-      console.log("!!!!!!SETTINGS WIPED!!!!!!");
+      window.localStorage.removeItem("cabList");
+      window.localStorage.removeItem("userpref");
+      console.log("!!!!!DATA IS WIPED!!!!!!");
       loadmaps();
     }
   });
