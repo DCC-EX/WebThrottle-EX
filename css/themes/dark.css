@@ -211,3 +211,9 @@ a.edit-cur-loco, a.option-btn{
 .loco-details .sub-text p{
     background: #282828;
 }
+.loco-list-ctrl input{
+    border: 1px solid #3b3b3b;
+    background: #282828;
+    color: #ffffff;
+    box-shadow: inset 0px 0px 2px #000000;
+}
