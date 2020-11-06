@@ -69,7 +69,7 @@ $(document).ready(function(){
     if (map != "default") {
       downloadMapData(map);
     } else {
-      alert("Please select Custom Map.");
+      alert("Please select Custom map");
     }
   });
 
@@ -281,32 +281,30 @@ function editMap(){
 // Verify if the given Map data already exists and replace it
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
-function setMapData(data){
-  console.log(data);
+function setMapData(mapdata){
   if (typeof(Storage) !== "undefined") {
     curmapdata = []; 
     smapdata = JSON.parse(window.localStorage.getItem('mapData'));
     if(!smapdata){
-        curmapdata.push(data);
+        curmapdata.push(mapdata);
         window.localStorage.setItem('mapData', JSON.stringify(curmapdata));
     }else{
-     if(ifExists(data.mname)){
-        smapdata.find(function(item, i){
-          if(item.mname == data.mname){
-            item.fnData=data.fnData;
-          }
-        });  
-      }else{
-        smapdata.push(data);
-      }
+     if (ifExists(mapdata.mname)) {
+       smapdata.find(function (item, i) {
+         if (item.mname == data.mname) {
+           item.fnData = data.fnData;
+         }
+       });
+     } else {
+       smapdata.push(mapdata);
+     }
       window.localStorage.setItem('mapData', JSON.stringify(smapdata));
     }
     loadmaps();
     setFunctionMaps();
-    loadMapData(data.mname);
-    $("#select-map").val(data.mname).trigger("change");
+    loadMapData(mapdata.mname);
+    $("#select-map").val(mapdata.mname).trigger("change");
   }
-
 }
 
 //Returns the Map data of given Map name
