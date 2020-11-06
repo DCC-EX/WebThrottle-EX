@@ -188,12 +188,8 @@ function loadLocomotives(){
     $("#locomotives-panel").empty();
     $.each(locos, function (key, value) {
       $("#locomotives-panel").append(
-        '<div class="row settings-group" id="' +
-          key +
-          '">' +
-          '<div class="column-1 sno"><p>' +
-          (key + 1) +
-          "</p></div>" +
+        '<div class="row settings-group" id="'+key+'">'+
+          '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
           '<div class="column-7 loco-details">' +
           '<div class="row">' +
           '<div class="column-7"><p class="ac-loco-name column-10">' +
@@ -204,18 +200,12 @@ function loadLocomotives(){
           "</p></div>" +
           "</div>" +
           '<div class="row sub-text">' +
-          '<div class="column-3"><p>' +
-          value.type +
-          "</p></div>" +
+          '<div class="column-3"><p>' + value.type + '</p></div>' +
           '<div class="column-3">' +
-          (value.decoder == ""
-            ? '<p class="nd">Undefined</p>'
-            : "<p>" + value.decoder + "</p>") +
+          (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
           "</div>" +
           '<div class="column-3">' +
-          (value.brand == ""
-            ? '<p class="nd">Undefined</p>'
-            : "<p>" + value.brand + "</p>") +
+          (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
           "</div></div></div>" +
           '<div class="column-2 asst-map"><div class="row">' +
           '<div class="column-7"><p class="muted">Map</p><p>' +
@@ -927,14 +917,14 @@ function eventListeners(){
     var cmdDirect = document.getElementById("cmd-direct");
     var exLocoID = document.getElementById("ex-locoid");  
     cmdDirect.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-sendCmd').click();
         }
     });
     exLocoID.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-getloco').click();
