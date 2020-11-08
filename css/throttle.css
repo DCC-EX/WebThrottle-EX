@@ -788,8 +788,7 @@ input:checked + .slider.debug-slider{
     position: absolute;
     left: 50%;
     top: 100px;
-    padding: 20px;
-    padding-bottom: 10px;
+    padding: 10px 20px;
     box-sizing: border-box;
     border-radius: 5px;
     z-index: 1000;
@@ -798,10 +797,19 @@ input:checked + .slider.debug-slider{
 }
 .add-loco-form .add-loco-head{
     font-size: 16px;
-    padding-bottom: 7px;
+    margin-top: 10px;
+    padding: 0;
+}
+.add-loco-form .close{
+    margin-right: -15px;
+    margin-top: -1px;
 }
 .add-loco-form .row{
     margin: 10px 0;
+}
+#loco-form .fn-modal-header.row{
+    padding: 0;
+    margin: 0;
 }
 .add-loco-form .row label{
     padding-left: 0;

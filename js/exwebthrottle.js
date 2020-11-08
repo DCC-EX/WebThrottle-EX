@@ -211,7 +211,8 @@ function loadLocomotives(){
           '<div class="column-7"><p class="muted">Map</p><p>' +
           value.map +
           "</p></div>" +
-          '<div class="column-3 prh"><a href="#" class="edit-cur-loco"> &#9998; </a></div></div>' +
+          '<div class="column-3 prh"><a href="#" loco-id="'+key+'" data-loco="'+
+          value.name+'" class="edit-cur-loco"> &#9998; </a></div></div>' +
           "</div></br>"
       );      
     });
@@ -844,6 +845,7 @@ $(document).ready(function(){
         }*/
     $("#general-section")[0].scrollIntoView(true);
   });
+  
   $("#settings-storage").on("click", function () {
     /*var target = $('#storage-section');
         if (target.length) {
@@ -860,19 +862,38 @@ $(document).ready(function(){
     $("li.map-name").removeClass("active");
     $(this).addClass("active");
   });
+
   // This allows user to delete currently selected Map
   $(document).on("click", "#delete-map", function () {
     selectedval = $("#cur-map-val").attr("cur-map");
     if (selectedval != "Default") {
-        deleteFuncData(selectedval);
-        loadmaps();
-        setFunctionMaps();
-        loadMapData("Default");
-        $("#select-map").val("default").trigger("change");
-        $("li.map-name").removeClass("active");
-        $("li.map-name[map-val= 'Default']").addClass("active");
+      deleteFuncData(selectedval);
+      loadmaps();
+      setFunctionMaps();
+      loadMapData("Default");
+      $("#select-map").val("default").trigger("change");
+      $("li.map-name").removeClass("active");
+      $("li.map-name[map-val= 'Default']").addClass("active");
     }
   });
+
+  $(document).on("click", ".edit-cur-loco", function () {   
+    cabdata = getStoredLocoData($(this).attr("data-loco"));
+    $("#loco-form")[0].reset();
+    $("#loco-form-content").css("display", "inline-block");
+    $(".add-loco-form .add-loco-head").html("Edit Locomotive");
+    $("#loco-submit").attr("loco-mode", "edit");
+    $("#loco-submit").attr("loco-id", $(this).attr("loco-id"));
+    $.each(cabdata, function (key, value) {
+      $("#loco-form").children().find("#"+key).val(value);
+      if(key=="map"){
+        $("#function-maps").autocomplete("search", value);
+        var menu = $("#function-maps").autocomplete("widget");
+        $(menu[0].children[0]).click();
+      }
+    });
+  });
+
 });
 
 function setFunctionMaps(){
@@ -883,11 +904,11 @@ function setFunctionMaps(){
         fnData: {},
         });
     }
-      $("#function-mappings").empty();
-      $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
-      $.each(getMapData(), function () {
-        $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
-      });
+    $("#function-mappings").empty();
+    $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
+    $.each(getMapData(), function () {
+      $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
+    });
 }
 
 function hideWindows(){

@@ -4,8 +4,13 @@ $(document).ready(function(){
   $("#loco-form").on("submit", function (e) {
     e.preventDefault();
     data = $(this).serializeArray();
-    saveLocomotive(data);
-    //console.log("SAVED"+x);
+    mode = $("#loco-submit").attr("loco-mode");
+    if(mode != 'edit'){
+      saveLocomotive(data);
+    }else{
+      id = $("#loco-submit").attr("loco-id")
+      saveEditedLocomotive(data, id);
+    }
     locoList = getLocoList();
     loadLocomotives();
     $("#loco-form")[0].reset();
@@ -13,12 +18,16 @@ $(document).ready(function(){
   });
 
   $("#add-loco").on("click", function () {
-    if ($("#loco-form-content").is(":visible")) {
-      $("#loco-form-content").css("display", "none");
-    } else {
       savedMaps = getPreparedMaps();
       $("#loco-form")[0].reset();
       $("#loco-form-content").css("display", "inline-block");
+      $(".add-loco-form .add-loco-head").html("Add Locomotive");
+      $("#loco-submit").attr("loco-mode", "add");
+  });
+
+  $("#close-addloco-model").on("click", function () {
+    if ($("#loco-form-content").is(":visible")) {
+      $("#loco-form-content").css("display", "none");
     }
   });
 
@@ -73,8 +82,7 @@ $(document).ready(function(){
       .appendTo(ul);
   };
 
-  $("#function-maps")
-    .autocomplete({
+  $("#function-maps").autocomplete({
       delay: 0,
       minLength: 0,
       source: function (request, response) {

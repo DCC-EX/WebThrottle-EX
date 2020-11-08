@@ -307,8 +307,8 @@ function setMapData(mapdata){
     }else{
      if (ifExists(mapdata.mname)) {
        smapdata.find(function (item, i) {
-         if (item.mname == data.mname) {
-           item.fnData = data.fnData;
+         if (item.mname == mapdata.mname) {
+           item.fnData = mapdata.fnData;
          }
        });
      } else {
@@ -368,7 +368,7 @@ function deleteFuncData(name){
   }
 }
 
-// Returns the AppData of ExWebThrottle
+// Returns the Map data of ExWebThrottle
 function getMapData(){
   if (typeof Storage !== "undefined") {
     return JSON.parse(window.localStorage.getItem("mapData"));
@@ -441,6 +441,33 @@ function saveLocomotive(data){
   return false;
 }
 
+function saveEditedLocomotive(data, id){
+  locodata = $(data).arrayToJSON();
+  if (typeof Storage !== "undefined") {
+    cabData = JSON.parse(window.localStorage.getItem("cabList"));
+    cabData.find(function (item, i) {
+      if (i == id) {
+        cabData[i] = locodata;
+      }
+    });
+    window.localStorage.setItem("cabList", JSON.stringify(cabData));
+  }
+}
+
+function ifLocoExists(name) {
+  data = JSON.parse(window.localStorage.getItem("cabList"));
+  found = false;
+  if (data != null) {
+    data.find(function (item, i) {
+      if (item.name == name) {
+        found = true;
+      }
+    });
+    return found;
+  }
+  return found;
+}
+
  // Returns the AppData of ExWebThrottle
 function getLocoList(){
     if (typeof Storage !== "undefined") {
@@ -460,7 +487,20 @@ function downloadCabData(){
   a.click();
 }
 
-
+// Returns the LocoData of ExWebThrottle
+function getStoredLocoData(name) {
+  console.log(name);
+  data = JSON.parse(window.localStorage.getItem("cabList"));
+  if (data != null) {
+    return data.find(function (item, i) {
+      if (item.name == name) {
+        return item;
+      }
+    });
+  } else {
+    return null;
+  }
+}
 
 /********************************************/
 /**************  Preferences  ***************/
@@ -487,7 +527,7 @@ function setPreference(pref, val){
   setUserPreferences(curpref);
 }
 
-//// Store user preferences in local storage
+// Store user preferences in local storage
 function setUserPreferences(pref){
   if (typeof(Storage) !== "undefined") {  
     window.localStorage.setItem("userpref", JSON.stringify(pref));  
@@ -522,7 +562,6 @@ function exportAppData(){
   a.click();
   
 }
-
 
 function  importAppdata(data){
   importMapdata(data[0]["maps"]);
