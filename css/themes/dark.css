@@ -132,7 +132,12 @@ input:checked + .slider.debug-slider:before{
     -webkit-box-shadow: 0 0 5px #000000;
     box-shadow: 0 0 5px #000000;
 }
-
+.em-btn button.em-stop{
+    padding: 12px;
+    box-shadow: 0 0 5px 2px #000000;
+    border: 1px solid #ececec;
+    background: #ddd;
+}
 
 .rotaryswitchPlugin.big.light { 
   margin: 36px;

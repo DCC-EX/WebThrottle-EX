@@ -599,7 +599,6 @@ $(document).ready(function(){
         break;
       }
       case "backward": {
-        isStopped = false;
         setDirection(0);
         setSpeedofControllers();
         isStopped = false;
@@ -611,10 +610,18 @@ $(document).ready(function(){
         dir = getDirection();
         setSpeed(0);
         setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " -1 " + dir);
+        writeToStream("t 01 " + getCV() + " 0 " + dir);
         break;
       }
     }
+  });
+
+  $("#emergency-stop").on("click", function () {
+      isStopped = true;
+      dir = getDirection();
+      setSpeed(0);
+      setSpeedofControllers();
+      writeToStream("t 01 " + getCV() + " -1 " + dir);
   });
 
   // Hide/Show the Loco, Connect server fields (on top)
