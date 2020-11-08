@@ -27,15 +27,15 @@
             var version = "1.3.0";
         </script>
 
-        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link href="css/jquery-ui.css"  rel="stylesheet" type="text/css">
-        <link href="css/layout.css"  rel="stylesheet" type="text/css">
-        <link href="css/roundslider.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/throttle.css"  rel="stylesheet" type="text/css">
-        <link href="css/jquery.rotaryswitch.css" rel="stylesheet" type="text/css">
-        <link href="css/icons.css"  rel="stylesheet" type="text/css">
-        <link href="css/settings.css" rel="stylesheet" type="text/css">
+        <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="images/favicon.ico" rel="icon"          type="image/x-icon">
+        <link href="css/jquery-ui.css"              rel="stylesheet" type="text/css">
+        <link href="css/layout.css"                 rel="stylesheet" type="text/css">
+        <link href="css/roundslider.min.css"        rel="stylesheet" type="text/css"/>
+        <link href="css/throttle.css"               rel="stylesheet" type="text/css">
+        <link href="css/jquery.rotaryswitch.css"    rel="stylesheet" type="text/css">
+        <link href="css/icons.css"                  rel="stylesheet" type="text/css">
+        <link href="css/settings.css"               rel="stylesheet" type="text/css">
         <script  type="text/javascript" src="js/jquery-3.2.1.min.js"></script>  
         <script  type="text/javascript" src="js/jquery-ui.min.js"></script>                       
         <script  type="text/javascript" src="js/roundslider.min.js"></script>
@@ -43,9 +43,10 @@
         <script  type="text/javascript" src="js/fnMaster.js"></script> 
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
-        <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
         <script  type="text/javascript" src="js/addloco.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
+        <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
           connected to the internet. Using the links above, they must be installed on your machine.
@@ -114,71 +115,8 @@
                                         </button>
                                     </div>
                                     <div class="column-2 formbuilder-button acquire-wrap">
-                                        <!-- <button id="add-loco" class="add-loco-btn btn"> 
-                                            <span class="icon-plus"></span> New 
-                                        </button>
-                                        <div id="loco-form-content" class="add-loco-form">
-                                            <form id="loco-form" class="form-inline">
-                                                <div class="add-loco-head">
-                                                    Add Locomotive
-                                                    <hr>
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="name">Name:*</label>
-                                                    <input class="column-6" type="text" id="name" placeholder="Enter name" name="name" required>
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="cv">CV:*</label>
-                                                    <input class="column-6" type="number" id="cv" placeholder="Enter CV" name="cv" required>
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="type">Engine Type:</label>
-                                                    <select class="column-6 add-select" id="type" placeholder="Select Type" name="type">
-                                                        <option value="Diesel"> Diesel </option>
-                                                        <option value="Steam"> Steam </option>
-                                                        <option value="Electric"> Electric </option>
-                                                        <option value="Other"> Other </option>
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="brand">Brand:</label>
-                                                    <input class="column-6" type="text" id="brand" placeholder="Brand Name" name="brand">
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="decoder">Decoder:</label>
-                                                    <input class="column-6" type="text" id="decoder" placeholder="Decoder Name" name="decoder">
-                                                </div>
-                                                <div class="row">
-                                                    <label class="column-4"for="map">Function map:*</label>
-                                                    <input id="function-maps" class="column-6" type="text" id="map" placeholder="Select Map" name="map" required>
-                                                </div>
-                                                 <div class="spacer">
-                                                    
-                                                 </div>
-                                                <div class="row">
-                                                    <div class="column-2"></div>
-                                                    <button class="column-6 " type="submit">Submit</button>
-                                                    <div class="column-2"></div>
-                                                </div>
-                                            </form>
-                                        </div>-->
                                     </div>                                   
                                 </div>
-                                <!--
-                                <div class="row">
-                                    <div class="loco-cv-text column-4">
-                                        <label for="ex-locoid" class="formbuilder-text-label">
-                                            Locomotive ID <span class="formbuilder-required">*</span>
-                                        </label>
-                                        <input type="number" placeholder="Enter loco ID" class="form-control" name="ex-locoid" access="false" maxlength="30" id="ex-locoid" required="required" aria-required="true">
-                                    </div>
-
-                                        <div class="acquire-wrap formbuilder-button column-3">
-                                            <button type="button" class="btn-default btn button-acquire" name="getloco" access="false" data-acquired="false"  id="button-getloco">
-                                                Acquire
-                                            </button>
-                                        </div>
-                                    </div>-->
                             </div>
                             <div class="server-button column-5">
                                 <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
@@ -255,14 +193,6 @@
                                     <div class="note-msg column-6">
                                         <select id="select-map" class="btn select-map select-control" name="selectMap" title="Load a Saved Map">
                                         </select>                                   
-                                        <!-- <div class="dropdown">
-                                            <button class="dropbtn">Options <span style="font-size:8px;vertical-align: middle;">&#9660;</span></button>
-                                            <div class="dropdown-content">
-                                            <a href="#" id="download-map">&#8595; &nbsp;Download map</a>
-                                            <a href="#" id="restore-map"> &#10515;&nbsp; Import map</a>
-                                            <a href="#" id="delete-map">&#128465; &nbsp;Delete map</a>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="row" id="fn-wrapper">
@@ -319,10 +249,15 @@
                                     </button>
                                     <div id="loco-form-content" class="add-loco-form">
                                         <form id="loco-form" class="form-inline">
-                                            <div class="add-loco-head">
-                                                Add Locomotive
-                                                <hr>
+                                            <div class="fn-modal-header row">
+                                                <h4 class="fn-heading add-loco-head">Add Locomotive</h4>    
+                                                <span class="close" id="close-addloco-model">×</span>
                                             </div>
+                                            <!-- <div class="add-loco-head">s
+                                                Add Locomotive
+                                                <>
+                                                <hr>
+                                            </div> -->
                                             <div class="row">
                                                 <label class="column-4"for="name">Name:*</label>
                                                 <input class="column-6" type="text" id="name" placeholder="Enter name" name="name" required>
@@ -357,7 +292,7 @@
                                                 </div>
                                             <div class="row">
                                                 <div class="column-2"></div>
-                                                <button class="column-6 " type="submit">Submit</button>
+                                                <button id="loco-submit" loco-mode="add" class="column-6" type="submit">Submit</button>
                                                 <div class="column-2"></div>
                                             </div>
                                         </form>
@@ -524,6 +459,7 @@
         <input id="map-upload"  type="file" hidden/>
         <input id="maps-upload" type="file" hidden/>
         <input id="cabs-upload" type="file" hidden/>
+        <input id="app-upload"  type="file" hidden/>
     </body>
 
 </html>

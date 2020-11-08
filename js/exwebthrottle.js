@@ -188,12 +188,8 @@ function loadLocomotives(){
     $("#locomotives-panel").empty();
     $.each(locos, function (key, value) {
       $("#locomotives-panel").append(
-        '<div class="row settings-group" id="' +
-          key +
-          '">' +
-          '<div class="column-1 sno"><p>' +
-          (key + 1) +
-          "</p></div>" +
+        '<div class="row settings-group" id="'+key+'">'+
+          '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
           '<div class="column-7 loco-details">' +
           '<div class="row">' +
           '<div class="column-7"><p class="ac-loco-name column-10">' +
@@ -204,24 +200,19 @@ function loadLocomotives(){
           "</p></div>" +
           "</div>" +
           '<div class="row sub-text">' +
-          '<div class="column-3"><p>' +
-          value.type +
-          "</p></div>" +
+          '<div class="column-3"><p>' + value.type + '</p></div>' +
           '<div class="column-3">' +
-          (value.decoder == ""
-            ? '<p class="nd">Undefined</p>'
-            : "<p>" + value.decoder + "</p>") +
+          (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
           "</div>" +
           '<div class="column-3">' +
-          (value.brand == ""
-            ? '<p class="nd">Undefined</p>'
-            : "<p>" + value.brand + "</p>") +
+          (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
           "</div></div></div>" +
           '<div class="column-2 asst-map"><div class="row">' +
           '<div class="column-7"><p class="muted">Map</p><p>' +
           value.map +
           "</p></div>" +
-          '<div class="column-3 prh"><a href="#" class="edit-cur-loco"> &#9998; </a></div></div>' +
+          '<div class="column-3 prh"><a href="#" loco-id="'+key+'" data-loco="'+
+          value.name+'" class="edit-cur-loco"> &#9998; </a></div></div>' +
           "</div></br>"
       );      
     });
@@ -417,6 +408,7 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
+    var version = "1.3.0";
     var mode = 0;
     // Left Menu
     $("#nav-open").on("click", function () { 
@@ -432,7 +424,7 @@ $(document).ready(function(){
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+      "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
     show: {
       effect: "slideDown",
       delay: 100,
@@ -854,6 +846,7 @@ $(document).ready(function(){
         }*/
     $("#general-section")[0].scrollIntoView(true);
   });
+  
   $("#settings-storage").on("click", function () {
     /*var target = $('#storage-section');
         if (target.length) {
@@ -870,19 +863,38 @@ $(document).ready(function(){
     $("li.map-name").removeClass("active");
     $(this).addClass("active");
   });
+
   // This allows user to delete currently selected Map
   $(document).on("click", "#delete-map", function () {
     selectedval = $("#cur-map-val").attr("cur-map");
     if (selectedval != "Default") {
-        deleteFuncData(selectedval);
-        loadmaps();
-        setFunctionMaps();
-        loadMapData("Default");
-        $("#select-map").val("default").trigger("change");
-        $("li.map-name").removeClass("active");
-        $("li.map-name[map-val= 'Default']").addClass("active");
+      deleteFuncData(selectedval);
+      loadmaps();
+      setFunctionMaps();
+      loadMapData("Default");
+      $("#select-map").val("default").trigger("change");
+      $("li.map-name").removeClass("active");
+      $("li.map-name[map-val= 'Default']").addClass("active");
     }
   });
+
+  $(document).on("click", ".edit-cur-loco", function () {   
+    cabdata = getStoredLocoData($(this).attr("data-loco"));
+    $("#loco-form")[0].reset();
+    $("#loco-form-content").css("display", "inline-block");
+    $(".add-loco-form .add-loco-head").html("Edit Locomotive");
+    $("#loco-submit").attr("loco-mode", "edit");
+    $("#loco-submit").attr("loco-id", $(this).attr("loco-id"));
+    $.each(cabdata, function (key, value) {
+      $("#loco-form").children().find("#"+key).val(value);
+      if(key=="map"){
+        $("#function-maps").autocomplete("search", value);
+        var menu = $("#function-maps").autocomplete("widget");
+        $(menu[0].children[0]).click();
+      }
+    });
+  });
+
 });
 
 function setFunctionMaps(){
@@ -893,11 +905,11 @@ function setFunctionMaps(){
         fnData: {},
         });
     }
-      $("#function-mappings").empty();
-      $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
-      $.each(getMapData(), function () {
-        $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
-      });
+    $("#function-mappings").empty();
+    $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
+    $.each(getMapData(), function () {
+      $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
+    });
 }
 
 function hideWindows(){
@@ -927,14 +939,14 @@ function eventListeners(){
     var cmdDirect = document.getElementById("cmd-direct");
     var exLocoID = document.getElementById("ex-locoid");  
     cmdDirect.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-sendCmd').click();
         }
     });
     exLocoID.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-getloco').click();

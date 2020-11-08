@@ -69,7 +69,7 @@ $(document).ready(function(){
     if (map != "default") {
       downloadMapData(map);
     } else {
-      alert("Please select Custom Map.");
+      alert("Please select Custom map");
     }
   });
 
@@ -119,14 +119,14 @@ $(document).ready(function(){
     freader.readAsText(file);
   });
 
-  // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
+  // This allows user to upload previously downloaded MAP DATA (JSON format must adhere)
   $(document).on("click", "#import-all-maps", function (e) {
     e.preventDefault();
     //$("#appdata-upload").attr("mode", "mapData");
     $("#maps-upload").trigger("click");
   });
 
-  // This part of above which is responsible for actual file upload for APP DATA
+  // This part of above which is responsible for actual file upload for MAP DATA
   $("#maps-upload").on("change", function (e) {
     var file = e.target.files[0];
     var field = $(this);
@@ -150,23 +150,39 @@ $(document).ready(function(){
   //Functions for the storage page in settings
 
   $("#backup-app-settings").on("click", function () {
-    alert("Needs to implment Backup function");
+    exportAppData();
   });
 
+  // This allows user to upload previously downloaded APP DATA (JSON format must adhere)
   $("#restore-app-settings").on("click", function (e) {
     e.preventDefault();
-    alert("Needs to implment Import App data function");
-    //$("#appdata-upload").trigger('click');
+    $("#app-upload").trigger("click");
+  });
+
+  // This part of above which is responsible for actual file upload for APP DATA
+  $("#app-upload").on("change", function (e) {
+    var file = e.target.files[0];
+    var field = $(this);
+    var freader = new FileReader();
+    freader.onload = function (evt) {
+      data = JSON.parse(evt.target.result);
+      importAppdata(data);
+      field.val("");
+    };
+    freader.readAsText(file);
   });
 
   $("#wipe-app-settings").on("click", function () {
     var r = confirm("Are you sure on deletion?");
     if (r == true) {
       window.localStorage.removeItem("mapData");
-      console.log("!!!!!!SETTINGS WIPED!!!!!!");
+      window.localStorage.removeItem("cabList");
+      window.localStorage.removeItem("userpref");
+      console.log("!!!!!DATA IS WIPED!!!!!!");
       loadmaps();
     }
   });
+
 });
 
 // Load all maps to select box
@@ -281,32 +297,30 @@ function editMap(){
 // Verify if the given Map data already exists and replace it
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
-function setMapData(data){
-  console.log(data);
+function setMapData(mapdata){
   if (typeof(Storage) !== "undefined") {
     curmapdata = []; 
     smapdata = JSON.parse(window.localStorage.getItem('mapData'));
     if(!smapdata){
-        curmapdata.push(data);
+        curmapdata.push(mapdata);
         window.localStorage.setItem('mapData', JSON.stringify(curmapdata));
     }else{
-     if(ifExists(data.mname)){
-        smapdata.find(function(item, i){
-          if(item.mname == data.mname){
-            item.fnData=data.fnData;
-          }
-        });  
-      }else{
-        smapdata.push(data);
-      }
+     if (ifExists(mapdata.mname)) {
+       smapdata.find(function (item, i) {
+         if (item.mname == mapdata.mname) {
+           item.fnData = mapdata.fnData;
+         }
+       });
+     } else {
+       smapdata.push(mapdata);
+     }
       window.localStorage.setItem('mapData', JSON.stringify(smapdata));
     }
     loadmaps();
     setFunctionMaps();
-    loadMapData(data.mname);
-    $("#select-map").val(data.mname).trigger("change");
+    loadMapData(mapdata.mname);
+    $("#select-map").val(mapdata.mname).trigger("change");
   }
-
 }
 
 //Returns the Map data of given Map name
@@ -325,7 +339,6 @@ function getStoredMapData(name){
 
 //Download the Map data of given Map name
 function downloadMapData(mapName){
-  getStoredMapData(mapName);
   data = JSON.stringify(getStoredMapData(mapName));
   const a = document.createElement("a");
   const file = new Blob([data], {type: 'application/json'});
@@ -355,9 +368,13 @@ function deleteFuncData(name){
   }
 }
 
-// Returns the AppData of ExWebThrottle
+// Returns the Map data of ExWebThrottle
 function getMapData(){
-  return JSON.parse(window.localStorage.getItem('mapData'));
+  if (typeof Storage !== "undefined") {
+    return JSON.parse(window.localStorage.getItem("mapData"));
+  } else {
+    return [];
+  }
 }
 
 // Returns boolen if the given Map exists in local storage
@@ -424,9 +441,40 @@ function saveLocomotive(data){
   return false;
 }
 
+function saveEditedLocomotive(data, id){
+  locodata = $(data).arrayToJSON();
+  if (typeof Storage !== "undefined") {
+    cabData = JSON.parse(window.localStorage.getItem("cabList"));
+    cabData.find(function (item, i) {
+      if (i == id) {
+        cabData[i] = locodata;
+      }
+    });
+    window.localStorage.setItem("cabList", JSON.stringify(cabData));
+  }
+}
+
+function ifLocoExists(name) {
+  data = JSON.parse(window.localStorage.getItem("cabList"));
+  found = false;
+  if (data != null) {
+    data.find(function (item, i) {
+      if (item.name == name) {
+        found = true;
+      }
+    });
+    return found;
+  }
+  return found;
+}
+
  // Returns the AppData of ExWebThrottle
 function getLocoList(){
-  return JSON.parse(window.localStorage.getItem("cabList"));
+    if (typeof Storage !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("cabList"));
+    }else{
+      return [];
+    }
 }
 
 //Download the Locomotives List data
@@ -439,7 +487,20 @@ function downloadCabData(){
   a.click();
 }
 
-
+// Returns the LocoData of ExWebThrottle
+function getStoredLocoData(name) {
+  console.log(name);
+  data = JSON.parse(window.localStorage.getItem("cabList"));
+  if (data != null) {
+    return data.find(function (item, i) {
+      if (item.name == name) {
+        return item;
+      }
+    });
+  } else {
+    return null;
+  }
+}
 
 /********************************************/
 /**************  Preferences  ***************/
@@ -462,47 +523,68 @@ function setPreference(pref, val){
   }else{
     curpref = {};
   }
-  switch (pref) {
-    case "scontroller":
-      curpref["scontroller"] = val;
-      break;
-    case "dbugConsole":
-      curpref["dbugConsole"] = val;
-      break;
-    case "theme":
-      curpref["theme"] = val;
-      break;
-  }
+  curpref[pref] = val;
   setUserPreferences(curpref);
 }
 
-//// Store user preferences in local storage
+// Store user preferences in local storage
 function setUserPreferences(pref){
   if (typeof(Storage) !== "undefined") {  
     window.localStorage.setItem("userpref", JSON.stringify(pref));  
   }
 }
 
-/*
-  {
-    "scontroller": 'vertical',
-    "dbugConsole": true
+function getUserPreferences() {
+  if (typeof Storage !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("userpref"));
+  }else{
+    return [];
   }
-*/
+}
+
+function importPrefData(data) {
+  if (data) {
+    window.localStorage.setItem("userpref", JSON.stringify(data));
+  }
+}
+
+function exportAppData(){
+  jsonObj = [
+    {maps: getMapData()},
+    {locos: getLocoList()},
+    {preferences: getUserPreferences()}
+  ]
+  data = JSON.stringify(jsonObj);
+  const a = document.createElement("a");
+  const file = new Blob([data], { type: "application/json" });
+  a.href = URL.createObjectURL(file);
+  a.download = "AppData.json";
+  a.click();
+  
+}
+
+function  importAppdata(data){
+  importMapdata(data[0]["maps"]);
+  importLocoData(data[1]["locos"]);
+  importPrefData(data[2]["preferences"]);
+  setThrottleScreenUI(); 
+}
+
 
 (function ($) {
-  $.fn.arrayToJSON = function () {
-    var o = {};
-    $.each($(this), function () {
-      if (o[this.name]) {
-        if (!o[this.name].push) {
-          o[this.name] = [o[this.name]];
+    $.fn.arrayToJSON = function () {
+      var o = {};
+      $.each($(this), function () {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || "");
+        } else {
+          o[this.name] = this.value || "";
         }
-        o[this.name].push(this.value || "");
-      } else {
-        o[this.name] = this.value || "";
-      }
-    });
-    return o;
-  };
-})(jQuery);
+      });
+      return o;
+    };
+  }
+)(jQuery);
