@@ -42,6 +42,7 @@ $(document).ready(function(){
         response(
           $.grep(locoList, function (item) {
             if (item != undefined) {
+              console.log(item);
               return (
                 matcher.test(item.name) ||
                 matcher.test(item.cv) ||
@@ -76,7 +77,7 @@ $(document).ready(function(){
           "</span>|<span class='pill'>" +
           item.type +
           "</span>|<span class='pill wrap'>" +
-          item.manufacturer +
+          item.brand +
           "</span></small></div>"
       )
       .appendTo(ul);
