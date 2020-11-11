@@ -7,8 +7,6 @@ body{
     background-repeat: repeat;
     color: #fff;
     background-size: 16px;
-    border: 1px solid #303030;
-    box-shadow: 0px 0px 10px 0px #0c0c0c;
 }
 .rs-control .rs-bg-color{
     background: #1b1b1b;
@@ -19,7 +17,10 @@ body{
 .rs-control .rs-range-color{
    background-color: #00A3B9;
 }
-
+#throttle-window{
+    border: 1px solid #303030;
+    box-shadow: 0px 0px 10px 0px #0c0c0c;
+}
 label.formbuilder-text-label, 
 label.formbuilder-select-label, 
 label.formbuilder-textarea-label, 
