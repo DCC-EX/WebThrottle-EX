@@ -714,7 +714,7 @@ input:checked + .slider.debug-slider{
     -ms-touch-action: none;
     touch-action: none;
     border: 1px solid #f9f9f9;
-    left: -8px;
+    left: -7px;
     margin-left: 0;
     margin-bottom: -.6em;
     background-color: #efefef;

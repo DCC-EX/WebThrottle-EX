@@ -166,7 +166,8 @@ input:checked + .slider.debug-slider:before{
 .ui-slider-vertical .ui-slider-handle {
     border: 1px solid #3f3f3f;
     background-color: #282828;
-    background: linear-gradient(to bottom,#3b3b3b, #282828) ;
+    background: linear-gradient(to bottom,#3b3b3b, #282828);
+    left: -6px;
 }
 hr {
     border-color: #3f3f3f;
