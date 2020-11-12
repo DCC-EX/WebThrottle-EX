@@ -196,3 +196,13 @@ input.form-control:focus, select.form-control:focus, textarea.form-control:focus
     transform: rotate(15deg);
 }
 
+.rs-control .rs-bg-color {
+  background-color: #ddd;
+  background-image: url(../../images/pattern.png);
+  background-size: 900%;
+  opacity: 0.9;
+} 
+.rs-overlay.rs-transition.rs-bg-color{
+  background: #dcdcdc;
+  opacity: 1;
+}

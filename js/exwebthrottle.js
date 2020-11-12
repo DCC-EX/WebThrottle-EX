@@ -680,6 +680,7 @@ $(document).ready(function(){
         var sp = getSpeed(sp);
         if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp - speedStep);
+          setSpeedofControllers();
           writeToStream(
             "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
           );
