@@ -8,7 +8,7 @@ body{
     color: #fff;
     background-size: 16px;
 }
-.rs-control .rs-bg-color{
+.rs-control .rs-bg-color, #throttle-window{
     background: #1b1b1b;
     background-image: url(../../images/carbon_fibre.png);
     background-repeat: repeat;
