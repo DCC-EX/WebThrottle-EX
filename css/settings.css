@@ -47,6 +47,7 @@
     border: 1px solid #e0e0e0;
     padding: 10px 20px;
     background: #fff;
+    margin-bottom: 5px;
 }
 .setting-entry{
     margin: 15px 0;
@@ -65,8 +66,46 @@
     -ms-flex: 3;
     flex: 3;
 }
-.side-panel ul li:hover {
+.side-panel ul li:hover, .side-panel ul li.active {
     background: rgba(4,4,4, 0.05);
+}
+.settings-group.placeholder {
+    min-height: 200px;
+    text-align: center;
+    padding: 20%;
+}
+.settings-group.placeholder p {
+    border: 1px dashed;
+    padding: 4%;
+    color: #808080;
+    border-radius: 10px;
+}
+.row.settings-group.fnhead {
+    background: #f3f3f3;
+    font-weight: 600;
+}
+.maps-content{
+    max-height: 380px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+a.edit-cur-loco, a.option-btn{
+    float: right;
+    text-decoration: none;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-flex;
+    background: #f3f3f3;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 0 3px #e8e8e8;
+    margin-left: 5px;
+}
+a.edit-cur-loco{
+    margin-top: 6px;
+}
+.settings-subheading.row .map-name-heading{
+    padding-top: 8px;
 }
 /* Style the content */
 .settings-panel {
@@ -74,14 +113,19 @@
     -ms-flex: 3;
     flex: 3;
     padding: 24px;
+    padding-top: 10px;
 }
 
 .back-button{
     text-align: left;
     padding: 10px;
 }
-
-
+.caplitalize{
+    text-transform: capitalize;
+}
+.waste-bin{
+    font-size: 13px;
+}
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
 @media (max-width: 600px) {
     .settings-content {

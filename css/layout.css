@@ -205,3 +205,13 @@ hr{
 .spacer{
     height: 5px;
 }
+.pl0{
+    padding-left: 0;
+}
+.pr0{
+    padding-right: 0;
+}
+.prh{
+    padding-left: 0;
+    padding-right: 0;
+}
