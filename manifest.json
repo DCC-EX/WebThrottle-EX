@@ -2,15 +2,19 @@
     "short_name": "exWebThrottle",
     "name": "DCC++ EX Web Throttle",
     "icons": [
-      {
-        "src": "/images/full-logo.png",
-        "type": "image/png",
-        "sizes": "176x176"
-      }
+        {
+            "src": "/images/full-logo.png",
+            "type": "image/png",
+            "sizes": "176x176"
+        }
     ],
     "start_url": "/",
     "background_color": "#fff",
     "display": "standalone",
     "scope": "/",
+    "related_applications": [{
+        "platform": "webapp",
+        "url": "http://127.0.0.1:5500/manifest.json"
+    }],
     "theme_color": "#fff"
-  }
+}

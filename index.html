@@ -45,7 +45,8 @@
         <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/addloco.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
-        <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+        <script  type="text/javascript" src="js/exwebthrottle.js"></script>
+        <script type="text/javascript" src="js/pwa.js"></script>
 
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
@@ -64,7 +65,6 @@
     </head>
 
     <body>
-    
         <nav class="menu" id="side-menu" tabindex="0">
             <header class="avatar">
                 <button class="nav-btn in" id="nav-close">&times;</button> 
@@ -351,6 +351,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="settings-window" hidden="true">
                     <div class="row">
                         <div class="settings-heading">
@@ -362,6 +363,7 @@
                             <ul>
                                 <li id="settings-general">General</li>
                                 <li id="settings-storage">Storage</li>
+                                <li id="settings-app">App</li>
                             </ul>
                         </div>
                         <div class="settings-panel scrollbar" id="settings-panel">
@@ -434,6 +436,22 @@
                                         </label>
                                     </div>
                                 </div>
+                            <div class="settings-section" id="app-section">
+                                <div class="settings-subheading">
+                                    App
+                                </div>
+                                <div class="settings-group">
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            Install as an app
+                                        </label>
+                                        <label class="setting-label">
+                                            <button class="add-button">Install</button>
+                                            <button class="remove-button">Uninstall</button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
