@@ -44,7 +44,11 @@
         <script  type="text/javascript" src="js/storageController.js"></script> 
         <script  type="text/javascript" src="js/addloco.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
-        <script  type="text/javascript" src="js/exwebthrottle.js"></script> 
+        <script  type="text/javascript" src="js/exwebthrottle.js"></script>
+
+        <script type="text/javascript" src="js/trainlink/trainlink.js"></script>
+        <script type="text/javascript" src="js/trainlink/addons/parser.js"></script>
+        <script type="text/javascript" src="js/trainlinkManager.js"></script>
 
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
@@ -120,6 +124,7 @@
                             <div class="server-button column-5">
                                 <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
                                     <option value="serial">Serial</option>
+                                    <option value="trainlink">TrainLink</option>
                                     <option value="emulator">Emulator</option>
                                 </select>
                                 <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
@@ -366,6 +371,7 @@
                             <ul>
                                 <li id="settings-general">General</li>
                                 <li id="settings-storage">Storage</li>
+                                <li id="settings-trainlink">TrainLink</li>
                             </ul>
                         </div>
                         <div class="settings-panel scrollbar" id="settings-panel">
@@ -405,23 +411,6 @@
                                     Storage
                                 </div>
                                 <div class="settings-group">
-                                    <!--<div class="row setting-entry">
-                                        <label class="setting-label">
-                                            Some placeholder
-                                        </label>
-                                        <div class="setting-content">
-                                            <input /> 
-                                        </div> 
-                                    </div>
-                                    <div class="row setting-entry">
-                                        <label class="setting-label">
-                                            Some placeholder
-                                        </label>
-                                        <div class="setting-content">
-                                            <input /> 
-                                        </div>
-                                    </div>-->
-                                    <!--<div class="hr"></div>-->
                                     <div class="row setting-entry">
                                         <label class="setting-label">
                                             <button id="backup-app-settings">&#10514;&nbsp; Export App data</button>
@@ -436,6 +425,29 @@
                                         <label class="setting-label">
                                             <button id="wipe-app-settings">&#10539;&nbsp; Wipe App data</button>
                                         </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-section" id="trainlink-section">
+                                <div class="settings-subheading">
+                                    TrainLink
+                                </div>
+                                <div class="settings-group">
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            IP address
+                                        </label>
+                                        <div class="setting-content">
+                                            <input type="text" id="trainlinkIP" value="127.0.0.1">
+                                        </div>
+                                    </div>
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            Port
+                                        </label>
+                                        <div class="setting-content">
+                                            <input type="text" id="trainlinkPort" value="6789">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -18,8 +18,8 @@ $(document).ready(function(){
 //   whenever it arrives.
 async function connectServer() {
     // Gets values of the connection method selector
-    selectMethod = document.getElementById('select-method')
-    mode = selectMethod.value;
+    selectMethod = $('#select-method')
+    mode = $("#select-method").val();
     // Disables selector so it can't be changed whilst connected
     selectMethod.disabled = true;
     console.log("Set Mode: "+mode)
@@ -59,6 +59,18 @@ async function connectServer() {
             return true;
         } catch (err) {
             console.log("User didn't select a port to connect to")
+            return false;
+        }
+    } else if (mode == "trainlink") {
+        console.log("trainlink mode")
+        trainlinkMode = true;
+        try{
+            trainlink.initiateTrainLink($("#trainlinkIP").val(),$("#trainlinkPort").val())
+            uiDisable(false)
+            return true;
+
+        } catch (err) {
+            console.error("No server at that address!")
             return false;
         }
     } else{
@@ -101,6 +113,10 @@ function writeToStream(...lines) {
             displayLog('[SEND]'+line.toString());
         });
         writer.releaseLock();
+    } else if (trainlinkMode) {
+        lines.forEach((line) => {
+            trainlinkParser.parse(line)
+        })
     } else {
         lines.forEach((line) => {
             displayLog('[SEND] '+line.toString());
@@ -143,11 +159,11 @@ class JSONTransformer {
     transform(chunk, controller) {
         // Attempt to parse JSON content
         try {
-        controller.enqueue(JSON.parse(chunk));
+            controller.enqueue(JSON.parse(chunk));
         } catch (e) {
-        displayLog(chunk.toString());
-        console.log('No JSON, dumping the raw chunk', chunk);
-        controller.enqueue(chunk);
+            displayLog(chunk.toString());
+            console.log('No JSON, dumping the raw chunk', chunk);
+            controller.enqueue(chunk);
         }
 
     }
@@ -183,18 +199,22 @@ async function disconnectServer() {
         await port.close();
         port = null;
         displayLog('close port');
+    } else if (trainlinkMode) {
+        trainlinkMode = undefined;
+        trainlink.close()
+        console.log("TrainLink server disconnected")
     } else {
         // Disables emulator
         emulatorMode = undefined;
     }
     // Allows a new method to be chosen
-    selectMethod.disabled = false;
+    $("select-method").disabled = false;
 }
 
 // Connect or disconnect from the command station
 async function toggleServer(btn) {
     // If already connected, disconnect
-    if (port || emulatorMode) {
+    if (port || emulatorMode || trainlinkMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
         btn.html('<span class="con-ind"></span>Connect DCC++ EX'); //<span id="con-ind"></span>Connect DCC++ EX

@@ -59,6 +59,7 @@ window.functions = {
 window.isStopped = true;
 let port;
 let emulatorMode;
+let trainlinkMode
 let reader;
 let inputDone;
 let outputDone;
@@ -408,6 +409,8 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
+    trainlink();
+    trainlinkParser();
     var version = "1.3.0";
     var mode = 0;
     // Left Menu
@@ -422,254 +425,254 @@ $(document).ready(function(){
 
     
 
-  $("#info-tooltip").tooltip({
-    content:
-      "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
-    show: {
-      effect: "slideDown",
-      delay: 100,
-    },
-    classes: {
-      "ui-tooltip": "credits-tooltip",
-    },
-    position: {
-      my: "left top",
-      at: "left bottom",
-    },
-  });
+    $("#info-tooltip").tooltip({
+        content:
+            "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+        show: {
+            effect: "slideDown",
+            delay: 100,
+        },
+        classes: {
+            "ui-tooltip": "credits-tooltip",
+        },
+        position: {
+            my: "left top",
+            at: "left bottom",
+        },
+    });
 
-  // Load function map, buttons throttle etc
-  setThrottleScreenUI();
-  $("#throttle-selector").on("change", function (e) {
-    selectedval = $(this).val();
-    console.log(selectedval);
-    setPreference("scontroller", selectedval);
-    setspeedControllerType(selectedval);
-  });
+    // Load function map, buttons throttle etc
+    setThrottleScreenUI();
+    $("#throttle-selector").on("change", function (e) {
+        selectedval = $(this).val();
+        console.log(selectedval);
+        setPreference("scontroller", selectedval);
+        setspeedControllerType(selectedval);
+    });
 
-  $("#theme-selector").on("change", function (e) {
-    selectedval = $(this).val();
-    console.log(selectedval);
-    setPreference("theme", selectedval);
-    $("link[title*='theme']").remove();
-    if (selectedval != "simple") {
-      $("head").append(
-        '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/' +
-          selectedval +
-          '.css">'
-      );
-    }
-  });
+    $("#theme-selector").on("change", function (e) {
+        selectedval = $(this).val();
+        console.log(selectedval);
+        setPreference("theme", selectedval);
+        $("link[title*='theme']").remove();
+        if (selectedval != "simple") {
+        $("head").append(
+            '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/' +
+            selectedval +
+            '.css">'
+        );
+        }
+    });
 
-  // Connect command station
-  $("#button-connect").on("click", function () {
-    toggleServer($(this));
-  });
+    // Connect command station
+    $("#button-connect").on("click", function () {
+        toggleServer($(this));
+    });
 
-  // Disconnect command station
-  $("#button-disconnect").on("click", function () {
-    disconnectServer();
-  });
+    // Disconnect command station
+    $("#button-disconnect").on("click", function () {
+        disconnectServer();
+    });
 
-  // Aquire loco of given CV
-  $("#button-getloco").on("click", function () {
-    acButton = $(this);
-    isAcquired = $(this).data("acquired");
-    // Parse int only returns number if the string is starting with Number
-    locoid_input = parseInt($("#ex-locoid").val());
+    // Aquire loco of given CV
+    $("#button-getloco").on("click", function () {
+        acButton = $(this);
+        isAcquired = $(this).data("acquired");
+        // Parse int only returns number if the string is starting with Number
+        locoid_input = parseInt($("#ex-locoid").val());
 
-    if (locoid_input != 0) {
-      if (isAcquired == false && getCV() == 0) {
-        setCV(locoid_input);
-        $("#loco-info").html("Acquired Locomotive: " + locoid_input);
-        acButton.data("acquired", true);
-        acButton.html('<span class="icon-cross"></span>');
-        toggleThrottleState(true);
-      } else {
-        currentCV = getCV();
-        $("#ex-locoid").val(0);
-        setCV(0);
-        $("#loco-info").html("Released Locomotive: " + currentCV);
-        acButton.data("acquired", false);
-        acButton.html('<span class="icon-circle-right"></span>');
-        toggleThrottleState(false);
-      }
-    }
-  });
+        if (locoid_input != 0) {
+            if (isAcquired == false && getCV() == 0) {
+                setCV(locoid_input);
+                $("#loco-info").html("Acquired Locomotive: " + locoid_input);
+                acButton.data("acquired", true);
+                acButton.html('<span class="icon-cross"></span>');
+                toggleThrottleState(true);
+            } else {
+                currentCV = getCV();
+                $("#ex-locoid").val(0);
+                setCV(0);
+                $("#loco-info").html("Released Locomotive: " + currentCV);
+                acButton.data("acquired", false);
+                acButton.html('<span class="icon-circle-right"></span>');
+                toggleThrottleState(false);
+            }
+        }
+    });
 
-  // Switch ON/OFF power of the Command station
-  $("#power-switch").on("click", function () {
-    pb = $(this).is(":checked");
+    // Switch ON/OFF power of the Command station
+    $("#power-switch").on("click", function () {
+        pb = $(this).is(":checked");
 
-    if (pb == true) {
-      writeToStream("1");
-      $("#power-status").html("On");
-    } else {
-      writeToStream("0");
-      $("#power-status").html("Off");
-    }
-  });
-  ////////////////////////////////////
-  $("#v-throttle").slider({
-    orientation: "vertical",
-    min: 0,
-    max: 126,
-    disabled: true,
-    range: "max",
-    slide: function (event, ui) {
-      $("#speed-indicator").html(ui.value);
-      setSpeed(ui.value);
-      setSpeedofControllers();
-    },
-  });
+        if (pb == true) {
+            writeToStream("1");
+            $("#power-status").html("On");
+        } else {
+            writeToStream("0");
+            $("#power-status").html("Off");
+        }
+    });
+    ////////////////////////////////////
+    $("#v-throttle").slider({
+        orientation: "vertical",
+        min: 0,
+        max: 126,
+        disabled: true,
+        range: "max",
+        slide: function (event, ui) {
+            $("#speed-indicator").html(ui.value);
+            setSpeed(ui.value);
+            setSpeedofControllers();
+        },
+    });
 
-  /////////////////////////////////////////*/
-  knob = $(".rotarySwitch").rotaryswitch({
-    minimum: 0,
-    maximum: 126,
-    step: 2,
-    beginDeg: 210,
-    lengthDeg: 295,
-    minimumOverMaximum: true,
-    showMarks: true,
-    themeClass: "big light",
-  });
-  toggleKnobState($("#knobthrottle"), false);
-  knob.on("change", function () {
-    oldValue = getSpeed();
-    kval = knob.val();
-    $("#knob-value").html(kval);
-    setSpeed(kval);
-    // Below condition is to avoid infinite loop
-    // that triggers change() event indifinitely
-    if (oldValue != kval) {
-      setSpeedofControllers();
-    } else {
-      writeToStream(
-        "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-      );
-    }
-    //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
-  });
-
-  /////////////////////////////////////////////
-  // Speed (round) Slider allows user to change the speed of the locomotive
-  Tht = $("#circular-throttle").roundSlider({
-    width: 20,
-    radius: 116,
-    value: speed,
-    circleShape: "pie",
-    handleShape: "dot",
-    startAngle: 315,
-    lineCap: "round",
-    sliderType: "min-range",
-    showTooltip: true,
-    editableTooltip: false,
-    handleSize: "+18",
-    max: "126",
-    disabled: true,
-    update: function (slider) {
-      setSpeed(slider.value);
-      setSpeedofControllers();
-      //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-    },
-    valueChange: function (slider) {
-      //setSpeed(slider.value);
-      //writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
-      // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
-    },
-  });
-
-  // Allows user to change the direction of the loco and STOP.
-  $(".dir-btn").on("click", function () {
-    current = $(this);
-    dir = current.attr("aria-label");
-    $(".dir-btn").removeClass("selected");
-    current.addClass("selected", 200);
-    console.log(dir);
-    $(".dir-toggle").removeClass("forward backward  stop");
-    $(".dir-toggle").addClass(dir);
-
-    // Do direction stuff here
-    switch (dir) {
-      case "forward": {
-        isStopped = false;
-        setDirection(1);
+    /////////////////////////////////////////*/
+    knob = $(".rotarySwitch").rotaryswitch({
+        minimum: 0,
+        maximum: 126,
+        step: 2,
+        beginDeg: 210,
+        lengthDeg: 295,
+        minimumOverMaximum: true,
+        showMarks: true,
+        themeClass: "big light",
+    });
+    toggleKnobState($("#knobthrottle"), false);
+    knob.on("change", function () {
+        oldValue = getSpeed();
+        kval = knob.val();
+        $("#knob-value").html(kval);
+        setSpeed(kval);
+        // Below condition is to avoid infinite loop
+        // that triggers change() event indifinitely
+        if (oldValue != kval) {
         setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
-        break;
-      }
-      case "backward": {
-        setDirection(0);
-        setSpeedofControllers();
-        isStopped = false;
-        writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
-        break;
-      }
-      case "stop": {
+        } else {
+        writeToStream(
+            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+        );
+        }
+        //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+    });
+
+    /////////////////////////////////////////////
+    // Speed (round) Slider allows user to change the speed of the locomotive
+    Tht = $("#circular-throttle").roundSlider({
+        width: 20,
+        radius: 116,
+        value: speed,
+        circleShape: "pie",
+        handleShape: "dot",
+        startAngle: 315,
+        lineCap: "round",
+        sliderType: "min-range",
+        showTooltip: true,
+        editableTooltip: false,
+        handleSize: "+18",
+        max: "126",
+        disabled: true,
+        update: function (slider) {
+            setSpeed(slider.value);
+            setSpeedofControllers();
+            //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+        },
+        valueChange: function (slider) {
+            //setSpeed(slider.value);
+            //writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+            // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
+        },
+    });
+
+    // Allows user to change the direction of the loco and STOP.
+    $(".dir-btn").on("click", function () {
+        current = $(this);
+        dir = current.attr("aria-label");
+        $(".dir-btn").removeClass("selected");
+        current.addClass("selected", 200);
+        console.log(dir);
+        $(".dir-toggle").removeClass("forward backward  stop");
+        $(".dir-toggle").addClass(dir);
+
+        // Do direction stuff here
+        switch (dir) {
+            case "forward": {
+                isStopped = false;
+                setDirection(1);
+                setSpeedofControllers();
+                writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
+                break;
+            }
+            case "backward": {
+                setDirection(0);
+                setSpeedofControllers();
+                isStopped = false;
+                writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
+                break;
+            }
+            case "stop": {
+                isStopped = true;
+                dir = getDirection();
+                setSpeed(0);
+                setSpeedofControllers();
+                writeToStream("t 01 " + getCV() + " 0 " + dir);
+                break;
+            }
+        }
+    });
+
+    $("#emergency-stop").on("click", function () {
         isStopped = true;
         dir = getDirection();
         setSpeed(0);
         setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " 0 " + dir);
-        break;
-      }
-    }
-  });
-
-  $("#emergency-stop").on("click", function () {
-      isStopped = true;
-      dir = getDirection();
-      setSpeed(0);
-      setSpeedofControllers();
-      writeToStream("t 01 " + getCV() + " -1 " + dir);
-  });
+        writeToStream("t 01 " + getCV() + " -1 " + dir);
+    });
 
   // Hide/Show the Loco, Connect server fields (on top)
-  $("#button-hide").on("click", function () {
-    if ($(".details-panel").is(":visible")) {
-      $(".details-panel").hide();
-      $(this).css("top", 0);
-      $(this).html('<span class="icon-circle-down"></span>');
-    } else {
-      $(".details-panel").show();
-      $(this).html('<span class="icon-circle-up"></span>');
-      $(this).css("top", "-9px");
-    }
-  });
+    $("#button-hide").on("click", function () {
+        if ($(".details-panel").is(":visible")) {
+            $(".details-panel").hide();
+            $(this).css("top", 0);
+            $(this).html('<span class="icon-circle-down"></span>');
+        } else {
+            $(".details-panel").show();
+            $(this).html('<span class="icon-circle-up"></span>');
+            $(this).css("top", "-9px");
+        }
+    });
 
-  // PLUS button. Increases speed on Hold / Tap
-  var tId = 0;
-  $("#button-right")
-    .on("mousedown", function () {
-      event.stopImmediatePropagation();
-      tId = setInterval(function () {
+    // PLUS button. Increases speed on Hold / Tap
+    var tId = 0;
+    $("#button-right")
+        .on("mousedown", function () {
+        event.stopImmediatePropagation();
+        tId = setInterval(function () {
+            var sp = getSpeed();
+            if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
+                setSpeed(sp + speedStep);
+                setSpeedofControllers();
+                writeToStream(
+                    "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+                );
+                sp = 0;
+            }
+        }, 100);
+        })
+        .on("mouseup mouseleave", function () {
+        clearInterval(tId);
+        })
+        .on("click", function () {
+        event.stopImmediatePropagation();
         var sp = getSpeed();
         if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
-          setSpeed(sp + speedStep);
-          setSpeedofControllers();
-          writeToStream(
+            setSpeed(sp + speedStep);
+            setSpeedofControllers();
+            writeToStream(
             "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-          );
-          sp = 0;
+            );
+            sp = 0;
         }
-      }, 100);
-    })
-    .on("mouseup mouseleave", function () {
-      clearInterval(tId);
-    })
-    .on("click", function () {
-      event.stopImmediatePropagation();
-      var sp = getSpeed();
-      if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
-        setSpeed(sp + speedStep);
-        setSpeedofControllers();
-        writeToStream(
-          "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
-        );
-        sp = 0;
-      }
-    });
+        });
 
   // MINUS button. Decreases speed on Hold / Tap
   var tId = 0;
@@ -864,6 +867,17 @@ $(document).ready(function(){
 
         }*/
     $("#storage-section")[0].scrollIntoView(true);
+  });
+
+  $("#settings-trainlink").on("click", function () {
+    /*var target = $('#storage-section');
+        if (target.length) {
+            $('#settings-panel').animate({
+                scrollTop: target.offset().top
+            }, 1000);
+
+        }*/
+    $("#trainlink-section")[0].scrollIntoView(true);
   });
 
   $(document).on("click", ".map-name", function () {
