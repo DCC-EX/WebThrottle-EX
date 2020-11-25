@@ -22,7 +22,7 @@
 	For more information, visit use at dcc-ex.com
 -->
     <head>
-        <link rel="manifest" href="/manifest.json">
+        <link rel="manifest" href="manifest.json">
         <script>
             var version = "1.3.0";
         </script>
@@ -447,7 +447,7 @@
                                         </label>
                                         <label class="setting-label">
                                             <button class="add-button">Install</button>
-                                            <button class="remove-button">Uninstall</button>
+                                            <label class="installed-label">App Installed</label>
                                         </label>
                                     </div>
                                 </div>
@@ -484,7 +484,7 @@
 
 <script>
     if('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('sw.js')
         .then(function() {
               console.log('Service Worker Registered');
         });
