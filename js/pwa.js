@@ -1,10 +1,11 @@
 $(document).ready(function(){
     let deferredPrompt;
     const addBtn = document.querySelector('.add-button');
-    const removeBtn = document.querySelector('.remove-button');
+    const removeBtn = document.querySelector('.installed-label');
     addBtn.style.display = 'none';
-    removeBtn.style.display = 'none';
+    removeBtn.style.display = 'block';
     window.addEventListener('beforeinstallprompt', (e) => {
+        removeBtn.style.display = 'none';
         // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
         // Stash the event so it can be triggered later.
