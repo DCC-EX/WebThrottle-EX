@@ -879,6 +879,10 @@ $(document).ready(function(){
         }*/
     $("#trainlink-section")[0].scrollIntoView(true);
   });
+  
+  $('#settings-app').on('click', function() {
+    $("#app-section")[0].scrollIntoView(true);
+  })
 
   $(document).on("click", ".map-name", function () {
     loadMapData($(this).attr("map-val"));
