@@ -1,6 +1,6 @@
-var cacheName = 'exWebThrottle';
+var cacheName = 'WebThrottle-EX';
 var filesToCache = [
-  '/exWebThrottle/',
+  '/WebThrottle-EX/',
   'index.html',
   'images/favicon.ico',
   'images/carbon_fibre.png',
@@ -18,6 +18,7 @@ var filesToCache = [
   'css/jquery-ui.css',
   'css/jquery.rotaryswitch.css',
   'css/layout.css',
+  'css/pwa.css',
   'css/roundslider.min.css',
   'css/settings.css',
   'css/throttle.css',
@@ -35,6 +36,7 @@ var filesToCache = [
   'js/jquery-3.2.1.min.js',
   'js/jquery-ui.min.js',
   'js/jquery.rotaryswitch.js',
+  'js/pwa.js',
   'js/roundslider.min.js',
   'js/storageController.js'
 ];

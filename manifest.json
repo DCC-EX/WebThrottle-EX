@@ -1,5 +1,5 @@
 {
-    "short_name": "exWebThrottle",
+    "short_name": "WebThrottle-EX",
     "name": "DCC++ EX Web Throttle",
     "icons": [
         {
@@ -8,13 +8,13 @@
             "sizes": "176x176"
         }
     ],
-    "start_url": "/exWebThrottle/",
+    "start_url": "/WebThrottle-EX/",
     "background_color": "#fff",
     "display": "standalone",
-    "scope": "/exWebThrottle/",
+    "scope": "/WebThrottle-EX/",
     "related_applications": [{
         "platform": "webapp",
-        "url": "https://matt-hu.github.io/exWebThrottle/manifest.json"
+        "url": "https://DCC-EX.github.io/WebThrottle-EX/manifest.json"
     }],
     "theme_color": "#fff"
 }
