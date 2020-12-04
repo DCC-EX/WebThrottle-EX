@@ -4,16 +4,20 @@
 
   /* Style the header */
 .settings-heading {
-    padding: 20px;
+    padding: 10px 20px;
     text-align: left;
     font-size: 30px;
     border-bottom: 1px solid #bbbbbb;
+}
+.settings-heading  .hdng{
+    padding-top: 10px;
 }
   
 /* Container for flexboxes */
 .settings-content {
     display: -webkit-flex;
     display: flex;
+    height: calc(100% - 70px);
 }
 
 /* Style the navigation menu */
@@ -85,9 +89,9 @@
     font-weight: 600;
 }
 .maps-content{
-    max-height: 380px;
     overflow-y: auto;
     font-size: 14px;
+    max-height: calc(100% - 90px);
 }
 a.edit-cur-loco, a.option-btn{
     float: right;
@@ -114,6 +118,7 @@ a.edit-cur-loco{
     flex: 3;
     padding: 24px;
     padding-top: 10px;
+    overflow-y: auto;
 }
 
 .back-button{
@@ -136,6 +141,5 @@ a.edit-cur-loco{
 
 .scrollbar {
     overflow: auto;
-    height: 400px;
     width: 100%;
 }

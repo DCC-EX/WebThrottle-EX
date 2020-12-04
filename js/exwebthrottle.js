@@ -408,6 +408,7 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
+    var version = "1.3.0";
     var mode = 0;
     // Left Menu
     $("#nav-open").on("click", function () { 
@@ -423,7 +424,7 @@ $(document).ready(function(){
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC++ EX Webthrottle</p><hr><p>Version: 1.2</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+      "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
     show: {
       effect: "slideDown",
       delay: 100,
@@ -599,7 +600,6 @@ $(document).ready(function(){
         break;
       }
       case "backward": {
-        isStopped = false;
         setDirection(0);
         setSpeedofControllers();
         isStopped = false;
@@ -611,10 +611,18 @@ $(document).ready(function(){
         dir = getDirection();
         setSpeed(0);
         setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " -1 " + dir);
+        writeToStream("t 01 " + getCV() + " 0 " + dir);
         break;
       }
     }
+  });
+
+  $("#emergency-stop").on("click", function () {
+      isStopped = true;
+      dir = getDirection();
+      setSpeed(0);
+      setSpeedofControllers();
+      writeToStream("t 01 " + getCV() + " -1 " + dir);
   });
 
   // Hide/Show the Loco, Connect server fields (on top)
@@ -672,6 +680,7 @@ $(document).ready(function(){
         var sp = getSpeed(sp);
         if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp - speedStep);
+          setSpeedofControllers();
           writeToStream(
             "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
           );

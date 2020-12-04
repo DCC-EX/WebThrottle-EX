@@ -7,10 +7,8 @@ body{
     background-repeat: repeat;
     color: #fff;
     background-size: 16px;
-    border: 1px solid #303030;
-    box-shadow: 0px 0px 10px 0px #0c0c0c;
 }
-.rs-control .rs-bg-color{
+.rs-control .rs-bg-color, #throttle-window{
     background: #1b1b1b;
     background-image: url(../../images/carbon_fibre.png);
     background-repeat: repeat;
@@ -19,7 +17,10 @@ body{
 .rs-control .rs-range-color{
    background-color: #00A3B9;
 }
-
+#throttle-window{
+    border: 1px solid #303030;
+    box-shadow: 0px 0px 10px 0px #0c0c0c;
+}
 label.formbuilder-text-label, 
 label.formbuilder-select-label, 
 label.formbuilder-textarea-label, 
@@ -132,7 +133,12 @@ input:checked + .slider.debug-slider:before{
     -webkit-box-shadow: 0 0 5px #000000;
     box-shadow: 0 0 5px #000000;
 }
-
+.em-btn button.em-stop{
+    padding: 12px;
+    box-shadow: 0 0 5px 2px #000000;
+    border: 1px solid #ececec;
+    background: #ddd;
+}
 
 .rotaryswitchPlugin.big.light { 
   margin: 36px;
@@ -160,7 +166,8 @@ input:checked + .slider.debug-slider:before{
 .ui-slider-vertical .ui-slider-handle {
     border: 1px solid #3f3f3f;
     background-color: #282828;
-    background: linear-gradient(to bottom,#3b3b3b, #282828) ;
+    background: linear-gradient(to bottom,#3b3b3b, #282828);
+    left: -6px;
 }
 hr {
     border-color: #3f3f3f;

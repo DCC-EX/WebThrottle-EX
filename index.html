@@ -97,7 +97,7 @@
         </div>
         <div id="rendered-form">
             <div class="rendered-form">
-                <div id="throttle-window">
+                <section id="throttle-window" class="section">
                     <div Class="details-panel" id="details-panel">
                         <div class="row">
                             <div class="column-5">
@@ -170,6 +170,11 @@
                                     </div>
                                     
                                     <div class=" column-2">
+                                        <div class="em-btn">
+                                            <button class="em-stop" id="emergency-stop" title="Emergency Stop">
+                                                <span class="icon-stop"></span>
+                                            </button>
+                                        </div>
                                         <div class="dir-toggle">
                                             <button class="dir-btn forward selected" id="dir-f" aria-label="forward" ><span class="arrow-up icon-up"></span></button>
                                             <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button>
@@ -232,11 +237,11 @@
                         <div class="log-msg" id="log-box">
                         </div>
                     </div>
-                </div>
+                </section>
                 
-                <div id="loco-window" hidden="true">
+                <section id="loco-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0">
+                        <div class="column-7 pl0 hdng">
                             Locomotives
                         </div>
                         <div class="column-3 pr0">
@@ -313,11 +318,11 @@
                              </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div id="fn-map-window" hidden="true">
+                <section id="fn-map-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0">
+                        <div class="column-7 pl0 hdng">
                             Function Mappings
                         </div>
                         <div class="column-3 pr0">
@@ -349,10 +354,10 @@
                              </div>
                         </div>
                     </div>
-                </div>
-                <div id="settings-window" hidden="true">
+                </section>
+                <section id="settings-window" class="section" hidden="true">
                     <div class="row">
-                        <div class="settings-heading">
+                        <div class="settings-heading hdng">
                             Settings
                         </div>
                     </div>
@@ -436,7 +441,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
         

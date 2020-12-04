@@ -199,7 +199,7 @@ label.formbuilder-file-label {
     background-color: #575555;
 }
 .rs-control .rs-bg-color {
-    background-color: #efefef;
+    background-color: #e3e3e3;
 }
 .rs-tooltip.rs-tooltip-text{
     top: auto;
@@ -225,11 +225,32 @@ label.formbuilder-file-label {
 .functionKeys{
     padding: 10px 24px;
 }
+.em-btn{
+    justify-content: center;
+    margin: 0px auto;
+    text-align: center;
+}
+.em-btn button.em-stop{
+    width: 44px;
+    height: 44px;
+    border-radius: 24px;
+    color: #d60000;
+    font-size: 18px;
+    padding: 9px;
+    outline: none;
+    cursor: pointer;
+    background-color: #c7c7c7;
+    border: 4px solid #ddd;
+    box-shadow: 0 4px 4px #5d5d5d;
+}
+.em-btn button.em-stop:active{
+    box-shadow: none;
+}
 .dir-toggle{
     height: 219px;
     background-color: #cecece;
     width: 48px;
-    margin: 64px auto;
+    margin: 8px auto;
     border-radius: 100px;
     -moz-box-shadow:    inset 0 0 5px #000000;
     -webkit-box-shadow: inset 0 0 5px #000000;
@@ -319,7 +340,7 @@ label.formbuilder-file-label {
 }
 
 .btn-speed:hover{
-    background: #00A3B9;
+    box-shadow: none;
     color: #FFFFFF;
 }
 .flexx{
@@ -693,7 +714,7 @@ input:checked + .slider.debug-slider{
     -ms-touch-action: none;
     touch-action: none;
     border: 1px solid #f9f9f9;
-    left: -8px;
+    left: -7px;
     margin-left: 0;
     margin-bottom: -.6em;
     background-color: #efefef;
@@ -971,7 +992,7 @@ input:checked + .slider.debug-slider{
     align-items: center;
 }
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1200px) {
 	.column-4.mobile-100, .column-6.mobile-100, .mobile-100 {
 		width: 100%;
 	}
