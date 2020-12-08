@@ -424,7 +424,7 @@ $(document).ready(function(){
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC++ EX Webthrottle</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt</p>",
+      "<p>DCC++ EX Web Throttle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H</p>",
     show: {
       effect: "slideDown",
       delay: 100,

@@ -1,18 +1,21 @@
-In this release, we added more customization features, as well as tweaking the UI to make it easier to use.
+# Version 1.3.0
+In this release, we added a dedicated settings page, as well as changing the way locomotives and function maps are added. Also, we have switched to a new distribution method, PWAs! Oh, Did we mention the new and improved wider UI? Overal, we would be better off listing the sections that have stayed the same!
 
 __New Features:__
-* Themes - You now have the option of simple, dark and metallic theme to choose from. They all look fabulous, but don't take our word for it, go check them out!
-* More throttles - You now have the option to choose a knob speed controller, which goes well with the metallic theme.
+* Side menu - We have added a side menu to switch between 'pages'
+* Locomotive page - This is where locomotives are now added
+* Functions page - This is where function maps are now created
+* Settings page - This page contains all the options to manage storage settings and to choose different themes and throttles
+* Emergency stop button - There is now a button to provide the emergency stop feature
+* Information and help button - These have been added to the top right of the screen and display the version, along with other information
 
 __Fixes:__
-* Different parts of the UI now disable depending if you have acquired a cab or connected to a command station
+* The button to minimise the top section is displayed correctly
 
 __Changed behavior:__
-* The Emulator now issues responses to the commands sent to it
-* The connect button now has an indicator for connection status
-* There are more tooltips on various parts of the UI
-* The enter key triggers the appropriate action in a text field (e.g. sending a command in the debug console).
-* UI is now aligned with the center of the screen
-* Other minor UI changes
+* Locomotives now need to be added in the locomotives menu before they are used
+* The UI is now wider
+* Other minor tweaks to the UI
 
-If you want something added, let us know! First, check out the roadmap page in the wiki to check if it is planned, then open an issue letting us know what you want. Similarly, if you have found a bug, also let us know. Chances are we haven't spotted it so this will help us greatly.
+
+If you want something added, let us know! First, check out the roadmap page in the wiki to check if it is planned, then open an issue letting us know what you want. Similarly, if you have found a bug, also let us know. Chances are we haven't spotted it so this will help us greatly!
