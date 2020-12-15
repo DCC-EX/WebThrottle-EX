@@ -50,12 +50,13 @@ async function connectServer() {
             inputDone = port.readable.pipeTo(decoder.writable);
             inputStream = decoder.readable
             //  .pipeThrough(new TransformStream(new LineBreakTransformer())); // added this line to pump through transformer
-            .pipeThrough(new TransformStream(new JSONTransformer()));
+            //.pipeThrough(new TransformStream(new JSONTransformer()));
 
             // get a reader and start the non-blocking asynchronous read loop to read data from the stream.
             reader = inputStream.getReader();
             readLoop();
             uiDisable(false)
+            displayLog("[CONNECTION] Serial connected")
             return true;
         } catch (err) {
             console.log("User didn't select a port to connect to")
@@ -65,7 +66,8 @@ async function connectServer() {
         // If using the emulator
         emulatorMode = true;
         // Displays dummy hardware message
-        displayLog("DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        displayLog("\n[CONNECTION] Emulator connected")
+        displayLog("[RECEIVE] DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         uiDisable(false)
         return true;
     }
@@ -80,11 +82,11 @@ async function readLoop() {
         // if (value && value.button) { // alternate check and calling a function
         // buttonPushed(value);
         if (value) {
-            displayLog(value);
+            displayLog('[RECEIVE] '+value);
+            console.log('[RECEIVE] '+value);
         }
         if (done) {
             console.log('[readLoop] DONE'+done.toString());
-            displayLog('[readLoop] DONE'+done.toString());
             reader.releaseLock();
             break;
         }
@@ -98,7 +100,11 @@ function writeToStream(...lines) {
         lines.forEach((line) => {
             writer.write('<' + line + '>' + '\n');
             console.log('<' + line + '>' + '\n')
-            displayLog('[SEND]'+line.toString());
+            if (line == "\x03" || line == "echo(false);") {
+                
+            } else {
+                displayLog('[SEND]'+line.toString());
+            }
         });
         writer.releaseLock();
     } else {
@@ -145,7 +151,8 @@ class JSONTransformer {
         try {
         controller.enqueue(JSON.parse(chunk));
         } catch (e) {
-        displayLog(chunk.toString());
+        //displayLog(chunk.toString());
+        //displayLog(chunk);
         console.log('No JSON, dumping the raw chunk', chunk);
         controller.enqueue(chunk);
         }
@@ -168,7 +175,7 @@ async function disconnectServer() {
             await inputDone.catch(() => {});
             reader = null;
             inputDone = null;
-            displayLog('close reader');
+            console.log('close reader');
         }
 
         // Close the output stream.
@@ -177,15 +184,17 @@ async function disconnectServer() {
             await outputDone; // have to wait for  the azync calls to finish and outputDone to close
             outputStream = null;
             outputDone = null;
-            displayLog('close outputStream');
+            console.log('close outputStream');
         }
         // Close the serial port.
         await port.close();
         port = null;
-        displayLog('close port');
+        console.log('close port');
+        displayLog("[CONNECTION] Serial disconnected");
     } else {
         // Disables emulator
         emulatorMode = undefined;
+        displayLog("[CONNECTION] Emulator disconnected");
     }
     // Allows a new method to be chosen
     selectMethod.disabled = false;
@@ -214,7 +223,9 @@ async function toggleServer(btn) {
 
 // Display log of events
 function displayLog(data){
-    $("#log-box").append("<br>"+data+"<br>");
+    data = data.replace("<"," ");
+    data = data.replace(">"," ");
+    $("#log-box").append("<br>"+data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 }
 

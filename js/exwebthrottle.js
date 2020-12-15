@@ -245,7 +245,6 @@ function setThrottleScreenUI() {
     }else{
         theme = getPreference("theme");
         $("#theme-selector").val(theme).trigger("change");
-        console.log(theme);
         if (theme != "simple") {
             $("link[title*='theme']").remove();
             $("head").append(
@@ -257,7 +256,6 @@ function setThrottleScreenUI() {
 
 // Change the Speed controller type
 function setspeedControllerType(pref){
-  console.log(pref);
   // Set saved throttle or use circular throttle as default
   $(".speedController").hide();
   switch (pref) {
