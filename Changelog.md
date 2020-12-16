@@ -1,5 +1,8 @@
-# Version 1.3.0
-In this release, we added a dedicated settings page, as well as changing the way locomotives and function maps are added. Also, we have switched to a new distribution method, PWAs! Oh, Did we mention the new and improved wider UI? Overal, we would be better off listing the sections that have stayed the same!
+# Version 1.3.1
+This is a quick little bugfix to fix a problem where received packets weren't being displayed in the debug console.
+
+## Changes from 1.3.0
+In this release, we added a dedicated settings page, as well as changing the way locomotives and function maps are added. Also, we have switched to a new distribution method, PWAs! Oh, did we mention the new and improved wider UI? Overall, we would be better off listing the sections that have stayed the same!
 
 __New Features:__
 * Side menu - We have added a side menu to switch between 'pages'
@@ -12,7 +15,7 @@ __New Features:__
 __Fixes:__
 * The button to minimise the top section is displayed correctly
 
-__Changed behavior:__
+__Changed behaviour:__
 * Locomotives now need to be added in the locomotives menu before they are used
 * The UI is now wider
 * Other minor tweaks to the UI

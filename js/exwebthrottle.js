@@ -406,7 +406,6 @@ function generateFnCommand(clickedBtn){
 }
 
 $(document).ready(function(){
-    var version = "1.3.0";
     var mode = 0;
     // Left Menu
     $("#nav-open").on("click", function () { 
