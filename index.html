@@ -136,25 +136,24 @@
                             <span class="icon-circle-up"></span>
                         </button> 
                     </div>
-                 
- 
-                    <div class="row flex-center">
-                        <div class="column-5 mobile-100 throttle-container">
-                            <div class="row mobile-100  width100 flexx">
-                                <div class="column-7 flexx">
-                                    <div class="flexx btns">
-                                        <button type="button" title="Decrease speed" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
-                                            <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
-                                        </button>
-                                    </div> 
-                                    <div class="Throttlewrap">
-                                        <div id="vertical-throttle" class="vertical-throttle speedController">                              
-                                            <div id="v-throttle">                                           
+                    <div class="row c-panel">
+                            <div class="column-2 acq-locos"></div>
+                            <div class="column-4 th-controls mobile-100">
+                                <div class="row">
+                                    <div class="flexx throttle-container">
+                                        <div class="btns">
+                                            <button type="button" title="Decrease speed" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
+                                                <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
+                                            </button>
+                                        </div> 
+                                        <div class="Throttlewrap">
+                                            <div id="vertical-throttle" class="vertical-throttle speedController">                              
+                                                <div id="v-throttle">                                           
+                                                </div>
+                                                <div id="speed-indicator" class="progress-numb">
+                                                    0
+                                                </div>
                                             </div>
-                                            <div id="speed-indicator" class="progress-numb">
-                                                0
-                                            </div>
-                                        </div>
                                             <div id="knobthrottle" class="speedController">
                                                 <input type="text" class="rotarySwitch" value="0">
                                                 <div id="knob-value" class="knob-value">0</div>
@@ -163,28 +162,33 @@
                                             
                                             </div>
                                         </div>
-                                        <div class="flexx btns">
+                                        <div class="btns">
                                             <button type="button" title="Increase speed" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
                                                 <span class="right">&nbsp;+&nbsp;</span>
                                             </button> 
                                         </div>
                                     </div>
-                                    
-                                    <div class=" column-2">
+                                </div>                         
+                                <div class="dir-controller">
+                                    <div class="column-2">
                                         <div class="em-btn">
                                             <button class="em-stop" id="emergency-stop" title="Emergency Stop">
                                                 <span class="icon-stop"></span>
                                             </button>
                                         </div>
+                                    </div>
+                                    <div class="column-6">                              
                                         <div class="dir-toggle">
-                                            <button class="dir-btn forward selected" id="dir-f" aria-label="forward" ><span class="arrow-up icon-up"></span></button>
-                                            <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button>
-                                            <button class="dir-btn backward" id="dir-b" aria-label="backward"> <span class="arrow-down icon-down"></button>        
+                                            <button class="dir-btn backward" id="dir-b" aria-label="backward"> <span class="arrow-down icon-down"></button>  
+                                            <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button> 
+                                            <button class="dir-btn forward selected" id="dir-f" aria-label="forward" ><span class="arrow-up icon-up"></span></button>     
                                         </div>
+                                    </div>
+                                    <div class="column-2">
                                     </div>
                                 </div>
                             </div>
-                            <div class="functionKeys column-5 mobile-100">
+                            <div class="column-4 functionKeys mobile-100">
                                 <div class="row mobile-100">
                                     <div class="power-slider column-4 formbuilder-button " id="power-switch-div" title="Enable track power">
                                         <label class="switch">

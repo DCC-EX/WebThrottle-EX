@@ -140,7 +140,7 @@ $(document).ready(function(){
   });
 
   // Set height of throttle container according to functions panel
-  $(".throttle-container").height($(".functionKeys").first().height());
+  // $(".throttle-container").height($(".functionKeys").first().height());
 
   //Temparory function Shows APP DATA in console
   $("#loco-info").on("click", function () {

@@ -1,5 +1,7 @@
 
-
+.topnav{
+    background: url("../../images/pattern.png");
+}
 .rendered-form{
   background-image: url("../../images/pattern.png");
   background-size: 50%;
@@ -24,8 +26,20 @@
   border: 1px solid #9e9e9e;
 }
 .dir-toggle:before{
-    width: 40px;
-    height: 70px;
+    width: 70px;
+    height: 38px;
+}
+.dir-toggle.forward:before{
+    top: 0;
+    left: 150px;
+}
+.dir-toggle.stop:before{
+    top: 0;
+    left: 75px;
+}
+.dir-toggle.backward:before{
+    top: 0;
+    left:2px;
 }
 .dir-btn span.arrow-up,
 .dir-btn span.arrow-down{
@@ -198,7 +212,7 @@ input.form-control:focus, select.form-control:focus, textarea.form-control:focus
 
 .rs-control .rs-bg-color {
   background-color: #ddd;
-  background-image: url(../../images/pattern.png);
+  background: url(../../images/pattern.png) !important;
   background-size: 900%;
   opacity: 0.9;
 } 

@@ -552,8 +552,8 @@ $(document).ready(function(){
   /////////////////////////////////////////////
   // Speed (round) Slider allows user to change the speed of the locomotive
   Tht = $("#circular-throttle").roundSlider({
-    width: 20,
-    radius: 116,
+    width: 16,
+    radius: 100,
     value: speed,
     circleShape: "pie",
     handleShape: "dot",

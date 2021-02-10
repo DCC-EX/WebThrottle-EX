@@ -168,12 +168,12 @@ label.formbuilder-file-label {
 }
 .btn-hide{
     position: absolute;
-    left: 5px;
+    right: 5px;
     top: -9px;
     font-size: 13px;
     color: #9a9a9a;
     outline: none;
-    padding: 7px;
+    padding: 4px 7px;
     vertical-align: middle;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -209,26 +209,38 @@ label.formbuilder-file-label {
     width: 112px;
     text-align: center;
 }
+.c-panel{
+    /* minheight: 64%; */
+}
+.acq-locos{
+    background: #c7c7c7;
+    min-height: 420px;
+    border-radius: 0px 10px 10px 0px;
+}
 .rendered-form div.throttle-container{
-    min-height: 360px;
-    display: flex;
-    align-items: center;
-    justify-content: right;
+    padding: 32px 0;
 }
 .throttlewrap{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 340px;
+    min-height: 340px;
+    height: 100%;
 }
-
+.th-controls{
+    height: 100%;
+    padding: 0 15px;
+}
+.th-controls > div.dir-controller{
+    display: flex;
+    justify-content: center;
+} 
 .functionKeys{
-    padding: 10px 24px;
+    padding: 10px;
+    height: 100%;
 }
 .em-btn{
-    justify-content: center;
-    margin: 0px auto;
-    text-align: center;
+    margin-right: 12px;
 }
 .em-btn button.em-stop{
     width: 44px;
@@ -247,10 +259,10 @@ label.formbuilder-file-label {
     box-shadow: none;
 }
 .dir-toggle{
-    height: 219px;
+    height: 48px;
     background-color: #cecece;
-    width: 48px;
-    margin: 8px auto;
+    width: 230px;
+    /* margin: 8px auto; */
     border-radius: 100px;
     -moz-box-shadow:    inset 0 0 5px #000000;
     -webkit-box-shadow: inset 0 0 5px #000000;
@@ -265,8 +277,8 @@ label.formbuilder-file-label {
     background:#ddd;
     position: absolute;
     padding: 10px;
-    width: 20px;
-    height: 50px;
+    width: 50px;
+    height: 20px;
     border: none;
     border-radius: 80px;
     cursor: pointer;
@@ -277,45 +289,47 @@ label.formbuilder-file-label {
     transition:all .5s ease-in-out;
     box-shadow: 0 4px 4px #5d5d5d;
 }
+
 .dir-toggle.forward:before{
-    top:0;
+    top: 0;
     background: #00ac4d;
+    left: 150px;
 }
 .dir-toggle.stop:before{
-    top: 70px;
+    top: 0;
     background: #da0000;
+    left: 75px;
 }
 .dir-toggle.backward:before{
-    top: 141px;
+    top: 0;
     background: #00ac4d;
+    left:0;
 }
 .dir-btn{
     position: relative;
     padding: 10px;
-    width: 40px;
-    height: 70px;
+    width: 70px;
+    height: 40px;
     border: none;
     border-radius: 80px;
     cursor: pointer;
     outline: none;
     background: transparent;
+    vertical-align: middle;
 }
 .dir-btn:active{
     outline: none;
 }
 .dir-btn span{
     display: inline-block;
-    height: 16px;
-    width:16px;
 }
 .dir-btn span.stop{
     background: #4d4d4d;
+    height: 16px;
+    width: 16px;
 }
 .dir-btn span.arrow-up, .dir-btn span.arrow-down{
     color: #4d4d4d;
-}
-.dir-btn span.arrow-down{
-    margin-top: 10px;
 }
 .dir-btn.selected span.stop{
     background: #ffffff;
@@ -323,7 +337,12 @@ label.formbuilder-file-label {
 .dir-btn.selected span.arrow-up, .dir-btn.selected span.arrow-down{
     color: #ffffff;
 }
-
+.dir-toggle .forward span.arrow-up{
+    transform: rotate(90deg);
+}
+.dir-toggle .backward span.arrow-down{
+    transform: rotate(90deg);
+}
 .btn-speed{
     border-width: 0;
     outline: none;
@@ -441,7 +460,7 @@ input:checked + .slider:before {
   transform: translateX(28px);
 }
 .console-slider {
-    margin-bottom: 8px;
+    margin-top: 8px;
 }
 .slider.debug-slider:before{
     height: 13px;
@@ -630,7 +649,7 @@ input:checked + .slider.debug-slider{
   }
 /* Circular Slider Code */
 .circular-throttle{
-    margin: 0 5px;
+    margin: 32px 5px;
 }
 /* Vertical Slider Code */
 .vertical-throttle{
