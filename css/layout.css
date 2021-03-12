@@ -120,6 +120,12 @@ hr{
     /* height: auto; */
     padding-bottom: 1px;
 }
+.section{
+    box-shadow: 0 0 5px 0px #777777;
+    /*overflow: auto;*/
+    /* height: auto; */
+    padding-bottom: 1px;
+}
 .rendered-form div {
     box-sizing: border-box;
     justify-content: center;
