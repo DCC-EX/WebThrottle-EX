@@ -176,7 +176,7 @@ function loadMapData(map){
         '<div class="row settings-group" id="'+key+'">' +
           '<div class="column-2 caplitalize">'+key+'</div>'+
           '<div class="column-4">'+value[2]+'</div>'+
-          '<div class="column-2">'+ (value[1] == 1 ? '<span class="pill red">Press</span>' : '<span class="pill green">Switch</span>') +'</div>' +
+          '<div class="column-2">'+ (value[1] == 1 ? '<span class="pill red">Momentary</span>' : '<span class="pill green">Latching</span>') +'</div>' +
           '<div class="column-2">'+ (value[3] == 1 ? '<span class="pill green">Visible</span>' : '<span class="pill">Hidden</span>') +'</div>' +
         '</div>'
       );
