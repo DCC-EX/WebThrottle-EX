@@ -232,9 +232,9 @@ function showBtnConfig(data){
       '</div>'+
       '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
           '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press" '+btnpress+'/>'+
-          '<label for="'+key+'press">Press</label>  &nbsp;'+
+          '<label for="'+key+'press">Momentary</label>  &nbsp;'+
           '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" '+btnToggle+'/>'+
-          '<label for="'+key+'toggle">Toggle</label>'+ 
+      '<label for="'+key+'toggle">Latching</label>'+ 
       '</div>'+
       '<div class="fn-chkbox column-2" name="'+key+'Visible" id="'+key+'Type">'+
           '<input type="checkbox" id="'+key+'Visible" name="'+key+'Visible" '+fvisible+'/>'+
