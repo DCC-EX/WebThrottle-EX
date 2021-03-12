@@ -823,10 +823,17 @@ $(document).ready(function(){
     //loadMapData("Default");
   });
   $("#settings-nav").on("click", function () {
+    console.log("settings-nav")
     hideWindows();
     $("#settings-window").show();
     $("#nav-close").trigger("click");
   });
+  $("#cv-nav").on("click", function() {
+    hideWindows();
+    $("#cv-window").show();
+    $("#nav-close").trigger("click");
+  })
+
 
   eventListeners();
 
@@ -926,6 +933,7 @@ function hideWindows(){
     $("#loco-window").hide();
     $("#fn-map-window").hide();
     $("#settings-window").hide();
+    $("#cv-window").hide();
 }
 
 function hideSettings(){
