@@ -1,6 +1,6 @@
 <template>
     <div class="topnav">
-        <button class="nav-btn" id="nav-open">☰</button>
+        <button class="nav-btn" id="nav-open" @click="toggleNav">☰</button>
         <div  class="throttle-heading"> 
             <a href="http://www.dcc-ex.com" target="_blank" rel="noopener noreferrer"><img class="wt-logo" src="@/assets/WebThrottle.png" alt="DCC-EX logo"></a>
         </div>
@@ -12,8 +12,13 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 export default {
+    methods: {
+        toggleNav() {
+            this.$emit('toggleNav')
+        }
+    }
 
 }
 </script>
