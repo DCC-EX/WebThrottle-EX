@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Throttle from '../views/throttle-page/Throttle.vue'
+import component from '../views/throttle-page/Throttle.vue'
+import Throttle from '@/views/throttle-page/Throttle.vue'
+import Locomotives from '@/views/locomotives-page/locomotives.vue'
+import Functions from '@/views/functions-page/functions.vue'
+import Settings from '@/views/settings-page/settings.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -7,6 +11,21 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Throttle 
   },
+  {
+    path: '/locomotives',
+    name: 'Locomotives',
+    component: Locomotives
+  },
+  {
+    path: '/functions',
+    name: 'Functions',
+    component: Functions
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
+  }
   // {
   //   path: '/about',
   //   name: 'About',

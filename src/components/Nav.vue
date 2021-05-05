@@ -1,19 +1,19 @@
 <template>
-          <nav class="menu" id="side-menu" tabindex="0">
-            <header class="avatar">
-                <button class="nav-btn in" id="nav-close" @click="closeNav">&times;</button> 
-                <img src="@/assets/cover.jpg" />
-            </header>
-            <ul>
-                <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
-                <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
-                <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
-                <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
-            </ul>
-        </nav>
+    <nav class="menu" id="side-menu" tabindex="0">
+        <header class="avatar">
+            <button class="nav-btn in" id="nav-close" @click="closeNav">&times;</button> 
+            <img src="@/assets/cover.jpg" />
+        </header>
+        <div class="nav-list">
+            <router-link @click="closeNav" to="/">Throttle</router-link>
+            <router-link @click="closeNav" to="/locomotives">Locomotives</router-link>
+            <router-link @click="closeNav" to="/functions">Function Map</router-link>
+            <router-link @click="closeNav" to="/settings">Settings</router-link>
+        </div>
+    </nav>
 </template>
 
-<script lang="ts">
+<script lang="js">
 export default {
     methods: {
         closeNav() {
@@ -24,6 +24,11 @@ export default {
 </script>
 
 <style>
+.nav-list {
+    display: flex;
+    flex-direction: column;
+}
+
 .menu {
 	background: #00A3B9;
 	height: 100vh;
@@ -66,7 +71,42 @@ export default {
 }
 .menu ul  li:focus{
     border:none;
+}
+
+
+.menu div a{
+    padding: 1em;
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: auto 20px;
+    transition: all 0.15s linear;
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+    text-decoration: none;
+}
+.menu div a:hover{
+    background-color:rgba(0,0,0,0.1);
+}
+.menu div a:focus{
+    border:none;
 } 
+/* .menu ul li a{
+    padding: 1em;
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: auto 20px;
+    transition: all 0.15s linear;
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+    text-decoration:none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+} */
 .nav-btn.in{
     color:#cccccc;
     font-size: 40px;

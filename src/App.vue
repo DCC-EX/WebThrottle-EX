@@ -1,6 +1,9 @@
 <template>
-    <Nav v-show="showNav" @closeNav="toggleNav"></Nav>
-    <TopBar @toggleNav="toggleNav"></TopBar>
+    <div>
+        <Nav v-show="showNav" @closeNav="toggleNav"/>
+        <TopBar @toggleNav="toggleNav"/>
+        <router-view @click="closeNav"/>
+    </div>
 </template>
 
 <script>
@@ -21,6 +24,11 @@ export default defineComponent({
     methods: {
         toggleNav() {
             this.showNav = ~this.showNav;
+        },
+        closeNav() {
+            if (this.showNav) {
+                this.showNav = false
+            }
         }
     }
 })
