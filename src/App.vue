@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <Nav v-show="showNav" @closeNav="toggleNav"/>
-        <TopBar @toggleNav="toggleNav"/>
-        <router-view @click="closeNav"/>
-    </div>
+    <Nav v-show="showNav" @closeNav="toggleNav"/>
+    <TopBar @toggleNav="toggleNav"/>
+    <router-view @click="closeNav"/>
 </template>
 
 <script>
