@@ -33,6 +33,6 @@ jobs:
       run: |
         git add -A
         git commit -m 'Deploy to github pages'
-        git push -f https://matt-hu:${{ secrets.GITHUB_TOKEN }}@github.com/matt-hu/WebThrottle-EX.git master:gh-pages
+        git push -f https://matt-hu:${{ secrets.GITHUB_TOKEN }}@github.com/matt-hu/WebThrottle-EX.git vue-rewrite:gh-pages
     
       
