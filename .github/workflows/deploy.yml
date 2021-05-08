@@ -19,15 +19,17 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Npm build
-      run: npm build
+      run: npm run build
     - name: Prepare for commit
       run: |
+        git config --global user.email "${{ env.GITHUB_ACTOR }}@users.noreply.github.com"
+        git config --global user.name "${{ env.GITHUB_ACTOR }}"
         cd dist
         git init
+    - name: Commit deploy
+      run: |
+        git add -A
+        git commit -m 'Deploy to github pages'
+        git push -f https://matt-hu:${{ secrets.GITHUB_TOKEN }}@github.com/matt-hu/WebThrottle-EX.git master:gh-pages
     
-    - name: Commit build
-      uses: EndBug/add-and-commit@v7
-      with:
-        default_author: github_actions
-        message: "Deploy from release"
       
