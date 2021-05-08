@@ -23,7 +23,8 @@ export default {
 }
 </script>
 
-<style>
+
+<style scoped>
 .topnav {
     display: flex;
     justify-content: space-between;
