@@ -1,7 +1,7 @@
 <template>
-    <nav class="menu" id="side-menu" tabindex="0">
-        <header class="avatar">
-            <button class="nav-btn in" id="nav-close" @click="closeNav">&times;</button> 
+    <nav class="nav-menu" tabindex="0">
+        <header class="nav-header">
+            <button class="nav-btn-close" @click="closeNav">&times;</button> 
             <img src="@/assets/cover.jpg" />
         </header>
         <div class="nav-list">
@@ -29,33 +29,37 @@ export default {
     flex-direction: column;
 }
 
-.menu {
+.nav-menu {
 	background: #00A3B9;
 	height: 100vh;
 	width: 250px;
 	position: fixed;
     box-shadow: 0 0px 10px #666;
 }
-.menu .avatar img {
+
+.nav-header img {
     width: 100%;
     overflow: hidden;
     border: 0;
 }
 
-.menu div a{
+.nav-list a{
     padding: 1em;
     cursor: pointer;
     color: #fff;
     text-decoration: none;
 }
-.menu div a:hover{
+.nav-list a:hover{
     background-color: #0092a6;
 }
-.menu div a:focus{
+.nav-list a:focus{
     border:none;
 } 
 
-.nav-btn.in{
+.nav-btn-close {
+    cursor: pointer;
+    border: none;
+    background: none;
     color:#cccccc;
     font-size: 40px;
     position: absolute;
@@ -64,15 +68,7 @@ export default {
     /* margin: 0; */
     padding: 5px 10px 0 0;
 }
-.nav-btn.in:hover{
+.nav-btn-close:hover {
   color: #ffffff;
-}
-.nav-btn {
-    cursor: pointer;
-    border: none;
-    background: none;
-}
-.nav-btn:hover {
-  color: #000000;
 }
 </style>
