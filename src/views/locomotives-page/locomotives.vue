@@ -1,13 +1,9 @@
 <template>
-    <p>locomotives</p>
+    <div class="view">
+        <p>Locomotives</p>
+    </div>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style>
-
+/* .view styling in App.vue */
 </style>

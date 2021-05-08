@@ -1,13 +1,9 @@
 <template>
-  <p>settings</p>
+    <div class="view">
+        <p>Settings</p>
+    </div>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style>
-
+/* .view styling in App.vue */
 </style>

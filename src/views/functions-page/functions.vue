@@ -1,13 +1,9 @@
 <template>
-  <p>functions</p>
+    <div class="view">
+        <p>Function maps</p>
+    </div>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style>
-
+/* .view styling in App.vue */
 </style>
