@@ -18,21 +18,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Npm build
-      run: |
-        npm install
-        npm ci
-        npm run build
-    - name: Prepare for commit
-      run: |
-        git config --global user.email "github-actions@users.noreply.github.com"
-        git config --global user.name "github-actions"
-        cd dist
-        git init
-    - name: Commit deploy
-      run: |
-        git add -A
-        git commit -m 'Deploy to github pages'
-        git push -f https://matt-hu:${{ secrets.GITHUB_TOKEN }}@github.com/matt-hu/WebThrottle-EX.git vue-rewrite:gh-pages
+    - id: build-vue
+      uses: xRealNeon/VuePagesAction@1.0.0
+      with:
+        username: 'matt-hu'
+        reponame: 'WebThrottle-EX'
+        gitname: 'github-actions'
+        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
     
       
