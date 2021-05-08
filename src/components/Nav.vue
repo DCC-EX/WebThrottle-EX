@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .nav-list {
     display: flex;
     flex-direction: column;
