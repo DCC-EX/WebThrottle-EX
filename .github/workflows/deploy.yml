@@ -23,7 +23,9 @@ jobs:
       with:
         username: 'matt-hu'
         reponame: 'WebThrottle-EX'
-        gitname: 'github-actions'
+        gitname: 'matt-hu'
+        gitemail: 'matt.hu1@outlook.com'
+        gitmsg: 'Deploy to GitHub Pages'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
     
       
