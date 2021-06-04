@@ -14,9 +14,10 @@
 </template>
 
 <script lang="js">
+/* eslint-disable */
 export default {
     methods: {
-        closeNav() {
+        closeNav(){
             this.$emit('closeNav')
         }
     }
@@ -69,6 +70,6 @@ export default {
     padding: 5px 10px 0 0;
 }
 .nav-btn-close:hover {
-  color: #ffffff;
+    color: #ffffff;
 }
 </style>
