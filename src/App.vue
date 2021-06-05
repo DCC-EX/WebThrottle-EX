@@ -50,4 +50,11 @@ export default defineComponent({
     background-color: #e3e3e3;
     box-shadow: 0 0 5px 0px #777777;
 }
+
+@media only screen and (max-width: 768px) {
+    .view {
+        margin: 20px;
+        height: calc(100vh - 110px);
+    }
+}
 </style>

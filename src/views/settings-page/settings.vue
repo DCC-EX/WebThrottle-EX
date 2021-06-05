@@ -2,13 +2,15 @@
     <div class="view">
         <h1 class="view-title">Settings</h1>
         <div class="settings-view">
-            <div class="settings-nav">
+            <div class="view-nav">
                 <router-link to="/settings">General</router-link>
                 <router-link to="/settings/storage">Storage</router-link>
                 <router-link to="/settings/app">App</router-link>
                 <router-link to="/settings/about">About</router-link>
             </div>
-            <router-view/>
+            <div class="settings-view-inner">
+                <router-view/>
+            </div>
         </div>
     </div>
 </template>
@@ -23,7 +25,7 @@
 .settings-view {
     display: flex;
 }
-.settings-nav {
+.view-nav {
     display: flex;
     flex-direction: column;
     width: 200px;
@@ -33,19 +35,38 @@
     padding: 10px 0px;
 }
 
-.settings-nav a {
+.view-nav a {
     padding: 10px 0px;
     text-decoration: none;
     color: #555;
     cursor: pointer;
 }
 
-.settings-nav a:hover {
+.view-nav a:hover {
     background-color: #d6d6d6;
     color: #111;
 }
 
-a.router-link-exact-active {
+.view-nav .router-link-exact-active {
     color:black;
 }
+
+.settings-view-inner {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 768px){
+    .view-nav {
+        width: auto;
+        height: auto;
+        border-bottom: 1px solid #bbb;
+
+    }
+    .settings-view {
+        flex-direction: column;
+    }
+}
+
 </style>

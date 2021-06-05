@@ -1,6 +1,6 @@
 <template>
     <div class="view">
-        <p>Locomotives</p>
+        <h1 class="view-title">Locomotives</h1>
     </div>
 </template>
 

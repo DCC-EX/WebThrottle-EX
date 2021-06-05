@@ -67,4 +67,19 @@ export default {
     box-shadow: 0 0 3px #989898;
     border-radius: 6px;
 }
+
+@media only screen and (max-width: 768px) {
+    #help-button {
+        display: none;
+    }
+    #info-tooltip {
+        display: none;
+    }
+    #fs-toggle {
+        margin-left: 10px;
+    }
+    .nav-btn-open {
+        margin-right: 0px;
+    }
+}
 </style>
