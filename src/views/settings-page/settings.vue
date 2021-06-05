@@ -37,6 +37,12 @@
     padding: 10px 0px;
     text-decoration: none;
     color: #555;
+    cursor: pointer;
+}
+
+.settings-nav a:hover {
+    background-color: #d6d6d6;
+    color: #111;
 }
 
 a.router-link-exact-active {

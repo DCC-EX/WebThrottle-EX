@@ -6,7 +6,7 @@
         </div>
         <div class="btn-cluster">
             <button class="btn-expand" id="fs-toggle" state="ws" title="Fullscreen mode">&#10530;</button>
-            <button class="btn-info" id="info-tooltip" state="ws" title="Information"><span class="icon-info"></span></button>
+            <router-link to="/settings/about"><button class="btn-info" id="info-tooltip" state="ws" title="Information"><span class="icon-info"></span></button></router-link>
             <button class="btn-info" id="help-button" state="ws" title="Help" onclick=" window.open('https://dcc-ex.com/throttles/ex-webthrottle.html', '_blank')"><span class="icon-question"></span></button>
         </div>
     </div>
