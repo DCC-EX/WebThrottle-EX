@@ -1,6 +1,7 @@
 <template>
     <div class="view">
-        <div class="throttle-header">
+        <p>Throttle</p>
+        <!-- <div class="throttle-header">
             <div id="locomotive-id">
                 <div id="locomotive-id-inner">
                     <p id="locomotive-id-label">Locomotive ID</p>
@@ -15,7 +16,7 @@
                 </select>
                 <button id="connection-button">Connect</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
