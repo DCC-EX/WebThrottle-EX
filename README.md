@@ -4,15 +4,8 @@ This is a prototype for a new DCC++ EX Throttle/Controller that can connect to t
 
 ## What you need to setup the project
 
-* Chromium-Based Browser version 80 or above
+* Chromium-Based Browser version 89 or above
   (Chrome, Opera, Edge)
-* You must enable the experimental Web Serial API
-
-To enable the Web Serial API, in your browser URL bar type:
-
-    chrome://flags
-    
-Then set the **#enable-experimental-web-platform-features** flag by looking on the page for "Experimental Web Platform Features" and click on the "enable" button. (NOTE: Substitute the name of your browser above if you don't use Chrome)
 
 ## What you’ll need to use this application
 
