@@ -426,7 +426,7 @@ label.formbuilder-file-label {
 }
 
 input:checked + .slider {
-  background-color: #ff0000;
+  background-color: #00a349;
   box-shadow: 1px 1px rgba(255,255,255,0.8);
 }
 
