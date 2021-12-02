@@ -8,23 +8,25 @@
     file manages the correct response that a Command Station would provide.
 */
 
-function cabControlCommand(splitPacket) {
+function cabControlCommand(packet) {
+  const splitPacket = packet.split(" ");
   return 'T 1 ' + splitPacket[3] + ' ' + splitPacket[4].substring(0, splitPacket[4].length - 2);
 }
 
-function powerOffCommand(_splitPacket) {
+function powerOffCommand(packet) {
   return 'p0';
 }
 
-function powerOnCommand(_splitPacket) {
+function powerOnCommand(packet) {
   return 'p1';
 }
 
-function cabFunctionCommand(_splitPacket, legacy = false) {
+function cabFunctionCommand(packet, legacy = false) {
   return NaN;
 }
 
-function turnoutCommand(splitPacket) {
+function turnoutCommand(packet) {
+  const splitPacket = packet.split(" ");
   const turnouts = [];
   let returnList;
   if (splitPacket.length === 4) {
@@ -51,6 +53,10 @@ function turnoutCommand(splitPacket) {
   }
 }
 
+function extractPacketKey(packet) {
+  const cleanedPacket = [...packet].filter(char => !["<", ">"].includes(char))
+  return cleanedPacket.find(char => char !== " ");
+}
 
 function emulator(packet) {
   if (packet === "<credits>") {
@@ -58,33 +64,34 @@ function emulator(packet) {
     return credits()
   }
 
-  const cleanedPacket = [...packet].filter(char => !["<", ">"].includes(char))
-  let packetKey = cleanedPacket.find(char => char !== " ");
+  let packetKey = extractPacketKey(packet);
 
-  const splitPacket = packet.split(" ");
   switch (packetKey) {
     // Cab control
     case ("t"):
-      return cabControlCommand(splitPacket)
+      return cabControlCommand(packet)
 
     // Track power off
     case ('0') :
-      return powerOffCommand(splitPacket);
+      return powerOffCommand(packet);
 
     // Track power on
     case ('1'):
-      return powerOnCommand(splitPacket);
+      return powerOnCommand(packet);
 
     // New cab functions
     case ('F'):
-      return cabFunctionCommand(splitPacket);
+      return cabFunctionCommand(packet);
 
     // Legacy cab functions
     case ('f'):
-      return cabFunctionCommand(splitPacket, true);
+      return cabFunctionCommand(packet, true);
 
     // Turnouts
     case ('T'): //Not fully finished
-      return turnoutCommand(splitPacket);
+      return turnoutCommand(packet);
+
+    default:
+      break;
   }
 }
