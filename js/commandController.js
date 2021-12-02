@@ -10,6 +10,7 @@
 $(document).ready(function(){
     console.log("Command Controller loaded");
     uiDisable(true)
+    emulatorClass = new Emulator();
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -110,8 +111,9 @@ function writeToStream(...lines) {
     } else {
         lines.forEach((line) => {
             displayLog('[SEND] '+line.toString());
-            message = emulator('<' + line + '>')
-            console.log('<' + line + '>' + '\n')
+            const packet = `<${line}>`;
+            const message = emulatorClass.write(packet)
+            console.log(packet + '\n')
             displayLog('[RECEIVE] '+message);
         });
     }
