@@ -25,14 +25,16 @@ function cabFunctionCommand(packet, legacy = false) {
   return NaN;
 }
 
-function turnoutCommand(packet) {
-  const splitPacket = packet.split(" ");
-  const turnouts = [];
+function turnoutCommand(packet, turnouts = []) {
+  const splitPacket = removeControlCharacters(packet).split(" ");
   let returnList;
+
   if (splitPacket.length === 4) {
+    // Adds a Turnout
     turnouts.push({id: splitPacket[1], address: splitPacket[2], subaddress: splitPacket[3], throw: 0})
     return '<O>';
   } else if (splitPacket.length === 2) {
+    // Removes a Turnout
     var i;
     for (i = 0; i < turnouts.length; i++) {
       if (turnouts[i]['id'] == splitPacket[1].substring(0, splitPacket[1].length - 1)) {
@@ -42,6 +44,7 @@ function turnoutCommand(packet) {
     }
     return 'X';
   } else if (splitPacket.length === 1) {
+    // Reads Turnouts
     returnList = [];
     if (turnouts.length > 0) {
       for (i = 0; i < turnouts.length; i++) {
@@ -53,10 +56,16 @@ function turnoutCommand(packet) {
   }
 }
 
+function removeControlCharacters(packet) {
+  return [...packet].filter(char => !["<", ">"].includes(char)).join("")
+}
+
 function extractPacketKey(packet) {
-  const cleanedPacket = [...packet].filter(char => !["<", ">"].includes(char))
+  const cleanedPacket = [...removeControlCharacters(packet)]
   return cleanedPacket.find(char => char !== " ");
 }
+
+let turnouts = []
 
 function emulator(packet) {
   if (packet === "<credits>") {
@@ -89,7 +98,7 @@ function emulator(packet) {
 
     // Turnouts
     case ('T'): //Not fully finished
-      return turnoutCommand(packet);
+      return turnoutCommand(packet, turnouts);
 
     default:
       break;
