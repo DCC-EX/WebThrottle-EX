@@ -9,10 +9,9 @@
 */
 
 function emulator(packet) {
-  let lastMessage;
-  var turnouts = [];
+  const turnouts = [];
 
-  if (packet == "<credits>") {
+  if (packet === "<credits>") {
     console.log("Credits")
     return credits()
   }
@@ -24,18 +23,15 @@ function emulator(packet) {
   switch (packetKey) {
     // Cab control
     case ("t"):
-      lastMessage = 'T 1 ' + splitPacket[3] + ' ' + splitPacket[4].substring(0, splitPacket[4].length - 2)
-      return lastMessage;
+      return 'T 1 ' + splitPacket[3] + ' ' + splitPacket[4].substring(0, splitPacket[4].length - 2)
 
     // Track power off
     case ('0') :
-      lastMessage = 'p0';
-      return lastMessage;
+      return 'p0';
 
     // Track power on
     case ('1'):
-      lastMessage = 'p1';
-      return lastMessage;
+      return 'p1';
 
     // New cab functions
     case ('F'):
@@ -47,10 +43,11 @@ function emulator(packet) {
 
     // Turnouts
     case ('T'): //Not fully finished
-      if (splitPacket.length == 4) {
+      let returnList;
+      if (splitPacket.length === 4) {
         turnouts.push({id: splitPacket[1], address: splitPacket[2], subaddress: splitPacket[3], throw: 0})
         return '<O>';
-      } else if (splitPacket.length == 2) {
+      } else if (splitPacket.length === 2) {
         var i;
         for (i = 0; i < turnouts.length; i++) {
           if (turnouts[i]['id'] == splitPacket[1].substring(0, splitPacket[1].length - 1)) {
@@ -59,7 +56,7 @@ function emulator(packet) {
           }
         }
         return 'X';
-      } else if (splitPacket.length == 1) {
+      } else if (splitPacket.length === 1) {
         returnList = [];
         if (turnouts.length > 0) {
           for (i = 0; i < turnouts.length; i++) {
