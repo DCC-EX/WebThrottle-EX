@@ -12,7 +12,7 @@
  * @return {string}
  */
 function removeControlCharacters(packet) {
-  return [...packet].filter(char => !["<", ">"].includes(char)).join("")
+  return [...packet].filter(char => !["<", ">", "\n"].includes(char)).join("")
 }
 
 /**
@@ -25,8 +25,9 @@ function extractPacketKey(packet) {
 }
 
 class Emulator {
-  constructor() {
+  constructor({logger}) {
     this.turnoutEmulator = new TurnoutEmulator()
+    this.logger = logger
   }
 
   /**
@@ -43,27 +44,34 @@ class Emulator {
     switch (packetKey) {
       // Cab control
       case ("t"):
-        return this.#cabControlCommand(packet)
+        this.logger('[RECEIVE] '+ this.#cabControlCommand(packet))
+        break;
 
       // Track power off
       case ('0') :
-        return this.#powerOffCommand(packet);
+        this.logger('[RECEIVE] '+ this.#powerOffCommand(packet));
+        break;
 
       // Track power on
       case ('1'):
-        return this.#powerOnCommand(packet);
+        this.logger('[RECEIVE] '+ this.#powerOnCommand(packet));
+        break;
 
       // New cab functions
       case ('F'):
-        return this.#cabFunctionCommand(packet);
+        this.logger('[RECEIVE] '+  this.#cabFunctionCommand(packet));
+        break;
 
       // Legacy cab functions
       case ('f'):
-        return this.#cabFunctionCommand(packet, true);
+
+        this.logger('[RECEIVE] '+  this.#cabFunctionCommand(packet, true));
+        break;
 
       // Turnouts
       case ('T'): //Not fully finished
-        return this.#turnoutCommand(packet, this.turnoutEmulator);
+        this.logger('[RECEIVE] '+  this.#turnoutCommand(packet, this.turnoutEmulator))
+        break
 
       default:
         break;

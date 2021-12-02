@@ -10,7 +10,7 @@
 $(document).ready(function(){
     console.log("Command Controller loaded");
     uiDisable(true)
-    emulatorClass = new Emulator();
+    emulatorClass = new Emulator({logger: displayLog});
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -95,29 +95,22 @@ async function readLoop() {
 }
 
 function writeToStream(...lines) {
-    // Stops data being written to nonexistent port if using emulator
-    if (port) {
-        const writer = outputStream.getWriter();
-        lines.forEach((line) => {
-            writer.write('<' + line + '>' + '\n');
-            console.log('<' + line + '>' + '\n')
-            if (line == "\x03" || line == "echo(false);") {
-                
-            } else {
-                displayLog('[SEND]'+line.toString());
-            }
-        });
-        writer.releaseLock();
-    } else {
-        lines.forEach((line) => {
-            displayLog('[SEND] '+line.toString());
-            const packet = `<${line}>`;
-            const message = emulatorClass.write(packet)
-            console.log(packet + '\n')
-            displayLog('[RECEIVE] '+message);
-        });
-    }
+  // Stops data being written to nonexistent port if using emulator
+  let stream = emulatorClass
+  if (port) {
+    stream = outputStream.getWriter();
+  }
 
+  lines.forEach((line) => {
+      if (line == "\x03" || line == "echo(false);") {
+
+      } else {
+          displayLog('[SEND]'+line.toString());
+      }
+      const packet = `<${line}>\n`;
+      stream.write(packet)
+      console.log(packet)
+  });
 }
 
 // Transformer for the Web Serial API. Data comes in as a stream so we
