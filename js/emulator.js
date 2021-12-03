@@ -8,6 +8,8 @@
     file manages the correct response that a Command Station would provide.
 */
 /**
+ * Utility function can be moved when we can import files
+ * @description Removes control characters "<", ">" and "\n"
  * @param {string} packet
  * @return {string}
  */
@@ -16,6 +18,8 @@ function removeControlCharacters(packet) {
 }
 
 /**
+ * Utility function can be moved when we can import files
+ * @description Finds the first non-blank character after control characters are removed
  * @param {string} packet
  * @return {string}
  */
