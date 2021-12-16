@@ -319,92 +319,6 @@ function setSpeedofControllers(){
     knob.val(spd).change();
 }
 
-// This function will generate commands for each type of function
-function generateFnCommand(clickedBtn){
-    
-       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
-       eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
-       btnPressed = clickedBtn.attr("aria-pressed");
-       //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);
-    
-       switch(func){
-            case "f0":
-            case "f1":
-            case "f2":
-            case "f3":
-            case "f4":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF0ToF4(func,1);                
-                }else{ 
-                    sendCommandForF0ToF4(func,0);
-                }
-                break;
-            }
-            case "f5":
-            case "f6":
-            case "f7":
-            case "f8":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF5ToF8(func,1);                
-                }else{ 
-                    sendCommandForF5ToF8(func,0);
-                }
-                break;
-            }
-            case "f9":
-            case "f10":
-            case "f11":
-            case "f12":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF9ToF12(func,1);                
-                }else{ 
-                    sendCommandForF9ToF12(func,0);
-                }
-                break;
-            }
-            case "f13":
-            case "f14":
-            case "f15":
-            case "f16":
-            case "f17":
-            case "f18":
-            case "f19":
-            case "f20":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF13ToF20(func,1);                
-                    }else{     
-                        sendCommandForF13ToF20(func,0);
-                    }
-                    break;
-            }
-            case "f21":
-            case "f22":
-            case "f23":
-            case "f24":
-            case "f25":
-            case "f26":
-            case "f27":
-            case "f28":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF21ToF28(func,1);                
-                    }else{  
-                        sendCommandForF21ToF28(func,0);
-                    }
-                    break;
-            }
-            default:
-            {
-                alert("Invalid Function");
-            }
-
-       }          
-}
-
 $(document).ready(function(){
     var mode = 0;
     // Left Menu
@@ -709,47 +623,7 @@ $(document).ready(function(){
       }
     });
 
-  // Functions buttons
-  // Send Instructions to generate command depends the type of Button (press/toggle)
-  var timer = 0;
-  $(document)
-    .on("mousedown", ".fn-btn", function () {
-      console.log($(this).val);
-      clickedBtn = $(this);
-      btnType = clickedBtn.data("type");
-      if (btnType == "press") {
-        timer = setInterval(function () {
-          // MOMENTARY HOLD ON
-          clickedBtn.attr("aria-pressed", "true");
-          generateFnCommand(clickedBtn);
-          console.log("PRESSED HOLD ==> " + clickedBtn.attr("name"));
-        }, 100);
-      }
-    })
-    .on("mouseup mouserelease", ".fn-btn", function () {
-      clearInterval(timer);
-      clickedBtn = $(this);
-      btnType = clickedBtn.data("type");
-      btnState = clickedBtn.attr("aria-pressed");
-      if (btnType == "press") {
-        // MOMENTARY HOLD OFF
-        clickedBtn.attr("aria-pressed", "false");
-        generateFnCommand(clickedBtn);
-        console.log("RELEASED HOLD  ==> " + clickedBtn.attr("name"));
-      } else {
-        if (btnState == "false") {
-          // TOGGLE ON
-          clickedBtn.attr("aria-pressed", "true");
-          generateFnCommand(clickedBtn);
-          console.log("TOGGLE ON ==> " + clickedBtn.attr("name"));
-        } else {
-          // TOGGLE OFF
-          clickedBtn.attr("aria-pressed", "false");
-          generateFnCommand(clickedBtn);
-          console.log("TOGGLE OFF ==> " + clickedBtn.attr("name"));
-        }
-      }
-    });
+
 
   // Hide/Show the Debug console
   $("#console-toggle").on("click", function () {
