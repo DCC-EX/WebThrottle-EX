@@ -44,11 +44,11 @@ function sendCommandForF21ToF28(fn, opr){
 }
 
 // This function will generate commands for each type of function
-function generateFnCommand(clickedBtn){
+function generateFnCommand(clickedBtn) {
 
   const func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
   const btnPressed = clickedBtn.attr("aria-pressed");
-  //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);
+  const opr = btnPressed==="true" ? 1: 0
 
   switch(func){
     case "f0":
@@ -57,11 +57,7 @@ function generateFnCommand(clickedBtn){
     case "f3":
     case "f4":
     {
-      if(btnPressed==="true"){
-        sendCommandForF0ToF4(func,1);
-      }else{
-        sendCommandForF0ToF4(func,0);
-      }
+      sendCommandForF0ToF4(func,opr);
       break;
     }
     case "f5":
@@ -69,11 +65,7 @@ function generateFnCommand(clickedBtn){
     case "f7":
     case "f8":
     {
-      if(btnPressed==="true"){
-        sendCommandForF5ToF8(func,1);
-      }else{
-        sendCommandForF5ToF8(func,0);
-      }
+      sendCommandForF5ToF8(func,opr);
       break;
     }
     case "f9":
@@ -81,11 +73,7 @@ function generateFnCommand(clickedBtn){
     case "f11":
     case "f12":
     {
-      if(btnPressed==="true"){
-        sendCommandForF9ToF12(func,1);
-      }else{
-        sendCommandForF9ToF12(func,0);
-      }
+      sendCommandForF9ToF12(func,opr);
       break;
     }
     case "f13":
@@ -97,11 +85,7 @@ function generateFnCommand(clickedBtn){
     case "f19":
     case "f20":
     {
-      if(btnPressed==="true"){
-        sendCommandForF13ToF20(func,1);
-      }else{
-        sendCommandForF13ToF20(func,0);
-      }
+      sendCommandForF13ToF20(func,opr);
       break;
     }
     case "f21":
@@ -113,11 +97,7 @@ function generateFnCommand(clickedBtn){
     case "f27":
     case "f28":
     {
-      if(btnPressed==="true"){
-        sendCommandForF21ToF28(func,1);
-      }else{
-        sendCommandForF21ToF28(func,0);
-      }
+      sendCommandForF21ToF28(func,opr);
       break;
     }
     default:
