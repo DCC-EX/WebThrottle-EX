@@ -8,7 +8,6 @@ function sendCabCommand(fn, value) {
   writeRawToStream(command)
 }
 
-// This function will generate commands for each type of function
 function generateFnCommand(funcName, btnPressed) {
   const value = btnPressed ? 1 : 0
 
@@ -18,10 +17,11 @@ function generateFnCommand(funcName, btnPressed) {
 function toggleButtonState(previousBtnState, buttonElement) {
   const newBtnState = !previousBtnState
   buttonElement.ariaPressed = newBtnState
+  buttonElement.setAttribute("aria-pressed", newBtnState) // Firefox support https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaPressed
   return newBtnState;
 }
 
-let buttonPressTimers = {}
+const buttonPressIntervals = {}
 
 function functionButtonPressed(buttonElement) {
   const {name, ariaPressed, dataset: {type: buttonType}} = buttonElement
@@ -35,7 +35,7 @@ function functionButtonPressed(buttonElement) {
   console.debug("PRESSED HOLD ==> " + name);
   generateFnCommand(name, newBtnState);
 
-  buttonPressTimers[buttonElement.id] = setInterval(function () {
+  buttonPressIntervals[buttonElement.id] = setInterval(function () {
     // MOMENTARY HOLD ON
     console.debug("PRESSED HOLD ==> " + name);
     generateFnCommand(name, newBtnState);
@@ -43,7 +43,7 @@ function functionButtonPressed(buttonElement) {
 }
 
 function functionButtonReleased(buttonElement) {
-  clearInterval(buttonPressTimers[buttonElement.id]);
+  clearInterval(buttonPressIntervals[buttonElement.id]);
   const {name, ariaPressed, dataset: {type: buttonType}} = buttonElement
   const newBtnState = toggleButtonState(ariaPressed, buttonElement);
 
@@ -57,23 +57,26 @@ function functionButtonReleased(buttonElement) {
   generateFnCommand(name, newBtnState);
 }
 
+function isFunctionButton(target) {
+  return [...target.classList].includes("fn-btn");
+}
+
 // Functions buttons
 // Send Instructions to generate command depends the type of Button (press/toggle)
 const fnWrapperElement = document.getElementById("fn-wrapper")
 
-fnWrapperElement.addEventListener("mousedown", (event) => {
-  const {target} = event
-  if (isFunctionButton(target)) {
-    functionButtonPressed(target)
-  }
-})
-fnWrapperElement.addEventListener("mouseup", (event) => {
-  const {target} = event
-  if (isFunctionButton(target)) {
-    functionButtonReleased(target)
-  }
-})
-
-function isFunctionButton(target) {
-  return [...target.classList].includes("fn-btn");
+if (fnWrapperElement) {
+  fnWrapperElement.addEventListener("mousedown", (event) => {
+    const {target} = event
+    if (isFunctionButton(target)) {
+      functionButtonPressed(target)
+    }
+  })
+  fnWrapperElement.addEventListener("mouseup", (event) => {
+    const {target} = event
+    if (isFunctionButton(target)) {
+      functionButtonReleased(target)
+    }
+  })
 }
+
