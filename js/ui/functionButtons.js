@@ -17,13 +17,13 @@ function generateFnCommand(clickedBtn) {
   sendCabCommand(func, opr)
 }
 
-let timers = {}
+let buttonPressTimers = {}
 
 function functionButtonPressed(buttonElement) {
   const {dataset: {type: buttonType}} = buttonElement
 
   if (buttonType === "press") {
-    timers[buttonElement.id] = setInterval(function () {
+    buttonPressTimers[buttonElement.id] = setInterval(function () {
       // MOMENTARY HOLD ON
       buttonElement.setAttribute("aria-pressed", "true");
       console.debug("PRESSED HOLD ==> " + buttonElement.getAttribute("name"));
@@ -33,28 +33,18 @@ function functionButtonPressed(buttonElement) {
 }
 
 function functionButtonReleased(buttonElement) {
-  clearInterval(timers[buttonElement.id]);
+  clearInterval(buttonPressTimers[buttonElement.id]);
   const {dataset: {type: buttonType}} = buttonElement
-  const btnState = buttonElement.getAttribute("aria-pressed");
   const buttonName = buttonElement.getAttribute("name")
+  const previousBtnState = buttonElement.getAttribute("aria-pressed");
+  const newBtnState = previousBtnState === "false"
+  buttonElement.setAttribute("aria-pressed", newBtnState);
 
-  if (btnState === "false") {
-    // TOGGLE ON
-    buttonElement.setAttribute("aria-pressed", "true");
-
-    if (buttonType === "press") {
-      console.debug("RELEASED HOLD  ==> " + buttonName);
-    } else {
-      console.debug("TOGGLE ON ==> " + buttonName);
-    }
+  if (buttonType === "press") {
+    console.debug("RELEASED HOLD  ==> " + buttonName);
   } else {
-    // TOGGLE OFF
-    buttonElement.setAttribute("aria-pressed", "false");
-    if (buttonType === "press") {
-      console.debug("RELEASED HOLD  ==> " + buttonName);
-    } else {
-      console.debug("TOGGLE OFF ==> " + buttonName);
-    }
+    const action = newBtnState ? "ON" : "OFF"
+    console.debug(`TOGGLE ${action} ==> ` + buttonName);
   }
 
   generateFnCommand(buttonElement);
@@ -63,10 +53,6 @@ function functionButtonReleased(buttonElement) {
 // Functions buttons
 // Send Instructions to generate command depends the type of Button (press/toggle)
 const fnWrapperElement = document.getElementById("fn-wrapper")
-
-function isFunctionButton(target) {
-  return [...target.classList].includes("fn-btn");
-}
 
 fnWrapperElement.addEventListener("mousedown", (event) => {
   const {target} = event
@@ -80,3 +66,7 @@ fnWrapperElement.addEventListener("mouseup", (event) => {
     functionButtonReleased(target)
   }
 })
+
+function isFunctionButton(target) {
+  return [...target.classList].includes("fn-btn");
+}
