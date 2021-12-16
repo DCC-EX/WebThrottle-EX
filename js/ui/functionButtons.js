@@ -18,47 +18,43 @@ function generateFnCommand(funcName, btnPressed) {
 let buttonPressTimers = {}
 
 function toggleButtonState(previousBtnState, buttonElement) {
-  const newBtnState = previousBtnState === "false"
-  buttonElement.setAttribute("aria-pressed", newBtnState);
+  const newBtnState = !previousBtnState
+  buttonElement.ariaPressed = newBtnState
   return newBtnState;
 }
 
 function functionButtonPressed(buttonElement) {
-  const {dataset: {type: buttonType}} = buttonElement
+  const {name, ariaPressed, dataset: {type: buttonType}} = buttonElement
 
   if (buttonType !== "press") {
     return
   }
 
-  const buttonName = buttonElement.getAttribute("name")
-  const previousBtnState = buttonElement.getAttribute("aria-pressed");
-  const newBtnState = toggleButtonState(previousBtnState, buttonElement);
+  const newBtnState = toggleButtonState(ariaPressed, buttonElement);
 
-  console.debug("PRESSED HOLD ==> " + buttonName);
-  generateFnCommand(buttonName, newBtnState);
+  console.debug("PRESSED HOLD ==> " + name);
+  generateFnCommand(name, newBtnState);
 
   buttonPressTimers[buttonElement.id] = setInterval(function () {
     // MOMENTARY HOLD ON
-    console.debug("PRESSED HOLD ==> " + buttonName);
-    generateFnCommand(buttonName, newBtnState);
+    console.debug("PRESSED HOLD ==> " + name);
+    generateFnCommand(name, newBtnState);
   }, 100);
 }
 
 function functionButtonReleased(buttonElement) {
   clearInterval(buttonPressTimers[buttonElement.id]);
-  const {dataset: {type: buttonType}} = buttonElement
-  const buttonName = buttonElement.getAttribute("name")
-  const previousBtnState = buttonElement.getAttribute("aria-pressed");
-  const newBtnState = toggleButtonState(previousBtnState, buttonElement);
+  const {name, ariaPressed, dataset: {type: buttonType}} = buttonElement
+  const newBtnState = toggleButtonState(ariaPressed, buttonElement);
 
   if (buttonType === "press") {
-    console.debug("RELEASED HOLD  ==> " + buttonName);
+    console.debug("RELEASED HOLD  ==> " + name);
   } else {
     const action = newBtnState ? "ON" : "OFF"
-    console.debug(`TOGGLE ${action} ==> ` + buttonName);
+    console.debug(`TOGGLE ${action} ==> ` + name);
   }
 
-  generateFnCommand(buttonName, newBtnState);
+  generateFnCommand(name, newBtnState);
 }
 
 // Functions buttons
