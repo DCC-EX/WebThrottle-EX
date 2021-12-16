@@ -29,7 +29,7 @@ $(document)
         // MOMENTARY HOLD ON
         clickedBtn.attr("aria-pressed", "true");
         generateFnCommand(clickedBtn);
-        console.log("PRESSED HOLD ==> " + clickedBtn.attr("name"));
+        console.debug("PRESSED HOLD ==> " + clickedBtn.attr("name"));
       }, 100);
     }
   })
@@ -42,18 +42,18 @@ $(document)
       // MOMENTARY HOLD OFF
       clickedBtn.attr("aria-pressed", "false");
       generateFnCommand(clickedBtn);
-      console.log("RELEASED HOLD  ==> " + clickedBtn.attr("name"));
+      console.debug("RELEASED HOLD  ==> " + clickedBtn.attr("name"));
     } else {
       if (btnState === "false") {
         // TOGGLE ON
         clickedBtn.attr("aria-pressed", "true");
         generateFnCommand(clickedBtn);
-        console.log("TOGGLE ON ==> " + clickedBtn.attr("name"));
+        console.debug("TOGGLE ON ==> " + clickedBtn.attr("name"));
       } else {
         // TOGGLE OFF
         clickedBtn.attr("aria-pressed", "false");
         generateFnCommand(clickedBtn);
-        console.log("TOGGLE OFF ==> " + clickedBtn.attr("name"));
+        console.debug("TOGGLE OFF ==> " + clickedBtn.attr("name"));
       }
     }
   });
