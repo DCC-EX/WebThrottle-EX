@@ -1,4 +1,5 @@
-import {cabCommand} from 'https://cdn.skypack.dev/@cloudthrottle/dcc-ex--commands';
+import {cabCommand} from "../vendor/dcc-ex--commands-v0.3.0.js"
+
 
 function sendCabCommand(fn, value) {
   setFunCurrentVal(fn, value);

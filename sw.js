@@ -33,12 +33,14 @@ var filesToCache = [
   'js/emulator.js',
   'js/exwebthrottle.js',
   'js/fnMaster.js',
-  'js/jquery-3.2.1.min.js',
-  'js/jquery-ui.min.js',
-  'js/jquery.rotaryswitch.js',
+  'js/vendor/jquery-3.2.1.min.js',
+  'js/vendor/jquery-ui.min.js',
+  'js/vendor/jquery.rotaryswitch.js',
   'js/pwa.js',
-  'js/roundslider.min.js',
-  'js/storageController.js'
+  'js/vendor/roundslider.min.js',
+  'js/storageController.js',
+  'js/ui/functionButtons.js',
+  'js/vendor/dcc-ex--commands-0.4.0.js'
 ];
 
 self.addEventListener('install', function(e) {
