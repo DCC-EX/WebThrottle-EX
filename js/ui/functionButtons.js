@@ -15,13 +15,13 @@ function generateFnCommand(funcName, btnPressed) {
   sendCabCommand(funcName, value)
 }
 
-let buttonPressTimers = {}
-
 function toggleButtonState(previousBtnState, buttonElement) {
   const newBtnState = !previousBtnState
   buttonElement.ariaPressed = newBtnState
   return newBtnState;
 }
+
+let buttonPressTimers = {}
 
 function functionButtonPressed(buttonElement) {
   const {name, ariaPressed, dataset: {type: buttonType}} = buttonElement
