@@ -914,19 +914,18 @@ $(document).ready(function(){
 
 });
 
-function setFunctionMaps(){
-    maps = getMapData();
-    if (maps != null) {
-        maps.unshift({
-        mname: "Default",
-        fnData: {},
-        });
-    }
-    $("#function-mappings").empty();
-    $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
-    $.each(getMapData(), function () {
-      $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
-    });
+function setFunctionMaps() {
+  const defaultMap = {
+    mname: "Default",
+    fnData: {},
+  }
+  const maps = [defaultMap, ...getMapData()];
+
+  $("#function-mappings").empty();
+  maps.forEach(map => {
+    const name = map.mname
+    $("#function-mappings").append(`<li class='map-name' map-val=${name}>${name}</li>`);
+  })
 }
 
 function hideWindows(){
