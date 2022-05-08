@@ -40,7 +40,7 @@ var filesToCache = [
   'js/vendor/roundslider.min.js',
   'js/storageController.js',
   'js/ui/functionButtons.js',
-  'js/vendor/dcc-ex--commands-0.4.0.js'
+  'js/vendor/dcc-ex--commands-0.10.0.js'
 ];
 
 self.addEventListener('install', function(e) {
