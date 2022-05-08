@@ -1,5 +1,4 @@
-import {cabCommand} from "../vendor/dcc-ex--commands-v0.3.0.js"
-
+import {cabCommand} from "../vendor/dcc-ex--commands-0.10.0.js"
 
 function sendCabCommand(fn, value) {
   setFunCurrentVal(fn, value);
@@ -16,7 +15,7 @@ function generateFnCommand(funcName, btnPressed) {
 }
 
 function toggleButtonState(previousBtnState, buttonElement) {
-  const newBtnState = !previousBtnState
+  const newBtnState = previousBtnState === 'false'
   buttonElement.ariaPressed = newBtnState
   buttonElement.setAttribute("aria-pressed", newBtnState) // Firefox support https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaPressed
   return newBtnState;

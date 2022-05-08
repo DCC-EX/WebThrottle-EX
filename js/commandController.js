@@ -95,22 +95,25 @@ async function readLoop() {
 }
 
 function writeToStream(...lines) {
-  // Stops data being written to nonexistent port if using emulator
-  let stream = emulatorClass
-  if (port) {
-    stream = outputStream.getWriter();
-  }
+    const commandLines = lines.map(line => `<${line}>\n`)
+    writeRawToStream(...commandLines)
+}
 
-  lines.forEach((line) => {
-      if (line == "\x03" || line == "echo(false);") {
+function writeRawToStream(...lines) {
+    let stream = emulatorClass
+    if (port) {
+        stream = outputStream.getWriter();
+    }
 
-      } else {
-          displayLog('[SEND]'+line.toString());
-      }
-      const packet = `<${line}>\n`;
-      stream.write(packet)
-      console.log(packet)
-  });
+    lines.forEach((line) => {
+        if (line == "\x03" || line == "echo(false);") {
+
+        } else {
+            displayLog('[SEND]'+line.toString());
+        }
+        stream.write(line)
+        console.log(line)
+    });
 }
 
 // Transformer for the Web Serial API. Data comes in as a stream so we

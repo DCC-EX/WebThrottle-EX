@@ -1,8 +1,29 @@
+// src/types/FunctionButtons.ts
+var FunctionButtonKind = /* @__PURE__ */ ((FunctionButtonKind2) => {
+  FunctionButtonKind2["TOGGLE"] = "toggle";
+  FunctionButtonKind2["PRESS"] = "press";
+  return FunctionButtonKind2;
+})(FunctionButtonKind || {});
+
 // src/types/index.ts
+var Enabled = /* @__PURE__ */ ((Enabled2) => {
+  Enabled2["OFF"] = "OFF";
+  Enabled2["ON"] = "ON";
+  return Enabled2;
+})(Enabled || {});
 var ParserStatus = /* @__PURE__ */ ((ParserStatus2) => {
   ParserStatus2["SUCCESS"] = "success";
   return ParserStatus2;
 })(ParserStatus || {});
+var FunctionName = /* @__PURE__ */ ((FunctionName2) => {
+  FunctionName2["EEPROMS_ERASE"] = "eraseParser";
+  FunctionName2["EEPROMS_STORE"] = "storeParser";
+  FunctionName2["LOCO"] = "locoParser";
+  FunctionName2["POWER"] = "powerParser";
+  FunctionName2["ROSTER_ITEM"] = "rosterItemParser";
+  FunctionName2["THROTTLE"] = "throttleParser";
+  return FunctionName2;
+})(FunctionName || {});
 
 // src/utils/makeCommand.ts
 var makeCommand = (instruction) => {
@@ -45,9 +66,18 @@ function isControlCharacters(char) {
 function removeControlCharacters(command) {
   return command.split("").filter((char) => !isControlCharacters(char)).join("");
 }
+function splitBySpaceOrQuote(cleanedParams) {
+  const parts = cleanedParams.match(/\w+|"[^"]+"/g);
+  return parts ?? [];
+}
+function getStrings(cleanedParams) {
+  return splitBySpaceOrQuote(cleanedParams).map((part) => {
+    return part.replaceAll('"', "");
+  });
+}
 function parseCommand(command) {
   const cleanedParams = removeControlCharacters(command);
-  const [key, ...attributes] = cleanedParams.split(" ");
+  const [key, ...attributes] = getStrings(cleanedParams);
   return {
     key,
     attributes
@@ -296,6 +326,79 @@ var storeCommand = () => makeCommand(storeCommandKey);
 var eraseCommandKey = "e";
 var eraseCommand = () => makeCommand(eraseCommandKey);
 
+// src/commands/exRails/exRailFreeBlockCommand.ts
+var exRailFreeBlockCommand = ({ blockId }) => {
+  const constant = "/ FREE";
+  const attributes = [
+    constant,
+    blockId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/exRails/exRailKillTaskCommand.ts
+var exRailKillTaskCommand = ({ taskId }) => {
+  const constant = "/ KILL";
+  const attributes = [
+    constant,
+    taskId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/exRails/exRailLatchSensorCommand.ts
+var exRailLatchSensorCommand = ({ sensorId }) => {
+  const constant = "/ LATCH";
+  const attributes = [
+    constant,
+    sensorId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/exRails/exRailPauseCommand.ts
+var exRailPauseCommand = () => makeCommand("/ PAUSE");
+
+// src/commands/exRails/exRailReserveBlockCommand.ts
+var exRailReserveBlockCommand = ({ blockId }) => {
+  const constant = "/ RESERVE";
+  const attributes = [
+    constant,
+    blockId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/exRails/exRailResumeCommand.ts
+var exRailResumeCommand = () => makeCommand("/ RESUME");
+
+// src/commands/exRails/exRailRoutesCommand.ts
+var exRailRoutesCommand = () => makeCommand("/ ROUTES");
+
+// src/commands/exRails/exRailStartTaskCommand.ts
+var exRailStartTaskCommand = ({ address, taskId }) => {
+  const constant = "/ START";
+  const attributes = [
+    constant,
+    address,
+    taskId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/exRails/exRailTasksCommand.ts
+var exRailTasksCommand = () => makeCommand("/");
+
+// src/commands/exRails/exRailUnlatchSensorCommand.ts
+var exRailUnlatchSensorCommand = ({ sensorId }) => {
+  const constant = "/ UNLATCH";
+  const attributes = [
+    constant,
+    sensorId
+  ];
+  return makeCommandFromAttributes(attributes);
+};
+
 // src/commands/powers/powerCommand.ts
 var Track = /* @__PURE__ */ ((Track2) => {
   Track2["MAIN"] = "MAIN";
@@ -309,6 +412,12 @@ var powerCommand = ({ power, track }) => {
     track
   ];
   return makeCommandFromAttributes(attributes);
+};
+
+// src/commands/rosters/rosterCommand.ts
+var rosterSendKey = "J";
+var rosterCommand = ({ cabId } = {}) => {
+  return makeCommandFromAttributes([rosterSendKey, cabId]);
 };
 
 // src/commands/sensors/defineSensorCommand.ts
@@ -465,31 +574,48 @@ var ParserKeyError = class extends Error {
     this.name = "ParserKeyError";
   }
 };
+var ParserAttributeError = class extends Error {
+  constructor(attribute, value, msg) {
+    const message = `${attribute} set to ${value}. ${msg}`;
+    super(message);
+    this.name = "ParserAttributeError";
+  }
+};
 
 // src/parsers/eeproms/eraseParser.ts
 var eraseParserKey = "0";
-var eraseParser = ({ key }) => {
+var parseFromCommand = ({ key }) => {
   if (key !== eraseParserKey) {
     throw new ParserKeyError("eraseParser", key);
   }
   return {
     key: eraseParserKey,
+    parser: FunctionName.EEPROMS_ERASE,
     status: ParserStatus.SUCCESS,
     params: {}
   };
 };
+var eraseParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand(commandParams);
+};
 
 // src/parsers/eeproms/storeParser.ts
 var storeParserKey = "e";
-var storeParser = ({ key, attributes }) => {
+var parseFromCommand2 = ({ key, attributes }) => {
   if (key !== storeParserKey) {
     throw new ParserKeyError("storeParser", key);
   }
   return {
     key: storeParserKey,
+    parser: FunctionName.EEPROMS_STORE,
     status: ParserStatus.SUCCESS,
     params: {}
   };
+};
+var storeParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand2(commandParams);
 };
 
 // src/parsers/powers/powerParser.ts
@@ -501,7 +627,7 @@ var ReturnTrack = /* @__PURE__ */ ((ReturnTrack2) => {
   return ReturnTrack2;
 })(ReturnTrack || {});
 var powerParserKey = "p";
-var powerParser = ({ key: potentialKey, attributes }) => {
+var parseFromCommand3 = ({ key: potentialKey, attributes }) => {
   const [key, power] = potentialKey.split("");
   if (!isPowerCommand(key, power)) {
     throw new ParserKeyError("powerParser", key);
@@ -512,6 +638,7 @@ var powerParser = ({ key: potentialKey, attributes }) => {
   }
   return {
     key: powerParserKey,
+    parser: FunctionName.POWER,
     status: ParserStatus.SUCCESS,
     params: {
       power: parseInt(power),
@@ -522,8 +649,172 @@ var powerParser = ({ key: potentialKey, attributes }) => {
 function isPowerCommand(key, power) {
   return key === powerParserKey && ["0", "1"].includes(power);
 }
+var powerParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand3(commandParams);
+};
+
+// src/parsers/throttles/throttleParser.ts
+var throttleParserKey = "T";
+var isValidDirection = (direction) => !Object.values(Direction).includes(direction);
+var parseFromCommand4 = ({ key, attributes }) => {
+  const [register, speed, directionString] = attributes;
+  if (key !== throttleParserKey) {
+    throw new ParserKeyError("throttleParser", key);
+  }
+  const direction = parseInt(directionString);
+  if (isValidDirection(direction)) {
+    throw new ParserAttributeError("direction", direction, `it must be one of ${Object.values(Direction).join(" | ")}`);
+  }
+  return {
+    key: throttleParserKey,
+    parser: FunctionName.THROTTLE,
+    status: ParserStatus.SUCCESS,
+    params: {
+      register: parseInt(register),
+      speed: parseInt(speed),
+      direction
+    }
+  };
+};
+var throttleParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand4(commandParams);
+};
+
+// src/parsers/throttles/locoParser.ts
+function parseSpeedAndDirection(speedValue) {
+  const direction = speedValue - 128 >= 0 ? Direction.FORWARD : Direction.REVERSE;
+  const normalisedSpeed = speedValue - 128 >= 0 ? speedValue - 128 : speedValue;
+  let speed;
+  switch (normalisedSpeed) {
+    case 0: {
+      speed = 0;
+      break;
+    }
+    case 1: {
+      speed = -1;
+      break;
+    }
+    default: {
+      speed = normalisedSpeed - 1;
+    }
+  }
+  return {
+    speed,
+    direction
+  };
+}
+var parseFunctionButtons = (functionButtonValue) => {
+  const values = functionButtonValue.toString(2).split("").reverse().map((value) => parseInt(value));
+  const numOfFunctions = 29;
+  return Array.from(Array(numOfFunctions)).reduce((acc, currentValue, index) => {
+    acc[index] = {
+      value: values[index] ?? 0
+    };
+    return acc;
+  }, {});
+};
+var locoParserKey = "l";
+var parseFromCommand5 = ({ key, attributes }) => {
+  const [cabIdValue, registerValue, speedValue, functionButtonsValue] = attributes;
+  if (key !== locoParserKey) {
+    throw new ParserKeyError("locoParser", key);
+  }
+  const { speed, direction } = parseSpeedAndDirection(parseInt(speedValue));
+  const functionButtons = parseFunctionButtons(parseInt(functionButtonsValue));
+  return {
+    key: locoParserKey,
+    parser: FunctionName.LOCO,
+    status: ParserStatus.SUCCESS,
+    params: {
+      register: parseInt(registerValue),
+      speed,
+      direction,
+      cabId: parseInt(cabIdValue),
+      functionButtons
+    }
+  };
+};
+var locoParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand5(commandParams);
+};
+
+// src/parsers/rosters/rosterItemParser.ts
+var rosterItemParserKey = "j";
+var functionButtonsParser = (param = null) => {
+  if (param === null) {
+    return {};
+  }
+  const buttons = param.split("/");
+  return buttons.reduce((accum, button, index) => {
+    const [display, isPress] = button.split(/(\*)/).reverse();
+    const kind = isPress == null && !isPress ? FunctionButtonKind.TOGGLE : FunctionButtonKind.PRESS;
+    accum[index] = {
+      display,
+      kind
+    };
+    return accum;
+  }, {});
+};
+var parseFromCommand6 = ({ key, attributes }) => {
+  const [cabId, display, rawFunctionButtons] = attributes;
+  if (key !== rosterItemParserKey) {
+    throw new ParserKeyError("rosterItemParser", key);
+  }
+  const functionButtons = functionButtonsParser(rawFunctionButtons);
+  return {
+    key: rosterItemParserKey,
+    parser: FunctionName.ROSTER_ITEM,
+    status: ParserStatus.SUCCESS,
+    params: {
+      cabId: parseInt(cabId),
+      display,
+      functionButtons
+    }
+  };
+};
+var rosterItemParser = (command) => {
+  const commandParams = parseCommand(command);
+  return parseFromCommand6(commandParams);
+};
+
+// src/parsers/genericParser.ts
+var createParser = (parsers) => {
+  return {
+    parse: async (command) => {
+      const results = parsers.map(async (parser) => {
+        return await new Promise((resolve, reject) => {
+          try {
+            const result = parser(command);
+            resolve(result);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+      return await Promise.any(results);
+    }
+  };
+};
+var genericParser = () => {
+  const allParsers = [
+    eraseParser,
+    locoParser,
+    powerParser,
+    rosterItemParser,
+    storeParser,
+    throttleParser
+  ];
+  return createParser(allParsers);
+};
 export {
   Direction,
+  Enabled,
+  FunctionButtonKind,
+  FunctionName,
+  ParserAttributeError,
   ParserKeyError,
   ParserStatus,
   ReturnTrack,
@@ -532,6 +823,7 @@ export {
   TurnoutState,
   accessoryCommand,
   cabCommand,
+  createParser,
   defineDCCTurnoutCommand,
   defineSensorCommand,
   defineServoTurnoutCommand,
@@ -548,26 +840,44 @@ export {
   eraseCommand,
   eraseParser,
   eraseParserKey,
+  exRailFreeBlockCommand,
+  exRailKillTaskCommand,
+  exRailLatchSensorCommand,
+  exRailPauseCommand,
+  exRailReserveBlockCommand,
+  exRailResumeCommand,
+  exRailRoutesCommand,
+  exRailStartTaskCommand,
+  exRailTasksCommand,
+  exRailUnlatchSensorCommand,
   forgetAllCabsCommand,
   forgetCabCommand,
+  genericParser,
   isControlCharacters,
   listSensorsCommand,
   listSensorsStatusCommand,
   listTurnoutsCommand,
+  locoParser,
   makeCommand,
   makeCommandFromAttributes,
   parseAddress,
   parseCommand,
+  parseFromCommand3 as parseFromCommand,
+  parseFunctionButtons,
+  parseSpeedAndDirection,
   powerCommand,
   powerParser,
   powerParserKey,
   readAddressProgrammingCommand,
   readCVByteProgrammingCommand,
   removeControlCharacters,
+  rosterCommand,
+  rosterItemParser,
   storeCommand,
   storeParser,
   storeParserKey,
   throttleCommand,
+  throttleParser,
   turnoutCommand,
   verifyCVBitProgrammingCommand,
   verifyCVByteProgrammingCommand,
@@ -577,4 +887,4 @@ export {
   writeCVByteMainCommand,
   writeCVByteProgrammingCommand
 };
-//# sourceMappingURL=dcc-ex--commands-0.4.0.js.map
+//# sourceMappingURL=dcc-ex--commands-0.10.0.js.map
