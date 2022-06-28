@@ -823,6 +823,12 @@ $(document).ready(function(){
     $("#nav-close").trigger("click");
     loadLocomotives();
   });
+  $("#turnout-nav").on("click", function () {
+    hideWindows();
+    $("#turnout-window").show();
+    $("#nav-close").trigger("click");
+    //loadLocomotives();
+  });
   $("#fn-map-nav").on("click", function () {
     hideWindows();
     $("#fn-map-window").show();

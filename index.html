@@ -43,7 +43,8 @@
         <script  type="text/javascript" src="js/fnMaster.js"></script> 
         <script  type="text/javascript" src="js/commandController.js"></script>
         <script  type="text/javascript" src="js/storageController.js"></script> 
-        <script  type="text/javascript" src="js/addloco.js"></script> 
+        <script  type="text/javascript" src="js/addloco.js"></script>
+        <script  type="text/javascript" src="js/turnouts.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
         <script  type="text/javascript" src="js/exwebthrottle.js"></script>
         <script type="text/javascript" src="js/pwa.js"></script>
@@ -73,6 +74,7 @@
             <ul>
                 <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
                 <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
+                <li tabindex="0" class="turnouts" id="turnout-nav"><span>Turnouts</span></li>
                 <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
                 <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
             </ul>
@@ -320,6 +322,85 @@
                         </div>
                     </div>
                 </section>
+
+<!---------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+<section id="turnout-window" class="section" hidden="true">
+    <div class="row settings-heading">
+        <div class="column-7 pl0 hdng">
+            Turnouts
+        </div>
+        <div class="column-3 pr0">
+            <div class="option-btns formbuilder-button row">
+                <div class="column-2">&nbsp;</div> 
+                <div class="column-4">
+                    <button id="add-turnout" class="add-turnout-btn btn"> 
+                        <span class="icon-plus"></span> Add New 
+                    </button>
+                    <div id="turnout-form-content" class="add-turnout-form">
+                        <form id="turnout-form" class="form-inline">
+                            <div class="fn-modal-header row">
+                                <h4 class="fn-heading add-turnout-head">Add turnout</h4>    
+                                <span class="close" id="close-addturnout-model">×</span>
+                            </div>
+                            <div class="row">
+                                <label class="column-4"for="name">Turnout Name:*</label>
+                                <input class="column-6" type="text" id="name" placeholder="Enter name" name="name" required>
+                            </div>
+                            <div class="row">
+                                <label class="column-4"for="cv">CV:*</label>
+                                <input class="column-6" type="number" id="cv" placeholder="Enter CV" name="cv" required>
+                            </div>                          
+                            <div class="spacer">
+                            
+                            </div>
+                            <div class="row">
+                                <div class="column-2"></div>
+                                <button id="turnout-submit" loco-mode="add" class="column-6" type="submit">Submit</button>
+                                <div class="column-2"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+                <div class="column-2">  
+                    <button class="add-turnout-btn btn" id="export-turnout-list" title="Export Turnouts">
+                        <span class="icon-upload3"></span>
+                    </button>
+                </div>
+                <div class="column-2">
+                    <button class="add-turnout-btn btn" id="import-turnout-list" title="Import Turnouts">
+                        <span class="icon-download3"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row settings-content">
+        <div class="settings-panel" id="turnouts-panel">
+             <div class="settings-group">
+                 Select a Turnout
+             </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+
+
+
+
+
 
                 <section id="fn-map-window" class="section" hidden="true">
                     <div class="row settings-heading">
