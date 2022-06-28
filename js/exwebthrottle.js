@@ -176,7 +176,7 @@ function loadMapData(map){
         '<div class="row settings-group" id="'+key+'">' +
           '<div class="column-2 caplitalize">'+key+'</div>'+
           '<div class="column-4">'+value[2]+'</div>'+
-          '<div class="column-2">'+ (value[1] == 1 ? '<span class="pill red">Press</span>' : '<span class="pill green">Switch</span>') +'</div>' +
+          '<div class="column-2">'+ (value[1] == 1 ? '<span class="pill red">Momentary</span>' : '<span class="pill green">Latching</span>') +'</div>' +
           '<div class="column-2">'+ (value[3] == 1 ? '<span class="pill green">Visible</span>' : '<span class="pill">Hidden</span>') +'</div>' +
         '</div>'
       );
@@ -579,47 +579,55 @@ $(document).ready(function(){
 
   // Allows user to change the direction of the loco and STOP.
   $(".dir-btn").on("click", function () {
-    current = $(this);
-    dir = current.attr("aria-label");
-    $(".dir-btn").removeClass("selected");
-    current.addClass("selected", 200);
-    console.log(dir);
-    $(".dir-toggle").removeClass("forward backward  stop");
-    $(".dir-toggle").addClass(dir);
-
-    // Do direction stuff here
-    switch (dir) {
-      case "forward": {
-        isStopped = false;
-        setDirection(1);
-        setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
-        break;
+    if (getCV() != 0){
+      current = $(this);
+      dir = current.attr("aria-label");
+      $(".dir-btn").removeClass("selected");
+      current.addClass("selected", 200);
+      console.log(dir);
+      $(".dir-toggle").removeClass("forward backward  stop");
+      $(".dir-toggle").addClass(dir);
+      // Do direction stuff here
+      switch (dir) {
+        case "forward": {
+          isStopped = false;
+          setDirection(1);
+          setSpeedofControllers();
+          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
+          break;
+        }
+        case "backward": {
+          isStopped = false;
+          setDirection(0);
+          setSpeedofControllers();
+          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
+          break;
+        }
+        case "stop": {
+          isStopped = true;
+          dir = getDirection();
+          setSpeed(0);
+          setSpeedofControllers();
+          writeToStream("t 01 " + getCV() + " 0 " + dir);
+          break;
+        }
       }
-      case "backward": {
-        setDirection(0);
-        setSpeedofControllers();
-        isStopped = false;
-        writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
-        break;
-      }
-      case "stop": {
-        isStopped = true;
-        dir = getDirection();
-        setSpeed(0);
-        setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " 0 " + dir);
-        break;
-      }
+    }else{
+      console.log("No loco acquired");
     }
   });
 
   $("#emergency-stop").on("click", function () {
-      isStopped = true;
-      dir = getDirection();
-      setSpeed(0);
-      setSpeedofControllers();
-      writeToStream("t 01 " + getCV() + " -1 " + dir);
+      if (getCV() != 0){
+        isStopped = true;
+        dir = getDirection();
+        setSpeed(0);
+        setSpeedofControllers();
+        writeToStream("t 01 " + getCV() + " -1 " + dir);
+      }
+      else{
+        console.log("No loco acquired");
+      }
   });
 
   // Hide/Show the Loco, Connect server fields (on top)
@@ -906,19 +914,18 @@ $(document).ready(function(){
 
 });
 
-function setFunctionMaps(){
-    maps = getMapData();
-    if (maps != null) {
-        maps.unshift({
-        mname: "Default",
-        fnData: {},
-        });
-    }
-    $("#function-mappings").empty();
-    $("#function-mappings").append("<li class='map-name' map-val='Default'>Default</li>");
-    $.each(getMapData(), function () {
-      $("#function-mappings").append("<li class='map-name' map-val=" + this.mname + ">" + this.mname + "</li>");
-    });
+function setFunctionMaps() {
+  const defaultMap = {
+    mname: "Default",
+    fnData: {},
+  }
+  const maps = [defaultMap, ...getMapData()];
+
+  $("#function-mappings").empty();
+  maps.forEach(map => {
+    const name = map.mname
+    $("#function-mappings").append(`<li class='map-name' map-val=${name}>${name}</li>`);
+  })
 }
 
 function hideWindows(){

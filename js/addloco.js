@@ -127,14 +127,11 @@ $(document).ready(function(){
 });
 
 function getPreparedMaps() {
-    maps = getMapData();
-    if (maps != null){
-        maps.unshift({
-            mname: "Default",
-            fnData: {},
-        });
+    const defaultMap = {
+      mname: "Default",
+      fnData: {},
     }
-    return maps;
+    return [defaultMap, ...getMapData()];
 }
 
 /** Reference Map Structure 

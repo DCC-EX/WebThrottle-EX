@@ -189,9 +189,9 @@ $(document).ready(function(){
 function loadmaps(){
   $("#select-map").empty();
   $("#select-map").append($("<option />").val("default").text("Default"));
-  $.each(getMapData(), function() {
-    $("#select-map").append($("<option />").val(this.mname).text(this.mname));
-  });
+  getMapData().forEach(map => {
+    $("#select-map").append($("<option />").val(map.mname).text(map.mname));
+  })
 }
 
 // Load button layout of selected Map
@@ -232,9 +232,9 @@ function showBtnConfig(data){
       '</div>'+
       '<div class="fn-radio column-3" name="'+key+'Type" id="'+key+'Type">'+
           '<input type="radio" id="'+key+'press" name="btn'+key+'Type" value="press" '+btnpress+'/>'+
-          '<label for="'+key+'press">Press</label>  &nbsp;'+
+          '<label for="'+key+'press">Momentary</label>  &nbsp;'+
           '<input type="radio" id="'+key+'toggle" name="btn'+key+'Type" value="toggle" '+btnToggle+'/>'+
-          '<label for="'+key+'toggle">Toggle</label>'+ 
+      '<label for="'+key+'toggle">Latching</label>'+ 
       '</div>'+
       '<div class="fn-chkbox column-2" name="'+key+'Visible" id="'+key+'Type">'+
           '<input type="checkbox" id="'+key+'Visible" name="'+key+'Visible" '+fvisible+'/>'+
@@ -297,35 +297,34 @@ function editMap(){
 // Verify if the given Map data already exists and replace it
 // Or Create new map data and inserts it into local storage object
 // Finally Saves the Data into Local storage */
-function setMapData(mapdata){
-  if (typeof(Storage) !== "undefined") {
-    curmapdata = []; 
-    smapdata = JSON.parse(window.localStorage.getItem('mapData'));
-    if(!smapdata){
-        curmapdata.push(mapdata);
-        window.localStorage.setItem('mapData', JSON.stringify(curmapdata));
-    }else{
-     if (ifExists(mapdata.mname)) {
-       smapdata.find(function (item, i) {
-         if (item.mname == mapdata.mname) {
-           item.fnData = mapdata.fnData;
-         }
-       });
-     } else {
-       smapdata.push(mapdata);
-     }
-      window.localStorage.setItem('mapData', JSON.stringify(smapdata));
-    }
-    loadmaps();
-    setFunctionMaps();
-    loadMapData(mapdata.mname);
-    $("#select-map").val(mapdata.mname).trigger("change");
+function setMapData(mapdata) {
+  if (typeof Storage === "undefined") {
+    return;
   }
+
+  const smapdata = getMapData()
+
+  if (ifExists(mapdata.mname)) {
+    smapdata.find(function (item, i) {
+      if (item.mname == mapdata.mname) {
+        item.fnData = mapdata.fnData;
+      }
+    });
+  } else {
+    smapdata.push(mapdata);
+  }
+  window.localStorage.setItem('mapData', JSON.stringify(smapdata));
+
+  loadmaps();
+  setFunctionMaps();
+  loadMapData(mapdata.mname);
+  $("#select-map").val(mapdata.mname).trigger("change");
+
 }
 
 //Returns the Map data of given Map name
 function getStoredMapData(name){
-  data = JSON.parse(window.localStorage.getItem('mapData'));
+  const data = getMapData();
   if(data !=null){
     return data.find(function(item, i){
       if(item.mname == name){
@@ -353,7 +352,7 @@ function deleteFuncData(name){
   if (r == true) {
     if (typeof(Storage) !== "undefined") {
       curmapdata = []; 
-      data = JSON.parse(window.localStorage.getItem('mapData'));
+      const data = getMapData()
       if(!data){
         alert("No Data stored");
       }else{
@@ -368,33 +367,30 @@ function deleteFuncData(name){
   }
 }
 
-// Returns the Map data of ExWebThrottle
+/**
+ * Returns the Map data of ExWebThrottle
+ * @return {[]}
+ */
 function getMapData(){
-  if (typeof Storage !== "undefined") {
-    return JSON.parse(window.localStorage.getItem("mapData"));
-  } else {
+  if (typeof Storage === "undefined") {
     return [];
   }
+
+  const localMapData = JSON.parse(window.localStorage.getItem("mapData"));
+
+  return localMapData || []
 }
 
 // Returns boolen if the given Map exists in local storage
-function ifExists(name){
-  data = JSON.parse(window.localStorage.getItem('mapData'));
-  found = false;
-  if(data != null){
-    data.find(function(item, i){
-      if(item.mname == name){
-        found = true;
-      }
-    });
-    return found;
-  }
-  return found;
+function ifExists(name) {
+  const data = getMapData()
+  const existingItem = data.find((item) => item.mname === name);
+  return !!existingItem;
 }
 
 //Download all Maps of EXthrottle
 function exportMapData() {
-  data = window.localStorage.getItem('mapData');
+  const data = getMapData()
   const a = document.createElement("a");
   const file = new Blob([data], {type: 'application/json'});
   a.href = URL.createObjectURL(file);
@@ -549,12 +545,12 @@ function importPrefData(data) {
 }
 
 function exportAppData(){
-  jsonObj = [
+  const jsonObj = [
     {maps: getMapData()},
     {locos: getLocoList()},
     {preferences: getUserPreferences()}
   ]
-  data = JSON.stringify(jsonObj);
+  const data = JSON.stringify(jsonObj);
   const a = document.createElement("a");
   const file = new Blob([data], { type: "application/json" });
   a.href = URL.createObjectURL(file);
