@@ -1,4 +1,15 @@
-# Version 1.3.1
+# Version 1.3.2
+Various bugfixes and a few other changes.
+
+__Fixes:__
+- Help link fixed
+- Various CSS Fixes
+
+__Other changes:__
+- Various internal changes to the emulator
+- Function actions renamed from *press* and *toggle* to *momentary* and *latching*
+
+## Changes from 1.3.1
 This is a quick little bugfix to fix a problem where received packets weren't being displayed in the debug console.
 
 ## Changes from 1.3.0
