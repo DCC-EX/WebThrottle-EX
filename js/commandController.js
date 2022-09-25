@@ -111,6 +111,7 @@ function writeToStream(...lines) {
       stream.write(packet)
       console.log(packet)
   });
+  stream.releaseLock();
 }
 
 // Transformer for the Web Serial API. Data comes in as a stream so we
