@@ -1,4 +1,7 @@
-# Version 1.3.2
+# Version 1.3.3
+Fixes a bug that prevented communication with the CS
+
+## Changes from 1.3.2
 Various bugfixes and a few other changes.
 
 __Fixes:__
