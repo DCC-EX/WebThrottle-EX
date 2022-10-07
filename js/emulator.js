@@ -135,6 +135,10 @@ class Emulator {
       return turnoutEmulator.turnouts
     }
   }
+
+  // Prevents a type error during runtime
+  releaseLock() {
+  }
 }
 
 class TurnoutEmulator {
