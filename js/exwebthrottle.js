@@ -105,11 +105,19 @@ function setFunCurrentVal(fun, val){
 // Set given CV value
 function setCV(val){
     window.cv = val;
+    $("#opsaddress").prop('value', val);
     console.log("Set Cab Address: "+val);
 }
 // Get stored CV value
 function getCV(){
     return window.cv
+}
+
+function dispAddrVal(newVal){
+	if (newVal.length == 1)
+		$("#dccaddress").prop('value', newVal[0]);
+	else
+		$("#cvvalue").prop('value', newVal[1]);
 }
 
 // Set Speed value
@@ -225,6 +233,20 @@ function setThrottleScreenUI() {
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);
 
+    if (getPreference("joinmode") == null) {
+        setPreference("joinmode", "individual");
+	}
+ 	isjoined = getPreference("joinmode");
+ 	setjoinModeType(isjoined);
+    $("#joinmode-selector").val(isjoined).trigger("change");
+
+    if (getPreference("progmode") == null) {
+        setPreference("progmode", "ServiceMode");
+	}
+ 	issmode = getPreference("progmode");
+ 	setprogModeType(issmode);
+    $("#progmode-selector").val(issmode).trigger("change");
+
     // Show and hide debug console based on preference set in earlier session
     if (getPreference("dbugConsole") == null) {
         setPreference("dbugConsole", true);
@@ -278,6 +300,47 @@ function setspeedControllerType(pref){
       $("#vertical-throttle").show();
       setPreference("scontroller", "vertical");
       $("#throttle-selector").val("vertical").trigger("change");
+  }
+}
+
+function setprogModeType(pref){
+  switch (pref) {
+    case "ServiceMode":
+      console.log("Set Service mode programming");
+      $("#addrprog-section").show();
+      $("#prog-read-cv").show();
+      $("#opsadrinput").hide();
+      
+      break;
+    case "OpsMode":
+      console.log("Set OpsMode programming");
+      $("#addrprog-section").hide();
+      $("#prog-read-cv").hide();
+      $("#opsadrinput").show();
+      break;
+    case "default":
+    case null:
+    case undefined:
+      console.log("Fallback Prog Mode Type");
+      setPreference("progmode", "ServiceMode");
+      $("#progmode-selector").val("ServiceMode").trigger("change");
+  }
+}
+
+function setjoinModeType(pref){
+  switch (pref) {
+    case "joined":
+      console.log("Set Prog Track JOIN mode");
+      break;
+    case "individual":
+      console.log("Set Prog Track PROG only");
+      break;
+    case "default":
+    case null:
+    case undefined:
+      console.log("Fallback Join Mode Type");
+      setPreference("joinmode", "individual");
+      $("#joinmode-selector").val("joined").trigger("change");
   }
 }
 
@@ -458,6 +521,21 @@ $(document).ready(function(){
     }
   });
 
+  $("#progmode-selector").on("change", function (e) {
+    selectedval = $(this).val();
+    console.log(selectedval);
+    setprogModeType(selectedval);
+    setPreference("progmode", selectedval);
+    
+  });
+
+  $("#joinmode-selector").on("change", function (e) {
+    selectedval = $(this).val();
+    console.log(selectedval);
+    setjoinModeType(selectedval);
+    setPreference("joinmode", selectedval);
+  });
+
   // Connect command station
   $("#button-connect").on("click", function () {
     toggleServer($(this));
@@ -499,13 +577,76 @@ $(document).ready(function(){
     pb = $(this).is(":checked");
 
     if (pb == true) {
-      writeToStream("1");
-      $("#power-status").html("On");
+		var joinmode = getPreference("joinmode");
+		console.log(joinmode);
+		if (joinmode == "individual")
+		{
+			writeToStream("1");
+			$("#power-status").html("On");
+		}
+		else
+		{
+			writeToStream("1 join");
+			$("#power-status").html("Joined");
+		}
     } else {
       writeToStream("0");
       $("#power-status").html("Off");
     }
   });
+
+  $("#prog-read-addr").on("click", function () {
+		$("#dccaddress").prop('value', "");
+		writeToStream("R");
+  });
+
+  $("#prog-read-cv").on("click", function () {
+		var cvNum = parseInt($("#cvaddress").val());
+		if ((cvNum > 0) && (cvNum <= 1024))
+		{
+			$("#cvvalue").prop('value', "");
+			writeToStream("R " + cvNum + " 0 0");
+		}
+		else
+			alert("Invalid CV (Range is from 1..1024)");
+  });
+
+  $("#prog-write-addr").on("click", function () {
+
+		var cvVal = parseInt($("#dccaddress").val());
+		if ((cvVal > 0) && (cvVal <= 10293))
+			writeToStream("W " + cvVal);
+		else
+			alert("Invalid Loco Address (Range is from 0..10293)");
+  });
+
+  $("#prog-write-cv").on("click", function () {
+
+		var serviceMode = getPreference("progmode") == "ServiceMode";
+		var opsAddr = parseInt($("#opsaddress").val());
+		if (((opsAddr > 0) && (opsAddr <= 10293)) || serviceMode)
+		{
+			var cvNum = parseInt($("#cvaddress").val());
+			if ((cvNum > 0) && (cvNum <= 1024))
+			{
+				var cvVal = parseInt($("#cvvalue").val());
+				if ((cvVal >= 0) && (cvVal <= 255))
+				{
+					if (serviceMode)
+						writeToStream("W " + cvNum + " " + cvVal);
+					else
+						writeToStream("w " + opsAddr + " " + cvNum + " " + cvVal);
+				}
+				else
+					alert("Invalid CV Value (Range is from 0..255)");
+			}
+			else
+				alert("Invalid CV (Range is from 1..1024)");
+		}
+		else
+			alert("Invalid Loco Address (Range is from 1..10293)");
+  });
+
   ////////////////////////////////////
   $("#v-throttle").slider({
     orientation: "vertical",
@@ -835,6 +976,11 @@ $(document).ready(function(){
     $("#settings-window").show();
     $("#nav-close").trigger("click");
   });
+  $("#prog-nav").on("click", function () {
+    hideWindows();
+    $("#prog-window").show();
+    $("#nav-close").trigger("click");
+  });
 
   eventListeners();
 
@@ -932,6 +1078,7 @@ function hideWindows(){
     $("#throttle-window").hide();
     $("#loco-window").hide();
     $("#fn-map-window").hide();
+    $("#prog-window").hide();
     $("#settings-window").hide();
 }
 

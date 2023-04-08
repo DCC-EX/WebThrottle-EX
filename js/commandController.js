@@ -74,17 +74,58 @@ async function connectServer() {
     }
 }
 
+function parseCommand(thisCmd) {
+	console.log(thisCmd);
+	switch (thisCmd[1])
+	{
+//		case '*': console.log("COMMENT: " + thisCmd); break;
+		case 'r': 
+		{
+//			console.log("ADDRESS: " + thisCmd); 
+			var newVal = (thisCmd.slice(2, thisCmd.length - 1)).trimStart().split(" ");
+			dispAddrVal(newVal);
+			break;
+		}
+//		default: console.log("COMMAND: " + thisCmd); break;
+	}
+}
 // While there is still data in the serial buffer us an asynchronous read loop
 // to get the data and place it in the "value" variable. When "done" is true
 // all the data has been read or the port is closed
 async function readLoop() {
+	var cmdBuffer = "";
     while (true) {
         const { value, done } = await reader.read();
         // if (value && value.button) { // alternate check and calling a function
         // buttonPushed(value);
         if (value) {
+			cmdBuffer += value;
+//            console.log('[RECEIVE] '+ value);
+//            console.log(cmdBuffer);
+			var checkCmd = true;
+			while (checkCmd)
+			{
+				var start = cmdBuffer.indexOf('<', 0);
+//				console.log("start: ", start);
+				if (start >= 0)
+				{
+					var end = cmdBuffer.indexOf('>', start);
+//					console.log("end: ", end);
+					if (end > start)
+					{
+						var newCmd = cmdBuffer.substr(start, end - start + 1);
+						var remBuffer = cmdBuffer.substr(end + 1, cmdBuffer.length - end - 1);
+						cmdBuffer = remBuffer;
+//						console.log(cmdBuffer);
+						parseCommand(newCmd);
+					}
+					else
+						checkCmd = false;
+				}
+				else
+					checkCmd = false;
+			}
             displayLog('[RECEIVE] '+value);
-            console.log('[RECEIVE] '+value);
         }
         if (done) {
             console.log('[readLoop] DONE'+done.toString());

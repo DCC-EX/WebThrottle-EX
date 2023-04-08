@@ -46,7 +46,7 @@
         <script  type="text/javascript" src="js/addloco.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
         <script  type="text/javascript" src="js/exwebthrottle.js"></script>
-        <script type="text/javascript" src="js/pwa.js"></script>
+        <script  type="text/javascript" src="js/pwa.js"></script>
 
 <!--
     NOTE: You can replace the above links with these if you like if you will always run when
@@ -74,6 +74,7 @@
                 <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
                 <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
                 <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
+                <li tabindex="0" class="progtool" id="prog-nav"><span>CV Programmer</span></li>
                 <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
             </ul>
         </nav>
@@ -239,7 +240,105 @@
                         </div>
                     </div>
                 </section>
-                
+
+                <section id="prog-window" class="section" hidden="true">
+                    <div class="row settings-heading">
+                        <div class="column-7 pl0 hdng">
+                            CV Programmer
+                        </div>
+                    </div>
+                    <div class="row settings-content">
+                        <div class="side-panel">
+                            <ul>
+                                <li id="settings-general">Programming Mode</li>
+                                <li id="settings-storage">Address Programming</li>
+                                <li id="settings-app">CV Programming</li>
+                            </ul>
+                        </div>
+
+                        <div class="settings-panel scrollbar" id="settings-panel">
+                            <div class="settings-section" id="progsettings-section">
+                                <div class="settings-subheading">
+                                    Programming Mode
+                                </div>
+                                <div class="settings-group">
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            Select Mode
+                                        </label>
+                                        <div class="setting-content">
+                                            <select id="progmode-selector" class="btn progmode-selector select-control" name="progmodeselector" title="Change Programming Mode">
+                                                <option value="ServiceMode"> Service Mode </option>
+                                                <option value="OpsMode"> Operations Mode </option>
+                                            </select> 
+                                        </div> 
+									</div>
+                                    <div class="row setting-entry" id="opsadrinput">
+										<label class="setting-label">
+											DCC Address
+										</label>
+										<div class="setting-content">
+											<input class="column-2 align-right" type="integer" id="opsaddress" placeholder="" name="opsaddress" required> 
+										</div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-section" id="addrprog-section">
+                                <div class="settings-subheading">
+                                    Address Programming
+                                </div>
+                                <div class="settings-group">
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            New DCC Address:
+                                        </label>
+                                        <div class="setting-content">
+                                            <input class="column-2 align-right" type="integer" id="dccaddress" name="dccaddress" required> 
+                                        </div> 
+                                    </div>
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            <button id="prog-read-addr">Read Address</button>
+                                        </label>
+                                        <label class="setting-label">
+                                            <button id="prog-write-addr">Write Address</button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-section" id="cvprog-section">
+                                <div class="settings-subheading">
+                                    CV Programming
+                                </div>
+                                <div class="settings-group">
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            CV #:
+                                        </label>
+                                        <div class="setting-content">
+                                            <input class="column-2 align-right" type="integer" id="cvaddress" name="cvaddress" required> 
+                                        </div> 
+                                        <label class="setting-label">
+                                            CV Value:
+                                        </label>
+                                        <div class="setting-content">
+                                            <input class="column-2 align-right" type="integer" id="cvvalue" name="cvvalue" required> 
+                                        </div> 
+                                    </div>
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            <button id="prog-read-cv">Read CV</button>
+                                        </label>
+                                        <label class="setting-label">
+                                            <button id="prog-write-cv">Write CV</button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            
                 <section id="loco-window" class="section" hidden="true">
                     <div class="row settings-heading">
                         <div class="column-7 pl0 hdng">
@@ -398,6 +497,17 @@
                                                 <option value="vertical"> Vertical </option>
                                                 <option value="knob"> Knob </option>
                                                 <option value="circular"> Circular </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            Programming Track Mode
+                                        </label>
+                                        <div class="setting-content">
+                                            <select id="joinmode-selector" class="btn joinmode-selector select-control" name="joinmodeselector" title="Change Prog Track Mode">
+                                                <option value="joined"> JOIN Mode </option>
+                                                <option value="individual"> Programming only </option>
                                             </select>
                                         </div>
                                     </div>
