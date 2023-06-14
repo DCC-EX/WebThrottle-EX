@@ -217,7 +217,7 @@ async function toggleServer(btn) {
 		if (!("serial" in navigator)) {
 			alert("No serial port found!\nYour browser may not be supported - check in the EX-WebThrottle documentation");
 		} else {
-			alert("Unable to connect");
+			alert("Unable to connect - you may need to allow access with a pop-up");
 		}
     }
 }
