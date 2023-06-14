@@ -460,7 +460,12 @@ $(document).ready(function(){
 
   // Connect command station
   $("#button-connect").on("click", function () {
-    toggleServer($(this));
+	if ("serial" in navigator) {
+		toggleServer($(this));
+	} else {
+		//Browser not supported - pop up a window?
+		alert("No serial port found!\nYour browser may not be supported - check in the EX-WebThrottle documentation");
+	}
   });
 
   // Disconnect command station
