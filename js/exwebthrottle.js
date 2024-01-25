@@ -78,8 +78,14 @@ function uiDisable (status) {
     document.getElementById('dir-S').disabled = status*/
     //document.getElementById('dir-b').disabled = status
     $("#ex-locoid").prop('disabled', status)
+    $("#button-getloco").prop('disabled', status)
     $("#power-switch").prop('disabled', status)
     $("#button-sendCmd").prop('disabled', status)
+    if (status) {
+      $("#button-getloco").addClass("ui-state-disabled")
+    } else {
+      $("#button-getloco").removeClass("ui-state-disabled")
+    }
     $("#dir-f").prop('disabled', status)
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
