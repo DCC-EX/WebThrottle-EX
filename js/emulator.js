@@ -1,4 +1,4 @@
-/*  This is part of the DCC++ EX Project for model railroading and more.
+/*  This is part of the DCC-EX Project for model railroading and more.
     For licence information, please see index.html.
     For more information, see us at dcc-ex.com.
 

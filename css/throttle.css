@@ -95,7 +95,7 @@ label.formbuilder-file-label {
 }
 .fn-button.field-button-fn{
     text-align: center;
-    padding: 8px;
+    padding: 5px;
     display: flex;
     justify-content: center;
 }
@@ -210,7 +210,7 @@ label.formbuilder-file-label {
     text-align: center;
 }
 .rendered-form div.throttle-container{
-    min-height: 360px;
+    min-height: 280px;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -425,10 +425,10 @@ label.formbuilder-file-label {
   box-shadow: 0px 0px 1px 1px #e2e2e2;
 }
 .power-slider .slider{
-    background-color: #00a349; 
+    background-color: #ff0000; 
 }
 input:checked + .slider {
-  background-color: #ff0000;
+  background-color: #00a349;
   box-shadow: 1px 1px rgba(255,255,255,0.8);
 }
 

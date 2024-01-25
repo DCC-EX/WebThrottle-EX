@@ -1,4 +1,4 @@
-/*  This is part of the DCC++ EX Project for model railroading and more.
+/*  This is part of the DCC-EX Project for model railroading and more.
     For licence information, please see index.html
     For more information, see us at dcc-ex.com.
     
@@ -7,6 +7,8 @@
     Open a serial port and create a stream to read and write data
     While there is data, we read the results in loop function
 */
+let commandString = "";
+
 $(document).ready(function(){
     console.log("Command Controller loaded");
     uiDisable(true)
@@ -68,7 +70,7 @@ async function connectServer() {
         emulatorMode = true;
         // Displays dummy hardware message
         displayLog("\n[CONNECTION] Emulator connected")
-        displayLog("[RECEIVE] DCC++ EX COMMAND STATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        displayLog("[RECEIVE] DCC-EX EXCOMMANDSTATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         uiDisable(false)
         return true;
     }
@@ -82,9 +84,36 @@ async function readLoop() {
         const { value, done } = await reader.read();
         // if (value && value.button) { // alternate check and calling a function
         // buttonPushed(value);
+
+        let thisCommandString = "";
+
         if (value) {
-            displayLog('[RECEIVE] '+value);
-            console.log('[RECEIVE] '+value);
+            // displayLog('[RECEIVE] '+ value);
+            // console.log('[RECEIVE] '+ value);
+
+            commandString = commandString + value;
+
+            let start = -1;
+            let end = -1;
+            for (i=0; i<commandString.length; i++) {
+                if (commandString.charAt(i)=='<') {
+                    start = i;
+                    break;
+                }
+            }
+            for (i=start+1; i<commandString.length; i++) {
+                if (commandString.charAt(i)=='>') {
+                    end = i;
+                    break;
+                }
+            }
+            if ((start>=0) && (end>start)) {
+                thisCommandString = commandString.substring(start+1,end);
+                if (end>0) commandString = commandString.substring(end);
+                displayLog('[RECEIVE] &lt;'+ thisCommandString +"&gt;");
+                console.log('[RECEIVE] &lt;'+ thisCommandString +"&gt;");
+            }            
+
         }
         if (done) {
             console.log('[readLoop] DONE'+done.toString());
@@ -202,7 +231,7 @@ async function toggleServer(btn) {
     if (port || emulatorMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
-        btn.html('<span class="con-ind"></span>Connect DCC++ EX'); //<span id="con-ind"></span>Connect DCC++ EX
+        btn.html('<span class="con-ind"></span>Connect DCC-EX'); //<span id="con-ind"></span>Connect DCC-EX
         return;
     }
 
@@ -211,7 +240,7 @@ async function toggleServer(btn) {
     // Checks if the port was opened successfully
     if (success) {
         btn.attr('aria-state','Connected');
-        btn.html('<span class="con-ind connected"></span>Disconnect DCC++ EX');
+        btn.html('<span class="con-ind connected"></span>Disconnect DCC-EX');
     } else {
         selectMethod.disabled = false;
     }

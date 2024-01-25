@@ -16,7 +16,7 @@
              Mani Kumar
              Matt
 			 
-    This is part of the DCC++ EX Project for model railroading and more.
+    This is part of the DCC-EX Project for model railroading and more.
 	For more information, see us at dcc-ex.com.
 */
 window.cv=0;
@@ -421,7 +421,7 @@ $(document).ready(function(){
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC++ EX Web Throttle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H</p>",
+      "<p>DCC-EX EX-WebThrottle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H</p>",
     show: {
       effect: "slideDown",
       delay: 100,
@@ -500,10 +500,10 @@ $(document).ready(function(){
 
     if (pb == true) {
       writeToStream("1");
-      $("#power-status").html("On");
+      $("#power-status").html("is On");
     } else {
       writeToStream("0");
-      $("#power-status").html("Off");
+      $("#power-status").html("is Off");
     }
   });
   ////////////////////////////////////
