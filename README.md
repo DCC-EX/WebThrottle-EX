@@ -1,6 +1,6 @@
-# DCC++ EX Web Throttle
+# DCC-EX-WebThrottle
 
-This is a prototype for a new DCC++ EX Throttle/Controller that can connect to the DCC++ EX Commmand Station directly through the USB port of a computer.
+This is a prototype for a new DCC-EX Throttle/Controller that can connect to the DCCEX EX-CommmandStation (EX-CS) directly through the USB port of a computer.
 
 ## What you need to setup the project
 
@@ -22,21 +22,21 @@ NOTE: If you don't have your hardware yet or just want to play with the throttle
       and see commands being sent to the log window, you can skip to the operation
       section.
 
-To get started, connect your Command Station to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit DCC-EX.github.io/WebThrottle-EX/ to start using the software.
+To get started, connect your EX-CommandStation to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit DCC-EX.github.io/WebThrottle-EX/ to start using the software.
 
 
-Alternativly, you can download the zip file found in the releases section and extract it. Click on the "index.html" or "exwebthrotle.html" file to load the webpage. This method is only recommended if you need a specific version as it won't be auto-updated.
+Alternatively, you can download the zip file found in the releases section and extract it. Click on the "index.html" or "exwebthrotle.html" file to load the webpage. This method is only recommended if you need a specific version as it won't be auto-updated.
 
 
 ## Operation
 
-To use the program, you can either click on the "serial" dropodown button and select "emulator" to run in emulator mode or after making sure your hardware is properly connected, make sure "serial" is selected and click on the "Connect DCC++ EX" button. 
+To use the program, you can either click on the "serial" dropdown button and select "emulator" to run in emulator mode or after making sure your hardware is properly connected, make sure "serial" is selected and click on the "Connect DCC-EX" button. 
 
 If the program finds a compatible device, it will popup a window showing you a selection. It may show a line at the top such as "Arduino Mega 2560 (COM3)". Your com port may vary. Click on your board to select it and then click the "connect" button.
 
 You should then be connected to the Command Station (CS) and should see the response from the CS on the web page under the buttons. Make sure your debug console is open. If it isn't, use the slider button in the lower left to open it. You can also open the DevTools window in your browser to see more developer logging.
 
-Once you are connected, you can enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ API command in this way. You should see <iDCC++...> returned in the log window with your version, type of arduino, type of motor shield, and some other information.
+Once you are connected, you can enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ command in this way. You should see <iDCC++...> returned in the log window with your version, type of arduino, type of motor shield, and some other information.
 
 Now you are ready to run trains! Place your loco on the track and click the power slider button to turn on power to your track. You should see lights on an Arduino Motor Board light and an indication that your loco has power.
 

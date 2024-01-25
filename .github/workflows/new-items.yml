@@ -1,4 +1,4 @@
-# This workflow is to be used for all repositories to integrate with the DCC++ EX Beta Project.
+# This workflow is to be used for all repositories to integrate with the DCC-EX Beta Project.
 # It will add all issues and pull requests for a repository to the project, and put in the correct status.
 # 
 # Ensure "REPO_LABEL" is updated with the correct label for the repo stream of work.

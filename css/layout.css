@@ -36,7 +36,7 @@ hr{
 .column-5 {
     float: left;
     width: 50%;
-    padding: 5px 15px;
+    padding: 0px 15px;
 }
 .column-6{
     float: left;
@@ -75,9 +75,9 @@ hr{
     display: inline-block;
 }
 .throttle-heading .wt-logo{
-    height: 48px;
-    width: 142px;
-    background: url(../images/WebThrottle.png);
+    height: 40px;
+    width: 200px;
+    background: url(../images/product-logo-ex-webthrottle.png);
     display: inline-block;
     background-size: 100%;
     box-shadow: 0 0 3px #989898;
