@@ -240,7 +240,7 @@ async function toggleServer(btn) {
     // Checks if the port was opened successfully
     if (success) {
         btn.attr('aria-state','Connected');
-        btn.html('<span class="con-ind connected"></span>Disconnect DCC-EX');
+        btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');
     } else {
         selectMethod.disabled = false;
     }

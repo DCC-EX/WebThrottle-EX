@@ -1,6 +1,6 @@
 # DCC-EX-WebThrottle
 
-This is a prototype for a new DCC-EX Throttle/Controller that can connect to the DCCEX EX-CommmandStation directly through the USB port of a computer.
+This is a prototype for a new DCC-EX Throttle/Controller that can connect to the DCCEX EX-CommmandStation (EX-CS) directly through the USB port of a computer.
 
 ## What you need to setup the project
 
@@ -22,7 +22,7 @@ NOTE: If you don't have your hardware yet or just want to play with the throttle
       and see commands being sent to the log window, you can skip to the operation
       section.
 
-To get started, connect your Command Station to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit DCC-EX.github.io/WebThrottle-EX/ to start using the software.
+To get started, connect your EX-CommandStation to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit DCC-EX.github.io/WebThrottle-EX/ to start using the software.
 
 
 Alternatively, you can download the zip file found in the releases section and extract it. Click on the "index.html" or "exwebthrotle.html" file to load the webpage. This method is only recommended if you need a specific version as it won't be auto-updated.
