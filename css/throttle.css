@@ -357,15 +357,16 @@ label.formbuilder-file-label {
     margin: 0 5px;
 }
 .log-msg{
-    height: 80px;
-    padding: 12px;
+    height: 90px;
+    padding: 3px;
     background-color: #fff2e1;
     color: darkblue;
     margin: 5px 15px 15px;
     border-radius: 5px;
     border: 1px solid #eac9a5;
     box-shadow: inset 0px 0px 7px #f3d9bc;
-    font-size: 9px;
+    font-size: 10px;
+    line-height: 140%;
     overflow: auto;
 }
 .note-msg{
@@ -1002,7 +1003,7 @@ input:checked + .slider.debug-slider{
 		width: 25%;
     }
     .mobile-margin-top20{
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .fn-modal{
         position: absolute;
