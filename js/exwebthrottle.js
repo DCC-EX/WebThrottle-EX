@@ -83,8 +83,30 @@ function uiDisable (status) {
     $("#button-sendCmd").prop('disabled', status)
     if (status) {
       $("#button-getloco").addClass("ui-state-disabled")
+      $("#button-sendCmd").addClass("ui-state-disabled")
+      $("#cmd-direct").addClass("ui-state-disabled")
+      $("#ex-locoid").addClass("ui-state-disabled")
+      $("#power-switch").parent().addClass("ui-state-disabled")
+      $("#dir-f").parent().addClass("ui-state-disabled")
+      $("#emergency-stop").addClass("ui-state-disabled")
+      $("#button-right").addClass("ui-state-disabled")
+      $("#button-left").addClass("ui-state-disabled")
+      for (i=0;i<=28;i++) {
+        $("#f"+i).addClass("ui-state-disabled")
+      }
     } else {
       $("#button-getloco").removeClass("ui-state-disabled")
+      $("#button-sendCmd").removeClass("ui-state-disabled")
+      $("#cmd-direct").removeClass("ui-state-disabled")
+      $("#ex-locoid").removeClass("ui-state-disabled")
+      $("#power-switch").parent().removeClass("ui-state-disabled")
+      $("#dir-f").parent().removeClass("ui-state-disabled")
+      $("#emergency-stop").removeClass("ui-state-disabled")
+      $("#button-right").removeClass("ui-state-disabled")
+      $("#button-left").removeClass("ui-state-disabled")
+      for (i=0;i<=28;i++) {
+        $("#f"+i).removeClass("ui-state-disabled")
+      }
     }
     $("#dir-f").prop('disabled', status)
     $("#dir-S").prop('disabled', status)
@@ -227,6 +249,7 @@ function loadLocomotives(){
 function setThrottleScreenUI() {
     loadmaps();
     loadButtons({ mname: "default", fnData: fnMasterData });
+    uiDisable(true);
     controller = getPreference("scontroller");
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);

@@ -8,6 +8,10 @@ input.form-control, select.form-control, textarea.form-control {
     border-radius: 4px;
     background: #ffffff;
 }
+input.form-control .ui-state-disabled {
+    background: #555555;
+}
+
 input.form-control:focus, 
 select.form-control:focus, 
 textarea.form-control:focus,
@@ -117,6 +121,10 @@ label.formbuilder-file-label {
     border: 1px solid #282828;
     box-shadow: inset 0 0 3px #282828;
 }
+.fn-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active .ui-state-disabled{
+    background: #555555;
+}
+
 .fn-button.field-button-fn .btn.press{
     background: #774caf;
     border: 1px solid #5c4180;
@@ -365,8 +373,9 @@ label.formbuilder-file-label {
     border-radius: 5px;
     border: 1px solid #eac9a5;
     box-shadow: inset 0px 0px 7px #f3d9bc;
-    font-size: 10px;
-    line-height: 140%;
+    font-size: 11px;
+    font-family: monospace;
+    line-height: 125%;
     overflow: auto;
 }
 .note-msg{

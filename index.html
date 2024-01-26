@@ -105,9 +105,9 @@
                                 <div class="loco-list-container row">
                                     <div class="column-4 loco-list-ctrl">
                                         <label for="ex-locoid" class="formbuilder-text-label">
-                                            Loco ID / DCC Address<span class="formbuilder-required">*</span>
+                                            Loco ID<span class="formbuilder-required">*</span>
                                         </label>
-                                        <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives"/>
+                                        <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives" placeholder="Loco ID / DCC Address"/>
                                     </div>
                                     <div class="column-2 formbuilder-button acquire-wrap">
                                         <button id="button-getloco" class="acq-loco-btn btn" data-acquired="false"> 
@@ -120,7 +120,7 @@
                             </div>
                             <div class="server-button column-4">
                                 <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
-                                    <option value="serial">Serial</option>
+                                    <option value="serial">Serial (USB)</option>
                                     <option value="emulator">Emulator</option>
                                 </select>
                                 <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">

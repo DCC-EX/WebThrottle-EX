@@ -130,14 +130,16 @@ async function readLoop() {
 }
 
 function parseResponse(cmd) {  // some basic ones only
-    // let thisCmd = cmd.substring(1,cmd.length);  // strip the <>
-    if (cmd.charAt(1)=='p') {
-        if (cmd.charAt(2)=="0") {
-            $("#power-switch").prop('checked', false)
-            $("#power-status").html("is Off");
-        } else {
-            $("#power-switch").prop('checked', true)
-            $("#power-status").html("is On");
+    // cmd.charAt(0) should be a linefeed
+    if (cmd.charAt(1)=='<') {
+        if (cmd.charAt(2)=='p') {
+            if (cmd.charAt(3)=="0") {
+                $("#power-switch").prop('checked', false)
+                $("#power-status").html("is Off");
+            } else {
+                $("#power-switch").prop('checked', true)
+                $("#power-status").html("is On");
+            }
         }
     }
 } 
@@ -321,9 +323,9 @@ function sendCommandForF21ToF28(fn, opr){
 
 function getTimeStamp() {
     var now = new Date();
-    return ((now.getFullYear() + 1) + '/' +
-            (now.getMonth()) + '/' +
-             now.getDate() + " " +
+    return (//(now.getFullYear()) + '/' +
+            // (now.getMonth()+1) + '/' +
+            // now.getDate() + " " +
              now.getHours() + ':' +
              ((now.getMinutes() < 10)
                  ? ("0" + now.getMinutes())
