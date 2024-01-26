@@ -88,40 +88,59 @@ async function readLoop() {
         let thisCommandString = "";
 
         if (value) {
-            // displayLog('[RECEIVE] '+ value);
-            // console.log('[RECEIVE] '+ value);
 
             commandString = commandString + value;
 
-            let start = -1;
-            let end = -1;
-            for (i=0; i<commandString.length; i++) {
-                if (commandString.charAt(i)=='<') {
-                    start = i;
-                    break;
-                }
-            }
-            for (i=start+1; i<commandString.length; i++) {
-                if (commandString.charAt(i)=='>') {
-                    end = i;
-                    break;
-                }
-            }
-            if ((start>=0) && (end>start)) {
-                thisCommandString = commandString.substring(start,end+1);
-                if (end>0) commandString = commandString.substring(end+1);
-                displayLog("[R] " + thisCommandString);
-                console.log(getTimeStamp() + " [R] " + thisCommandString);
-            }            
+            var moreToProcess = true;
+            while (moreToProcess) {
+                // displayLog('[RECEIVE] '+ value);
+                // console.log('[RECEIVE] '+ value);
 
+                let end = -1;
+
+                for (i=0; i<commandString.length; i++) {
+                    if ((commandString.charAt(i)=='\n') && (i>0)) {
+                        end = i;
+                        break;
+                    }
+                }
+
+                if (end>=0) {
+                    thisCommandString = commandString.substring(0,end);
+                    if (end>0) { 
+                        commandString = commandString.substring(end);
+                        moreToProcess = true;
+                    } else {
+                        moreToProcess = false;
+                    }
+                    displayLog("[R] " + thisCommandString);
+                    console.log(getTimeStamp() + " [R] " + thisCommandString);
+                    parseResponse(thisCommandString); 
+                } else {
+                    moreToProcess = false;
+                }        
+            }
         }
         if (done) {
-            console.log(getTimeStamp() + ' [readLoop] DONE'+done.toString());
+            console.log(getTimeStamp() + ' [readLoop] DONE '+done.toString());
             reader.releaseLock();
             break;
         }
     }
 }
+
+function parseResponse(cmd) {  // some basic ones only
+    // let thisCmd = cmd.substring(1,cmd.length);  // strip the <>
+    if (cmd.charAt(1)=='p') {
+        if (cmd.charAt(2)=="0") {
+            $("#power-switch").prop('checked', false)
+            $("#power-status").html("is Off");
+        } else {
+            $("#power-switch").prop('checked', true)
+            $("#power-status").html("is On");
+        }
+    }
+} 
 
 function writeToStream(...lines) {
   // Stops data being written to nonexistent port if using emulator
@@ -248,8 +267,8 @@ async function toggleServer(btn) {
 
 // Display log of events
 function displayLog(data){
-    data = data.replace("<","&lt;");
-    data = data.replace(">","&gt;");
+    data = data.replaceAll("<","&lt;");
+    data = data.replaceAll(">","&gt;");
     data = getTimeStamp() + " <b>" + data + "</b>";
     $("#log-box").append(data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
