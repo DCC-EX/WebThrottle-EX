@@ -377,6 +377,7 @@ label.formbuilder-file-label {
     font-family: monospace;
     line-height: 125%;
     overflow: auto;
+    resize: vertical;
 }
 .note-msg{
     padding: 10px 10px;
