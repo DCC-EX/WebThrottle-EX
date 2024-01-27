@@ -1,4 +1,4 @@
-name: Set deployements to inactive
+name: Remove deployments
 
 on:
     workflow_dispatch:
