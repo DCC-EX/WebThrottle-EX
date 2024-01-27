@@ -140,6 +140,10 @@ function parseResponse(cmd) {  // some basic ones only
                 $("#power-switch").prop('checked', true)
                 $("#power-status").html("is On");
             }
+        } else if (cmd.charAt(2)=='@') {
+            if (cmd.includes("Free RAM=")) {
+                displayLog('<br><br>[READY] EX-CommandStation is READY<br>');
+            }
         }
     }
 } 
@@ -269,8 +273,11 @@ async function toggleServer(btn) {
 
 // Display log of events
 function displayLog(data){
+    data = data.replaceAll("\n","");
+    data = data.replaceAll("<br>","\n");
     data = data.replaceAll("<","&lt;");
     data = data.replaceAll(">","&gt;");
+    data = data.replaceAll("\n","<br>");
     if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
     $("#log-box").append(data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));

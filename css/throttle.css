@@ -32,7 +32,7 @@ label.formbuilder-file-label {
     color: #00353D;
 }
 .details-panel{
-    margin-top: 8px;
+    margin-top: 0px;
 }
 .server-button{
     padding-top: 26px;
@@ -365,11 +365,11 @@ label.formbuilder-file-label {
     margin: 0 5px;
 }
 .log-msg{
-    height: 90px;
+    height: 120px;
     padding: 3px;
     background-color: #fff2e1;
     color: darkblue;
-    margin: 5px 15px 15px;
+    margin: 0px 10px 0px;
     border-radius: 5px;
     border: 1px solid #eac9a5;
     box-shadow: inset 0px 0px 7px #f3d9bc;

@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.5";
+            var version = "1.3.6";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -212,7 +212,9 @@
                         </div>                             
 
                     <div class="row">
-                        <div class="console-slider column-4" title="Enable the debug console">
+                        <div class="column-8">
+                            <hr>
+                        </div>                        <div class="console-slider column-2" title="Enable the debug console">
                             <label class="debug switch">
                                 <input type="checkbox" id="console-toggle">
                                 <span class="slider round debug-slider"></span>
@@ -223,29 +225,34 @@
                         </div>   
                     </div>
                     <div id="debug-console" hidden="true">
-                        <hr>
-                        <div class="row mobile-margin-top20">
-                            <div class="formbuilder-text column-6">
-                                <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
-                            </div>
-                    
-                            <div class="formbuilder-button column-2">
-                                <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd" title=""Sent to the Command Station>
-                                    Send
-                                </button>
-                            </div>
-                            <div class="formbuilder-button  dcmd-clear column-1">
-                                <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog" title="Clear log">
-                                    Clear
-                                </button>
-                            </div>
-                            <div class="formbuilder-button  dcmd-clear column-1">
-                                <button type="button" class="btn-default btn" name="copyLog" access="false" data-acquired="false"  id="button-copyLog" title="Copy log to clipboard">
-                                    Copy
-                                </button>
+                      
+                        <div class="column-4 mobile-100">
+                            <div class="row mobile-margin-top20">
+                                <div class="formbuilder-text column-10">
+                                    <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
+                                </div>
+                            </div>                        
+                            <div class="row mobile-margin-top20">
+                                <div class="formbuilder-button column-4">
+                                    <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd" title=""Sent to the Command Station>
+                                        Send
+                                    </button>
+                                </div>
+                                <div class="formbuilder-button  dcmd-clear column-3">
+                                    <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog" title="Clear log">
+                                        Clear
+                                    </button>
+                                </div>
+                                <div class="formbuilder-button  dcmd-clear column-3">
+                                    <button type="button" class="btn-default btn" name="copyLog" access="false" data-acquired="false"  id="button-copyLog" title="Copy log to clipboard">
+                                        Copy
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="log-msg" id="log-box">
+                        <div class="column-6 mobile-100">
+                            <div class="log-msg" id="log-box">
+                            </div>
                         </div>
                     </div>
                 </section>

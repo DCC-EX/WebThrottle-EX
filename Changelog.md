@@ -1,3 +1,6 @@
+# Version 1.3.6
+- small UI improvements
+
 # Version 1.3.5
 - Updating some of the commands sent
 
