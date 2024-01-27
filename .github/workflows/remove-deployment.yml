@@ -1,0 +1,15 @@
+name: Set deployements to inactive
+
+on:
+    workflow_dispatch:
+      branches: [ build ]
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: strumwolf/delete-deployment-environment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: WebThrottle-EX
+          onlyRemoveDeployments: true
