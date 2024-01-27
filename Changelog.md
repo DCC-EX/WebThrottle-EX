@@ -1,3 +1,6 @@
+# Version 1.3.5
+- Updating some of the commands sent
+
 # Version 1.3.4
 - Fixes the splitting of the responses on multiple lines
 - Rename of DCC++EX to DCC-EX

@@ -281,6 +281,9 @@ function setThrottleScreenUI() {
             );
         }
     }
+    console.log('EX-WebThrottle - version: ' + version);
+    displayLog('EX-WebThrottle - version: ' + version);
+    displayLog('');
 }
 
 // Change the Speed controller type
@@ -333,7 +336,7 @@ function setSpeedofControllers(){
     spd = getSpeed();
     
     if(!isStopped){
-        writeToStream("t 01 " + getCV() + " " + spd + " " + getDirection());
+        writeToStream("t " + getCV() + " " + spd + " " + getDirection());
     }
     // Circular
     $("#circular-throttle").roundSlider("setValue", spd);
@@ -601,7 +604,7 @@ $(document).ready(function(){
     },
     valueChange: function (slider) {
       //setSpeed(slider.value);
-      //writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+      //writeToStream("t "+getCV()+" "+getSpeed()+" "+getDirection());
       // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
     },
   });
@@ -622,14 +625,14 @@ $(document).ready(function(){
           isStopped = false;
           setDirection(1);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
+          writeToStream("t " + getCV() + " " + getSpeed() + " 1");
           break;
         }
         case "backward": {
           isStopped = false;
           setDirection(0);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
+          writeToStream("t " + getCV() + " " + getSpeed() + " 0");
           break;
         }
         case "stop": {
@@ -637,7 +640,7 @@ $(document).ready(function(){
           dir = getDirection();
           setSpeed(0);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " 0 " + dir);
+          writeToStream("t " + getCV() + " 0 " + dir);
           break;
         }
       }
@@ -804,6 +807,11 @@ $(document).ready(function(){
   // Clear the console log window
   $("#button-clearLog").on("click", function () {
     $("#log-box").html("");
+  });
+
+  // Clear the console log window
+  $("#button-copyLog").on("click", function () {
+    copyLogToClipboard();
   });
 
   // Function to toggle fullScreen viceversa

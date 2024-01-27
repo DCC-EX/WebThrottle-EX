@@ -271,7 +271,7 @@ async function toggleServer(btn) {
 function displayLog(data){
     data = data.replaceAll("<","&lt;");
     data = data.replaceAll(">","&gt;");
-    data = getTimeStamp() + " <b>" + data + "</b>";
+    if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
     $("#log-box").append(data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 }
@@ -333,4 +333,12 @@ function getTimeStamp() {
              ((now.getSeconds() < 10)
                  ? ("0" + now.getSeconds())
                  : (now.getSeconds())));
+}
+
+function copyLogToClipboard() {
+    let text = document.getElementById('log-box').innerText;
+    text = "```\n" + text + "\n```"
+    navigator.clipboard.writeText(text);
+    console.log('Content copied to clipboard');
+    displayLog("Content copied to clipboard");
 }
