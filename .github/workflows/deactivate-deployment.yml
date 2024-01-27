@@ -11,5 +11,5 @@ jobs:
       - uses: strumwolf/delete-deployment-environment@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          environment: http://dcc-ex.com/WebThrottle-EX/
+          environment: github-pages
           onlyDeactivateDeployments: true
