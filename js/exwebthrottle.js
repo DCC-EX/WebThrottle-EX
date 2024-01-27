@@ -78,8 +78,36 @@ function uiDisable (status) {
     document.getElementById('dir-S').disabled = status*/
     //document.getElementById('dir-b').disabled = status
     $("#ex-locoid").prop('disabled', status)
+    $("#button-getloco").prop('disabled', status)
     $("#power-switch").prop('disabled', status)
     $("#button-sendCmd").prop('disabled', status)
+    if (status) {
+      $("#button-getloco").addClass("ui-state-disabled")
+      $("#button-sendCmd").addClass("ui-state-disabled")
+      $("#cmd-direct").addClass("ui-state-disabled")
+      $("#ex-locoid").addClass("ui-state-disabled")
+      $("#power-switch").parent().addClass("ui-state-disabled")
+      $("#dir-f").parent().addClass("ui-state-disabled")
+      $("#emergency-stop").addClass("ui-state-disabled")
+      $("#button-right").addClass("ui-state-disabled")
+      $("#button-left").addClass("ui-state-disabled")
+      for (i=0;i<=28;i++) {
+        $("#f"+i).addClass("ui-state-disabled")
+      }
+    } else {
+      $("#button-getloco").removeClass("ui-state-disabled")
+      $("#button-sendCmd").removeClass("ui-state-disabled")
+      $("#cmd-direct").removeClass("ui-state-disabled")
+      $("#ex-locoid").removeClass("ui-state-disabled")
+      $("#power-switch").parent().removeClass("ui-state-disabled")
+      $("#dir-f").parent().removeClass("ui-state-disabled")
+      $("#emergency-stop").removeClass("ui-state-disabled")
+      $("#button-right").removeClass("ui-state-disabled")
+      $("#button-left").removeClass("ui-state-disabled")
+      for (i=0;i<=28;i++) {
+        $("#f"+i).removeClass("ui-state-disabled")
+      }
+    }
     $("#dir-f").prop('disabled', status)
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
@@ -221,6 +249,7 @@ function loadLocomotives(){
 function setThrottleScreenUI() {
     loadmaps();
     loadButtons({ mname: "default", fnData: fnMasterData });
+    uiDisable(true);
     controller = getPreference("scontroller");
     $("#throttle-selector").val(controller).trigger("change");
     setspeedControllerType(controller);
@@ -252,6 +281,9 @@ function setThrottleScreenUI() {
             );
         }
     }
+    console.log('EX-WebThrottle - version: ' + version);
+    displayLog('EX-WebThrottle - version: ' + version);
+    displayLog('');
 }
 
 // Change the Speed controller type
@@ -304,7 +336,7 @@ function setSpeedofControllers(){
     spd = getSpeed();
     
     if(!isStopped){
-        writeToStream("t 01 " + getCV() + " " + spd + " " + getDirection());
+        writeToStream("t " + getCV() + " " + spd + " " + getDirection());
     }
     // Circular
     $("#circular-throttle").roundSlider("setValue", spd);
@@ -572,7 +604,7 @@ $(document).ready(function(){
     },
     valueChange: function (slider) {
       //setSpeed(slider.value);
-      //writeToStream("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+      //writeToStream("t "+getCV()+" "+getSpeed()+" "+getDirection());
       // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
     },
   });
@@ -593,14 +625,14 @@ $(document).ready(function(){
           isStopped = false;
           setDirection(1);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 1");
+          writeToStream("t " + getCV() + " " + getSpeed() + " 1");
           break;
         }
         case "backward": {
           isStopped = false;
           setDirection(0);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " " + getSpeed() + " 0");
+          writeToStream("t " + getCV() + " " + getSpeed() + " 0");
           break;
         }
         case "stop": {
@@ -608,7 +640,7 @@ $(document).ready(function(){
           dir = getDirection();
           setSpeed(0);
           setSpeedofControllers();
-          writeToStream("t 01 " + getCV() + " 0 " + dir);
+          writeToStream("t " + getCV() + " 0 " + dir);
           break;
         }
       }
@@ -636,10 +668,12 @@ $(document).ready(function(){
       $(".details-panel").hide();
       $(this).css("top", 0);
       $(this).html('<span class="icon-circle-down"></span>');
+      $("#log-box").height("170px");
     } else {
       $(".details-panel").show();
       $(this).html('<span class="icon-circle-up"></span>');
       $(this).css("top", "-9px");
+      $("#log-box").height("80px");
     }
   });
 
@@ -773,6 +807,11 @@ $(document).ready(function(){
   // Clear the console log window
   $("#button-clearLog").on("click", function () {
     $("#log-box").html("");
+  });
+
+  // Clear the console log window
+  $("#button-copyLog").on("click", function () {
+    copyLogToClipboard();
   });
 
   // Function to toggle fullScreen viceversa

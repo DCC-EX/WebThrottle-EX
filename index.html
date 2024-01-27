@@ -22,9 +22,13 @@
 	For more information, visit use at dcc-ex.com
 -->
     <head>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.3";
+            var version = "1.3.5";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -101,13 +105,13 @@
                 <section id="throttle-window" class="section">
                     <div Class="details-panel" id="details-panel">
                         <div class="row">
-                            <div class="column-5">
+                            <div class="column-6">
                                 <div class="loco-list-container row">
-                                    <div class="column-5 loco-list-ctrl">
+                                    <div class="column-4 loco-list-ctrl">
                                         <label for="ex-locoid" class="formbuilder-text-label">
-                                            Locomotive ID <span class="formbuilder-required">*</span>
+                                            Loco ID<span class="formbuilder-required">*</span>
                                         </label>
-                                        <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives"/>
+                                        <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives" placeholder="Loco ID / DCC Address"/>
                                     </div>
                                     <div class="column-2 formbuilder-button acquire-wrap">
                                         <button id="button-getloco" class="acq-loco-btn btn" data-acquired="false"> 
@@ -118,9 +122,9 @@
                                     </div>                                   
                                 </div>
                             </div>
-                            <div class="server-button column-5">
+                            <div class="server-button column-4">
                                 <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
-                                    <option value="serial">Serial</option>
+                                    <option value="serial">Serial (USB)</option>
                                     <option value="emulator">Emulator</option>
                                 </select>
                                 <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
@@ -220,18 +224,23 @@
                     <div id="debug-console" hidden="true">
                         <hr>
                         <div class="row mobile-margin-top20">
-                            <div class="formbuilder-text column-8">
+                            <div class="formbuilder-text column-6">
                                 <input placeholder="Direct Command (without &lt; &gt;)" class="form-control" name="cmd-direct" access="false" id="cmd-direct">
                             </div>
                     
-                            <div class="formbuilder-button column-1">
-                                <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd">
+                            <div class="formbuilder-button column-2">
+                                <button type="button" class="btn-default btn" name="sendCmd" access="false" data-acquired="false"  id="button-sendCmd" title=""Sent to the Command Station>
                                     Send
                                 </button>
                             </div>
                             <div class="formbuilder-button  dcmd-clear column-1">
-                                <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog">
-                                    Clear Log
+                                <button type="button" class="btn-default btn" name="clearLog" access="false" data-acquired="false"  id="button-clearLog" title="Clear log">
+                                    Clear
+                                </button>
+                            </div>
+                            <div class="formbuilder-button  dcmd-clear column-1">
+                                <button type="button" class="btn-default btn" name="copyLog" access="false" data-acquired="false"  id="button-copyLog" title="Copy log to clipboard">
+                                    Copy
                                 </button>
                             </div>
                         </div>

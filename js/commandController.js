@@ -69,8 +69,8 @@ async function connectServer() {
         // If using the emulator
         emulatorMode = true;
         // Displays dummy hardware message
-        displayLog("\n[CONNECTION] Emulator connected")
-        displayLog("[RECEIVE] DCC-EX EXCOMMANDSTATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        displayLog("[ CONNECTION] Emulator connected")
+        displayLog("[R] DCC-EX EXCOMMANDSTATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
         uiDisable(false)
         return true;
     }
@@ -88,40 +88,61 @@ async function readLoop() {
         let thisCommandString = "";
 
         if (value) {
-            // displayLog('[RECEIVE] '+ value);
-            // console.log('[RECEIVE] '+ value);
 
             commandString = commandString + value;
 
-            let start = -1;
-            let end = -1;
-            for (i=0; i<commandString.length; i++) {
-                if (commandString.charAt(i)=='<') {
-                    start = i;
-                    break;
-                }
-            }
-            for (i=start+1; i<commandString.length; i++) {
-                if (commandString.charAt(i)=='>') {
-                    end = i;
-                    break;
-                }
-            }
-            if ((start>=0) && (end>start)) {
-                thisCommandString = commandString.substring(start+1,end);
-                if (end>0) commandString = commandString.substring(end);
-                displayLog('[RECEIVE] &lt;'+ thisCommandString +"&gt;");
-                console.log('[RECEIVE] &lt;'+ thisCommandString +"&gt;");
-            }            
+            var moreToProcess = true;
+            while (moreToProcess) {
+                // displayLog('[RECEIVE] '+ value);
+                // console.log('[RECEIVE] '+ value);
 
+                let end = -1;
+
+                for (i=0; i<commandString.length; i++) {
+                    if ((commandString.charAt(i)=='\n') && (i>0)) {
+                        end = i;
+                        break;
+                    }
+                }
+
+                if (end>=0) {
+                    thisCommandString = commandString.substring(0,end);
+                    if (end>0) { 
+                        commandString = commandString.substring(end);
+                        moreToProcess = true;
+                    } else {
+                        moreToProcess = false;
+                    }
+                    displayLog("[R] " + thisCommandString);
+                    console.log(getTimeStamp() + " [R] " + thisCommandString);
+                    parseResponse(thisCommandString); 
+                } else {
+                    moreToProcess = false;
+                }        
+            }
         }
         if (done) {
-            console.log('[readLoop] DONE'+done.toString());
+            console.log(getTimeStamp() + ' [readLoop] DONE '+done.toString());
             reader.releaseLock();
             break;
         }
     }
 }
+
+function parseResponse(cmd) {  // some basic ones only
+    // cmd.charAt(0) should be a linefeed
+    if (cmd.charAt(1)=='<') {
+        if (cmd.charAt(2)=='p') {
+            if (cmd.charAt(3)=="0") {
+                $("#power-switch").prop('checked', false)
+                $("#power-status").html("is Off");
+            } else {
+                $("#power-switch").prop('checked', true)
+                $("#power-status").html("is On");
+            }
+        }
+    }
+} 
 
 function writeToStream(...lines) {
   // Stops data being written to nonexistent port if using emulator
@@ -134,7 +155,7 @@ function writeToStream(...lines) {
       if (line == "\x03" || line == "echo(false);") {
 
       } else {
-          displayLog('[SEND]'+line.toString());
+          displayLog("[S] &lt;" + line.toString() + "&gt;");
       }
       const packet = `<${line}>\n`;
       stream.write(packet)
@@ -248,9 +269,10 @@ async function toggleServer(btn) {
 
 // Display log of events
 function displayLog(data){
-    data = data.replace("<"," ");
-    data = data.replace(">"," ");
-    $("#log-box").append("<br>"+data.toString()+"<br>");
+    data = data.replaceAll("<","&lt;");
+    data = data.replaceAll(">","&gt;");
+    if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
+    $("#log-box").append(data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 }
 
@@ -297,4 +319,26 @@ function sendCommandForF21ToF28(fn, opr){
     writeToStream("f "+getCV()+" 223 "+cabval);
     console.log("Command: "+ "f "+getCV()+" 223 "+cabval);
 
+}
+
+function getTimeStamp() {
+    var now = new Date();
+    return (//(now.getFullYear()) + '/' +
+            // (now.getMonth()+1) + '/' +
+            // now.getDate() + " " +
+             now.getHours() + ':' +
+             ((now.getMinutes() < 10)
+                 ? ("0" + now.getMinutes())
+                 : (now.getMinutes())) + ':' +
+             ((now.getSeconds() < 10)
+                 ? ("0" + now.getSeconds())
+                 : (now.getSeconds())));
+}
+
+function copyLogToClipboard() {
+    let text = document.getElementById('log-box').innerText;
+    text = "```\n" + text + "\n```"
+    navigator.clipboard.writeText(text);
+    console.log('Content copied to clipboard');
+    displayLog("Content copied to clipboard");
 }

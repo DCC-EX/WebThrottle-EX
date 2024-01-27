@@ -8,6 +8,10 @@ input.form-control, select.form-control, textarea.form-control {
     border-radius: 4px;
     background: #ffffff;
 }
+input.form-control .ui-state-disabled {
+    background: #555555;
+}
+
 input.form-control:focus, 
 select.form-control:focus, 
 textarea.form-control:focus,
@@ -117,6 +121,10 @@ label.formbuilder-file-label {
     border: 1px solid #282828;
     box-shadow: inset 0 0 3px #282828;
 }
+.fn-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active .ui-state-disabled{
+    background: #555555;
+}
+
 .fn-button.field-button-fn .btn.press{
     background: #774caf;
     border: 1px solid #5c4180;
@@ -357,16 +365,19 @@ label.formbuilder-file-label {
     margin: 0 5px;
 }
 .log-msg{
-    height: 80px;
-    padding: 12px;
+    height: 90px;
+    padding: 3px;
     background-color: #fff2e1;
     color: darkblue;
     margin: 5px 15px 15px;
     border-radius: 5px;
     border: 1px solid #eac9a5;
     box-shadow: inset 0px 0px 7px #f3d9bc;
-    font-size: 9px;
+    font-size: 11px;
+    font-family: monospace;
+    line-height: 125%;
     overflow: auto;
+    resize: vertical;
 }
 .note-msg{
     padding: 10px 10px;
@@ -781,6 +792,11 @@ input:checked + .slider.debug-slider{
     border-bottom-left-radius: 0;
     margin-top: -1px;
 }
+
+.formbuilder-button .btn.acq-loco-btn .ui-state-disabled{
+    color: #555555;
+}
+
 .btn.acq-loco-btn .icon-circle-right{
     vertical-align: middle;
     padding-bottom: 1px;
@@ -1002,7 +1018,7 @@ input:checked + .slider.debug-slider{
 		width: 25%;
     }
     .mobile-margin-top20{
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .fn-modal{
         position: absolute;
