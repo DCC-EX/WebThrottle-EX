@@ -28,14 +28,23 @@ var filesToCache = [
   'js/jquery-ui.min.js',
   'js/jquery.rotaryswitch.js',
   'js/pwa.js',
-  'js/roundslider.min.js'
+  'js/roundslider.min.js',
+  'js/addLoco.js',
+  'js/emulator.js',
+  'js/fnMaster.js'
 ];
+
+  // 'index.html',
+  // 'js/commandController.js',
+  // 'js/storageController.js',
+  // 'js/exwebThrottle.js',
+  // 'css/throttle.css',
+  // 'css/layout.css',
 
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      // cache.delete('index.html');
       console.log('[ServiceWorker] Caching app shell');
       return cache.addAll(filesToCache);
     })

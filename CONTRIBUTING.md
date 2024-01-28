@@ -16,7 +16,7 @@ break if the user is offline!
 ## Contributions from DCC-EX members
 If you are a member of DCC-EX, you can clone this repo locally to make changes. Please make your own branch for this, either using a name related to the feature you are implementing,
 or better yet, in the format `user-feature`. This way it is easy to see who is using which branch and the feature they are implementing.
-Once you have made these changes, you can either open a pull request to `master` or just merge it to `master` yourself, it is completly up to you.
+Once you have made these changes, you can either open a pull request to `master` or just merge it to `master` yourself, it is completely up to you.
 
 **Note:** Never touch the `build` branch! This is the live, end-user version of WebThrottle-EX and is only pushed to when a release is made.
 
