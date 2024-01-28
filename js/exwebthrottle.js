@@ -576,10 +576,10 @@ $(document).ready(function(){
       setSpeedofControllers();
     } else {
       writeToStream(
-        "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+        "t " + getCV() + " " + getSpeed() + " " + getDirection()
       );
     }
-    //console.log( "t 01 " + getCV() + " " + getSpeed() + " " + getDirection());
+    //console.log( "t " + getCV() + " " + getSpeed() + " " + getDirection());
   });
 
   /////////////////////////////////////////////
@@ -601,7 +601,7 @@ $(document).ready(function(){
     update: function (slider) {
       setSpeed(slider.value);
       setSpeedofControllers();
-      //console.log("t 01 "+getCV()+" "+getSpeed()+" "+getDirection());
+      //console.log("t "+getCV()+" "+getSpeed()+" "+getDirection());
     },
     valueChange: function (slider) {
       //setSpeed(slider.value);
@@ -660,7 +660,7 @@ $(document).ready(function(){
         dir = getDirection();
         setSpeed(0);
         setSpeedofControllers();
-        writeToStream("t 01 " + getCV() + " -1 " + dir);
+        writeToStream("t " + getCV() + " -1 " + dir);
       }
       else{
         console.log("No loco acquired");
@@ -693,7 +693,7 @@ $(document).ready(function(){
           setSpeed(sp + speedStep);
           setSpeedofControllers();
           writeToStream(
-            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+            "t " + getCV() + " " + getSpeed() + " " + getDirection()
           );
           sp = 0;
         }
@@ -709,7 +709,7 @@ $(document).ready(function(){
         setSpeed(sp + speedStep);
         setSpeedofControllers();
         writeToStream(
-          "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+          "t " + getCV() + " " + getSpeed() + " " + getDirection()
         );
         sp = 0;
       }
@@ -726,7 +726,7 @@ $(document).ready(function(){
           setSpeed(sp - speedStep);
           setSpeedofControllers();
           writeToStream(
-            "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+            "t " + getCV() + " " + getSpeed() + " " + getDirection()
           );
           sp = 0;
         }
@@ -742,7 +742,7 @@ $(document).ready(function(){
         setSpeed(sp - speedStep);
         setSpeedofControllers();
         writeToStream(
-          "t 01 " + getCV() + " " + getSpeed() + " " + getDirection()
+          "t " + getCV() + " " + getSpeed() + " " + getDirection()
         );
         sp = 0;
       }
