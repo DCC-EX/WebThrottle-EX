@@ -57,6 +57,7 @@ window.functions = {
     "f28": 0
 };
 window.isStopped = true;
+window.isDirectionToggleStopped = false;
 let port;
 let emulatorMode;
 let reader;
@@ -513,7 +514,7 @@ $(document).ready(function(){
         $("#loco-info").html("Acquired Locomotive: " + locoid_input);
         acButton.data("acquired", true);
         acButton.html('<span class="icon-cross"></span>');
-        toggleThrottleState(true);
+        toggleThrottleState(!isDirectionToggleStopped);
       } else {
         currentCV = getCV();
         $("#ex-locoid").val(0);
@@ -623,6 +624,7 @@ $(document).ready(function(){
       switch (dir) {
         case "forward": {
           isStopped = false;
+          isDirectionToggleStopped = false;
           setDirection(1);
           setSpeedofControllers();
           writeToStream("t " + getCV() + " " + getSpeed() + " 1");
@@ -630,6 +632,7 @@ $(document).ready(function(){
         }
         case "backward": {
           isStopped = false;
+          isDirectionToggleStopped = false;
           setDirection(0);
           setSpeedofControllers();
           writeToStream("t " + getCV() + " " + getSpeed() + " 0");
@@ -637,6 +640,7 @@ $(document).ready(function(){
         }
         case "stop": {
           isStopped = true;
+          isDirectionToggleStopped = true;
           dir = getDirection();
           setSpeed(0);
           setSpeedofControllers();
@@ -644,6 +648,7 @@ $(document).ready(function(){
           break;
         }
       }
+      toggleThrottleState(!isDirectionToggleStopped);
     }else{
       console.log("No loco acquired");
     }

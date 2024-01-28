@@ -108,9 +108,9 @@ hr{
     padding-top: 68px;
 }
 .rendered-form .section{
-    width: 80%;
+    width: 90%;
     height: 98%;
-    margin: 0 10%;
+    margin: 0 5%;
     background: rgba(0,0,0,0.05);
     border-radius: 10px;
 }

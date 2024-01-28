@@ -274,6 +274,7 @@ async function toggleServer(btn) {
 // Display log of events
 function displayLog(data){
     data = data.replaceAll("\n","");
+    data = data.replaceAll("\r","");
     data = data.replaceAll("<br>","\n");
     data = data.replaceAll("<","&lt;");
     data = data.replaceAll(">","&gt;");
