@@ -319,10 +319,18 @@ function toggleThrottleState(state){
     if(state){
         $("#circular-throttle").roundSlider("enable");
         $("#v-throttle").slider("enable");
+        $("#button-right").removeClass("ui-state-disabled")
+        $("#button-left").removeClass("ui-state-disabled")
+        $("#button-right").slider("enable");
+        $("#button-left").slider("enable");
         toggleKnobState($("#knobthrottle"), true);
     }else{
         $("#circular-throttle").roundSlider("disable");
         $("#v-throttle").slider("disable");
+        $("#button-right").addClass("ui-state-disabled")
+        $("#button-left").addClass("ui-state-disabled")
+        $("#button-right").slider("disable");
+        $("#button-left").slider("disable");
         toggleKnobState($("#knobthrottle"), false);
     }
 }
