@@ -256,7 +256,7 @@ async function toggleServer(btn) {
     if (port || emulatorMode) {
         await disconnectServer();
         btn.attr('aria-state','Disconnected');
-        btn.html('<span class="con-ind"></span>Connect DCC-EX'); //<span id="con-ind"></span>Connect DCC-EX
+        btn.html('<span class="con-ind"></span>Connect EX-CS'); //<span id="con-ind"></span>Connect EX-CS
         return;
     }
 
