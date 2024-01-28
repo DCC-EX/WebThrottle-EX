@@ -39,10 +39,8 @@ var filesToCache = [
   'js/storageController.js',
   'js/exwebThrottle.js',
   'css/throttle.css',
-  'css/layout.css',
+  'css/layout.css'
 ];
-
-
 
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Installing');
