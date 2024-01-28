@@ -31,15 +31,18 @@ var filesToCache = [
   'js/roundslider.min.js',
   'js/addLoco.js',
   'js/emulator.js',
-  'js/fnMaster.js'
+  'js/fnMaster.js',
+  
+  '/WebThrottle-EX/',
+  'index.html',
+  'js/commandController.js',
+  'js/storageController.js',
+  'js/exwebThrottle.js',
+  'css/throttle.css',
+  'css/layout.css',
 ];
 
-  // 'index.html',
-  // 'js/commandController.js',
-  // 'js/storageController.js',
-  // 'js/exwebThrottle.js',
-  // 'css/throttle.css',
-  // 'css/layout.css',
+
 
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
