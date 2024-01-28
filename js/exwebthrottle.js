@@ -668,12 +668,12 @@ $(document).ready(function(){
       $(".details-panel").hide();
       $(this).css("top", 0);
       $(this).html('<span class="icon-circle-down"></span>');
-      $("#log-box").height("170px");
+      $("#log-box").height("190px");
     } else {
       $(".details-panel").show();
       $(this).html('<span class="icon-circle-up"></span>');
       $(this).css("top", "-9px");
-      $("#log-box").height("80px");
+      $("#log-box").height("120px");
     }
   });
 

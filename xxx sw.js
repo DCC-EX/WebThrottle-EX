@@ -4,7 +4,7 @@ var filesToCache = [
   'index.html',
   'images/favicon.ico',
   'images/carbon_fibre.png',
-  'images/cover.jpg',
+  'images/cover.png',
   'images/darkmkBigBackground.png',
   'images/darkmkBigFront.png',
   'images/full-logo.png',
