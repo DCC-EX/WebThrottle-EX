@@ -68,6 +68,15 @@ let outputStream;
 
 let pressed = false;
 
+window.lastLocoSent = -1;
+window.lastSpeedSent = -1;
+window.lastDirSent = -1;
+window.lastTimeSent = new Date();
+window.lastLocoReceived = -1;
+window.lastSpeedReceived = -1;
+window.lastDirReceived = -1;
+
+window.csIsReady = false;
 
 // Enables and disables ui elements
 
@@ -342,22 +351,63 @@ function toggleThrottleState(state){
     3. Set respctive speed number 
 ************************************************************/
 function setSpeedofControllers(){
-    spd = getSpeed();
-    
-    if(!isStopped){
-        writeToStream("t " + getCV() + " " + spd + " " + getDirection());
+  // displayLog('setSpeedofControllers()');
+  spd = getSpeed();
+  
+  if(!isStopped){
+      // writeToStream("t " + getCV() + " " + spd + " " + getDirection());
+      sendSpeed(getCV(),spd ,getDirection());
+  }
+  setPositionofControllers();
+}
+
+function setPositionofControllers(){
+  // displayLog('setPositionofControllers()');
+  spd = getSpeed();
+  
+  // Circular
+  $("#circular-throttle").roundSlider("setValue", spd);
+
+  // Vertical
+  $("#v-throttle").val(spd).change();  
+  $("#v-throttle").slider("option", "value", spd);
+  $("#speed-indicator").html(spd);
+
+  // Knob
+  $("#knob-value").html(spd);
+  knob.val(spd).change();
+}
+
+function sendSpeed(locoId, speed, dir) {
+  // displayLog('sendSpeed()');
+  if ( (locoId!=lastLocoSent) || (speed!=lastSpeedSent) || (dir!=lastDirSent) ) {
+    writeToStream("t " + locoId + " " + speed + " " + dir);
+    lastLocoSent = locoId;
+    lastSpeedSent = speed;
+    lastDirSent = dir;
+  }
+  lastTimeSent = new Date();
+  // displayLog('sendSpeed() ' + lastTimeSent);
+}
+
+function setPositionOfDirectionSlider(dir) { //1=forward -1=reverse 0=stop
+  $(".dir-toggle").removeClass("forward backward  stop");
+  switch (dir) {
+    case (0): {
+      // displayLog('[EXTERNAL] Forward:' + dir);
+      $(".dir-toggle").addClass("forward");
+      break;
     }
-    // Circular
-    $("#circular-throttle").roundSlider("setValue", spd);
-
-    // Vertical
-    $("#v-throttle").val(spd).change();  
-    $("#v-throttle").slider("option", "value", spd);
-    $("#speed-indicator").html(spd);
-
-    // Knob
-    $("#knob-value").html(spd);
-    knob.val(spd).change();
+    case (1): {
+      // displayLog('[EXTERNAL] backward:' + dir);
+      $(".dir-toggle").addClass("backward");
+      break;
+    }
+    // case (0): {
+    //   $(".dir-toggle").addClass("stop");
+    //   break;
+    // }
+  }
 }
 
 // This function will generate commands for each type of function
@@ -507,6 +557,7 @@ $(document).ready(function(){
   // Disconnect command station
   $("#button-disconnect").on("click", function () {
     disconnectServer();
+    csIsReady = false;
   });
 
   // Aquire loco of given CV
@@ -581,13 +632,16 @@ $(document).ready(function(){
     // Below condition is to avoid infinite loop
     // that triggers change() event indifinitely
     if (oldValue != kval) {
-      setSpeedofControllers();
+      if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
+        setSpeedofControllers();
+      } else {
+        setPositionofControllers();
+      }
     } else {
-      writeToStream(
-        "t " + getCV() + " " + getSpeed() + " " + getDirection()
-      );
+      // if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
+        sendSpeed(getCV(),getSpeed() ,getDirection());
+      // }
     }
-    //console.log( "t " + getCV() + " " + getSpeed() + " " + getDirection());
   });
 
   /////////////////////////////////////////////
@@ -609,11 +663,9 @@ $(document).ready(function(){
     update: function (slider) {
       setSpeed(slider.value);
       setSpeedofControllers();
-      //console.log("t "+getCV()+" "+getSpeed()+" "+getDirection());
     },
     valueChange: function (slider) {
       //setSpeed(slider.value);
-      //writeToStream("t "+getCV()+" "+getSpeed()+" "+getDirection());
       // console.log("This event is similar to 'update' event, in addition it will trigger even the value was changed through programmatically also.");
     },
   });
@@ -635,7 +687,7 @@ $(document).ready(function(){
           isDirectionToggleStopped = false;
           setDirection(1);
           setSpeedofControllers();
-          writeToStream("t " + getCV() + " " + getSpeed() + " 1");
+          sendSpeed(getCV(),getSpeed(),1);
           break;
         }
         case "backward": {
@@ -643,7 +695,7 @@ $(document).ready(function(){
           isDirectionToggleStopped = false;
           setDirection(0);
           setSpeedofControllers();
-          writeToStream("t " + getCV() + " " + getSpeed() + " 0");
+          sendSpeed(getCV(),getSpeed(),0);
           break;
         }
         case "stop": {
@@ -652,7 +704,7 @@ $(document).ready(function(){
           dir = getDirection();
           setSpeed(0);
           setSpeedofControllers();
-          writeToStream("t " + getCV() + " 0 " + dir);
+          sendSpeed(getCV(),0,dir);
           break;
         }
       }
@@ -668,7 +720,7 @@ $(document).ready(function(){
         dir = getDirection();
         setSpeed(0);
         setSpeedofControllers();
-        writeToStream("t " + getCV() + " -1 " + dir);
+        sendSpeed(getCV(),-1,dir);
       }
       else{
         console.log("No loco acquired");
@@ -700,9 +752,7 @@ $(document).ready(function(){
         if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp + speedStep);
           setSpeedofControllers();
-          writeToStream(
-            "t " + getCV() + " " + getSpeed() + " " + getDirection()
-          );
+          sendSpeed(getCV(),getSpeed(),getDirection());
           sp = 0;
         }
       }, 100);
@@ -716,9 +766,7 @@ $(document).ready(function(){
       if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp + speedStep);
         setSpeedofControllers();
-        writeToStream(
-          "t " + getCV() + " " + getSpeed() + " " + getDirection()
-        );
+        sendSpeed(getCV(),getSpeed(),getDirection());
         sp = 0;
       }
     });
@@ -733,9 +781,7 @@ $(document).ready(function(){
         if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp - speedStep);
           setSpeedofControllers();
-          writeToStream(
-            "t " + getCV() + " " + getSpeed() + " " + getDirection()
-          );
+          sendSpeed(getCV(),getSpeed(),getDirection());
           sp = 0;
         }
       }, 100);
@@ -749,9 +795,7 @@ $(document).ready(function(){
       if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp - speedStep);
         setSpeedofControllers();
-        writeToStream(
-          "t " + getCV() + " " + getSpeed() + " " + getDirection()
-        );
+        sendSpeed(getCV(),getSpeed(),getDirection());
         sp = 0;
       }
     });

@@ -141,8 +141,38 @@ function parseResponse(cmd) {  // some basic ones only
                 $("#power-status").html("is On");
             }
         } else if (cmd.charAt(2)=='@') {
-            if (cmd.includes("Free RAM=")) {
+            if ( (cmd.includes("Free RAM=")) && (!csIsReady)) {
+                csIsReady = true;
                 displayLog('<br><br>[READY] EX-CommandStation is READY<br>');
+            }
+        } else if (cmd.charAt(2)=='l') {
+            cmd = cmd.replaceAll('\n',"");
+            let cmdArray = cmd.split(" ");
+            try {
+                // displayLog('[EXTERNAL] 0: "' + cmdArray[0] + '" 1: "' + cmdArray[1] + '" 2: "' + cmdArray[2] + ' 3: "' + cmdArray[3] +'"' );
+                lastLocoReceived = parseInt(cmdArray[1]);
+                let speedbyte = parseInt(cmdArray[3]);
+                let functMap = parseInt(cmdArray[4]);
+                lastSpeedReceived = 0;
+                lastDirReceived = 0;
+                if (getCV() == lastLocoReceived) {
+                    if ((speedbyte>=2) && (speedbyte<=127)) {
+                        lastSpeedReceived = speedbyte-1;
+                        lastDirReceived = 1;
+                    } else if ( (speedbyte>=130) && (speedbyte<=255) ) { 
+                        lastSpeedReceived = speedbyte - 129;
+                        lastDirReceived = 0;
+                    }
+                    let now = new Date();
+                    if((getSecondSinceMidnight(now)- getSecondSinceMidnight(lastTimeSent)) > 0.1) { // don't respond if we sent a command in the specified period
+                        setPositionOfDirectionSlider(lastDirReceived);
+                        setPositionofControllers();
+                        setDirection(lastDirReceived);
+                        setSpeed(lastSpeedReceived);
+                    }
+                }
+            } catch (e) {
+                console.log(getTimeStamp + '[ERROR] Unable process speed commands');
             }
         }
     }
@@ -341,6 +371,14 @@ function getTimeStamp() {
              ((now.getSeconds() < 10)
                  ? ("0" + now.getSeconds())
                  : (now.getSeconds())));
+}
+
+function getSecondSinceMidnight(myDate) {
+    var seconds = myDate.getHours() * 60 * 60; 
+    seconds = seconds + myDate.getMinutes() * 60;
+    seconds = seconds + myDate.getSeconds();
+    seconds = seconds + (myDate.getMilliseconds() / 1000);
+    return seconds;
 }
 
 function copyLogToClipboard() {
