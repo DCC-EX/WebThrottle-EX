@@ -130,26 +130,44 @@ async function readLoop() {
 }
 
 function parseResponse(cmd) {  // some basic ones only
-    // cmd.charAt(0) should be a linefeed
-    if (cmd.charAt(1)=='<') {
-        if (cmd.charAt(2)=='p') {
-            if (cmd.charAt(3)=="0") {
+    cmd = cmd.replaceAll('\n',"");
+    cmd = cmd.replaceAll('\r',"");
+
+    if (cmd.charAt(0)=='<') {
+        if (cmd.charAt(1)=='p') {
+            if (cmd.charAt(2)=="0") {
                 $("#power-switch").prop('checked', false)
                 $("#power-status").html("is Off");
             } else {
                 $("#power-switch").prop('checked', true)
                 $("#power-status").html("is On");
             }
-        } else if (cmd.charAt(2)=='@') {
+        } else if ( (cmd.charAt(1)=='@') || (cmd.charAt(1)=='*') ){
             if ( (cmd.includes("Free RAM=")) && (!csIsReady)) {
                 csIsReady = true;
-                displayLog('<br><br>[READY] EX-CommandStation is READY<br>');
+                displayLog('<br><br>[i] EX-CommandStation is READY<br>');
+                $("#button-getloco").removeClass("ui-state-disabled");
+                $("#button-sendCmd").removeClass("ui-state-disabled");
             }
-        } else if (cmd.charAt(2)=='l') {
-            cmd = cmd.replaceAll('\n',"");
-            let cmdArray = cmd.split(" ");
+
+        } else if (cmd.charAt(1)=='i') {
+            cmdArray = cmd.split(" ");
+            versionText = "";
+            if (cmdArray[1].charAt(0)=='V') //version
             try {
-                // displayLog('[EXTERNAL] 0: "' + cmdArray[0] + '" 1: "' + cmdArray[1] + '" 2: "' + cmdArray[2] + ' 3: "' + cmdArray[3] +'"' );
+                versionText = cmdArray[1].substring(2,cmdArray[1].length);
+                versionArray = versionText.split(".");
+                csVersion = parseInt(versionArray[0])
+                 + parseInt(versionArray[1]) / 100
+                 + parseInt(versionArray[2]) / 100000;
+                displayLog('[i] Version:' + csVersion);
+            } catch (e) {
+                console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
+            }
+
+        } else if (cmd.charAt(1)=='l') {
+            cmdArray = cmd.split(" ");
+            try {
                 lastLocoReceived = parseInt(cmdArray[1]);
                 let speedbyte = parseInt(cmdArray[3]);
                 let functMap = parseInt(cmdArray[4]);

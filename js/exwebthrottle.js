@@ -76,6 +76,7 @@ window.lastLocoReceived = -1;
 window.lastSpeedReceived = -1;
 window.lastDirReceived = -1;
 
+window.csVersion = 5;
 window.csIsReady = false;
 
 // Enables and disables ui elements
@@ -105,8 +106,8 @@ function uiDisable (status) {
         $("#f"+i).addClass("ui-state-disabled")
       }
     } else {
-      $("#button-getloco").removeClass("ui-state-disabled")
-      $("#button-sendCmd").removeClass("ui-state-disabled")
+      // $("#button-getloco").removeClass("ui-state-disabled")
+      // $("#button-sendCmd").removeClass("ui-state-disabled")
       $("#cmd-direct").removeClass("ui-state-disabled")
       $("#ex-locoid").removeClass("ui-state-disabled")
       $("#power-switch").parent().removeClass("ui-state-disabled")
@@ -330,17 +331,19 @@ function toggleThrottleState(state){
         $("#v-throttle").slider("enable");
         $("#button-right").removeClass("ui-state-disabled")
         $("#button-left").removeClass("ui-state-disabled")
-        $("#button-right").slider("enable");
-        $("#button-left").slider("enable");
+        // $("#button-right").button("enable");
+        // $("#button-left").button("enable");
         toggleKnobState($("#knobthrottle"), true);
     }else{
         $("#circular-throttle").roundSlider("disable");
         $("#v-throttle").slider("disable");
         $("#button-right").addClass("ui-state-disabled")
         $("#button-left").addClass("ui-state-disabled")
-        $("#button-right").slider("disable");
-        $("#button-left").slider("disable");
+        // $("#button-right").button("disable");
+        // $("#button-left").button("disable");
         toggleKnobState($("#knobthrottle"), false);
+        setSpeed(0);
+        setPositionofControllers(0);
     }
 }
 
@@ -576,7 +579,7 @@ $(document).ready(function(){
         toggleThrottleState(!isDirectionToggleStopped);
       } else {
         currentCV = getCV();
-        $("#ex-locoid").val(0);
+        $("#ex-locoid").val("");
         setCV(0);
         $("#loco-info").html("Released Locomotive: " + currentCV);
         acButton.data("acquired", false);
