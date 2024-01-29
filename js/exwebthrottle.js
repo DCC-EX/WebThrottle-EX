@@ -88,12 +88,12 @@ function uiDisable (status) {
     document.getElementById('dir-f').disabled = status
     document.getElementById('dir-S').disabled = status*/
     //document.getElementById('dir-b').disabled = status
-    $("#ex-locoid").prop('disabled', status)
-    $("#button-getloco").prop('disabled', status)
     $("#power-switch").prop('disabled', status)
     $("#button-sendCmd").prop('disabled', status)
     if (status) {
-      $("#button-getloco").addClass("ui-state-disabled")
+      $("#ex-locoid").prop('disabled', status)
+      $("#button-getloco").prop('disabled', status)
+        $("#button-getloco").addClass("ui-state-disabled")
       $("#button-sendCmd").addClass("ui-state-disabled")
       $("#cmd-direct").addClass("ui-state-disabled")
       $("#ex-locoid").addClass("ui-state-disabled")
@@ -383,6 +383,8 @@ function setPositionofControllers(){
 
 function sendSpeed(locoId, speed, dir) {
   // displayLog('sendSpeed()');
+  if (locoId <= 0) return;
+
   if ( (locoId!=lastLocoSent) || (speed!=lastSpeedSent) || (dir!=lastDirSent) ) {
     writeToStream("t " + locoId + " " + speed + " " + dir);
     lastLocoSent = locoId;
@@ -567,7 +569,8 @@ $(document).ready(function(){
     acButton = $(this);
     isAcquired = $(this).data("acquired");
     // Parse int only returns number if the string is starting with Number
-    locoid_input = parseInt($("#ex-locoid").val());
+    locoid_input = 0;
+    if ($("#ex-locoid").val().length>0) locoid_input = parseInt($("#ex-locoid").val());
 
     if (locoid_input != 0) {
       if (isAcquired == false && getCV() == 0) {
@@ -576,6 +579,7 @@ $(document).ready(function(){
         acButton.data("acquired", true);
         acButton.html('<span class="icon-cross"></span>');
         toggleThrottleState(!isDirectionToggleStopped);
+
       } else {
         currentCV = getCV();
         $("#ex-locoid").val("");

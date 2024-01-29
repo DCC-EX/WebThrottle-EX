@@ -138,7 +138,9 @@ function parseResponse(cmd) {  // some basic ones only
         displayLog('<br><br>[i] EX-CommandStation is READY<br>');
         $("#button-getloco").removeClass("ui-state-disabled");
         $("#button-sendCmd").removeClass("ui-state-disabled");
-        
+        $("#ex-locoid").prop('disabled', false)
+        $("#button-getloco").prop('disabled', false)
+           
     } else if (cmd.charAt(0)=='<') {
 
         if (cmd.charAt(1)=='p') {
