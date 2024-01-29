@@ -1,5 +1,6 @@
 # Version 1.3.7
 - UI will respond to speed and direction changes on the current loco, broadcast by the CS
+- disable loco input until the CS is loaded
 
 # Version 1.3.6
 - small UI improvements
