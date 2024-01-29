@@ -133,7 +133,14 @@ function parseResponse(cmd) {  // some basic ones only
     cmd = cmd.replaceAll('\n',"");
     cmd = cmd.replaceAll('\r',"");
 
-    if (cmd.charAt(0)=='<') {
+    if ( (cmd.includes("Free RAM=")) && (!csIsReady)) {
+        csIsReady = true;
+        displayLog('<br><br>[i] EX-CommandStation is READY<br>');
+        $("#button-getloco").removeClass("ui-state-disabled");
+        $("#button-sendCmd").removeClass("ui-state-disabled");
+        
+    } else if (cmd.charAt(0)=='<') {
+
         if (cmd.charAt(1)=='p') {
             if (cmd.charAt(2)=="0") {
                 $("#power-switch").prop('checked', false)
@@ -141,13 +148,6 @@ function parseResponse(cmd) {  // some basic ones only
             } else {
                 $("#power-switch").prop('checked', true)
                 $("#power-status").html("is On");
-            }
-        } else if ( (cmd.charAt(1)=='@') || (cmd.charAt(1)=='*') ){
-            if ( (cmd.includes("Free RAM=")) && (!csIsReady)) {
-                csIsReady = true;
-                displayLog('<br><br>[i] EX-CommandStation is READY<br>');
-                $("#button-getloco").removeClass("ui-state-disabled");
-                $("#button-sendCmd").removeClass("ui-state-disabled");
             }
 
         } else if (cmd.charAt(1)=='i') {
@@ -260,11 +260,12 @@ class JSONTransformer {
 
 async function disconnectServer() {
     if ($("#power-switch").is(':checked')) {
-	  $("#log-box").append('<br>'+'turn off power'+'<br>');
+	  displayLog('[i] Turning off track power');
 	  writeToStream('0');
 	  $("#power-switch").prop('checked', false)
 	  $("#power-status").html('Off');
-    }
+    }   
+    csIsReady = false;
     uiDisable(true)
     if (port) {
     // Close the input stream (reader).
@@ -403,6 +404,6 @@ function copyLogToClipboard() {
     let text = document.getElementById('log-box').innerText;
     text = "```\n" + text + "\n```"
     navigator.clipboard.writeText(text);
-    console.log('Content copied to clipboard');
-    displayLog("Content copied to clipboard");
+    console.log('[i] Content copied to clipboard');
+    displayLog("[i] Content copied to clipboard");
 }

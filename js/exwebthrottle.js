@@ -560,7 +560,6 @@ $(document).ready(function(){
   // Disconnect command station
   $("#button-disconnect").on("click", function () {
     disconnectServer();
-    csIsReady = false;
   });
 
   // Aquire loco of given CV
