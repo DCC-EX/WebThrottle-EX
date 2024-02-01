@@ -77,6 +77,7 @@
             </header>
             <ul>
                 <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
+                <li tabindex="0" class="cv-programmer" id="cv-programmer-nav"><span>CV Programmer</span></li>
                 <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
                 <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
                 <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
@@ -252,6 +253,80 @@
                         </div>
                         <div class="column-6 mobile-100">
                             <div class="log-msg" id="log-box">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="cv-programmer-window" class="section" hidden="true">
+                    <div class="row settings-heading">
+                        <div class="column-7 pl0 hdng">
+                            CV Programmer (PROG track only)
+                        </div>
+                    </div>
+
+                    <div Class="details-panel" id="cv-details-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="cv-loco-id-container row">
+                                    <div class="column-4 cv-addr-ctrl">
+                                        <label for="cv-locoid" class="formbuilder-text-label">
+                                            Address
+                                        </label>
+                                        <input id="cv-locoid" type="text" loco-cv="0" name="cv-loco-id" placeholder="DCC Address"/>
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Read Address on PROG track" name="button-cv-read-loco-id" access="false" id="button-cv-read-loco-id">
+                                                Read Address
+                                            </button>
+                                        </div>
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Write Address on PROG track" name="button-cv-write-loco-id" access="false" id="button-cv-write-loco-id">
+                                                Write Address
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="cv-cv-container row">
+                                    <div class="column-3 cv-cv-ctrl">
+                                        <label for="cv-cvid" class="formbuilder-text-label">
+                                            CV
+                                        </label>
+                                        <input id="cv-cvid" type="text" loco-cv="0" name="cv-cv-id" placeholder="CV Number"/>
+                                    </div>
+                                    <div class="column-3 cv-cv-ctrl">
+                                            <label for="cv-cvid" class="formbuilder-text-label">
+                                            CV Value
+                                        </label>
+                                        <input id="cv-cvvalue" type="text" loco-cv="0" name="cv-cv-value" placeholder="CV Value"/>
+                                    </div>
+                                    <div class="column-4">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Read CV on PROG track" name="button-cv-read-cv" access="false" id="button-cv-read-cv">
+                                                Read CV
+                                            </button>
+                                        </div>
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Write CV on PROG track" name="button-cv-write-cv" access="false" id="button-cv-write-cv">
+                                                Write CV
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+ 
+                    <div id="debug-console2">
+                        <div class="column-100 mobile-100">
+                            <div class="log-msg log-msg2" id="log-box2">
                             </div>
                         </div>
                     </div>

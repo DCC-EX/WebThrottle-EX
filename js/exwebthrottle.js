@@ -93,7 +93,7 @@ function uiDisable (status) {
     if (status) {
       $("#ex-locoid").prop('disabled', status)
       $("#button-getloco").prop('disabled', status)
-        $("#button-getloco").addClass("ui-state-disabled")
+      $("#button-getloco").addClass("ui-state-disabled")
       $("#button-sendCmd").addClass("ui-state-disabled")
       $("#cmd-direct").addClass("ui-state-disabled")
       $("#ex-locoid").addClass("ui-state-disabled")
@@ -105,6 +105,15 @@ function uiDisable (status) {
       for (i=0;i<=28;i++) {
         $("#f"+i).addClass("ui-state-disabled")
       }
+
+      $("#button-cv-read-loco-id").prop('disabled', status)
+      $("#button-cv-read-loco-id").addClass("ui-state-disabled")
+      $("#button-cv-write-loco-id").prop('disabled', status)
+      $("#button-cv-write-loco-id").addClass("ui-state-disabled")
+      $("#button-cv-read-cv").prop('disabled', status)
+      $("#button-cv-read-cv").addClass("ui-state-disabled")
+      $("#button-cv-write-cv").prop('disabled', status)
+      $("#button-cv-write-cv").addClass("ui-state-disabled")
     } else {
       // $("#button-getloco").removeClass("ui-state-disabled")
       // $("#button-sendCmd").removeClass("ui-state-disabled")
@@ -118,7 +127,17 @@ function uiDisable (status) {
       for (i=0;i<=28;i++) {
         $("#f"+i).removeClass("ui-state-disabled")
       }
+
+      // $("#button-cv-read-loco-id").prop('disabled', status)
+      // $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
+      // $("#button-cv-write-loco-id").prop('disabled', status)
+      // $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
+      // $("#button-cv-read-cv").prop('disabled', status)
+      // $("#button-cv-read-cv").removeClass("ui-state-disabled")
+      // $("#button-cv-write-cv").prop('disabled', status)
+      // $("#button-cv-write-cv").removeClass("ui-state-disabled")
     }
+
     $("#dir-f").prop('disabled', status)
     $("#dir-S").prop('disabled', status)
     $("#dir-b").prop('disabled', status)
@@ -592,6 +611,44 @@ $(document).ready(function(){
     }
   });
 
+  // read DCC address on PROG track
+  $("#button-cv-read-loco-id").on("click", function () {
+    writeToStream('R');
+  });
+
+  // write DCC address on PROG track
+  $("#button-cv-write-loco-id").on("click", function () {
+    cv_locoid_input = 0;
+    if ($("#cv-locoid").val().length>0) cv_locoid_input = parseInt($("#cv-locoid").val());
+
+    if (cv_locoid_input != 0) {
+      writeToStream('W ' + cv_locoid_input);
+    }
+  });
+
+    // read cv address on PROG track
+    $("#button-cv-read-cv").on("click", function () {
+      cv_cvid_input = 0;
+      if ($("#cv-cvid").val().length>0) cv_cvid_input = parseInt($("#cv-cvid").val());
+  
+      if (cv_cvid_input != 0) {
+        writeToStream('R ' + cv_cvid_input);
+      }
+    });
+  
+    // write DCC address on PROG track
+    $("#button-cv-write-cv").on("click", function () {
+      cv_cvid_input = 0;
+      if ($("#cv-cvid").val().length>0) cv_cvid_input = parseInt($("#cv-cvid").val());
+      cv_cvvalue_input = -1;
+      if ($("#cv-cvvalue").val().length>0) cv_cvvalue_input = parseInt($("#cv-cvvalue").val());
+  
+      if ( (cv_cvid_input != 0) && (cv_cvvalue_input>=0) ) {
+        writeToStream('W ' + cv_cvid_input + " " + cv_cvvalue_input);
+      }
+    });
+  
+  
   // Switch ON/OFF power of the Command station
   $("#power-switch").on("click", function () {
     pb = $(this).is(":checked");
@@ -919,6 +976,11 @@ $(document).ready(function(){
     $("#throttle-window").show();
     $("#nav-close").trigger("click");
   });
+  $("#cv-programmer-nav").on("click", function () {
+    hideWindows();
+    $("#cv-programmer-window").show();
+    $("#nav-close").trigger("click");
+  });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
@@ -1032,6 +1094,7 @@ function setFunctionMaps() {
 
 function hideWindows(){
     $("#throttle-window").hide();
+    $("#cv-programmer-window").hide();
     $("#loco-window").hide();
     $("#fn-map-window").hide();
     $("#settings-window").hide();

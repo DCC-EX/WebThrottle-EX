@@ -140,8 +140,18 @@ function parseResponse(cmd) {  // some basic ones only
         $("#button-sendCmd").removeClass("ui-state-disabled");
         $("#ex-locoid").prop('disabled', false)
         $("#button-getloco").prop('disabled', false)
+        $("#button-cv-read-loco-id").prop('disabled', false)
+        $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
+        $("#button-cv-write-loco-id").prop('disabled', false)
+        $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
+        $("#button-cv-read-cv").prop('disabled', false)
+        $("#button-cv-read-cv").removeClass("ui-state-disabled")
+        $("#button-cv-write-cv").prop('disabled', false)
+        $("#button-cv-write-cv").removeClass("ui-state-disabled")
            
     } else if (cmd.charAt(0)=='<') {
+
+        cmdArray = cmd.split(" ");
 
         if (cmd.charAt(1)=='p') {
             if (cmd.charAt(2)=="0") {
@@ -153,7 +163,6 @@ function parseResponse(cmd) {  // some basic ones only
             }
 
         } else if (cmd.charAt(1)=='i') {
-            cmdArray = cmd.split(" ");
             versionText = "";
             if (cmdArray[1].charAt(0)=='V') //version
             try {
@@ -168,7 +177,6 @@ function parseResponse(cmd) {  // some basic ones only
             }
 
         } else if (cmd.charAt(1)=='l') {
-            cmdArray = cmd.split(" ");
             try {
                 lastLocoReceived = parseInt(cmdArray[1]);
                 let speedbyte = parseInt(cmdArray[3]);
@@ -192,7 +200,42 @@ function parseResponse(cmd) {  // some basic ones only
                     }
                 }
             } catch (e) {
-                console.log(getTimeStamp + '[ERROR] Unable process speed commands');
+                console.log(getTimeStamp + '[ERROR] Unable to process speed commands');
+            }
+        } else if ( (cmd.charAt(1)=='r') && (cmdArray.length==2) ) {
+            try {
+                locoAddr = parseInt(cmdArray[1]);
+                if (locoAddr>0) {
+                    $("#cv-locoid").val(locoAddr);
+                } else {
+                    displayLog("[i] DCC Address Read Failed!");
+                }
+            } catch (e) {
+                console.log(getTimeStamp + '[ERROR] Unable to process read address response');
+            }
+        } else if (cmd.charAt(1)=='w') {
+            try {
+                locoAddr = parseInt(cmdArray[1]);
+                if (locoAddr>0) {
+                    
+                } else {
+                    displayLog("[i] DCC Address Write Failed!");
+                }
+            } catch (e) {
+                console.log(getTimeStamp + '[ERROR] Unable to process write address response');
+            }
+        } else if ( (cmd.charAt(1)=='v') || (cmd.charAt(1)=='r') ) {
+            try {
+                cvid = parseInt(cmdArray[1]);
+                cvValue = parseInt(cmdArray[2]);
+                if ( (cvid>0) && (cvValue>-1) ) {
+                    $("#cv-cvid").val(cvid);
+                    $("#cv-cvvalue").val(cvValue);
+                } else {
+                    displayLog("[i] CV Read/Write Failed!");
+                }
+            } catch (e) {
+                console.log(getTimeStamp + '[ERROR] Unable to process read CV response');
             }
         }
     }
@@ -336,6 +379,9 @@ function displayLog(data){
     if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
     $("#log-box").append(data.toString()+"<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
+
+    $("#log-box2").append(data.toString()+"<br>");
+    $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
 }
 
 // Function to generate commands for functions F0 to F4

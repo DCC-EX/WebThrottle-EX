@@ -379,6 +379,9 @@ label.formbuilder-file-label {
     overflow: auto;
     resize: vertical;
 }
+.log-msg2 {    
+    height: 400px;
+}
 .note-msg{
     padding: 10px 10px;
     text-align: right;
