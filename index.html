@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.7";
+            var version = "1.3.8";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -302,7 +302,7 @@
                                     </div>
                                     <div class="column-3 cv-cv-ctrl">
                                             <label for="cv-cvid" class="formbuilder-text-label">
-                                            CV Value
+                                            Value
                                         </label>
                                         <input id="cv-cvvalue" type="text" loco-cv="0" name="cv-cv-value" placeholder="CV Value"/>
                                     </div>
@@ -317,6 +317,45 @@
                                                 Write CV
                                             </button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="cv-common-cvs-container row">
+                                    <div class="column-6 cv-cv-ctrl">
+                                        <label for="cv-cvid" class="formbuilder-text-label">
+                                            Common CVs
+                                        </label>
+                                        <select id="common-cvs" class="select-control select-xl" name="common-cvs" title="Common CVs">
+                                            <option value="0">&lt;select&gt;</option>
+                                            <option value="2">Vstart</option>
+                                            <option value="3">Acceleration Rate</option>
+                                            <option value="4">Deceleration Rate </option>
+                                            <option value="5">Vhigh</option>
+                                            <option value="6">Vmid</option>
+                                            <option value="7">Manufacturer Version No.</option>
+                                            <option value="8">Manufactured ID</option>
+                                            <option value="9">Total PWM Period</option>
+                                            <option value="10">EMF Feedback Cutout</option>
+                                            <option value="11">Packet Time-Out Value</option>
+                                            <option value="12">Power Source Conversion</option>
+                                            <option value="13">Alt. Mode Funct. Status F1-F8</option>
+                                            <option value="14">Alt. Mode Funct. Status FL,F9-F12</option>
+                                            <option value="15">Decoder Lock CV15</option>
+                                            <option value="16">Decoder Lock CV16</option>
+                                            <option value="19">Consist Address</option>
+                                            <option value="21">Consist Addr Active for F1-F8</option>
+                                            <option value="22">Consist Addr Active for FL-F9-F12</option>
+                                            <option value="23">Acceleration Adjustment</option>
+                                            <option value="24">Deceleration Adjustment</option>
+                                            <option value="29">Mode Control (dir, addr size, etc.)</option>
+                                            <option value="65">Kick Start</option>
+                                            <option value="66">Forward Trim</option>
+                                            <option value="95">Reverse Trim</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -1,3 +1,6 @@
+# Version 1.3.8
+- Addition of a CV Programmer page
+
 # Version 1.3.7
 - UI will respond to speed and direction changes on the current loco, broadcast by the CS
 - disable loco input until the CS is loaded
