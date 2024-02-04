@@ -1,3 +1,6 @@
+# Version 1.3.9
+- Improvements for when a separate throttle is controlling the same loco
+
 # Version 1.3.8
 - Addition of a CV Programmer page
 

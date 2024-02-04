@@ -191,12 +191,17 @@ function parseResponse(cmd) {  // some basic ones only
                         lastSpeedReceived = speedbyte - 129;
                         lastDirReceived = 0;
                     }
+
                     let now = new Date();
-                    if((getSecondSinceMidnight(now)- getSecondSinceMidnight(lastTimeSent)) > 0.1) { // don't respond if we sent a command in the specified period
-                        setPositionOfDirectionSlider(lastDirReceived);
-                        setPositionofControllers();
+                    lastTimeReceived = now;
+
+                    if((getSecondSinceMidnight(now)-getSecondSinceMidnight(lastTimeSent)) > 0.1) { // don't respond if we sent a command in the specified period
                         setDirection(lastDirReceived);
                         setSpeed(lastSpeedReceived);
+                        setPositionOfDirectionSlider(lastDirReceived);
+                        setPositionofControllers();
+                    } else {
+                        displayLog('[i] Ignoring Received Speed - too soon since last speed send.');
                     }
                 }
             } catch (e) {
@@ -431,6 +436,8 @@ function sendCommandForF21ToF28(fn, opr){
 
 function getTimeStamp() {
     var now = new Date();
+    var startOfSec = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    var millsecs = now.getMilliseconds() - startOfSec.getMilliseconds();
     return (//(now.getFullYear()) + '/' +
             // (now.getMonth()+1) + '/' +
             // now.getDate() + " " +
@@ -440,8 +447,13 @@ function getTimeStamp() {
                  : (now.getMinutes())) + ':' +
              ((now.getSeconds() < 10)
                  ? ("0" + now.getSeconds())
-                 : (now.getSeconds())));
-}
+                 : (now.getSeconds()))) + ":" +
+             ((millsecs < 10)
+                 ? ("00" + millsecs)
+                 : ((millsecs < 100)
+                    ? ("0" + millsecs)
+                    : (millsecs)));
+    }
 
 function getSecondSinceMidnight(myDate) {
     var seconds = myDate.getHours() * 60 * 60; 

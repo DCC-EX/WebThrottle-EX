@@ -72,6 +72,7 @@ window.lastLocoSent = -1;
 window.lastSpeedSent = -1;
 window.lastDirSent = -1;
 window.lastTimeSent = new Date();
+window.lastTimeReceived = new Date();
 window.lastLocoReceived = -1;
 window.lastSpeedReceived = -1;
 window.lastDirReceived = -1;
@@ -401,7 +402,7 @@ function setPositionofControllers(){
 }
 
 function sendSpeed(locoId, speed, dir) {
-  // displayLog('sendSpeed()');
+  // displayLog('sendSpeed() locoId: ' + locoId);
   if (locoId <= 0) return;
 
   if ( (locoId!=lastLocoSent) || (speed!=lastSpeedSent) || (dir!=lastDirSent) ) {
@@ -409,8 +410,8 @@ function sendSpeed(locoId, speed, dir) {
     lastLocoSent = locoId;
     lastSpeedSent = speed;
     lastDirSent = dir;
+    lastTimeSent = new Date();
   }
-  lastTimeSent = new Date();
   // displayLog('sendSpeed() ' + lastTimeSent);
 }
 
