@@ -2,8 +2,8 @@
 // New functions are based on this
 // If no Map is loaded this will load ad default
 var fnMasterData = {
-    "f0": [0, 0, "Head Light", 1], // Index => 0=state, 1=type (0-Toggle, 1-press), 
-    "f1": [0, 1, "Bell" , 1],      //          2=Label, 3= Available
+    "f0": [0, 0, "Headlight", 1], // Index => 0=state, 1=type (0-Toggle, 1-press), 
+    "f1": [0, 0, "Bell" , 1],      //          2=Label, 3= Available
     "f2": [0, 1, "Horn", 1], 
     "f3": [0, 0, "F3" , 1],
     "f4": [0, 0, "F4", 1],

@@ -180,7 +180,7 @@ function parseResponse(cmd) {  // some basic ones only
             try {
                 lastLocoReceived = parseInt(cmdArray[1]);
                 let speedbyte = parseInt(cmdArray[3]);
-                // let functMap = parseInt(cmdArray[4]);
+                let functMap = parseInt(cmdArray[4]);
                 if (getCV() == lastLocoReceived) {
 
                     let now = new Date();
@@ -209,6 +209,13 @@ function parseResponse(cmd) {  // some basic ones only
                         setPositionofControllers();
                     } else {
                         displayLog('[i] Ignoring Received Speed - too soon since last speed send.');
+                    }
+                    for (i=0; i<=28; i++) {
+                        fnState = (functMap >> i) & 0x1;
+                        fnStateText = (fnState==1) ? "true" : "false";
+                        if (getFunCurrentVal("f"+i) != fnStateText) {
+                            $("#f"+i).attr("aria-pressed",fnStateText);
+                        }
                     }
                 }
             } catch (e) {
