@@ -19,11 +19,11 @@
     This is part of the DCC-EX Project for model railroading and more.
 	For more information, see us at dcc-ex.com.
 */
-window.cv=0;
-window.speed=0;
-window.direction=1;
-window.server="";
-window.port=4444;
+window.cv = 0;
+window.speed = 0;
+window.direction = 1;
+window.server = "";
+window.port = 4444;
 window.speedStep = 1;
 window.functions = {
     "f0": 0,
@@ -76,6 +76,9 @@ window.lastTimeReceived = new Date();
 window.lastLocoReceived = -1;
 window.lastSpeedReceived = -1;
 window.lastDirReceived = -1;
+
+window.DIRECTION_FORWARD = 1;
+window.DIRECTION_REVERSED = 0;
 
 window.csVersion = 5;
 window.csIsReady = false;
@@ -187,7 +190,7 @@ function setDirection(dir){
 }
 
 // Get Direction value
-function getDirection(dir){
+function getDirection(){
     return window.direction;
 }
 
@@ -406,6 +409,8 @@ function sendSpeed(locoId, speed, dir) {
   if (locoId <= 0) return;
 
   if ( (locoId!=lastLocoSent) || (speed!=lastSpeedSent) || (dir!=lastDirSent) ) {
+    setSpeed(speed);
+    setDirection(dir);
     writeToStream("t " + locoId + " " + speed + " " + dir);
     lastLocoSent = locoId;
     lastSpeedSent = speed;
@@ -418,12 +423,12 @@ function sendSpeed(locoId, speed, dir) {
 function setPositionOfDirectionSlider(dir) { //1=forward -1=reverse 0=stop
   $(".dir-toggle").removeClass("forward backward  stop");
   switch (dir) {
-    case (0): {
+    case (DIRECTION_FORWARD): {
       // displayLog('[EXTERNAL] Forward:' + dir);
       $(".dir-toggle").addClass("forward");
       break;
     }
-    case (1): {
+    case (DIRECTION_REVERSED): {
       // displayLog('[EXTERNAL] backward:' + dir);
       $(".dir-toggle").addClass("backward");
       break;
@@ -439,86 +444,12 @@ function setPositionOfDirectionSlider(dir) { //1=forward -1=reverse 0=stop
 function generateFnCommand(clickedBtn){
     
        func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
+       fn = parseInt(func.substring(1));
        eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
        btnPressed = clickedBtn.attr("aria-pressed");
-       //console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnStatus);
+       console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnPressed);
     
-       switch(func){
-            case "f0":
-            case "f1":
-            case "f2":
-            case "f3":
-            case "f4":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF0ToF4(func,1);                
-                }else{ 
-                    sendCommandForF0ToF4(func,0);
-                }
-                break;
-            }
-            case "f5":
-            case "f6":
-            case "f7":
-            case "f8":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF5ToF8(func,1);                
-                }else{ 
-                    sendCommandForF5ToF8(func,0);
-                }
-                break;
-            }
-            case "f9":
-            case "f10":
-            case "f11":
-            case "f12":
-            { 
-                if(btnPressed=="true"){ 
-                    sendCommandForF9ToF12(func,1);                
-                }else{ 
-                    sendCommandForF9ToF12(func,0);
-                }
-                break;
-            }
-            case "f13":
-            case "f14":
-            case "f15":
-            case "f16":
-            case "f17":
-            case "f18":
-            case "f19":
-            case "f20":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF13ToF20(func,1);                
-                    }else{     
-                        sendCommandForF13ToF20(func,0);
-                    }
-                    break;
-            }
-            case "f21":
-            case "f22":
-            case "f23":
-            case "f24":
-            case "f25":
-            case "f26":
-            case "f27":
-            case "f28":
-                { 
-                    if(btnPressed=="true"){ 
-                        sendCommandForF21ToF28(func,1);                
-                    }else{  
-                        sendCommandForF21ToF28(func,0);
-                    }
-                    break;
-            }
-            default:
-            {
-                alert("Invalid Function");
-            }
-
-       }          
+       sendCommandForFunction(fn, ((btnPressed=="true") ? 1 : 0));
 }
 
 $(document).ready(function(){
@@ -758,7 +689,7 @@ $(document).ready(function(){
         case "forward": {
           isStopped = false;
           isDirectionToggleStopped = false;
-          setDirection(1);
+          setDirection(DIRECTION_FORWARD);
           setSpeedofControllers();
           sendSpeed(getCV(),getSpeed(),1);
           break;
@@ -766,7 +697,7 @@ $(document).ready(function(){
         case "backward": {
           isStopped = false;
           isDirectionToggleStopped = false;
-          setDirection(0);
+          setDirection(DIRECTION_REVERSED);
           setSpeedofControllers();
           sendSpeed(getCV(),getSpeed(),0);
           break;
@@ -775,7 +706,7 @@ $(document).ready(function(){
           isStopped = true;
           isDirectionToggleStopped = true;
           dir = getDirection();
-          setSpeed(0);
+          setSpeed(DIRECTION_FORWARD);
           setSpeedofControllers();
           sendSpeed(getCV(),0,dir);
           break;
@@ -890,6 +821,7 @@ $(document).ready(function(){
         }, 100);
       }
     })
+
     .on("mouseup mouserelease", ".fn-btn", function () {
       clearInterval(timer);
       clickedBtn = $(this);

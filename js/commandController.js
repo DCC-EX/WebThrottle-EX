@@ -180,22 +180,29 @@ function parseResponse(cmd) {  // some basic ones only
             try {
                 lastLocoReceived = parseInt(cmdArray[1]);
                 let speedbyte = parseInt(cmdArray[3]);
-                let functMap = parseInt(cmdArray[4]);
-                lastSpeedReceived = 0;
-                lastDirReceived = 0;
+                // let functMap = parseInt(cmdArray[4]);
                 if (getCV() == lastLocoReceived) {
-                    if ((speedbyte>=2) && (speedbyte<=127)) {
-                        lastSpeedReceived = speedbyte-1;
-                        lastDirReceived = 1;
-                    } else if ( (speedbyte>=130) && (speedbyte<=255) ) { 
-                        lastSpeedReceived = speedbyte - 129;
-                        lastDirReceived = 0;
-                    }
 
                     let now = new Date();
                     lastTimeReceived = now;
+                    if((getSecondSinceMidnight(now)-getSecondSinceMidnight(lastTimeSent)) > 0.1) {                        
+                        if ((speedbyte>=2) && (speedbyte<=127)) { // reverse
+                            lastSpeedReceived = speedbyte-1;
+                            lastDirReceived = DIRECTION_REVERSED;
+                        } else if ( (speedbyte>=130) && (speedbyte<=255) ) { //forward
+                            lastSpeedReceived = speedbyte - 129;
+                            lastDirReceived = DIRECTION_FORWARD;
+                        } else if (speedbyte==0) { //stop
+                            lastSpeedReceived = 0;
+                            lastDirReceived = DIRECTION_REVERSED; 
+                        } else if (speedbyte==128) { //stop
+                            lastSpeedReceived = 0;
+                            lastDirReceived = DIRECTION_FORWARD;
+                        } else {
+                            lastSpeedReceived = 0;
+                            lastDirReceived = getDirection();
+                        }
 
-                    if((getSecondSinceMidnight(now)-getSecondSinceMidnight(lastTimeSent)) > 0.1) { // don't respond if we sent a command in the specified period
                         setDirection(lastDirReceived);
                         setSpeed(lastSpeedReceived);
                         setPositionOfDirectionSlider(lastDirReceived);
@@ -389,50 +396,14 @@ function displayLog(data){
     $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
 }
 
+
 // Function to generate commands for functions F0 to F4
-function sendCommandForF0ToF4(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (128+getFunCurrentVal("f1")*1 + getFunCurrentVal("f2")*2 + getFunCurrentVal("f3")*4  + getFunCurrentVal("f4")*8 + getFunCurrentVal("f0")*16);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
-
+function sendCommandForFunction(fn, opr) {
+    setFunCurrentVal("f"+fn, opr);
+    writeToStream("F " + getCV() + " " + fn + " " + getFunCurrentVal("f"+fn));
+    console.log("Command: " + "F " + getCV() + " " + fn + " " + getFunCurrentVal("f"+fn));
 }
 
-// Function to generate commands for functions F5 to F8
-function sendCommandForF5ToF8(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (176+getFunCurrentVal("f5")*1 + getFunCurrentVal("f6")*2 + getFunCurrentVal("f7")*4  + getFunCurrentVal("f8")*8);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
-
-}
-
-// Function to generate commands for functions F9 to F12
-function sendCommandForF9ToF12(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (160+getFunCurrentVal("f9")*1 + getFunCurrentVal("f10")*2 + getFunCurrentVal("f11")*4  + getFunCurrentVal("f12")*8);
-    writeToStream("f "+getCV()+" "+cabval);
-    console.log("Command: "+ "f "+getCV()+" "+cabval);
-
-}
-
-// Function to generate commands for functions F13 to F20
-function sendCommandForF13ToF20(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (getFunCurrentVal("f13")*1 + getFunCurrentVal("f14")*2 + getFunCurrentVal("f15")*4  + getFunCurrentVal("f16")*8 + getFunCurrentVal("f17")*16 + getFunCurrentVal("f18")*32 + getFunCurrentVal("f19")*64 + getFunCurrentVal("f20")*128);
-    writeToStream("f "+getCV()+" 222 "+cabval);
-    console.log("Command: "+ "f "+getCV()+" 222 "+cabval);
-
-}
-
-// Function to generate commands for functions F21 to F28
-function sendCommandForF21ToF28(fn, opr){
-    setFunCurrentVal(fn,opr);
-    cabval = (getFunCurrentVal("f21")*1 + getFunCurrentVal("f22")*2 + getFunCurrentVal("f23")*4  + getFunCurrentVal("f24")*8 + getFunCurrentVal("f25")*16 + getFunCurrentVal("f26")*32 + getFunCurrentVal("f27")*64 + getFunCurrentVal("f28")*128);
-    writeToStream("f "+getCV()+" 223 "+cabval);
-    console.log("Command: "+ "f "+getCV()+" 223 "+cabval);
-
-}
 
 function getTimeStamp() {
     var now = new Date();
