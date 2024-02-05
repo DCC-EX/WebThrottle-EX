@@ -4,6 +4,7 @@
 - Bug fix for functions. Direction would toggle when a function button was pressed
 - react to inbound function button changes
 - Bell (f1) no longer momentary by default
+- rudimentary fix for the emulator
 
 # Version 1.3.8
 - Addition of a CV Programmer page

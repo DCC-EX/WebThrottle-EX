@@ -156,6 +156,22 @@ function uiDisable (status) {
     }
 }
 
+function uiEnableThrottleControlOnReady() {
+  displayLog('<br><br>[i] EX-CommandStation is READY<br>');
+  $("#button-getloco").removeClass("ui-state-disabled");
+  $("#button-sendCmd").removeClass("ui-state-disabled");
+  $("#ex-locoid").prop('disabled', false)
+  $("#button-getloco").prop('disabled', false)
+  $("#button-cv-read-loco-id").prop('disabled', false)
+  $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
+  $("#button-cv-write-loco-id").prop('disabled', false)
+  $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
+  $("#button-cv-read-cv").prop('disabled', false)
+  $("#button-cv-read-cv").removeClass("ui-state-disabled")
+  $("#button-cv-write-cv").prop('disabled', false)
+  $("#button-cv-write-cv").removeClass("ui-state-disabled")
+}
+
 // Returns given function current value (0-disable/1-enable)
 function getFunCurrentVal(fun){
     return window.functions[fun];

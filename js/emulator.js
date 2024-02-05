@@ -24,14 +24,14 @@ function removeControlCharacters(packet) {
  * @return {string}
  */
 function extractPacketKey(packet) {
-  const cleanedPacket = [...removeControlCharacters(packet)]
+  const cleanedPacket = [...removeControlCharacters(packet)];
   return cleanedPacket.find(char => char !== " ");
 }
 
 class Emulator {
   constructor({logger}) {
-    this.turnoutEmulator = new TurnoutEmulator()
-    this.logger = logger
+    this.turnoutEmulator = new TurnoutEmulator();
+    this.logger = logger;
   }
 
   /**
@@ -39,8 +39,8 @@ class Emulator {
    */
   write(packet) {
     if (packet === "<credits>") {
-      console.log("Credits")
-      return credits()
+      console.log("Credits");
+      return credits();
     }
 
     let packetKey = extractPacketKey(packet);
@@ -48,34 +48,34 @@ class Emulator {
     switch (packetKey) {
       // Cab control
       case ("t"):
-        this.logger('[RECEIVE] '+ this.#cabControlCommand(packet))
+        this.logger('[R] '+ this.#cabControlCommand(packet));
         break;
 
       // Track power off
       case ('0') :
-        this.logger('[RECEIVE] '+ this.#powerOffCommand(packet));
+        this.logger('[R] '+ this.#powerOffCommand(packet));
         break;
 
       // Track power on
       case ('1'):
-        this.logger('[RECEIVE] '+ this.#powerOnCommand(packet));
+        this.logger('[R] '+ this.#powerOnCommand(packet));
         break;
 
       // New cab functions
       case ('F'):
-        this.logger('[RECEIVE] '+  this.#cabFunctionCommand(packet));
+        this.logger('[R] '+  this.#cabFunctionCommand(packet));
         break;
 
       // Legacy cab functions
       case ('f'):
 
-        this.logger('[RECEIVE] '+  this.#cabFunctionCommand(packet, true));
+        this.logger('[R] '+  this.#cabFunctionCommand(packet, true));
         break;
 
       // Turnouts
       case ('T'): //Not fully finished
-        this.logger('[RECEIVE] '+  this.#turnoutCommand(packet, this.turnoutEmulator))
-        break
+        this.logger('[R] '+  this.#turnoutCommand(packet, this.turnoutEmulator));
+        break;
 
       default:
         break;
@@ -88,7 +88,23 @@ class Emulator {
    */
   #cabControlCommand(packet) {
     const splitPacket = packet.split(" ");
-    return 'T 1 ' + splitPacket[3] + ' ' + splitPacket[4].substring(0, splitPacket[4].length - 2);
+    let mySpeed = parseInt(splitPacket[2]);
+    let myDir = parseInt(splitPacket[3]);
+    let speedByte = 0;
+    if (myDir==1) { //forward
+      if (mySpeed==0) {
+        speedByte = 128;
+      } else {
+        speedByte = mySpeed + 1;
+      }
+    } else { //reverse
+      if (mySpeed==0) {
+        speedByte = 0;
+      } else {
+        speedByte = mySpeed + 129;
+      }
+    }
+    return '<l ' + splitPacket[1] + ' ' + speedByte + ' ' + 0 +'>';
   }
 
   /**
@@ -96,7 +112,7 @@ class Emulator {
    * @return {string}
    */
   #powerOffCommand(packet) {
-    return 'p0';
+    return '<p0>';
   }
 
   /**
@@ -104,7 +120,7 @@ class Emulator {
    * @return {string}
    */
   #powerOnCommand(packet) {
-    return 'p1';
+    return '<p1>';
   }
 
   /**
@@ -115,7 +131,7 @@ class Emulator {
   #cabFunctionCommand(packet, legacy = false) {
     return NaN;
   }
-
+ 
   /**
    * @param {string} packet
    * @param {TurnoutEmulator} turnoutEmulator
@@ -126,13 +142,13 @@ class Emulator {
 
     if (splitPacket.length === 4) {
       // Adds a Turnout
-      return turnoutEmulator.addTurnout(new Turnout(packet))
+      return turnoutEmulator.addTurnout(new Turnout(packet));
     } else if (splitPacket.length === 2) {
       // Removes a Turnout
-      return turnoutEmulator.removeTurnout(splitPacket[1])
+      return turnoutEmulator.removeTurnout(splitPacket[1]);
     } else if (splitPacket.length === 1) {
       // Reads Turnouts
-      return turnoutEmulator.turnouts
+      return turnoutEmulator.turnouts;
     }
   }
 
@@ -152,7 +168,7 @@ class TurnoutEmulator {
    */
   get turnouts() {
     if (!this.#turnouts.length) {
-      return 'X'
+      return 'X';
     }
 
     return this.#turnouts.map(turnout => `H ${turnout.id} ${turnout.address} ${turnout.subaddress} ${turnout.thrown}`)
@@ -183,9 +199,9 @@ class Turnout {
   constructor(packet) {
     let [_key, id, address, subaddress] = removeControlCharacters(packet).split(" ");
 
-    this.id = id
-    this.address = address
-    this.subaddress = subaddress
-    this.thrown = 0
+    this.id = id;
+    this.address = address;
+    this.subaddress = subaddress;
+    this.thrown = 0;
   }
 }

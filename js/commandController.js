@@ -9,10 +9,10 @@
 */
 let commandString = "";
 
-$(document).ready(function(){
+$(document).ready(function () {
     console.log("Command Controller loaded");
+    emulatorClass = new Emulator({ logger: displayLog });
     uiDisable(true)
-    emulatorClass = new Emulator({logger: displayLog});
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -25,15 +25,15 @@ async function connectServer() {
     mode = selectMethod.value;
     // Disables selector so it can't be changed whilst connected
     selectMethod.disabled = true;
-    console.log("Set Mode: "+mode)
+    console.log("Set Mode: " + mode)
     // Checks which method was selected
     if (mode == "serial") {
-        try{
+        try {
             // - Request a port and open an asynchronous connection, 
             //   which prevents the UI from blocking when waiting for
             //   input, and allows serial to be received by the web page
             //   whenever it arrives.
-            
+
             port = await navigator.serial.requestPort(); // prompt user to select device connected to a com port
             // - Wait for the port to open.
             await port.open({ baudRate: 115200 });         // open the port at the proper supported baud rate
@@ -65,12 +65,13 @@ async function connectServer() {
             console.log("User didn't select a port to connect to")
             return false;
         }
-    } else{
+    } else {
         // If using the emulator
         emulatorMode = true;
         // Displays dummy hardware message
-        displayLog("[ CONNECTION] Emulator connected")
+        displayLog("[CONNECTION] Emulator connected")
         displayLog("[R] DCC-EX EXCOMMANDSTATION FOR EMULATOR / EMULATOR MOTOR SHIELD: V-1.0.0 / Feb 30 2020 13:10:04")
+        uiEnableThrottleControlOnReady();
         uiDisable(false)
         return true;
     }
@@ -98,16 +99,16 @@ async function readLoop() {
 
                 let end = -1;
 
-                for (i=0; i<commandString.length; i++) {
-                    if ((commandString.charAt(i)=='\n') && (i>0)) {
+                for (i = 0; i < commandString.length; i++) {
+                    if ((commandString.charAt(i) == '\n') && (i > 0)) {
                         end = i;
                         break;
                     }
                 }
 
-                if (end>=0) {
-                    thisCommandString = commandString.substring(0,end);
-                    if (end>0) { 
+                if (end >= 0) {
+                    thisCommandString = commandString.substring(0, end);
+                    if (end > 0) {
                         commandString = commandString.substring(end);
                         moreToProcess = true;
                     } else {
@@ -115,14 +116,14 @@ async function readLoop() {
                     }
                     displayLog("[R] " + thisCommandString);
                     console.log(getTimeStamp() + " [R] " + thisCommandString);
-                    parseResponse(thisCommandString); 
+                    parseResponse(thisCommandString);
                 } else {
                     moreToProcess = false;
-                }        
+                }
             }
         }
         if (done) {
-            console.log(getTimeStamp() + ' [readLoop] DONE '+done.toString());
+            console.log(getTimeStamp() + ' [readLoop] DONE ' + done.toString());
             reader.releaseLock();
             break;
         }
@@ -130,31 +131,18 @@ async function readLoop() {
 }
 
 function parseResponse(cmd) {  // some basic ones only
-    cmd = cmd.replaceAll('\n',"");
-    cmd = cmd.replaceAll('\r',"");
+    cmd = cmd.replaceAll('\n', "");
+    cmd = cmd.replaceAll('\r', "");
 
-    if ( (cmd.includes("Free RAM=")) && (!csIsReady)) {
+    if ((cmd.includes("Free RAM=")) && (!csIsReady)) {
         csIsReady = true;
-        displayLog('<br><br>[i] EX-CommandStation is READY<br>');
-        $("#button-getloco").removeClass("ui-state-disabled");
-        $("#button-sendCmd").removeClass("ui-state-disabled");
-        $("#ex-locoid").prop('disabled', false)
-        $("#button-getloco").prop('disabled', false)
-        $("#button-cv-read-loco-id").prop('disabled', false)
-        $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
-        $("#button-cv-write-loco-id").prop('disabled', false)
-        $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
-        $("#button-cv-read-cv").prop('disabled', false)
-        $("#button-cv-read-cv").removeClass("ui-state-disabled")
-        $("#button-cv-write-cv").prop('disabled', false)
-        $("#button-cv-write-cv").removeClass("ui-state-disabled")
-           
-    } else if (cmd.charAt(0)=='<') {
+        uiEnableThrottleControlOnReady();
+    } else if (cmd.charAt(0) == '<') {
 
         cmdArray = cmd.split(" ");
 
-        if (cmd.charAt(1)=='p') {
-            if (cmd.charAt(2)=="0") {
+        if (cmd.charAt(1) == 'p') {
+            if (cmd.charAt(2) == "0") {
                 $("#power-switch").prop('checked', false)
                 $("#power-status").html("is Off");
             } else {
@@ -162,21 +150,21 @@ function parseResponse(cmd) {  // some basic ones only
                 $("#power-status").html("is On");
             }
 
-        } else if (cmd.charAt(1)=='i') {
+        } else if (cmd.charAt(1) == 'i') {
             versionText = "";
-            if (cmdArray[1].charAt(0)=='V') //version
-            try {
-                versionText = cmdArray[1].substring(2,cmdArray[1].length);
-                versionArray = versionText.split(".");
-                csVersion = parseInt(versionArray[0])
-                 + parseInt(versionArray[1]) / 100
-                 + parseInt(versionArray[2]) / 100000;
-                displayLog('[i] Version:' + csVersion);
-            } catch (e) {
-                console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
-            }
+            if (cmdArray[1].charAt(0) == 'V') //version
+                try {
+                    versionText = cmdArray[1].substring(2, cmdArray[1].length);
+                    versionArray = versionText.split(".");
+                    csVersion = parseInt(versionArray[0])
+                        + parseInt(versionArray[1]) / 100
+                        + parseInt(versionArray[2]) / 100000;
+                    displayLog('[i] Version:' + csVersion);
+                } catch (e) {
+                    console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
+                }
 
-        } else if (cmd.charAt(1)=='l') {
+        } else if (cmd.charAt(1) == 'l') {
             try {
                 lastLocoReceived = parseInt(cmdArray[1]);
                 let speedbyte = parseInt(cmdArray[3]);
@@ -185,17 +173,17 @@ function parseResponse(cmd) {  // some basic ones only
 
                     let now = new Date();
                     lastTimeReceived = now;
-                    if((getSecondSinceMidnight(now)-getSecondSinceMidnight(lastTimeSent)) > 0.1) {                        
-                        if ((speedbyte>=2) && (speedbyte<=127)) { // reverse
-                            lastSpeedReceived = speedbyte-1;
+                    if ((getSecondSinceMidnight(now) - getSecondSinceMidnight(lastTimeSent)) > 0.1) {
+                        if ((speedbyte >= 2) && (speedbyte <= 127)) { // reverse
+                            lastSpeedReceived = speedbyte - 1;
                             lastDirReceived = DIRECTION_REVERSED;
-                        } else if ( (speedbyte>=130) && (speedbyte<=255) ) { //forward
+                        } else if ((speedbyte >= 130) && (speedbyte <= 255)) { //forward
                             lastSpeedReceived = speedbyte - 129;
                             lastDirReceived = DIRECTION_FORWARD;
-                        } else if (speedbyte==0) { //stop
+                        } else if (speedbyte == 0) { //stop
                             lastSpeedReceived = 0;
-                            lastDirReceived = DIRECTION_REVERSED; 
-                        } else if (speedbyte==128) { //stop
+                            lastDirReceived = DIRECTION_REVERSED;
+                        } else if (speedbyte == 128) { //stop
                             lastSpeedReceived = 0;
                             lastDirReceived = DIRECTION_FORWARD;
                         } else {
@@ -210,21 +198,21 @@ function parseResponse(cmd) {  // some basic ones only
                     } else {
                         displayLog('[i] Ignoring Received Speed - too soon since last speed send.');
                     }
-                    for (i=0; i<=28; i++) {
+                    for (i = 0; i <= 28; i++) {
                         fnState = (functMap >> i) & 0x1;
-                        fnStateText = (fnState==1) ? "true" : "false";
-                        if (getFunCurrentVal("f"+i) != fnStateText) {
-                            $("#f"+i).attr("aria-pressed",fnStateText);
+                        fnStateText = (fnState == 1) ? "true" : "false";
+                        if (getFunCurrentVal("f" + i) != fnStateText) {
+                            $("#f" + i).attr("aria-pressed", fnStateText);
                         }
                     }
                 }
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process speed commands');
             }
-        } else if ( (cmd.charAt(1)=='r') && (cmdArray.length==2) ) {
+        } else if ((cmd.charAt(1) == 'r') && (cmdArray.length == 2)) {
             try {
                 locoAddr = parseInt(cmdArray[1]);
-                if (locoAddr>0) {
+                if (locoAddr > 0) {
                     $("#cv-locoid").val(locoAddr);
                 } else {
                     displayLog("[i] DCC Address Read Failed!");
@@ -232,22 +220,22 @@ function parseResponse(cmd) {  // some basic ones only
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process read address response');
             }
-        } else if (cmd.charAt(1)=='w') {
+        } else if (cmd.charAt(1) == 'w') {
             try {
                 locoAddr = parseInt(cmdArray[1]);
-                if (locoAddr>0) {
-                    
+                if (locoAddr > 0) {
+
                 } else {
                     displayLog("[i] DCC Address Write Failed!");
                 }
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process write address response');
             }
-        } else if ( (cmd.charAt(1)=='v') || (cmd.charAt(1)=='r') ) {
+        } else if ((cmd.charAt(1) == 'v') || (cmd.charAt(1) == 'r')) {
             try {
                 cvid = parseInt(cmdArray[1]);
                 cvValue = parseInt(cmdArray[2]);
-                if ( (cvid>0) && (cvValue>-1) ) {
+                if ((cvid > 0) && (cvValue > -1)) {
                     $("#cv-cvid").val(cvid);
                     $("#cv-cvvalue").val(cvValue);
                 } else {
@@ -258,51 +246,52 @@ function parseResponse(cmd) {  // some basic ones only
             }
         }
     }
-} 
+}
 
 function writeToStream(...lines) {
-  // Stops data being written to nonexistent port if using emulator
-  let stream = emulatorClass
-  if (port) {
-    stream = outputStream.getWriter();
-  }
+    // Stops data being written to nonexistent port if using emulator
+    if (emulatorClass == null) displayLog("[i] emulatorClass is null");
+    let stream = emulatorClass;
+    if (port) {
+        stream = outputStream.getWriter();
+    }
 
-  lines.forEach((line) => {
-      if (line == "\x03" || line == "echo(false);") {
+    lines.forEach((line) => {
+        if (line == "\x03" || line == "echo(false);") {
 
-      } else {
-          displayLog("[S] &lt;" + line.toString() + "&gt;");
-      }
-      const packet = `<${line}>\n`;
-      stream.write(packet)
-      console.log(packet)
-  });
-  stream.releaseLock();
+        } else {
+            displayLog("[S] &lt;" + line.toString() + "&gt;");
+        }
+        const packet = `<${line}>\n`;
+        stream.write(packet)
+        console.log(packet)
+    });
+    stream.releaseLock();
 }
 
 // Transformer for the Web Serial API. Data comes in as a stream so we
 // need a container to buffer what is coming from the serial port and
 // parse the data into separate lines by looking for the breaks
 class LineBreakTransformer {
-        constructor() {
-            // A container for holding stream data until it sees a new line.
-            this.container = '';
-        }
+    constructor() {
+        // A container for holding stream data until it sees a new line.
+        this.container = '';
+    }
 
-        transform(chunk, controller) {
-            // Handle incoming chunk
-            this.container += chunk;                      // add new data to the container 
-            const lines = this.container.split('\r\n');   // look for line breaks and if it finds any
-            this.container = lines.pop();                 // split them into an array
-            lines.forEach(line => controller.enqueue(line)); // iterate parsed lines and send them
+    transform(chunk, controller) {
+        // Handle incoming chunk
+        this.container += chunk;                      // add new data to the container 
+        const lines = this.container.split('\r\n');   // look for line breaks and if it finds any
+        this.container = lines.pop();                 // split them into an array
+        lines.forEach(line => controller.enqueue(line)); // iterate parsed lines and send them
 
-        }
+    }
 
-        flush(controller) {
-            // When the stream is closed, flush any remaining data
-            controller.enqueue(this.container);
+    flush(controller) {
+        // When the stream is closed, flush any remaining data
+        controller.enqueue(this.container);
 
-        }
+    }
 }
 
 // Optional transformer for use with the web serial API
@@ -311,31 +300,31 @@ class JSONTransformer {
     transform(chunk, controller) {
         // Attempt to parse JSON content
         try {
-        controller.enqueue(JSON.parse(chunk));
+            controller.enqueue(JSON.parse(chunk));
         } catch (e) {
-        //displayLog(chunk.toString());
-        //displayLog(chunk);
-        console.log('No JSON, dumping the raw chunk', chunk);
-        controller.enqueue(chunk);
+            //displayLog(chunk.toString());
+            //displayLog(chunk);
+            console.log('No JSON, dumping the raw chunk', chunk);
+            controller.enqueue(chunk);
         }
 
     }
-} 
+}
 
 async function disconnectServer() {
     if ($("#power-switch").is(':checked')) {
-	  displayLog('[i] Turning off track power');
-	  writeToStream('0');
-	  $("#power-switch").prop('checked', false)
-	  $("#power-status").html('Off');
-    }   
+        displayLog('[i] Turning off track power');
+        writeToStream('0');
+        $("#power-switch").prop('checked', false)
+        $("#power-status").html('Off');
+    }
     csIsReady = false;
     uiDisable(true)
     if (port) {
-    // Close the input stream (reader).
+        // Close the input stream (reader).
         if (reader) {
             await reader.cancel();  // .cancel is asynchronous so must use await to wave for it to finish
-            await inputDone.catch(() => {});
+            await inputDone.catch(() => { });
             reader = null;
             inputDone = null;
             console.log('close reader');
@@ -368,7 +357,7 @@ async function toggleServer(btn) {
     // If already connected, disconnect
     if (port || emulatorMode) {
         await disconnectServer();
-        btn.attr('aria-state','Disconnected');
+        btn.attr('aria-state', 'Disconnected');
         btn.html('<span class="con-ind"></span>Connect EX-CS'); //<span id="con-ind"></span>Connect EX-CS
         return;
     }
@@ -377,7 +366,7 @@ async function toggleServer(btn) {
     success = await connectServer();
     // Checks if the port was opened successfully
     if (success) {
-        btn.attr('aria-state','Connected');
+        btn.attr('aria-state', 'Connected');
         btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');
     } else {
         selectMethod.disabled = false;
@@ -385,30 +374,30 @@ async function toggleServer(btn) {
 }
 
 // Display log of events
-function displayLog(data){
-    data = data.replaceAll("\n","");
-    data = data.replaceAll("\r","");
-    data = data.replaceAll("\\n","");
-    data = data.replaceAll("\\r","");
-    data = data.replaceAll("\\0","");
-    data = data.replaceAll("<br>","\n");
-    data = data.replaceAll("<","&lt;");
-    data = data.replaceAll(">","&gt;");
-    data = data.replaceAll("\n","<br>");
+function displayLog(data) {
+    data = data.replaceAll("\n", "");
+    data = data.replaceAll("\r", "");
+    data = data.replaceAll("\\n", "");
+    data = data.replaceAll("\\r", "");
+    data = data.replaceAll("\\0", "");
+    data = data.replaceAll("<br>", "\n");
+    data = data.replaceAll("<", "&lt;");
+    data = data.replaceAll(">", "&gt;");
+    data = data.replaceAll("\n", "<br>");
     if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
-    $("#log-box").append(data.toString()+"<br>");
+    $("#log-box").append(data.toString() + "<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 
-    $("#log-box2").append(data.toString()+"<br>");
+    $("#log-box2").append(data.toString() + "<br>");
     $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
 }
 
 
 // Function to generate commands for functions F0 to F4
 function sendCommandForFunction(fn, opr) {
-    setFunCurrentVal("f"+fn, opr);
-    writeToStream("F " + getCV() + " " + fn + " " + getFunCurrentVal("f"+fn));
-    console.log("Command: " + "F " + getCV() + " " + fn + " " + getFunCurrentVal("f"+fn));
+    setFunCurrentVal("f" + fn, opr);
+    writeToStream("F " + getCV() + " " + fn + " " + getFunCurrentVal("f" + fn));
+    console.log("Command: " + "F " + getCV() + " " + fn + " " + getFunCurrentVal("f" + fn));
 }
 
 
@@ -417,24 +406,24 @@ function getTimeStamp() {
     var startOfSec = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     var millsecs = now.getMilliseconds() - startOfSec.getMilliseconds();
     return (//(now.getFullYear()) + '/' +
-            // (now.getMonth()+1) + '/' +
-            // now.getDate() + " " +
-             now.getHours() + ':' +
-             ((now.getMinutes() < 10)
-                 ? ("0" + now.getMinutes())
-                 : (now.getMinutes())) + ':' +
-             ((now.getSeconds() < 10)
-                 ? ("0" + now.getSeconds())
-                 : (now.getSeconds()))) + ":" +
-             ((millsecs < 10)
-                 ? ("00" + millsecs)
-                 : ((millsecs < 100)
-                    ? ("0" + millsecs)
-                    : (millsecs)));
-    }
+        // (now.getMonth()+1) + '/' +
+        // now.getDate() + " " +
+        now.getHours() + ':' +
+        ((now.getMinutes() < 10)
+            ? ("0" + now.getMinutes())
+            : (now.getMinutes())) + ':' +
+        ((now.getSeconds() < 10)
+            ? ("0" + now.getSeconds())
+            : (now.getSeconds()))) + ":" +
+        ((millsecs < 10)
+            ? ("00" + millsecs)
+            : ((millsecs < 100)
+                ? ("0" + millsecs)
+                : (millsecs)));
+}
 
 function getSecondSinceMidnight(myDate) {
-    var seconds = myDate.getHours() * 60 * 60; 
+    var seconds = myDate.getHours() * 60 * 60;
     seconds = seconds + myDate.getMinutes() * 60;
     seconds = seconds + myDate.getSeconds();
     seconds = seconds + (myDate.getMilliseconds() / 1000);
