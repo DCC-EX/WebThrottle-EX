@@ -122,7 +122,10 @@ label.formbuilder-file-label {
     box-shadow: inset 0 0 3px #282828;
 }
 .fn-button.field-button-fn button[aria-pressed="true"].btn, .save-fn:active .ui-state-disabled{
-    background: #555555;
+    background: #006e7c;
+    border: 1px solid #04e2ff;
+    font-weight: 700;
+    font-style: italic;
 }
 
 .fn-button.field-button-fn .btn.press{
