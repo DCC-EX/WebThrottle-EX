@@ -273,7 +273,7 @@ function loadLocomotives(){
           '<div class="column-7"><p class="ac-loco-name column-10">' +
           value.name +
           "</p></div>" +
-          '<div class="column-2 cv-num"><p><small>CV </small>' +
+          '<div class="column-2 cv-num"><p><small>Addr </small>' +
           value.cv +
           "</p></div>" +
           "</div>" +
