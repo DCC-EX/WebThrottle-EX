@@ -2,6 +2,7 @@
 - Correct Functions load automatically when loco selected from the list
 - Functions return to default when loco dropped
 - DCC address labels changed from 'CV' to 'DCC Addr' or 'Addr'
+- added setting to turn off the timestamp in the log
 
 # Version 1.3.9
 - Improvements for when a separate throttle is controlling the same loco

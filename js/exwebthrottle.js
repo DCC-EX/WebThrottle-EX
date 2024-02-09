@@ -315,7 +315,11 @@ function setThrottleScreenUI() {
         $("#debug-console").hide();
         $("#console-toggle").prop("checked", false);
     }
-
+    if (getPreference("timestamp") == null) {
+      setPreference("timestamp", "on");
+    }
+    $("#timestamp-selector").val(getPreference("timestamp")).trigger("change");
+  
     $(".dir-toggle").addClass("forward");
 
     // Set theme
@@ -520,6 +524,12 @@ $(document).ready(function(){
       );
     }
   });
+
+  $("#timestamp-selector").on("change", function (e) {
+    selectedval = $(this).val();
+    setPreference("timestamp", selectedval);
+  });
+
 
   // Connect command station
   $("#button-connect").on("click", function () {

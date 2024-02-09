@@ -402,6 +402,8 @@ function sendCommandForFunction(fn, opr) {
 
 
 function getTimeStamp() {
+    if (getPreference("timestamp")=="off") return "";
+
     var now = new Date();
     var startOfSec = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     var millsecs = now.getMilliseconds() - startOfSec.getMilliseconds();
