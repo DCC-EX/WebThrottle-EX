@@ -134,7 +134,11 @@ function parseResponse(cmd) {  // some basic ones only
     cmd = cmd.replaceAll('\n', "");
     cmd = cmd.replaceAll('\r', "");
 
-    if ((cmd.includes("Free RAM=")) && (!csIsReady)) {
+    if (!csIsReadyRequestSent) {
+        writeToStream("s");
+        csIsReadyRequestSent = true;
+    } else if ( ((cmd.includes("<iDCC")) || (cmd.includes("RAM=")))  
+                && (!csIsReady) ) {
         csIsReady = true;
         uiEnableThrottleControlOnReady();
     } else if (cmd.charAt(0) == '<') {
@@ -319,6 +323,7 @@ async function disconnectServer() {
         $("#power-status").html('Off');
     }
     csIsReady = false;
+    csIsReadyRequestSent = false;
     uiDisable(true)
     if (port) {
         // Close the input stream (reader).
@@ -393,7 +398,7 @@ function displayLog(data) {
 }
 
 
-// Function to generate commands for functions F0 to F4
+// Function to generate commands for functions F0 to F28
 function sendCommandForFunction(fn, opr) {
     setFunCurrentVal("f" + fn, opr);
     writeToStream("F " + getCV() + " " + fn + " " + getFunCurrentVal("f" + fn));

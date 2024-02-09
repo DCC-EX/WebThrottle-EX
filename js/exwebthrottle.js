@@ -82,6 +82,7 @@ window.DIRECTION_REVERSED = 0;
 
 window.csVersion = 5;
 window.csIsReady = false;
+window.csIsReadyRequestSent = false;
 
 // Enables and disables ui elements
 
