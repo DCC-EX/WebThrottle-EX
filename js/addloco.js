@@ -58,6 +58,11 @@ $(document).ready(function(){
       select: function (event, ui) {
         $(this).val(ui.item.cv + " | " + ui.item.name);
         $(this).attr("loco-cv", ui.item.cv);
+
+        console.log("Load Function: " + ui.item.map);
+        $("#select-map").val(ui.item.map).trigger("change");
+        $("#button-getloco").trigger("click");
+
         return false;
       },
     })
@@ -72,12 +77,14 @@ $(document).ready(function(){
       .append(
         "<div><p class='ac-loco-name'>" +
           item.name +
-          "</p><small> <span class='pill'>CV:" +
+          "</p><small> <span class='pill'>Addr:" +
           item.cv +
           "</span>|<span class='pill'>" +
           item.type +
           "</span>|<span class='pill wrap'>" +
           item.brand +
+          "</span>|<span class='pill wrap'>" +
+          item.map +
           "</span></small></div>"
       )
       .appendTo(ul);

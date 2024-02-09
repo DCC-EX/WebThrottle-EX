@@ -555,6 +555,7 @@ $(document).ready(function(){
         acButton.data("acquired", false);
         acButton.html('<span class="icon-circle-right"></span>');
         toggleThrottleState(false);
+        $("#select-map").val("default").trigger("change");
       }
     }
   });
