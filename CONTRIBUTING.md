@@ -1,5 +1,5 @@
 # Contributing
-Firstly, thank you for wanting to contribute to WebThrottle-EX! We really appreciate any contributions, however small (even typo corrections!). If you know what you want to change,
+Firstly, thank you for wanting to contribute to EX-WebThrottle! We really appreciate any contributions, however small (even typo corrections!). If you know what you want to change,
 go ahead and read the section **Making your change**. If you want to contribute, but don't know where to start, have a look at some of the open issues and join the discussion.
 
 ## Making your change
@@ -18,7 +18,7 @@ If you are a member of DCC-EX, you can clone this repo locally to make changes. 
 or better yet, in the format `user-feature`. This way it is easy to see who is using which branch and the feature they are implementing.
 Once you have made these changes, you can either open a pull request to `master` or just merge it to `master` yourself, it is completely up to you.
 
-**Note:** Never touch the `build` branch! This is the live, end-user version of WebThrottle-EX and is only pushed to when a release is made.
+**Note:** Never touch the `build` branch! This is the live, end-user version of EX-WebThrottle and is only pushed to when a release is made.
 
 ## What files are where?
 `index.html` - this is where the main code for the webpage is. There is only one html page, it is manipulated by JavaScript.  

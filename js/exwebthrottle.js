@@ -15,6 +15,7 @@
 	Authors: Fred Decker
              Mani Kumar
              Matt
+             Peter Akers
 			 
     This is part of the DCC-EX Project for model railroading and more.
 	For more information, see us at dcc-ex.com.
@@ -317,7 +318,7 @@ function setThrottleScreenUI() {
         $("#console-toggle").prop("checked", false);
     }
     if (getPreference("timestamp") == null) {
-      setPreference("timestamp", "on");
+      setPreference("timestamp", "off");
     }
     $("#timestamp-selector").val(getPreference("timestamp")).trigger("change");
   
@@ -489,7 +490,7 @@ $(document).ready(function(){
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC-EX EX-WebThrottle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H</p>",
+      "<p>DCC-EX EX-WebThrottle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H <BR> Peter Akers</p>",
     show: {
       effect: "slideDown",
       delay: 100,
@@ -1076,7 +1077,7 @@ function hideSettings(){
 }
 
 function credits() {
-    authors = ["Fred Decker","Mani Kumar","Matt"]
+    authors = ["Fred Decker","Mani Kumar","Matt","Peter Akers"]
     displayLog("Credits:")
     console.log("Credits:")
     for (i=0; i<authors.length; i++) {

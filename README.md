@@ -1,6 +1,6 @@
 # DCC-EX-WebThrottle
 
-This is a prototype for a new DCC-EX Throttle/Controller that can connect to the DCCEX EX-CommmandStation (EX-CS) directly through the USB port of a computer.
+This is a simple Throttle/Controller that can connect to the DCCEX EX-CommmandStation (EX-CS) directly through the USB port of a computer.
 
 ## What you need to setup the project
 
@@ -36,7 +36,7 @@ If the program finds a compatible device, it will popup a window showing you a s
 
 You should then be connected to the Command Station (CS) and should see the response from the CS on the web page under the buttons. Make sure your debug console is open. If it isn't, use the slider button in the lower left to open it. You can also open the DevTools window in your browser to see more developer logging.
 
-Once you are connected, you can enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ command in this way. You should see <iDCC++...> returned in the log window with your version, type of arduino, type of motor shield, and some other information.
+Once you are connected, you can enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ command in this way. You should see <iDCC++...> returned in the log window with your version, type of Arduino, type of motor shield, and some other information.
 
 Now you are ready to run trains! Place your loco on the track and click the power slider button to turn on power to your track. You should see lights on an Arduino Motor Board light and an indication that your loco has power.
 
@@ -64,12 +64,9 @@ To load the Chrome DevTools to look at logging and be able to manually enter "wr
 
 Copyright 2020 DCC-EX
 
-Licensed under the GNU open source licese.
+Licensed under the GNU open source licence.
 
-Unless required by applicable law or agreed to in writing, software distributed
-under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied. See the License for the
-specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the Licence.
 
 [DCC-EX](https://dcc-ex.com)
 
