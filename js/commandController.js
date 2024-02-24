@@ -271,7 +271,7 @@ function parseResponse(cmd) {  // some basic ones only
                         }
 
                         displayLog("CV29- Write a value of " + toggleBit(cvValue,1) + " to CV29 to toggle the direction");
-                        displayLog("CV29- Write a value of " + toggleBit(cvValue,5) + " to CV29 to toggle the direction");
+                        displayLog("CV29- Write a value of " + toggleBit(cvValue,5) + " to CV29 to toggle the Speed Table usage");
 
                     }
                 } else {
