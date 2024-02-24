@@ -242,6 +242,38 @@ function parseResponse(cmd) {  // some basic ones only
                 if ((cvid > 0) && (cvValue > -1)) {
                     $("#cv-cvid").val(cvid);
                     $("#cv-cvvalue").val(cvValue);
+
+                    if (cvid==29) {
+                        if (!isBitOn(cvValue, 1)) {
+                            displayLog("CV29- Direction: Forward");
+                        }  else {
+                            displayLog("CV29- Direction: Reverse");
+                        }
+                        if (!isBitOn(cvValue, 2)) {
+                            displayLog("CV29- Speed Steps: 14");
+                        }  else {
+                            displayLog("CV29- Speed Steps: 28/128");
+                        }
+                        if (!isBitOn(cvValue, 3)) {
+                            displayLog("CV29- Analogue Conversion: Off");
+                        }  else {
+                            displayLog("CV29- Analogue Conversion: On");
+                        }
+                        if (!isBitOn(cvValue, 5)) {
+                            displayLog("CV29- Speed Table: Not Used (uses CV 2,5 & 6)");
+                        }  else {
+                            displayLog("CV29- Speed Table: Enabled");
+                        }
+                        if (!isBitOn(cvValue, 6)) {
+                            displayLog("CV29- Address Size: 2 bit (Short 1-127)");
+                        }  else {
+                            displayLog("CV29- Address Size: 4 bit (Long 128-10239)");
+                        }
+
+                        displayLog("CV29- Write a value of " + toggleBit(cvValue,1) + " to CV29 to toggle the direction");
+                        displayLog("CV29- Write a value of " + toggleBit(cvValue,5) + " to CV29 to toggle the direction");
+
+                    }
                 } else {
                     displayLog("[i] CV Read/Write Failed!");
                 }
@@ -444,3 +476,22 @@ function copyLogToClipboard() {
     console.log('[i] Content copied to clipboard');
     displayLog("[i] Content copied to clipboard");
 }
+
+function isBitOn(n, index) {
+    i = index - 1;
+    // return Boolean(number & (1 << index));
+
+    var mask = 1 << i; // gets the i'th bit
+    if ((n & mask) != 0) {
+        return true;
+    } else {
+        return false;
+    }
+ }
+
+ function toggleBit(n, index) {
+    i = index - 1 ;
+    var mask = 1 << i; // gets the index'th bit
+    n ^= mask;
+    return n;
+ }
