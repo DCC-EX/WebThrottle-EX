@@ -338,7 +338,7 @@ function setThrottleScreenUI() {
         }
     }
     console.log('EX-WebThrottle - version: ' + version);
-    displayLog('EX-WebThrottle - version: ' + version);
+    displayLog('[i] EX-WebThrottle - version: ' + version);
     displayLog(browserType());
     displayLog('');
 }

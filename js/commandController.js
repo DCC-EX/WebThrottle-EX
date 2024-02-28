@@ -506,23 +506,27 @@ function browserType() {
         browser = "Opera";
         browserOk = true;
     }
-    // Detect Chrome
-    else if ( (/Chrome/.test(userAgent) && !/Chromium/.test(userAgent)) ) {
-        browser = "Google Chrome";
-        browserOk = true;
+    // Detect Legacy Edge
+    else if (/Edge/.test(userAgent)) {
+        browser = "Microsoft Edge (Legacy)";
     }
     // Detect Chromium-based Edge
     else if (/Edg/.test(userAgent)) {
-        browser = "Microsoft Edge";
+        browser = "Microsoft Edge (Chromium)";
         browserOk = true;
     }
-    // Detect Firefox
-    else if (/Firefox/.test(userAgent)) {
-        browser = "Mozilla Firefox";
+    // Detect Chrome
+    else if ( (/Chrome/.test(userAgent) && !/Chromium/.test(userAgent)) ) {
+        browser = "Google Chrome or Chromium";
+        browserOk = true;
     }
     // Detect Safari
     else if (/Safari/.test(userAgent)) {
         browser = "Apple Safari";
+    }
+    // Detect Firefox
+    else if (/Firefox/.test(userAgent)) {
+        browser = "Mozilla Firefox";
     }
     // Detect Internet Explorer
     else if (/Trident/.test(userAgent)) {
@@ -532,5 +536,5 @@ function browserType() {
     if (!browserOk) {
         window.alert("EX-WebThrottle is only known to work on Chromium based web browsers. (i.e. Chrome, Edge, Opera).\n\n Your browser '" + browser + "' is NOT one of these, so EX-WebThrottle will likely not work. You will not be able to select or interact with the USB port.")
     }
-    return "Browser: " + userAgent;
+    return "[i] Web browser: " + browser + " - '" + userAgent + "'";
 }
