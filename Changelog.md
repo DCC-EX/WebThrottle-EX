@@ -1,3 +1,6 @@
+# Version 1.3.12
+- display browser type warning if unsupported
+
 # Version 1.3.11
 - display additional info for CV29
 
