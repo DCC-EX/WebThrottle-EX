@@ -200,7 +200,7 @@ function parseResponse(cmd) {  // some basic ones only
                         setPositionOfDirectionSlider(lastDirReceived);
                         setPositionofControllers();
                     } else {
-                        displayLog('[i] Ignoring Received Speed - too soon since last speed send.');
+                        console.log('[i] Ignoring Received Speed - too soon since last speed sent.');
                     }
                     for (i = 0; i <= 28; i++) {
                         fnState = (functMap >> i) & 0x1;
