@@ -1,8 +1,8 @@
 # Version 1.3.12
-- display browser type warning if unsupported
+- Display browser type warning if unsupported
 
 # Version 1.3.11
-- display additional info for CV29
+- Display additional info for CV29
 
 # Version 1.3.10
 - Correct Functions load automatically when loco selected from the list
