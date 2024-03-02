@@ -1,3 +1,6 @@
+# Version 1.3.13
+- attempt to reduce caching
+
 # Version 1.3.12
 - Display browser type warning if unsupported
 
