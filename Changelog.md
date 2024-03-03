@@ -1,3 +1,6 @@
+# Version 1.3.14
+- Fix for Function Maps with spaces in the name
+
 # Version 1.3.13
 - attempt to reduce caching
 

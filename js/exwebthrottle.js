@@ -1012,7 +1012,9 @@ $(document).ready(function(){
   })
 
   $(document).on("click", ".map-name", function () {
-    loadMapData($(this).attr("map-val"));
+    const ename = $(this).attr("map-val");
+    const name = unescape(ename);
+    loadMapData(name);
     $("li.map-name").removeClass("active");
     $(this).addClass("active");
   });
@@ -1060,7 +1062,8 @@ function setFunctionMaps() {
   $("#function-mappings").empty();
   maps.forEach(map => {
     const name = map.mname
-    $("#function-mappings").append(`<li class='map-name' map-val=${name}>${name}</li>`);
+    const ename = escape(name);
+    $("#function-mappings").append(`<li class='map-name' map-val=${ename}>${name}</li>`);
   })
 }
 
