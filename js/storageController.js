@@ -507,10 +507,14 @@ function getCombinedLocoList(){
     rslt = JSON.parse(window.localStorage.getItem("cabList"));
   }
   if (rosterIds.length>0) {
-    roster = JSON.parse(rosterJSON);
-    for (i=0;i<rosterIds.length;i++) {
-      rslt[rslt.length] = roster[i];
-    } 
+    if (rslt==null) {
+      rslt = JSON.parse(rosterJSON);
+    } else {
+      roster = JSON.parse(rosterJSON);
+      for (i=0;i<rosterIds.length;i++) {
+        rslt[rslt.length] = roster[i];
+      } 
+    }
   }
   return rslt;
 }
