@@ -1,5 +1,6 @@
 $(document).ready(function(){
   locoList = getLocoList();
+  combinedLocoList = getCombinedLocoList();
   savedMaps = getPreparedMaps();
   $("#loco-form").on("submit", function (e) {
     e.preventDefault();
@@ -12,6 +13,7 @@ $(document).ready(function(){
       saveEditedLocomotive(data, id);
     }
     locoList = getLocoList();
+    combinedLocoList = getCombinedLocoList();
     loadLocomotives();
     $("#loco-form")[0].reset();
     $("#loco-form-content").css("display", "none");
@@ -39,8 +41,8 @@ $(document).ready(function(){
           $.ui.autocomplete.escapeRegex(request.term),
           "i"
         );
-        response(
-          $.grep(locoList, function (item) {
+        response( 
+          $.grep(combinedLocoList, function (item) {
             if (item != undefined) {
               console.log(item);
               return (
@@ -77,7 +79,7 @@ $(document).ready(function(){
       .append(
         "<div><p class='ac-loco-name'>" +
           item.name +
-          "</p><small> <span class='pill'>Addr:" +
+          "</p><small> <span class='pill'>Addr: " +
           item.cv +
           "</span>|<span class='pill'>" +
           item.type +

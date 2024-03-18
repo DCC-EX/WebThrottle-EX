@@ -26,7 +26,8 @@ $(document).ready(function(){
   $("#select-map").change(function () {
     selectedval = $(this).val();
     if (selectedval != "default") {
-      data = getStoredMapData(selectedval);
+      // data = getStoredMapData(selectedval);
+      data = getStoredCombinedMapData(selectedval);
       loadButtons(data);
     } else {
       loadButtons({ mname: "default", fnData: fnMasterData });
@@ -189,7 +190,8 @@ $(document).ready(function(){
 function loadmaps(){
   $("#select-map").empty();
   $("#select-map").append($("<option />").val("default").text("Default"));
-  getMapData().forEach(map => {
+  // getMapData().forEach(map => {
+  getCombinedMapData().forEach(map => {
     $("#select-map").append($("<option />").val(map.mname).text(map.mname));
   })
 }
@@ -336,6 +338,21 @@ function getStoredMapData(name){
   }
 }
 
+
+//Returns the Map data of given roster name
+function getStoredCombinedMapData(name){
+  const data = getCombinedMapData();
+  if(data !=null){
+    return data.find(function(item, i){
+      if(item.mname == name){
+        return item.fnData;
+      }
+    });
+  }else{
+    return null;
+  }
+}
+
 //Download the Map data of given Map name
 function downloadMapData(mapName){
   data = JSON.stringify(getStoredMapData(mapName));
@@ -381,6 +398,16 @@ function getMapData(){
   return localMapData || []
 }
 
+// add the data from the roster
+function getCombinedMapData(){
+  rslt = [];
+  rslt = getMapData();
+  for (i=0; i<rosterIds.length; i++) {
+    rslt[rslt.length] = JSON.parse(rosterFunctionsJSON[i]);
+  }
+  return rslt;
+}
+
 // Returns boolen if the given Map exists in local storage
 function ifExists(name) {
   const data = getMapData()
@@ -412,6 +439,7 @@ function importLocoData(data) {
     window.localStorage.setItem("cabList", JSON.stringify(data));
     loadLocomotives();
     locoList = getLocoList();
+    combinedLocoList = getCombinedLocoList();
   }
 }
 
@@ -466,11 +494,25 @@ function ifLocoExists(name) {
 
  // Returns the AppData of ExWebThrottle
 function getLocoList(){
-    if (typeof Storage !== "undefined") {
-      return JSON.parse(window.localStorage.getItem("cabList"));
-    }else{
-      return [];
-    }
+  rslt = [];
+  if (typeof Storage !== "undefined") {
+    rslt = JSON.parse(window.localStorage.getItem("cabList"));
+  }
+  return rslt;
+}
+
+function getCombinedLocoList(){
+  rslt = [];
+  if (typeof Storage !== "undefined") {
+    rslt = JSON.parse(window.localStorage.getItem("cabList"));
+  }
+  if (rosterIds.length>0) {
+    roster = JSON.parse(rosterJSON);
+    for (i=0;i<rosterIds.length;i++) {
+      rslt[rslt.length] = roster[i];
+    } 
+  }
+  return rslt;
 }
 
 //Download the Locomotives List data

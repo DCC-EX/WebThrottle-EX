@@ -85,6 +85,13 @@ window.csVersion = 5;
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
+window.rosterCount = 0;
+window.rosterIds = [];
+window.rosterNames = [];
+window.rosterFunctions = [];
+window.rosterFunctionsJSON = [];
+window.rosterJSON = "";
+
 // Enables and disables ui elements
 
 function uiDisable (status) {
@@ -220,12 +227,22 @@ function toggleKnobState(ele, state) {
         ele.removeClass("disabled");
     }
 }
+
+
 function loadMapData(map){
+    loadMapData(map, false);
+}
+
+function loadMapData(map, fromRoster){
     data = [];
     if (map == "Default") {
       data = { mname: "Default", fnData: fnMasterData };
     } else {
-      data = getStoredMapData(map);
+      if (source!=fromRoster) {
+        data = getStoredMapData(map);
+      } else {
+        data = getRosterMapData(map);
+      } 
     }
     $("#mapping-panel").empty();
     $("#mapping-panel").append(
@@ -263,8 +280,11 @@ function loadMapData(map){
     });
 
 }
+
+
 function loadLocomotives(){
     locos = getLocoList();
+    combinedLocoList = getCombinedLocoList();
     $("#locomotives-panel").empty();
     $.each(locos, function (key, value) {
       $("#locomotives-panel").append(
@@ -297,6 +317,7 @@ function loadLocomotives(){
       );      
     });
 }
+
 //Initialization routine for Throttle screen
 function setThrottleScreenUI() {
     loadmaps();
@@ -1024,7 +1045,8 @@ $(document).ready(function(){
     selectedval = $("#cur-map-val").attr("cur-map");
     if (selectedval != "Default") {
       deleteFuncData(selectedval);
-      loadmaps();
+      // loadmaps();
+      loadCombinedMaps();
       setFunctionMaps();
       loadMapData("Default");
       $("#select-map").val("default").trigger("change");

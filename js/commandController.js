@@ -141,9 +141,14 @@ function parseResponse(cmd) {  // some basic ones only
                 && (!csIsReady) ) {
         csIsReady = true;
         uiEnableThrottleControlOnReady();
+
+        //intiialse the roster
+        writeToStream("JR");
+
     } else if (cmd.charAt(0) == '<') {
 
         cmdArray = cmd.split(" ");
+        cmdArrayClean= cmd.substring(0,cmd.length-1).split(/ (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/);
 
         if (cmd.charAt(1) == 'p') {
             if (cmd.charAt(2) == "0") {
@@ -213,6 +218,7 @@ function parseResponse(cmd) {  // some basic ones only
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process speed commands');
             }
+
         } else if ((cmd.charAt(1) == 'r') && (cmdArray.length == 2)) {
             try {
                 locoAddr = parseInt(cmdArray[1]);
@@ -224,6 +230,7 @@ function parseResponse(cmd) {  // some basic ones only
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process read address response');
             }
+
         } else if (cmd.charAt(1) == 'w') {
             try {
                 locoAddr = parseInt(cmdArray[1]);
@@ -235,6 +242,7 @@ function parseResponse(cmd) {  // some basic ones only
             } catch (e) {
                 console.log(getTimeStamp + '[ERROR] Unable to process write address response');
             }
+
         } else if ((cmd.charAt(1) == 'v') || (cmd.charAt(1) == 'r')) {
             try {
                 cvid = parseInt(cmdArray[1]);
@@ -278,7 +286,89 @@ function parseResponse(cmd) {  // some basic ones only
                     displayLog("[i] CV Read/Write Failed!");
                 }
             } catch (e) {
-                console.log(getTimeStamp + '[ERROR] Unable to process read CV response');
+                console.log(getTimeStamp + ' [ERROR] Unable to process read CV response');
+            }
+
+        } else if (cmd.charAt(1) == 'j') {
+            if (cmdArray[0].charAt(2) == 'R')  { //roster
+                last = cmdArray.length-1;
+                if (cmdArrayClean.length > 2) { // if ==2, then no roster
+                    if ( (cmdArrayClean.length == 2 ) || 
+                       ( (cmdArrayClean.length > 2 ) && (cmdArrayClean[2].charAt(0) != '"' ) ) ) {
+                        rosterCount = cmdArrayClean.length-2;
+                        console.log(getTimeStamp() + ' Processing roster: ' + rosterCount);
+                        try {
+                            for (i=2;i<cmdArrayClean.length;i++) {
+                                rosterIds[i-2] = cmdArrayClean[i];
+                                rosterNames[i-2] = "";
+                                rosterFunctions[i-2] = "";
+                                rosterFunctionsJSON[i-2] = "";
+                                // writeToStream("JR " + cmdArrayClean[i]);                          
+                            }
+                            writeToStream("JR " + rosterIds[0]);  // get the details for the first
+                        } catch (e) {
+                            console.log(getTimeStamp() + ' [ERROR] Unable process roster: ');
+                        }
+                        
+                    } else { // individual entry
+                        console.log(getTimeStamp() + ' Processing individual roster entry: ' + cmdArrayClean[1]);
+
+                        rosterListComplete = true;
+                        for (i=0;i<rosterIds.length;i++) {
+                            if (rosterIds[i] == cmdArrayClean[1]) {
+                                rosterNames[i] = cmdArrayClean[2].substring(1,cmdArrayClean[2].length-1);
+                                rosterFunctions[i] = cmdArrayClean[3].substring(1,cmdArrayClean[3].length-1);
+                                splitFns = rosterFunctions[i].split("\/");
+
+                                empty = true;
+                                for (j=0;j<splitFns.length;j++) {
+                                    if (splitFns[j].length>0) {
+                                        empty = false;
+                                        break;
+                                    }
+                                }
+                                rosterFunctionsJSON[i] = '{"mname":"' + rosterNames[i] + '","fnData":{';
+                                if (!empty) {
+                                    for (j=0;j<splitFns.length;j++) {
+                                        // console.log(getTimeStamp() + ' splitFns: ' + j + " : " + splitFns[j]);
+                                        momentary = 0;
+                                        if (splitFns[j].charAt(0)=='*') {
+                                            momentary = 1;
+                                            splitFns[j] = splitFns[j].substring(1);
+                                        }
+                                        rosterFunctionsJSON[i] = rosterFunctionsJSON[i] + '"f'+j+'":[0,'+momentary+',"'+splitFns[j]+'",1]';
+                                        if (j<splitFns.length-1) rosterFunctionsJSON[i] = rosterFunctionsJSON[i] + ",";
+                                    }
+                                }
+                                rosterFunctionsJSON[i] = rosterFunctionsJSON[i] + '}}';
+                            }
+                        }
+                        for (i=0;i<rosterIds.length;i++) {
+                            if (rosterNames[i].length==0) {
+                                writeToStream("JR " + rosterIds[i]);   // get the next
+                                rosterListComplete = false;
+                                break;
+                            }
+                        }
+
+                        if (rosterListComplete) {
+                            rosterJSON = "[";
+                            for (i=0; i<rosterCount;i++) {
+                                rosterJSON = rosterJSON + '{"name":"' + rosterNames[i] + '",';
+                                rosterJSON = rosterJSON + '"cv":"' + rosterIds[i] + '",';
+                                rosterJSON = rosterJSON + '"type":"ROSTER",';
+                                rosterJSON = rosterJSON + '"brand":"_",';
+                                rosterJSON = rosterJSON + '"decoder":"_",';
+                                rosterJSON = rosterJSON + '"map":"' + rosterNames[i] + '"';
+                                rosterJSON = rosterJSON + '}';
+                                if (i<rosterCount-1) rosterJSON = rosterJSON + ",";
+                            }
+                            rosterJSON = rosterJSON + "]";
+                            combinedLocoList = getCombinedLocoList();
+                            loadmaps();
+                        }
+                    }
+                }
             }
         }
     }
