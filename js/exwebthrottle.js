@@ -577,15 +577,21 @@ $(document).ready(function(){
       if (isAcquired == false && getCV() == 0) {
         setCV(locoid_input);
         $("#loco-info").html("Acquired Locomotive: " + locoid_input);
+        console.log("Acquired Locomotive: " + locoid_input);
+        displayLog("[i] Acquired Locomotive: " + locoid_input);
         acButton.data("acquired", true);
         acButton.html('<span class="icon-cross"></span>');
         toggleThrottleState(!isDirectionToggleStopped);
+        // $("#select-map").focus();
+        $("#power-switch").focus();
 
       } else {
         currentCV = getCV();
         $("#ex-locoid").val("");
         setCV(0);
         $("#loco-info").html("Released Locomotive: " + currentCV);
+        console.log("Released Locomotive: " + currentCV);
+        displayLog("[i] Released Locomotive: " + currentCV);
         acButton.data("acquired", false);
         acButton.html('<span class="icon-circle-right"></span>');
         toggleThrottleState(false);
