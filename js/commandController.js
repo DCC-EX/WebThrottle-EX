@@ -141,6 +141,7 @@ function parseResponse(cmd) {  // some basic ones only
                 && (!csIsReady) ) {
         csIsReady = true;
         uiEnableThrottleControlOnReady();
+        ToastMaker('Your Command Station is ready. Use the [Loco ID] field above select a Loco to control', 4000);
 
         //intiialse the roster
         writeToStream("JR");
