@@ -61,8 +61,10 @@ $(document).ready(function(){
         $(this).val(ui.item.cv + " | " + ui.item.name);
         $(this).attr("loco-cv", ui.item.cv);
 
-        console.log("Load Function: " + ui.item.map);
-        $("#select-map").val(ui.item.map).trigger("change");
+        console.log("Loading Function map: " + ui.item.map);
+        displayLog("[i] Loading Function map: " + ui.item.map);
+        map = String(ui.item.map).toLowerCase()=="default" ? "default" : ui.item.map;
+        $("#select-map").val(map).trigger("change");
         $("#button-getloco").trigger("click");
 
         return false;

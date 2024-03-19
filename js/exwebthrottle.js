@@ -239,7 +239,7 @@ function loadMapData(map){
 
 function loadMapData(map, fromRoster){
     data = [];
-    if (map == "Default") {
+    if (map.toLowerCase() == "default") {
       data = { mname: "Default", fnData: fnMasterData };
     } else {
       if (!fromRoster) {
