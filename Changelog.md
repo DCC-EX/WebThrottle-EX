@@ -1,3 +1,6 @@
+# Version 1.3.20
+- fix send commands from the the CV Programmer page with the 'Enter' key
+
 # Version 1.3.19
 - send commands from the the CV Programmer page
 
@@ -8,7 +11,7 @@
 - add toast messages
 
 # Version 1.3.15 & 16
-- Download Roster from the the Command Station and allow seletion
+- Download Roster from the the Command Station and allow selection
 
 # Version 1.3.14
 - Fix for Function Maps with spaces in the name

@@ -1144,12 +1144,20 @@ function credits() {
 
 function eventListeners(){
     var cmdDirect = document.getElementById("cmd-direct");
+    var cmdDirect2 = document.getElementById("cmd-direct2");
     var exLocoID = document.getElementById("ex-locoid");  
     cmdDirect.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             // Trigger the button element with a click
             $('#button-sendCmd').click();
+        }
+    });
+    cmdDirect2.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            // Trigger the button element with a click
+            $('#button-sendCmd2').click();
         }
     });
     exLocoID.addEventListener("keyup", function(event) {
