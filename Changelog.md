@@ -1,4 +1,7 @@
-# Version 1.3.14
+# Version 1.3.18
+- bug fix for editing Function Maps
+
+# Version 1.3.17
 - add toast messages
 
 # Version 1.3.15 & 16
