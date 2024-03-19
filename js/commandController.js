@@ -493,6 +493,7 @@ async function toggleServer(btn) {
     success = await connectServer();
     // Checks if the port was opened successfully
     if (success) {
+        ToastMaker('Please wait while information from the Command Station is loaded', 10000);
         btn.attr('aria-state', 'Connected');
         btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');
     } else {

@@ -92,6 +92,10 @@ window.rosterFunctions = [];
 window.rosterFunctionsJSON = [];
 window.rosterJSON = "";
 
+window.addEventListener("load", function(){
+  ToastMaker('Click the [Connect EX-CS] button to connect to your Command Station!', 8000);
+});
+
 // Enables and disables ui elements
 
 function uiDisable (status) {

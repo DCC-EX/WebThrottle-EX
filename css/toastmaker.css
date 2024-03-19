@@ -1,0 +1,52 @@
+/*!
+ * ToastMaker
+ * https://github.com/vivekweb2013/toastmaker
+ * @license MIT
+ */
+ .toastmaker {
+    animation-name: toastEffect;
+    animation-timing-function: ease-in;
+    background-color: #555555;
+    border-radius: 20px;
+    box-shadow: 0px 5px 15px 0 rgba(221, 221, 221, 1);
+    color: #ffffff;
+    display: inline-block;
+    padding: 2px 20px;
+    position: fixed;
+    text-align: center;
+    text-decoration: none;
+    z-index: 2147483647;
+}
+.toastmaker-bottom {
+    bottom: 1rem;
+}
+.toastmaker-center {
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+    right: 0;
+}
+.toastmaker-left {
+    left: 1rem;
+}
+.toastmaker-right {
+    right: 1rem;
+}
+.toastmaker-top {
+    top: 1rem;
+}
+@keyframes toastEffect {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+}
