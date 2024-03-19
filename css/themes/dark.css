@@ -176,7 +176,7 @@ hr {
     box-shadow: 0 0px 10px #000000;
     border-right: 1px solid #2f2f2f;
 }
-.nav-btn, .btn-expand, .btn-info, .btn-hide{
+.nav-btn, .btn-expand, .btn-info, .btn-nav, .btn-hide{
     color: #afafaf;
 }
 .nav-btn:hover, .btn-expand:hover, .btn-info:hover{

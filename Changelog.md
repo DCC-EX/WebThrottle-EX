@@ -1,3 +1,6 @@
+# Version 1.3.21
+- add navigation buttons
+
 # Version 1.3.20
 - fix send commands from the the CV Programmer page with the 'Enter' key
 

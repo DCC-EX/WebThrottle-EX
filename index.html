@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.20";
+            var version = "1.3.21";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -87,10 +87,14 @@
         </nav>
         <div class="topnav">
             <div class="row">
-                <div class="column-3">
+                <div class="column-4 align-left">
                     <button class="nav-btn" id="nav-open">☰</button>
+                    <button class="btn-nav" id="throttle-screen-button" state="ws" title="Throttle Screen"><span class="icon-circle-right"></span></button>
+                    <button class="btn-nav" id="cv-programmer-screen-button" state="ws" title="CV Programmer Screen"><span class="icon-wrench"></span></button>
+                    <button class="btn-nav" id="locos-screen-button" state="ws" title="Edit Locos Screen"><span class="icon-database"></span></button>
+                    <button class="btn-nav" id="function-screen-maps-button" state="ws" title="Edit Function Maps Screen"><span class="icon-equalizer2"></span></button>
                 </div>
-                <div class="column-4 align-center">
+                <div class="column-2 align-center">
                     <div  class="throttle-heading"> 
                         <a href="http://www.dcc-ex.com" target="_blank" rel="noopener noreferrer"><div class="wt-logo"></div></a>
                         <!--img src="images/WebThrottle.png" /> -->
@@ -101,6 +105,7 @@
                     <button class="btn-expand" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button>
                     <button class="btn-info" id="info-tooltip" state="ws" title="Information"><span class="icon-info"></span></button>
                     <button class="btn-info" id="help-button" state="ws" title="Help" onclick=" window.open('https://dcc-ex.com/ex-webthrottle/', '_blank')"><span class="icon-question"></span></button>
+                    <button class="btn-info" id="settings-button" state="ws" title="Settings"><span class="icon-cog"></span></button>
                 </div>
             </div> 
         </div>

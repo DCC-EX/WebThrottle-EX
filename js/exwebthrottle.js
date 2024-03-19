@@ -1022,6 +1022,30 @@ $(document).ready(function(){
     $("#nav-close").trigger("click");
   });
 
+  $("#throttle-screen-button").on("click", function () {
+    hideWindows();
+    $("#throttle-window").show();
+  });
+  $("#cv-programmer-screen-button").on("click", function () {
+    hideWindows();
+    $("#cv-programmer-window").show();
+  });
+  $("#locos-screen-button").on("click", function () {
+    hideWindows();
+    $("#loco-window").show();
+    loadLocomotives();
+  });
+  $("#function-screen-maps-button").on("click", function () {
+    hideWindows();
+    $("#fn-map-window").show();
+    setFunctionMaps();
+    //loadMapData("Default");
+  });
+  $("#settings-button").on("click", function () {
+    hideWindows();
+    $("#settings-window").show();
+  });
+
   eventListeners();
 
   /*

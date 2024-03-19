@@ -159,6 +159,17 @@ hr{
     background: none;
     line-height: 36px;
 }
+.btn-nav{
+    /* float: right; */
+    font-size: 20px;
+    cursor: pointer;
+    color: #666666;
+    padding: 10px 5px;
+    border: none;
+    background: none;
+    line-height: 36px;
+}
+
 .btn-info{
     padding-top: 14px;
 }
@@ -216,6 +227,9 @@ hr{
 }
 .align-center{
     text-align: center;
+}
+.align-left{
+    text-align: left;
 }
 .pos-rel{
     position: relative;
