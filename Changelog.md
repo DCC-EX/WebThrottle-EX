@@ -1,4 +1,10 @@
 # Version 1.3.14
+- add toast messages
+
+# Version 1.3.15 & 16
+- Download Roster from the the Command Station and allow seletion
+
+# Version 1.3.14
 - Fix for Function Maps with spaces in the name
 
 # Version 1.3.13
