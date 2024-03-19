@@ -930,10 +930,29 @@ $(document).ready(function(){
   // Clear the console log window
   $("#button-clearLog").on("click", function () {
     $("#log-box").html("");
+    $("#log-box2").html("");
   });
 
   // Clear the console log window
   $("#button-copyLog").on("click", function () {
+    copyLogToClipboard();
+  });
+
+  // Send command written in console
+  $("#button-sendCmd2").on("click", function () {
+    cmd = $("#cmd-direct2").val();
+    writeToStream(cmd);
+    document.getElementById("cmd-direct2").value = "";
+  });
+
+  // Clear the console log window
+  $("#button-clearLog2").on("click", function () {
+    $("#log-box").html("");
+    $("#log-box2").html("");
+  });
+
+  // Clear the console log window
+  $("#button-copyLog2").on("click", function () {
     copyLogToClipboard();
   });
 

@@ -1,3 +1,6 @@
+# Version 1.3.19
+- send commands from the the CV Programmer page
+
 # Version 1.3.18
 - bug fix for editing Function Maps
 
