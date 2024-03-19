@@ -242,7 +242,7 @@ function loadMapData(map, fromRoster){
     if (map == "Default") {
       data = { mname: "Default", fnData: fnMasterData };
     } else {
-      if (source!=fromRoster) {
+      if (!fromRoster) {
         data = getStoredMapData(map);
       } else {
         data = getRosterMapData(map);
