@@ -25,7 +25,7 @@ $(document).ready(function(){
   // This will Load buttons on selecting a map from the select box
   $("#select-map").change(function () {
     selectedval = $(this).val();
-    if (selectedval != "default") {
+    if ((selectedval != "default") && (selectedval != null)) {
       // data = getStoredMapData(selectedval);
       data = getStoredCombinedMapData(selectedval);
       loadButtons(data);
