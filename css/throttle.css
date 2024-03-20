@@ -943,7 +943,7 @@ input:checked + .slider.debug-slider{
 .routes-group .sno{
     width: 6%;
     padding-left: 0;
-    padding-top: 0.6%;
+    padding-top: 4px;
     text-align: center;
 }
 .loco-details p.ac-loco-name{
