@@ -1,3 +1,6 @@
+# Version 1.3.22
+- remove blank function buttons
+
 # Version 1.3.21
 - add navigation buttons
 
