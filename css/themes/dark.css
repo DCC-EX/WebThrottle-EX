@@ -211,6 +211,12 @@ a.edit-cur-loco, a.option-btn{
     box-shadow: 0px 0px 2px #000000;
     color: #ffffff;
 }
+a.run-cur-route, a.option-btn{
+    background: #282828;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #ffffff;
+}
 .loco-details p.ac-loco-name{
     text-shadow: 0 0 1px #000000;
     color: #00A3B9
@@ -223,4 +229,8 @@ a.edit-cur-loco, a.option-btn{
     background: #282828;
     color: #ffffff;
     box-shadow: inset 0px 0px 2px #000000;
+}
+p.ac-route-name{
+    text-shadow: 0 0 1px #000000;
+    color: #00A3B9
 }

@@ -141,9 +141,10 @@ function parseResponse(cmd) {  // some basic ones only
                 && (!csIsReady) ) {
         csIsReady = true;
         uiEnableThrottleControlOnReady();
-        ToastMaker('Your Command Station is ready. Use the [Loco ID] field above select a Loco to control', 4000);
-
-        //intiialse the roster
+        ToastMaker('Your Command Station has Started.', 4000, {valign:'bottom', align:'left'} );
+        ToastMaker('Checking Roster and Routes/Automations.', 2000, {valign:'bottom', align:'right'} );
+ 
+        //intialise the roster
         writeToStream("JR");
 
     } else if (cmd.charAt(0) == '<') {
@@ -291,22 +292,24 @@ function parseResponse(cmd) {  // some basic ones only
             }
 
         } else if (cmd.charAt(1) == 'j') {
+
             if (cmdArray[0].charAt(2) == 'R')  { //roster
                 last = cmdArray.length-1;
-                if (cmdArrayClean.length > 2) { // if ==2, then no roster
+                if (cmdArrayClean.length > 1) { // if ==1, then no roster
                     if ( (cmdArrayClean.length == 2 ) || 
                        ( (cmdArrayClean.length > 2 ) && (cmdArrayClean[2].charAt(0) != '"' ) ) ) {
-                        rosterCount = cmdArrayClean.length-2;
+                        rosterCount = cmdArrayClean.length-1;
                         console.log(getTimeStamp() + ' Processing roster: ' + rosterCount);
                         try {
-                            for (i=2;i<cmdArrayClean.length;i++) {
-                                rosterIds[i-2] = cmdArrayClean[i];
-                                rosterNames[i-2] = "";
-                                rosterFunctions[i-2] = "";
-                                rosterFunctionsJSON[i-2] = "";
+                            for (i=1;i<cmdArrayClean.length;i++) {
+                                rosterIds[i-1] = cmdArrayClean[i];
+                                rosterNames[i-1] = "";
+                                rosterFunctions[i-1] = "";
+                                rosterFunctionsJSON[i-1] = "";
                                 // writeToStream("JR " + cmdArrayClean[i]);                          
                             }
                             writeToStream("JR " + rosterIds[0]);  // get the details for the first
+                            ToastMaker('Please wait - Loading Roster', 2000, {valign:'bottom', align:'center'});
                         } catch (e) {
                             console.log(getTimeStamp() + ' [ERROR] Unable process roster: ');
                         }
@@ -367,10 +370,74 @@ function parseResponse(cmd) {  // some basic ones only
                             rosterJSON = rosterJSON + "]";
                             combinedLocoList = getCombinedLocoList();
                             loadmaps();
+                            //intialise the routes
+                            writeToStream("JA");
                         }
                     }
+                } else {
+                    //intialise the routes
+                    writeToStream("JA");
                 }
+
+            } else if (cmdArray[0].charAt(2) == 'A')  { //routes/automations
+                last = cmdArray.length-1;
+                if (cmdArrayClean.length > 1) { // if ==1, then no routes
+                    if ( (cmdArrayClean.length == 2 ) || 
+                       ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
+                        routesCount = cmdArrayClean.length-1;
+                        console.log(getTimeStamp() + ' Processing routes: ' + rosterCount);
+                        try {
+                            for (i=1;i<cmdArrayClean.length;i++) {
+                                routesIds[i-1] = cmdArrayClean[i];
+                                routesTypes[i-1] = "";
+                                routesNames[i-1] = "";
+                            }
+                            writeToStream("JA " + routesIds[0]);  // get the details for the first
+                            ToastMaker('Please wait - Loading Routes/Automations', 2000, {valign:'bottom', align:'right'});
+                        } catch (e) {
+                            console.log(getTimeStamp() + ' [ERROR] Unable process routes: ');
+                        }
+                        
+                    } else { // individual entry
+                        console.log(getTimeStamp() + ' Processing individual route entry: ' + cmdArrayClean[1]);
+
+                        routesListComplete = true;
+                        for (i=0;i<routesIds.length;i++) {
+                            if (routesIds[i] == cmdArrayClean[1]) {
+                                routesTypes[i] = cmdArrayClean[2];
+                                routesNames[i] = cmdArrayClean[3].substring(1,cmdArrayClean[3].length-1);
+                            }
+                        }
+                        for (i=0;i<routesIds.length;i++) {
+                            if (routesNames[i].length==0) {
+                                writeToStream("JA " + routesIds[i]);   // get the next
+                                routesListComplete = false;
+                                break;
+                            }
+                        }
+
+                        if (routesListComplete) {
+                            routesJSON = "[";
+                            for (i=0; i<routesCount;i++) {
+                                routesJSON = routesJSON + '{"name":"' + routesNames[i] + '",';
+                                routesJSON = routesJSON + '"id":"' + routesIds[i] + '",';
+                                routesJSON = routesJSON + '"type":"'+routesTypes[i]+'"';
+                                routesJSON = routesJSON + '}';
+                                if (i<routesCount-1) routesJSON = routesJSON + ",";
+                            }
+                            routesJSON = routesJSON + "]";
+                            // combinedLocoList = getCombinedLocoList();
+                            // loadmaps();
+                            ToastMaker('Your Command Station is ready.', 10000, {valign:'bottom', align:'left'} );
+                            ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
+                        }
+                    }
+                } else {
+                    ToastMaker('Your Command Station is ready.', 10000, {valign:'bottom', align:'left'} );
+                    ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
+        }
             }
+
         }
     }
 }

@@ -108,6 +108,22 @@ a.edit-cur-loco, a.option-btn{
 a.edit-cur-loco{
     margin-top: 6px;
 }
+
+a.run-cur-route, a.option-btn{
+    float: right;
+    text-decoration: none;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-flex;
+    background: #f3f3f3;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 0 3px #e8e8e8;
+    margin-left: 5px;
+}
+a.run-cur-route{
+    margin-top: 6px;
+}
 .settings-subheading.row .map-name-heading{
     padding-top: 8px;
 }

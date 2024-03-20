@@ -547,6 +547,41 @@ function getStoredLocoData(name) {
 }
 
 /********************************************/
+/**************  Routes       ***************/
+/********************************************/
+
+function getRoutesList(){
+  rslt = [];
+  if (routesIds.length>0) {
+    if (rslt==null) {
+      rslt = JSON.parse(routesJSON);
+    } else {
+      routes = JSON.parse(routesJSON);
+      for (i=0;i<routesIds.length;i++) {
+        rslt[rslt.length] = routes[i];
+      } 
+    }
+  }
+  return rslt;
+}
+
+// Returns the RouteData of ExWebThrottle
+function getStoredRouteData(id) {
+  console.log(id);
+  data = JSON.parse(routesJSON);
+  if (data != null) {
+    return data.find(function (item, i) {
+      if (item.id == id) {
+        return item;
+      }
+    });
+  } else {
+    return null;
+  }
+}
+
+
+/********************************************/
 /**************  Preferences  ***************/
 /********************************************/
 

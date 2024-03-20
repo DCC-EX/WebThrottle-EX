@@ -1,3 +1,6 @@
+# Version 1.3.24
+- support Routes/Automation
+
 # Version 1.3.23
 - navigation button improvements
 

@@ -92,6 +92,12 @@ window.rosterFunctions = [];
 window.rosterFunctionsJSON = [];
 window.rosterJSON = "";
 
+window.routesCount = 0;
+window.routesIds = [];
+window.routesNames = [];
+window.routesTypes = [];
+window.routesJSON = "";
+
 window.addEventListener("load", function () {
   ToastMaker('Click the [Connect EX-CS] button to connect to your Command Station!', 8000);
 });
@@ -293,30 +299,40 @@ function loadLocomotives() {
   $.each(locos, function (key, value) {
     $("#locomotives-panel").append(
       '<div class="row settings-group" id="' + key + '">' +
-      '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
-      '<div class="column-7 loco-details">' +
-      '<div class="row">' +
-      '<div class="column-7"><p class="ac-loco-name column-10">' +
-      value.name +
-      "</p></div>" +
-      '<div class="column-2 cv-num"><p><small>Addr </small>' +
-      value.cv +
-      "</p></div>" +
-      "</div>" +
-      '<div class="row sub-text">' +
-      '<div class="column-3"><p>' + value.type + '</p></div>' +
-      '<div class="column-3">' +
-      (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
-      "</div>" +
-      '<div class="column-3">' +
-      (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
-      "</div></div></div>" +
+        '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
+        '<div class="column-7 loco-details">' +
+          '<div class="row">' +
+            '<div class="column-7"><p class="ac-loco-name column-10">' + value.name + "</p></div>" +
+            '<div class="column-2 cv-num"><p><small>Addr </small>' + value.cv + "</p></div>" +
+        "</div>" +
+        '<div class="row sub-text">' +
+          '<div class="column-3"><p>' + value.type + '</p></div>' +
+            '<div class="column-3">' + (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
+          "</div>" +
+          '<div class="column-3">' + (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
+          '</div>' +
+        '</div>' + 
+      '</div>' +
       '<div class="column-2 asst-map"><div class="row">' +
-      '<div class="column-7"><p class="muted">Map</p><p>' +
-      value.map +
-      "</p></div>" +
-      '<div class="column-3 prh"><a href="#" loco-id="' + key + '" data-loco="' +
-      value.name + '" class="edit-cur-loco"> &#9998; </a></div></div>' +
+        '<div class="column-7"><p class="muted">Map</p><p>' + value.map + "</p></div>" +
+        '<div class="column-3 prh"><a href="#" loco-id="' + key + '" data-loco="' + value.name + '" class="edit-cur-loco"> &#9998; </a></div>' +
+      '</div>' +
+    '</div></br>'
+    );
+  });
+}
+
+function loadRoutes() {
+  locos = getRoutesList();
+  $("#routes-panel").empty();
+  $.each(locos, function (key, value) {
+    $("#routes-panel").append(
+      '<div class="row settings-group" id="' + key + '">' +
+        '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
+        '<div class="column-5"><p class="ac-route-name column-10">' + value.name + "</p></div>" +
+        '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
+        '<div class="column-1"><p>' + value.type + '</p></div>' +
+        '<div class="column-1 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"> &#10151; </a></div>' +
       "</div></br>"
     );
   });
@@ -1005,6 +1021,13 @@ $(document).ready(function () {
     showNavigationButtons("cv-programmer");
     $("#nav-close").trigger("click");
   });
+  $("#routes-nav").on("click", function () {
+    hideWindows();
+    $("#routes-window").show();
+    showNavigationButtons("routes");
+    loadRoutes();
+    $("#nav-close").trigger("click");
+  });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
@@ -1037,6 +1060,12 @@ $(document).ready(function () {
     hideWindows();
     $("#cv-programmer-window").show();
     showNavigationButtons("cv-programmer");
+  });
+  $("#routes-screen-button").on("click", function () {
+    hideWindows();
+    $("#routes-window").show();
+    showNavigationButtons("routes");
+    loadRoutes();
   });
   $("#locos-screen-button").on("click", function () {
     hideWindows();
@@ -1138,6 +1167,11 @@ $(document).ready(function () {
 
 });
 
+$(document).on("click", ".run-cur-route", function () {
+  // routesdata = getStoredRouteData($(this).attr("route-id"));
+  writeToStream("/ START "+ $(this).attr("route-id"));
+});
+
 function setFunctionMaps() {
   const defaultMap = {
     mname: "Default",
@@ -1156,6 +1190,7 @@ function setFunctionMaps() {
 function hideWindows() {
   $("#throttle-window").hide();
   $("#cv-programmer-window").hide();
+  $("#routes-window").hide();
   $("#loco-window").hide();
   $("#fn-map-window").hide();
   $("#settings-window").hide();
@@ -1163,6 +1198,7 @@ function hideWindows() {
 function showNavigationButtons(which) {
   $("#throttle-screen-button").show();
   $("#cv-programmer-screen-button").show();
+  $("#routes-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
   if(which.length>0) {
