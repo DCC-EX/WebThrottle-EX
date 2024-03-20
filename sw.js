@@ -1,4 +1,4 @@
-var cacheName = 'EX-WebThrottle-' + version;
+var cacheName = 'EX-WebThrottle';
 var filesToCache = [
   'images/favicon.ico',
   'images/carbon_fibre.png',
