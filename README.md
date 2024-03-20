@@ -1,6 +1,6 @@
 # DCC-EX-WebThrottle
 
-This is a simple Throttle/Controller that can connect to the DCCEX EX-CommmandStation (EX-CS) directly through the USB port of a computer.
+This is a simple Throttle/Controller that can connect to a DCC-EX *EX-CommmandStation* (EX-CS) directly through the USB port of a computer.
 
 ## What you need to setup the project
 
@@ -9,12 +9,10 @@ This is a simple Throttle/Controller that can connect to the DCCEX EX-CommmandSt
 
 ## What you’ll need to use this application
 
-You don't need anything to test it out and to run in emulator mode, to run trains you will need:
+You don't need anything to test it out and to run in emulator mode, but to actually run trains you will need:
 
-* An Arduino Mega or Uno Microcontroller
-* An Arduino Motor Control Shield
+* An EX-CommandStation (Arduino Mega/Uno or ESP32 Microcontroller + Motor Shield)
 * Chromium based browser version 80 or later
-
 
 ## Getting started
 
@@ -22,11 +20,9 @@ NOTE: If you don't have your hardware yet or just want to play with the throttle
       and see commands being sent to the log window, you can skip to the operation
       section.
 
-To get started, connect your EX-CommandStation to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit DCC-EX.github.io/WebThrottle-EX/ to start using the software.
+To get started, connect your EX-CommandStation to a computer that has a USB port and have a compatible browser installed. Use a USB serial cable from your computer to the serial connector on the Arduino. Visit our [EX-WebThrottle](https://dcc-ex.com/WebThrottle-EX) page to start using this program.
 
-
-Alternatively, you can download the zip file found in the releases section and extract it. Click on the "index.html" or "exwebthrotle.html" file to load the webpage. This method is only recommended if you need a specific version as it won't be auto-updated.
-
+Alternatively, you can download the zip file found in the releases section and extract it. Click on the "index.html" file to load the webpage. This method is only recommended if you need a specific version, or will be using it on a computer that does not have internet access. Note: it won't be auto-updated if new versions become available.
 
 ## Operation
 
@@ -35,8 +31,6 @@ To use the program, you can either click on the "serial" dropdown button and sel
 If the program finds a compatible device, it will popup a window showing you a selection. It may show a line at the top such as "Arduino Mega 2560 (COM3)". Your com port may vary. Click on your board to select it and then click the "connect" button.
 
 You should then be connected to the Command Station (CS) and should see the response from the CS on the web page under the buttons. Make sure your debug console is open. If it isn't, use the slider button in the lower left to open it. You can also open the DevTools window in your browser to see more developer logging.
-
-Once you are connected, you can enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ command in this way. You should see <iDCC++...> returned in the log window with your version, type of Arduino, type of motor shield, and some other information.
 
 Now you are ready to run trains! Place your loco on the track and click the power slider button to turn on power to your track. You should see lights on an Arduino Motor Board light and an indication that your loco has power.
 
@@ -52,6 +46,14 @@ The options button lets you save labels to go on your function buttons for each 
 
 **Note:** The emulator doesn't fully replicate the Command station yet. This means that although the software works, not all the responses will be shown in
 the debug console. We are currently working on this, so it is something that will be fixed.
+
+## Issuing Commands
+
+Once you are connected, you can direct commands o the command station.  Thais can be useful if you are having difficulty with the system or a decoder.
+
+For example, enter the ``<s>`` command in the "direct command" textbox to get status information from your Command Station, just enter "s" (without the quotes) and press the SEND button. You can send any DCC++ command in this way. You should see <iDCC++...> returned in the log window with your version, type of Arduino, type of motor shield, and some other information.
+
+A complete reference to all the commands is available on our [DCC-EX Native Commands Summary Reference](https://flash62au.github.io/dcc-ex.github.io/reference/software/command-summary-consolidated.html#gsc.tab) page.
 
 ## Going Further / Developing
 
