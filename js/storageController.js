@@ -508,8 +508,8 @@ function getCombinedLocoList(){
   if (typeof Storage !== "undefined") {
     rslt = JSON.parse(window.localStorage.getItem("cabList"));
   }
-  if (rosterIds.length>0) {
-    if (rslt==null) {
+  if ( (rosterIds.length>0) && (rosterComplete) ){
+    if (rslt==null) { // no locally stored locos
       rslt = JSON.parse(rosterJSON);
     } else {
       roster = JSON.parse(rosterJSON);
@@ -546,40 +546,57 @@ function getStoredLocoData(name) {
   }
 }
 
+function resetRoster() {
+  window.rosterRequested = false;
+  window.rosterComplete = false;
+  window.rosterCount = 0;
+  window.rosterIds = [];
+  window.rosterNames = [];
+  window.rosterFunctions = [];
+  window.rosterFunctionsJSON = [];
+  window.rosterJSON = "";
+}
+
 /********************************************/
 /**************  Routes       ***************/
 /********************************************/
 
+// retrieve the full list of routes
 function getRoutesList(){
   rslt = [];
-  if (routesIds.length>0) {
-    if (rslt==null) {
-      rslt = JSON.parse(routesJSON);
-    } else {
-      routes = JSON.parse(routesJSON);
-      for (i=0;i<routesIds.length;i++) {
-        rslt[rslt.length] = routes[i];
-      } 
-    }
+  if ( (routesIds.length>0) && (routesComplete) ) {
+    rslt = JSON.parse(routesJSON);
+    rslt = sortResults(rslt,"name",true);
   }
   return rslt;
 }
 
-// Returns the RouteData of ExWebThrottle
+// Returns the RouteData of a single route
 function getStoredRouteData(id) {
+  rslt = null;
   console.log(id);
-  data = JSON.parse(routesJSON);
-  if (data != null) {
-    return data.find(function (item, i) {
-      if (item.id == id) {
-        return item;
-      }
-    });
-  } else {
-    return null;
+  if (routesIds.length>0) {
+    data = JSON.parse(routesJSON);
+    if (data != null) {
+      rslt = data.find(function (item, i) {
+        if (item.id == id) {
+          return item;
+        }
+      });
+    }
+    return rslt;
   }
 }
 
+function resetRoutes() {
+  window.routesRequested = false;
+  window.routesComplete = false;
+  window.routesCount = 0;
+  window.routesIds = [];
+  window.routesNames = [];
+  window.routesTypes = [];
+  window.routesJSON = "";
+}
 
 /********************************************/
 /**************  Preferences  ***************/

@@ -196,6 +196,11 @@ hr {
     border-bottom: 1px solid #000000;
     box-shadow: 0 1px 0px #464646; 
 }
+.routes-group{
+    border: 1px solid #3b3b3b;
+    background: #121212;
+    box-shadow: inset 0px 0px 2px #000000;
+}
 .side-panel {
     border-right: 1px solid #000000;
     box-shadow: 1px 0 #464646; 
@@ -232,5 +237,6 @@ a.run-cur-route, a.option-btn{
 }
 p.ac-route-name{
     text-shadow: 0 0 1px #000000;
-    color: #00A3B9
+    color: #00A3B9;
+    padding-top: 4px;  
 }

@@ -79,6 +79,7 @@ hr{
     width: 200px;
     background: url(../images/product-logo-ex-webthrottle.png);
     display: inline-block;
+    float: center;
     background-size: 100%;
     box-shadow: 0 0 3px #989898;
     border-radius: 6px;
@@ -137,7 +138,7 @@ hr{
     font-size: 30px;
     cursor: pointer;
     color: #666666;
-    padding: 10px 15px;
+    padding: 10px 5px;
     border: none;
     background: none;
     line-height: 38px;

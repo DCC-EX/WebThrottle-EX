@@ -940,6 +940,12 @@ input:checked + .slider.debug-slider{
     padding-top: 1.6%;
     text-align: center;
 }
+.routes-group .sno{
+    width: 6%;
+    padding-left: 0;
+    padding-top: 4px;
+    text-align: center;
+}
 .loco-details p.ac-loco-name{
     color: #007a8a;
     font-size: 18px;
