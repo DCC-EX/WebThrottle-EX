@@ -12,8 +12,6 @@ var filesToCache = [
   'images/lightBigFront@2x.png',
   'images/pattern.png',
   'images/WebThrottle.png',
-  'css/icons.css',
-  'css/jquery-ui.css',
   'css/jquery.rotaryswitch.css',
   'css/layout.css',
   'css/pwa.css',
