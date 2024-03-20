@@ -1,3 +1,9 @@
+# Version 1.3.25
+- sort Routes/Automation
+- only retrieve the full Roster at connection
+- only retrieve the full Routes/Automation list at connection
+- bug fixes
+
 # Version 1.3.24
 - support Routes/Automation
 

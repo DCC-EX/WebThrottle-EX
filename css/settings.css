@@ -70,6 +70,14 @@
     -ms-flex: 3;
     flex: 3;
 }
+.routes-group{
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    padding: 0px 20px;
+    background: #fff;
+    margin-bottom: 8px;
+}
+
 .side-panel ul li:hover, .side-panel ul li.active {
     background: rgba(4,4,4, 0.05);
 }

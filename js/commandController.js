@@ -142,7 +142,7 @@ function parseResponse(cmd) {  // some basic ones only
         csIsReady = true;
         uiEnableThrottleControlOnReady();
         ToastMaker('Your Command Station has Started.', 4000, {valign:'bottom', align:'left'} );
-        ToastMaker('Checking Roster and Routes/Automations.', 2000, {valign:'bottom', align:'right'} );
+        ToastMaker('Checking Roster and Routes/Automations.', 1000, {valign:'bottom', align:'right'} );
  
         //intialise the roster
         writeToStream("JR");
@@ -161,6 +161,8 @@ function parseResponse(cmd) {  // some basic ones only
                 $("#power-status").html("is On");
             }
 
+// --------------------------------------------------------------------
+              
         } else if (cmd.charAt(1) == 'i') {
             versionText = "";
             if (cmdArray[1].charAt(0) == 'V') //version
@@ -175,6 +177,8 @@ function parseResponse(cmd) {  // some basic ones only
                     console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
                 }
 
+// --------------------------------------------------------------------
+                  
         } else if (cmd.charAt(1) == 'l') {
             try {
                 lastLocoReceived = parseInt(cmdArray[1]);
@@ -221,6 +225,8 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + '[ERROR] Unable to process speed commands');
             }
 
+// --------------------------------------------------------------------
+              
         } else if ((cmd.charAt(1) == 'r') && (cmdArray.length == 2)) {
             try {
                 locoAddr = parseInt(cmdArray[1]);
@@ -233,6 +239,8 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + '[ERROR] Unable to process read address response');
             }
 
+// --------------------------------------------------------------------
+              
         } else if (cmd.charAt(1) == 'w') {
             try {
                 locoAddr = parseInt(cmdArray[1]);
@@ -245,6 +253,8 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + '[ERROR] Unable to process write address response');
             }
 
+// --------------------------------------------------------------------
+              
         } else if ((cmd.charAt(1) == 'v') || (cmd.charAt(1) == 'r')) {
             try {
                 cvid = parseInt(cmdArray[1]);
@@ -291,7 +301,11 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + ' [ERROR] Unable to process read CV response');
             }
 
+// *********************************************************************
+
         } else if (cmd.charAt(1) == 'j') {
+
+// --------------------------------------------------------------------
 
             if (cmdArray[0].charAt(2) == 'R')  { //roster
                 last = cmdArray.length-1;
@@ -308,16 +322,19 @@ function parseResponse(cmd) {  // some basic ones only
                                 rosterFunctionsJSON[i-1] = "";
                                 // writeToStream("JR " + cmdArrayClean[i]);                          
                             }
-                            writeToStream("JR " + rosterIds[0]);  // get the details for the first
-                            ToastMaker('Please wait - Loading Roster', 2000, {valign:'bottom', align:'center'});
+                            if (!rosterRequested) {
+                                writeToStream("JR " + rosterIds[0]);  // get the details for the first
+                                ToastMaker('Please wait - Loading Roster', 1000, {valign:'bottom', align:'center'});
+                                rosterRequested = true;
+                            }
                         } catch (e) {
                             console.log(getTimeStamp() + ' [ERROR] Unable process roster: ');
                         }
                         
-                    } else { // individual entry
+                    } else { // individual roster entry
                         console.log(getTimeStamp() + ' Processing individual roster entry: ' + cmdArrayClean[1]);
 
-                        rosterListComplete = true;
+                        rosterComplete = true;
                         for (i=0;i<rosterIds.length;i++) {
                             if (rosterIds[i] == cmdArrayClean[1]) {
                                 rosterNames[i] = cmdArrayClean[2].substring(1,cmdArrayClean[2].length-1);
@@ -350,12 +367,12 @@ function parseResponse(cmd) {  // some basic ones only
                         for (i=0;i<rosterIds.length;i++) {
                             if (rosterNames[i].length==0) {
                                 writeToStream("JR " + rosterIds[i]);   // get the next
-                                rosterListComplete = false;
+                                rosterComplete = false;
                                 break;
                             }
                         }
 
-                        if (rosterListComplete) {
+                        if (rosterComplete) {
                             rosterJSON = "[";
                             for (i=0; i<rosterCount;i++) {
                                 rosterJSON = rosterJSON + '{"name":"' + rosterNames[i] + '",';
@@ -371,15 +388,20 @@ function parseResponse(cmd) {  // some basic ones only
                             combinedLocoList = getCombinedLocoList();
                             loadmaps();
                             //intialise the routes
-                            writeToStream("JA");
+                            if (!routesRequested) {
+                                writeToStream("JA");
+                            }
                         }
                     }
                 } else {
                     //intialise the routes
+                    rosterComplete = true;
                     writeToStream("JA");
                 }
 
-            } else if (cmdArray[0].charAt(2) == 'A')  { //routes/automations
+// --------------------------------------------------------------------
+
+              } else if (cmdArray[0].charAt(2) == 'A')  { //routes/automations
                 last = cmdArray.length-1;
                 if (cmdArrayClean.length > 1) { // if ==1, then no routes
                     if ( (cmdArrayClean.length == 2 ) || 
@@ -392,8 +414,11 @@ function parseResponse(cmd) {  // some basic ones only
                                 routesTypes[i-1] = "";
                                 routesNames[i-1] = "";
                             }
-                            writeToStream("JA " + routesIds[0]);  // get the details for the first
-                            ToastMaker('Please wait - Loading Routes/Automations', 2000, {valign:'bottom', align:'right'});
+                            if (!routesRequested) { // If we havn't already asked
+                                writeToStream("JA " + routesIds[0]);  // get the details for the first
+                                routesRequested = true;
+                            }
+                            ToastMaker('Please wait - Loading Routes/Automations', 1000, {valign:'bottom', align:'right'});
                         } catch (e) {
                             console.log(getTimeStamp() + ' [ERROR] Unable process routes: ');
                         }
@@ -401,7 +426,7 @@ function parseResponse(cmd) {  // some basic ones only
                     } else { // individual entry
                         console.log(getTimeStamp() + ' Processing individual route entry: ' + cmdArrayClean[1]);
 
-                        routesListComplete = true;
+                        routesComplete = true;
                         for (i=0;i<routesIds.length;i++) {
                             if (routesIds[i] == cmdArrayClean[1]) {
                                 routesTypes[i] = cmdArrayClean[2];
@@ -411,12 +436,12 @@ function parseResponse(cmd) {  // some basic ones only
                         for (i=0;i<routesIds.length;i++) {
                             if (routesNames[i].length==0) {
                                 writeToStream("JA " + routesIds[i]);   // get the next
-                                routesListComplete = false;
+                                routesComplete = false;
                                 break;
                             }
                         }
 
-                        if (routesListComplete) {
+                        if (routesComplete) {
                             routesJSON = "[";
                             for (i=0; i<routesCount;i++) {
                                 routesJSON = routesJSON + '{"name":"' + routesNames[i] + '",';
@@ -426,14 +451,15 @@ function parseResponse(cmd) {  // some basic ones only
                                 if (i<routesCount-1) routesJSON = routesJSON + ",";
                             }
                             routesJSON = routesJSON + "]";
-                            // combinedLocoList = getCombinedLocoList();
-                            // loadmaps();
-                            ToastMaker('Your Command Station is ready.', 10000, {valign:'bottom', align:'left'} );
+
+                            routesComplete = true;
+                            ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                             ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                         }
                     }
                 } else {
-                    ToastMaker('Your Command Station is ready.', 10000, {valign:'bottom', align:'left'} );
+                    routesComplete = true;
+                    ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                     ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
         }
             }
@@ -561,6 +587,8 @@ async function toggleServer(btn) {
     success = await connectServer();
     // Checks if the port was opened successfully
     if (success) {
+        resetRoster();
+        resetRoutes();
         ToastMaker('Please wait while information from the Command Station is loaded', 10000);
         btn.attr('aria-state', 'Connected');
         btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');
@@ -696,4 +724,16 @@ function browserType() {
         window.alert("EX-WebThrottle is only known to work on Chromium based web browsers. (i.e. Chrome, Edge, Opera).\n\n Your browser '" + browser + "' is NOT one of these, so EX-WebThrottle will likely not work. You will not be able to select or interact with the USB port.")
     }
     return "[i] Web browser: " + browser + " - '" + userAgent + "'";
+}
+
+function sortResults(list, prop, asc) {
+    rslt = list;
+    rslt.sort(function(a, b) {
+        if (asc) {
+            return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+        } else {
+            return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+        }
+    });
+    return rslt;
 }

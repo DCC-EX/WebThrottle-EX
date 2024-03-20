@@ -85,6 +85,8 @@ window.csVersion = 5;
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
+window.rosterRequested = false;
+window.rosterComplete = false;
 window.rosterCount = 0;
 window.rosterIds = [];
 window.rosterNames = [];
@@ -92,6 +94,8 @@ window.rosterFunctions = [];
 window.rosterFunctionsJSON = [];
 window.rosterJSON = "";
 
+window.routesRequested = false;
+window.routesComplete = false;
 window.routesCount = 0;
 window.routesIds = [];
 window.routesNames = [];
@@ -323,17 +327,17 @@ function loadLocomotives() {
 }
 
 function loadRoutes() {
-  locos = getRoutesList();
+  routes = getRoutesList();
   $("#routes-panel").empty();
-  $.each(locos, function (key, value) {
+  $.each(routes, function (key, value) {
     $("#routes-panel").append(
-      '<div class="row settings-group" id="' + key + '">' +
+      '<div class="row routes-group" id="' + key + '">' +
         '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
         '<div class="column-5"><p class="ac-route-name column-10">' + value.name + "</p></div>" +
         '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
         '<div class="column-1"><p>' + value.type + '</p></div>' +
         '<div class="column-1 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"> &#10151; </a></div>' +
-      "</div></br>"
+      "</div>"
     );
   });
 }
