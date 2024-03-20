@@ -12,13 +12,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 	
-	Authors: Fred Decker
+  Authors: Fred Decker
              Mani Kumar
              Matt
              Peter Akers
-			 
+       
     This is part of the DCC-EX Project for model railroading and more.
-	For more information, see us at dcc-ex.com.
+  For more information, see us at dcc-ex.com.
 */
 window.cv = 0;
 window.speed = 0;
@@ -27,35 +27,35 @@ window.server = "";
 window.port = 4444;
 window.speedStep = 1;
 window.functions = {
-    "f0": 0,
-    "f1": 0,
-    "f2": 0,
-    "f3": 0,
-    "f4": 0,
-    "f5": 0,
-    "f6": 0,
-    "f7": 0,
-    "f8": 0,
-    "f9": 0,
-    "f10": 0,
-    "f11": 0,
-    "f12": 0,
-    "f13": 0,
-    "f14": 0,
-    "f15": 0,
-    "f16": 0,
-    "f17": 0,
-    "f18": 0,
-    "f19": 0,
-    "f20": 0,
-    "f21": 0,
-    "f22": 0,
-    "f23": 0,
-    "f24": 0,
-    "f25": 0,
-    "f26": 0,
-    "f27": 0,
-    "f28": 0
+  "f0": 0,
+  "f1": 0,
+  "f2": 0,
+  "f3": 0,
+  "f4": 0,
+  "f5": 0,
+  "f6": 0,
+  "f7": 0,
+  "f8": 0,
+  "f9": 0,
+  "f10": 0,
+  "f11": 0,
+  "f12": 0,
+  "f13": 0,
+  "f14": 0,
+  "f15": 0,
+  "f16": 0,
+  "f17": 0,
+  "f18": 0,
+  "f19": 0,
+  "f20": 0,
+  "f21": 0,
+  "f22": 0,
+  "f23": 0,
+  "f24": 0,
+  "f25": 0,
+  "f26": 0,
+  "f27": 0,
+  "f28": 0
 };
 window.isStopped = true;
 window.isDirectionToggleStopped = false;
@@ -92,81 +92,81 @@ window.rosterFunctions = [];
 window.rosterFunctionsJSON = [];
 window.rosterJSON = "";
 
-window.addEventListener("load", function(){
+window.addEventListener("load", function () {
   ToastMaker('Click the [Connect EX-CS] button to connect to your Command Station!', 8000);
 });
 
 // Enables and disables ui elements
 
-function uiDisable (status) {
-    /*document.getElementById('ex-locoid').disabled = status
-    document.getElementById('power-switch').disabled = status
-    document.getElementById('button-sendCmd').disabled = status
-    document.getElementById('dir-f').disabled = status
-    document.getElementById('dir-S').disabled = status*/
-    //document.getElementById('dir-b').disabled = status
-    $("#power-switch").prop('disabled', status)
-    $("#button-sendCmd").prop('disabled', status)
-    if (status) {
-      $("#ex-locoid").prop('disabled', status)
-      $("#button-getloco").prop('disabled', status)
-      $("#button-getloco").addClass("ui-state-disabled")
-      $("#button-sendCmd").addClass("ui-state-disabled")
-      $("#cmd-direct").addClass("ui-state-disabled")
-      $("#ex-locoid").addClass("ui-state-disabled")
-      $("#power-switch").parent().addClass("ui-state-disabled")
-      $("#dir-f").parent().addClass("ui-state-disabled")
-      $("#emergency-stop").addClass("ui-state-disabled")
-      $("#button-right").addClass("ui-state-disabled")
-      $("#button-left").addClass("ui-state-disabled")
-      for (i=0;i<=28;i++) {
-        $("#f"+i).addClass("ui-state-disabled")
-      }
-
-      $("#button-cv-read-loco-id").prop('disabled', status)
-      $("#button-cv-read-loco-id").addClass("ui-state-disabled")
-      $("#button-cv-write-loco-id").prop('disabled', status)
-      $("#button-cv-write-loco-id").addClass("ui-state-disabled")
-      $("#button-cv-read-cv").prop('disabled', status)
-      $("#button-cv-read-cv").addClass("ui-state-disabled")
-      $("#button-cv-write-cv").prop('disabled', status)
-      $("#button-cv-write-cv").addClass("ui-state-disabled")
-    } else {
-      // $("#button-getloco").removeClass("ui-state-disabled")
-      // $("#button-sendCmd").removeClass("ui-state-disabled")
-      $("#cmd-direct").removeClass("ui-state-disabled")
-      $("#ex-locoid").removeClass("ui-state-disabled")
-      $("#power-switch").parent().removeClass("ui-state-disabled")
-      $("#dir-f").parent().removeClass("ui-state-disabled")
-      $("#emergency-stop").removeClass("ui-state-disabled")
-      $("#button-right").removeClass("ui-state-disabled")
-      $("#button-left").removeClass("ui-state-disabled")
-      for (i=0;i<=28;i++) {
-        $("#f"+i).removeClass("ui-state-disabled")
-      }
-
-      // $("#button-cv-read-loco-id").prop('disabled', status)
-      // $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
-      // $("#button-cv-write-loco-id").prop('disabled', status)
-      // $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
-      // $("#button-cv-read-cv").prop('disabled', status)
-      // $("#button-cv-read-cv").removeClass("ui-state-disabled")
-      // $("#button-cv-write-cv").prop('disabled', status)
-      // $("#button-cv-write-cv").removeClass("ui-state-disabled")
+function uiDisable(status) {
+  /*document.getElementById('ex-locoid').disabled = status
+  document.getElementById('power-switch').disabled = status
+  document.getElementById('button-sendCmd').disabled = status
+  document.getElementById('dir-f').disabled = status
+  document.getElementById('dir-S').disabled = status*/
+  //document.getElementById('dir-b').disabled = status
+  $("#power-switch").prop('disabled', status)
+  $("#button-sendCmd").prop('disabled', status)
+  if (status) {
+    $("#ex-locoid").prop('disabled', status)
+    $("#button-getloco").prop('disabled', status)
+    $("#button-getloco").addClass("ui-state-disabled")
+    $("#button-sendCmd").addClass("ui-state-disabled")
+    $("#cmd-direct").addClass("ui-state-disabled")
+    $("#ex-locoid").addClass("ui-state-disabled")
+    $("#power-switch").parent().addClass("ui-state-disabled")
+    $("#dir-f").parent().addClass("ui-state-disabled")
+    $("#emergency-stop").addClass("ui-state-disabled")
+    $("#button-right").addClass("ui-state-disabled")
+    $("#button-left").addClass("ui-state-disabled")
+    for (i = 0; i <= 28; i++) {
+      $("#f" + i).addClass("ui-state-disabled")
     }
 
-    $("#dir-f").prop('disabled', status)
-    $("#dir-S").prop('disabled', status)
-    $("#dir-b").prop('disabled', status)
-    if (status){
-        //$("#throttle").roundSlider("disable");
-        //toggleThrottleState(false)
-        $("#button-getloco").trigger("click");
-    } else {
-        //$("#throttle").roundSlider("enable");
-        //toggleThrottleState(true)
-        //$("#button-getloco").trigger("click");
+    $("#button-cv-read-loco-id").prop('disabled', status)
+    $("#button-cv-read-loco-id").addClass("ui-state-disabled")
+    $("#button-cv-write-loco-id").prop('disabled', status)
+    $("#button-cv-write-loco-id").addClass("ui-state-disabled")
+    $("#button-cv-read-cv").prop('disabled', status)
+    $("#button-cv-read-cv").addClass("ui-state-disabled")
+    $("#button-cv-write-cv").prop('disabled', status)
+    $("#button-cv-write-cv").addClass("ui-state-disabled")
+  } else {
+    // $("#button-getloco").removeClass("ui-state-disabled")
+    // $("#button-sendCmd").removeClass("ui-state-disabled")
+    $("#cmd-direct").removeClass("ui-state-disabled")
+    $("#ex-locoid").removeClass("ui-state-disabled")
+    $("#power-switch").parent().removeClass("ui-state-disabled")
+    $("#dir-f").parent().removeClass("ui-state-disabled")
+    $("#emergency-stop").removeClass("ui-state-disabled")
+    $("#button-right").removeClass("ui-state-disabled")
+    $("#button-left").removeClass("ui-state-disabled")
+    for (i = 0; i <= 28; i++) {
+      $("#f" + i).removeClass("ui-state-disabled")
     }
+
+    // $("#button-cv-read-loco-id").prop('disabled', status)
+    // $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
+    // $("#button-cv-write-loco-id").prop('disabled', status)
+    // $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
+    // $("#button-cv-read-cv").prop('disabled', status)
+    // $("#button-cv-read-cv").removeClass("ui-state-disabled")
+    // $("#button-cv-write-cv").prop('disabled', status)
+    // $("#button-cv-write-cv").removeClass("ui-state-disabled")
+  }
+
+  $("#dir-f").prop('disabled', status)
+  $("#dir-S").prop('disabled', status)
+  $("#dir-b").prop('disabled', status)
+  if (status) {
+    //$("#throttle").roundSlider("disable");
+    //toggleThrottleState(false)
+    $("#button-getloco").trigger("click");
+  } else {
+    //$("#throttle").roundSlider("enable");
+    //toggleThrottleState(true)
+    //$("#button-getloco").trigger("click");
+  }
 }
 
 function uiEnableThrottleControlOnReady() {
@@ -186,190 +186,190 @@ function uiEnableThrottleControlOnReady() {
 }
 
 // Returns given function current value (0-disable/1-enable)
-function getFunCurrentVal(fun){
-    return window.functions[fun];
+function getFunCurrentVal(fun) {
+  return window.functions[fun];
 }
 // Set given function current value with given value (0/1)
-function setFunCurrentVal(fun, val){
-    window.functions[fun]=val;
+function setFunCurrentVal(fun, val) {
+  window.functions[fun] = val;
 }
 // Set given CV value
-function setCV(val){
-    window.cv = val;
-    console.log("Set Cab Address: "+val);
+function setCV(val) {
+  window.cv = val;
+  console.log("Set Cab Address: " + val);
 }
 // Get stored CV value
-function getCV(){
-    return window.cv
+function getCV() {
+  return window.cv
 }
 
 // Set Speed value
-function setSpeed(sp){
-    window.speed=sp;
+function setSpeed(sp) {
+  window.speed = sp;
 }
 
 // Get Speed value
-function getSpeed(){
-    return parseInt(window.speed);
+function getSpeed() {
+  return parseInt(window.speed);
 }
 
 // Set Direction 
-function setDirection(dir){
-    window.direction=dir;
+function setDirection(dir) {
+  window.direction = dir;
 }
 
 // Get Direction value
-function getDirection(){
-    return window.direction;
+function getDirection() {
+  return window.direction;
 }
 
 // Handling Disabling functionality for Knob Type throttle (it will not Out of the box) 
 function toggleKnobState(ele, state) {
-    if(!state){
-        ele.addClass("disabled");
-    }else{
-        ele.removeClass("disabled");
-    }
+  if (!state) {
+    ele.addClass("disabled");
+  } else {
+    ele.removeClass("disabled");
+  }
 }
 
 
-function loadMapData(map){
-    loadMapData(map, false);
+function loadMapData(map) {
+  loadMapData(map, false);
 }
 
-function loadMapData(map, fromRoster){
-    data = [];
-    if (map.toLowerCase() == "default") {
-      data = { mname: "Default", fnData: fnMasterData };
+function loadMapData(map, fromRoster) {
+  data = [];
+  if (map.toLowerCase() == "default") {
+    data = { mname: "Default", fnData: fnMasterData };
+  } else {
+    if (!fromRoster) {
+      data = getStoredMapData(map);
     } else {
-      if (!fromRoster) {
-        data = getStoredMapData(map);
-      } else {
-        data = getRosterMapData(map);
-      } 
+      data = getRosterMapData(map);
     }
-    $("#mapping-panel").empty();
-    $("#mapping-panel").append(
-      '<div class="settings-subheading row">' +
-        '<div class="column-7 pl0"><div class="map-name-heading">' +
-        map +
-        "</div></div>" +
-        '<div class="column-3 pr0">' +
-        '<input type="hidden" id="cur-map-val" cur-map="'+map+'"/>' +
-        '<a href="#" class="option-btn waste-bin" id="delete-map"> &#128465;</a>' +
-        '<a href="#" class="option-btn" id="import-map"> &#8595;</a>' +
-        '<a href="#" class="option-btn" id="export-cur-map"> &#8593;</a>' +
-        '<a href="#" class="option-btn" id="edit-cur-map">&#9998;</a>' +
-        "</div>" +
-        "</div>"
+  }
+  $("#mapping-panel").empty();
+  $("#mapping-panel").append(
+    '<div class="settings-subheading row">' +
+    '<div class="column-7 pl0"><div class="map-name-heading">' +
+    map +
+    "</div></div>" +
+    '<div class="column-3 pr0">' +
+    '<input type="hidden" id="cur-map-val" cur-map="' + map + '"/>' +
+    '<a href="#" class="option-btn waste-bin" id="delete-map"> &#128465;</a>' +
+    '<a href="#" class="option-btn" id="import-map"> &#8595;</a>' +
+    '<a href="#" class="option-btn" id="export-cur-map"> &#8593;</a>' +
+    '<a href="#" class="option-btn" id="edit-cur-map">&#9998;</a>' +
+    "</div>" +
+    "</div>"
+  );
+  $("#mapping-panel").append(
+    '<div class="row settings-group fnhead">' +
+    '<div class="column-2">Function</div>' +
+    '<div class="column-4">Name</div>' +
+    '<div class="column-2">Type</div>' +
+    '<div class="column-2">Visible</div>' +
+    '</div>'
+  );
+  container = $('<div class="maps-content"></div>').appendTo("#mapping-panel");
+  $.each(data.fnData, function (key, value) {
+    container.append(
+      '<div class="row settings-group" id="' + key + '">' +
+      '<div class="column-2 caplitalize">' + key + '</div>' +
+      '<div class="column-4">' + value[2] + '</div>' +
+      '<div class="column-2">' + (value[1] == 1 ? '<span class="pill red">Momentary</span>' : '<span class="pill green">Latching</span>') + '</div>' +
+      '<div class="column-2">' + (value[3] == 1 ? '<span class="pill green">Visible</span>' : '<span class="pill">Hidden</span>') + '</div>' +
+      '</div>'
     );
-    $("#mapping-panel").append(
-        '<div class="row settings-group fnhead">' +
-          '<div class="column-2">Function</div>'+
-          '<div class="column-4">Name</div>'+
-          '<div class="column-2">Type</div>' +
-          '<div class="column-2">Visible</div>' +
-        '</div>'
-    );
-    container = $('<div class="maps-content"></div>').appendTo("#mapping-panel");
-    $.each(data.fnData, function (key, value) {
-      container.append(
-        '<div class="row settings-group" id="'+key+'">' +
-          '<div class="column-2 caplitalize">'+key+'</div>'+
-          '<div class="column-4">'+value[2]+'</div>'+
-          '<div class="column-2">'+ (value[1] == 1 ? '<span class="pill red">Momentary</span>' : '<span class="pill green">Latching</span>') +'</div>' +
-          '<div class="column-2">'+ (value[3] == 1 ? '<span class="pill green">Visible</span>' : '<span class="pill">Hidden</span>') +'</div>' +
-        '</div>'
-      );
-    });
+  });
 
 }
 
 
-function loadLocomotives(){
-    locos = getLocoList();
-    combinedLocoList = getCombinedLocoList();
-    $("#locomotives-panel").empty();
-    $.each(locos, function (key, value) {
-      $("#locomotives-panel").append(
-        '<div class="row settings-group" id="'+key+'">'+
-          '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
-          '<div class="column-7 loco-details">' +
-          '<div class="row">' +
-          '<div class="column-7"><p class="ac-loco-name column-10">' +
-          value.name +
-          "</p></div>" +
-          '<div class="column-2 cv-num"><p><small>Addr </small>' +
-          value.cv +
-          "</p></div>" +
-          "</div>" +
-          '<div class="row sub-text">' +
-          '<div class="column-3"><p>' + value.type + '</p></div>' +
-          '<div class="column-3">' +
-          (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
-          "</div>" +
-          '<div class="column-3">' +
-          (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
-          "</div></div></div>" +
-          '<div class="column-2 asst-map"><div class="row">' +
-          '<div class="column-7"><p class="muted">Map</p><p>' +
-          value.map +
-          "</p></div>" +
-          '<div class="column-3 prh"><a href="#" loco-id="'+key+'" data-loco="'+
-          value.name+'" class="edit-cur-loco"> &#9998; </a></div></div>' +
-          "</div></br>"
-      );      
-    });
+function loadLocomotives() {
+  locos = getLocoList();
+  combinedLocoList = getCombinedLocoList();
+  $("#locomotives-panel").empty();
+  $.each(locos, function (key, value) {
+    $("#locomotives-panel").append(
+      '<div class="row settings-group" id="' + key + '">' +
+      '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
+      '<div class="column-7 loco-details">' +
+      '<div class="row">' +
+      '<div class="column-7"><p class="ac-loco-name column-10">' +
+      value.name +
+      "</p></div>" +
+      '<div class="column-2 cv-num"><p><small>Addr </small>' +
+      value.cv +
+      "</p></div>" +
+      "</div>" +
+      '<div class="row sub-text">' +
+      '<div class="column-3"><p>' + value.type + '</p></div>' +
+      '<div class="column-3">' +
+      (value.decoder == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.decoder + "</p>") +
+      "</div>" +
+      '<div class="column-3">' +
+      (value.brand == "" ? '<p class="nd">Undefined</p>' : "<p>" + value.brand + "</p>") +
+      "</div></div></div>" +
+      '<div class="column-2 asst-map"><div class="row">' +
+      '<div class="column-7"><p class="muted">Map</p><p>' +
+      value.map +
+      "</p></div>" +
+      '<div class="column-3 prh"><a href="#" loco-id="' + key + '" data-loco="' +
+      value.name + '" class="edit-cur-loco"> &#9998; </a></div></div>' +
+      "</div></br>"
+    );
+  });
 }
 
 //Initialization routine for Throttle screen
 function setThrottleScreenUI() {
-    loadmaps();
-    loadButtons({ mname: "default", fnData: fnMasterData });
-    uiDisable(true);
-    controller = getPreference("scontroller");
-    $("#throttle-selector").val(controller).trigger("change");
-    setspeedControllerType(controller);
+  loadmaps();
+  loadButtons({ mname: "default", fnData: fnMasterData });
+  uiDisable(true);
+  controller = getPreference("scontroller");
+  $("#throttle-selector").val(controller).trigger("change");
+  setspeedControllerType(controller);
 
-    // Show and hide debug console based on preference set in earlier session
-    if (getPreference("dbugConsole") == null) {
-        setPreference("dbugConsole", true);
-    }
-    if(getPreference("dbugConsole")) {
-        $("#debug-console").show() 
-        $("#console-toggle").prop("checked", true);
-    }else{
-        $("#debug-console").hide();
-        $("#console-toggle").prop("checked", false);
-    }
-    if (getPreference("timestamp") == null) {
-      setPreference("timestamp", "off");
-    }
-    $("#timestamp-selector").val(getPreference("timestamp")).trigger("change");
-  
-    $(".dir-toggle").addClass("forward");
+  // Show and hide debug console based on preference set in earlier session
+  if (getPreference("dbugConsole") == null) {
+    setPreference("dbugConsole", true);
+  }
+  if (getPreference("dbugConsole")) {
+    $("#debug-console").show()
+    $("#console-toggle").prop("checked", true);
+  } else {
+    $("#debug-console").hide();
+    $("#console-toggle").prop("checked", false);
+  }
+  if (getPreference("timestamp") == null) {
+    setPreference("timestamp", "off");
+  }
+  $("#timestamp-selector").val(getPreference("timestamp")).trigger("change");
 
-    // Set theme
-    if (getPreference("theme") == null) {
-        setPreference("theme", "simple");
-    }else{
-        theme = getPreference("theme");
-        $("#theme-selector").val(theme).trigger("change");
-        if (theme != "simple") {
-            $("link[title*='theme']").remove();
-            $("head").append(
-                '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/'+theme+'.css">'
-            );
-        }
+  $(".dir-toggle").addClass("forward");
+
+  // Set theme
+  if (getPreference("theme") == null) {
+    setPreference("theme", "simple");
+  } else {
+    theme = getPreference("theme");
+    $("#theme-selector").val(theme).trigger("change");
+    if (theme != "simple") {
+      $("link[title*='theme']").remove();
+      $("head").append(
+        '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/' + theme + '.css">'
+      );
     }
-    console.log('EX-WebThrottle - version: ' + version);
-    displayLog('[i] EX-WebThrottle - version: ' + version);
-    displayLog(browserType());
-    displayLog('');
+  }
+  console.log('EX-WebThrottle - version: ' + version);
+  displayLog('[i] EX-WebThrottle - version: ' + version);
+  displayLog(browserType());
+  displayLog('');
 }
 
 // Change the Speed controller type
-function setspeedControllerType(pref){
+function setspeedControllerType(pref) {
   // Set saved throttle or use circular throttle as default
   $(".speedController").hide();
   switch (pref) {
@@ -396,26 +396,26 @@ function setspeedControllerType(pref){
 }
 
 // Enabling/disabling Speed Controllers
-function toggleThrottleState(state){
-    if(state){
-        $("#circular-throttle").roundSlider("enable");
-        $("#v-throttle").slider("enable");
-        $("#button-right").removeClass("ui-state-disabled")
-        $("#button-left").removeClass("ui-state-disabled")
-        // $("#button-right").button("enable");
-        // $("#button-left").button("enable");
-        toggleKnobState($("#knobthrottle"), true);
-    }else{
-        $("#circular-throttle").roundSlider("disable");
-        $("#v-throttle").slider("disable");
-        $("#button-right").addClass("ui-state-disabled")
-        $("#button-left").addClass("ui-state-disabled")
-        // $("#button-right").button("disable");
-        // $("#button-left").button("disable");
-        toggleKnobState($("#knobthrottle"), false);
-        setSpeed(0);
-        setPositionofControllers(0);
-    }
+function toggleThrottleState(state) {
+  if (state) {
+    $("#circular-throttle").roundSlider("enable");
+    $("#v-throttle").slider("enable");
+    $("#button-right").removeClass("ui-state-disabled")
+    $("#button-left").removeClass("ui-state-disabled")
+    // $("#button-right").button("enable");
+    // $("#button-left").button("enable");
+    toggleKnobState($("#knobthrottle"), true);
+  } else {
+    $("#circular-throttle").roundSlider("disable");
+    $("#v-throttle").slider("disable");
+    $("#button-right").addClass("ui-state-disabled")
+    $("#button-left").addClass("ui-state-disabled")
+    // $("#button-right").button("disable");
+    // $("#button-left").button("disable");
+    toggleKnobState($("#knobthrottle"), false);
+    setSpeed(0);
+    setPositionofControllers(0);
+  }
 }
 
 /********************************************************** 
@@ -424,26 +424,26 @@ function toggleThrottleState(state){
     2. Set speed value of all the available sliders/controllers
     3. Set respctive speed number 
 ************************************************************/
-function setSpeedofControllers(){
+function setSpeedofControllers() {
   // displayLog('setSpeedofControllers()');
   spd = getSpeed();
-  
-  if(!isStopped){
-      // writeToStream("t " + getCV() + " " + spd + " " + getDirection());
-      sendSpeed(getCV(),spd ,getDirection());
+
+  if (!isStopped) {
+    // writeToStream("t " + getCV() + " " + spd + " " + getDirection());
+    sendSpeed(getCV(), spd, getDirection());
   }
   setPositionofControllers();
 }
 
-function setPositionofControllers(){
+function setPositionofControllers() {
   // displayLog('setPositionofControllers()');
   spd = getSpeed();
-  
+
   // Circular
   $("#circular-throttle").roundSlider("setValue", spd);
 
   // Vertical
-  $("#v-throttle").val(spd).change();  
+  $("#v-throttle").val(spd).change();
   $("#v-throttle").slider("option", "value", spd);
   $("#speed-indicator").html(spd);
 
@@ -456,7 +456,7 @@ function sendSpeed(locoId, speed, dir) {
   // displayLog('sendSpeed() locoId: ' + locoId);
   if (locoId <= 0) return;
 
-  if ( (locoId!=lastLocoSent) || (speed!=lastSpeedSent) || (dir!=lastDirSent) ) {
+  if ((locoId != lastLocoSent) || (speed != lastSpeedSent) || (dir != lastDirSent)) {
     setSpeed(speed);
     setDirection(dir);
     writeToStream("t " + locoId + " " + speed + " " + dir);
@@ -489,34 +489,34 @@ function setPositionOfDirectionSlider(dir) { //1=forward -1=reverse 0=stop
 }
 
 // This function will generate commands for each type of function
-function generateFnCommand(clickedBtn){
-    
-       func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
-       fn = parseInt(func.substring(1));
-       eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
-       btnPressed = clickedBtn.attr("aria-pressed");
-       console.log("Function Name=>"+func+" , Button Type=>"+eventType+" , Button Pressed=>"+btnPressed);
-    
-       sendCommandForFunction(fn, ((btnPressed=="true") ? 1 : 0));
+function generateFnCommand(clickedBtn) {
+
+  func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
+  fn = parseInt(func.substring(1));
+  eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
+  btnPressed = clickedBtn.attr("aria-pressed");
+  console.log("Function Name=>" + func + " , Button Type=>" + eventType + " , Button Pressed=>" + btnPressed);
+
+  sendCommandForFunction(fn, ((btnPressed == "true") ? 1 : 0));
 }
 
-$(document).ready(function(){
-    var mode = 0;
-    // Left Menu
-    $("#nav-open").on("click", function () { 
-        $("#side-menu").show().animate({ left: 0 });
+$(document).ready(function () {
+  var mode = 0;
+  // Left Menu
+  $("#nav-open").on("click", function () {
+    $("#side-menu").show().animate({ left: 0 });
+  });
+  $("#nav-close").on("click", function () {
+    $("#side-menu").animate({ left: -260 }, function () {
+      $("#side-menu").hide();
     });
-    $("#nav-close").on("click", function () {
-        $("#side-menu").animate({ left: -260 }, function(){
-            $("#side-menu").hide();
-        });
-    });
+  });
 
-    
+
 
   $("#info-tooltip").tooltip({
     content:
-      "<p>DCC-EX EX-WebThrottle<br>(WebThrottle-EX)</p><hr><p>Version: "+version+"</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H <BR> Peter Akers</p>",
+      "<p>DCC-EX EX-WebThrottle<br>(WebThrottle-EX)</p><hr><p>Version: " + version + "</p><p><b>Credits</b><br> Fred Decker <br> Mani Kumar <br> Matt H <BR> Peter Akers</p>",
     show: {
       effect: "slideDown",
       delay: 100,
@@ -547,8 +547,8 @@ $(document).ready(function(){
     if (selectedval != "simple") {
       $("head").append(
         '<link rel="stylesheet" type="text/css" title="theme" href="css/themes/' +
-          selectedval +
-          '.css">'
+        selectedval +
+        '.css">'
       );
     }
   });
@@ -575,7 +575,7 @@ $(document).ready(function(){
     isAcquired = $(this).data("acquired");
     // Parse int only returns number if the string is starting with Number
     locoid_input = 0;
-    if ($("#ex-locoid").val().length>0) locoid_input = parseInt($("#ex-locoid").val());
+    if ($("#ex-locoid").val().length > 0) locoid_input = parseInt($("#ex-locoid").val());
 
     if (locoid_input != 0) {
       if (isAcquired == false && getCV() == 0) {
@@ -612,7 +612,7 @@ $(document).ready(function(){
   // write DCC address on PROG track
   $("#button-cv-write-loco-id").on("click", function () {
     cv_locoid_input = 0;
-    if ($("#cv-locoid").val().length>0) cv_locoid_input = parseInt($("#cv-locoid").val());
+    if ($("#cv-locoid").val().length > 0) cv_locoid_input = parseInt($("#cv-locoid").val());
 
     if (cv_locoid_input != 0) {
       writeToStream('W ' + cv_locoid_input);
@@ -622,7 +622,7 @@ $(document).ready(function(){
   // read cv address on PROG track
   $("#button-cv-read-cv").on("click", function () {
     cv_cvid_input = 0;
-    if ($("#cv-cvid").val().length>0) cv_cvid_input = parseInt($("#cv-cvid").val());
+    if ($("#cv-cvid").val().length > 0) cv_cvid_input = parseInt($("#cv-cvid").val());
 
     if (cv_cvid_input != 0) {
       writeToStream('R ' + cv_cvid_input);
@@ -632,25 +632,25 @@ $(document).ready(function(){
   // write DCC address on PROG track
   $("#button-cv-write-cv").on("click", function () {
     cv_cvid_input = 0;
-    if ($("#cv-cvid").val().length>0) cv_cvid_input = parseInt($("#cv-cvid").val());
+    if ($("#cv-cvid").val().length > 0) cv_cvid_input = parseInt($("#cv-cvid").val());
     cv_cvvalue_input = -1;
-    if ($("#cv-cvvalue").val().length>0) cv_cvvalue_input = parseInt($("#cv-cvvalue").val());
+    if ($("#cv-cvvalue").val().length > 0) cv_cvvalue_input = parseInt($("#cv-cvvalue").val());
 
-    if ( (cv_cvid_input != 0) && (cv_cvvalue_input>=0) ) {
+    if ((cv_cvid_input != 0) && (cv_cvvalue_input >= 0)) {
       writeToStream('W ' + cv_cvid_input + " " + cv_cvvalue_input);
     }
   });
-  
+
   $("#common-cvs").on("change", function (e) {
     selectedVal = $(this).val();
-    if (selectedVal>0) {
+    if (selectedVal > 0) {
       $("#cv-cvid").val(selectedVal);
-      $("#common-cvs").val("0"); 
+      $("#common-cvs").val("0");
       // $("#common-cvs[value=0]").prop('selected', true); 
       // $("#common-cvs[value=0]").attr('selected', true); 
     }
   });
-  
+
   // Switch ON/OFF power of the Command station
   $("#power-switch").on("click", function () {
     pb = $(this).is(":checked");
@@ -697,14 +697,14 @@ $(document).ready(function(){
     // Below condition is to avoid infinite loop
     // that triggers change() event indifinitely
     if (oldValue != kval) {
-      if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
+      if ((lastLocoReceived != getCV()) || (lastSpeedReceived != getSpeed()) || (lastDirReceived != getDirection())) {
         setSpeedofControllers();
       } else {
         setPositionofControllers();
       }
     } else {
       // if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
-        sendSpeed(getCV(),getSpeed() ,getDirection());
+      sendSpeed(getCV(), getSpeed(), getDirection());
       // }
     }
   });
@@ -737,7 +737,7 @@ $(document).ready(function(){
 
   // Allows user to change the direction of the loco and STOP.
   $(".dir-btn").on("click", function () {
-    if (getCV() != 0){
+    if (getCV() != 0) {
       current = $(this);
       dir = current.attr("aria-label");
       $(".dir-btn").removeClass("selected");
@@ -752,7 +752,7 @@ $(document).ready(function(){
           isDirectionToggleStopped = false;
           setDirection(DIRECTION_FORWARD);
           setSpeedofControllers();
-          sendSpeed(getCV(),getSpeed(),1);
+          sendSpeed(getCV(), getSpeed(), 1);
           break;
         }
         case "backward": {
@@ -760,7 +760,7 @@ $(document).ready(function(){
           isDirectionToggleStopped = false;
           setDirection(DIRECTION_REVERSED);
           setSpeedofControllers();
-          sendSpeed(getCV(),getSpeed(),0);
+          sendSpeed(getCV(), getSpeed(), 0);
           break;
         }
         case "stop": {
@@ -769,27 +769,27 @@ $(document).ready(function(){
           dir = getDirection();
           setSpeed(DIRECTION_FORWARD);
           setSpeedofControllers();
-          sendSpeed(getCV(),0,dir);
+          sendSpeed(getCV(), 0, dir);
           break;
         }
       }
       toggleThrottleState(!isDirectionToggleStopped);
-    }else{
+    } else {
       console.log("No loco acquired");
     }
   });
 
   $("#emergency-stop").on("click", function () {
-      if (getCV() != 0){
-        isStopped = true;
-        dir = getDirection();
-        setSpeed(0);
-        setSpeedofControllers();
-        sendSpeed(getCV(),-1,dir);
-      }
-      else{
-        console.log("No loco acquired");
-      }
+    if (getCV() != 0) {
+      isStopped = true;
+      dir = getDirection();
+      setSpeed(0);
+      setSpeedofControllers();
+      sendSpeed(getCV(), -1, dir);
+    }
+    else {
+      console.log("No loco acquired");
+    }
   });
 
   // Hide/Show the Loco, Connect server fields (on top)
@@ -817,7 +817,7 @@ $(document).ready(function(){
         if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp + speedStep);
           setSpeedofControllers();
-          sendSpeed(getCV(),getSpeed(),getDirection());
+          sendSpeed(getCV(), getSpeed(), getDirection());
           sp = 0;
         }
       }, 100);
@@ -831,7 +831,7 @@ $(document).ready(function(){
       if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp + speedStep);
         setSpeedofControllers();
-        sendSpeed(getCV(),getSpeed(),getDirection());
+        sendSpeed(getCV(), getSpeed(), getDirection());
         sp = 0;
       }
     });
@@ -846,7 +846,7 @@ $(document).ready(function(){
         if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp - speedStep);
           setSpeedofControllers();
-          sendSpeed(getCV(),getSpeed(),getDirection());
+          sendSpeed(getCV(), getSpeed(), getDirection());
           sp = 0;
         }
       }, 100);
@@ -860,7 +860,7 @@ $(document).ready(function(){
       if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp - speedStep);
         setSpeedofControllers();
-        sendSpeed(getCV(),getSpeed(),getDirection());
+        sendSpeed(getCV(), getSpeed(), getDirection());
         sp = 0;
       }
     });
@@ -996,22 +996,26 @@ $(document).ready(function(){
   $("#throttle-nav").on("click", function () {
     hideWindows();
     $("#throttle-window").show();
+    showNavigationButtons("throttle");
     $("#nav-close").trigger("click");
   });
   $("#cv-programmer-nav").on("click", function () {
     hideWindows();
     $("#cv-programmer-window").show();
+    showNavigationButtons("cv-programmer");
     $("#nav-close").trigger("click");
   });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
+    showNavigationButtons("locos");
     $("#nav-close").trigger("click");
     loadLocomotives();
   });
   $("#fn-map-nav").on("click", function () {
     hideWindows();
     $("#fn-map-window").show();
+    showNavigationButtons("function-maps");
     $("#nav-close").trigger("click");
     setFunctionMaps();
     //loadMapData("Default");
@@ -1019,31 +1023,38 @@ $(document).ready(function(){
   $("#settings-nav").on("click", function () {
     hideWindows();
     $("#settings-window").show();
+    showNavigationButtons("");
     $("#nav-close").trigger("click");
   });
 
+  // new navigation buttons
   $("#throttle-screen-button").on("click", function () {
     hideWindows();
     $("#throttle-window").show();
+    showNavigationButtons("throttle");
   });
   $("#cv-programmer-screen-button").on("click", function () {
     hideWindows();
     $("#cv-programmer-window").show();
+    showNavigationButtons("cv-programmer");
   });
   $("#locos-screen-button").on("click", function () {
     hideWindows();
     $("#loco-window").show();
     loadLocomotives();
+    showNavigationButtons("locos");
   });
-  $("#function-screen-maps-button").on("click", function () {
+  $("#function-maps-screen-button").on("click", function () {
     hideWindows();
     $("#fn-map-window").show();
     setFunctionMaps();
     //loadMapData("Default");
+    showNavigationButtons("function-maps");
   });
   $("#settings-button").on("click", function () {
     hideWindows();
     $("#settings-window").show();
+    showNavigationButtons("");
   });
 
   eventListeners();
@@ -1069,7 +1080,7 @@ $(document).ready(function(){
         }*/
     $("#general-section")[0].scrollIntoView(true);
   });
-  
+
   $("#settings-storage").on("click", function () {
     /*var target = $('#storage-section');
         if (target.length) {
@@ -1081,7 +1092,7 @@ $(document).ready(function(){
     $("#storage-section")[0].scrollIntoView(true);
   });
 
-  $('#settings-app').on('click', function() {
+  $('#settings-app').on('click', function () {
     $("#app-section")[0].scrollIntoView(true);
   })
 
@@ -1108,7 +1119,7 @@ $(document).ready(function(){
     }
   });
 
-  $(document).on("click", ".edit-cur-loco", function () {   
+  $(document).on("click", ".edit-cur-loco", function () {
     cabdata = getStoredLocoData($(this).attr("data-loco"));
     $("#loco-form")[0].reset();
     $("#loco-form-content").css("display", "inline-block");
@@ -1116,8 +1127,8 @@ $(document).ready(function(){
     $("#loco-submit").attr("loco-mode", "edit");
     $("#loco-submit").attr("loco-id", $(this).attr("loco-id"));
     $.each(cabdata, function (key, value) {
-      $("#loco-form").children().find("#"+key).val(value);
-      if(key=="map"){
+      $("#loco-form").children().find("#" + key).val(value);
+      if (key == "map") {
         $("#function-maps").autocomplete("search", value);
         var menu = $("#function-maps").autocomplete("widget");
         $(menu[0].children[0]).click();
@@ -1142,53 +1153,62 @@ function setFunctionMaps() {
   })
 }
 
-function hideWindows(){
-    $("#throttle-window").hide();
-    $("#cv-programmer-window").hide();
-    $("#loco-window").hide();
-    $("#fn-map-window").hide();
-    $("#settings-window").hide();
+function hideWindows() {
+  $("#throttle-window").hide();
+  $("#cv-programmer-window").hide();
+  $("#loco-window").hide();
+  $("#fn-map-window").hide();
+  $("#settings-window").hide();
+}
+function showNavigationButtons(which) {
+  $("#throttle-screen-button").show();
+  $("#cv-programmer-screen-button").show();
+  $("#locos-screen-button").show();
+  $("#function-maps-screen-button").show();
+  if(which.length>0) {
+    $("#"+which+"-screen-button").hide()
+  }
 }
 
-function hideSettings(){
-    $("#general-section").hide();
-    $("#storage-section").hide();
+function hideSettings() {
+  $("#general-section").hide();
+  $("#storage-section").hide();
 }
 
 function credits() {
-    authors = ["Fred Decker","Mani Kumar","Matt","Peter Akers"]
-    displayLog("Credits:")
-    console.log("Credits:")
-    for (i=0; i<authors.length; i++) {
-        displayLog(authors[i])
-        console.log(authors[i])
-    }
+  authors = ["Fred Decker", "Mani Kumar", "Matt", "Peter Akers"]
+  displayLog("Credits:")
+  console.log("Credits:")
+  for (i = 0; i < authors.length; i++) {
+    displayLog(authors[i])
+    console.log(authors[i])
+  }
 }
 
 
-function eventListeners(){
-    var cmdDirect = document.getElementById("cmd-direct");
-    var cmdDirect2 = document.getElementById("cmd-direct2");
-    var exLocoID = document.getElementById("ex-locoid");  
-    cmdDirect.addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            // Trigger the button element with a click
-            $('#button-sendCmd').click();
-        }
-    });
-    cmdDirect2.addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            // Trigger the button element with a click
-            $('#button-sendCmd2').click();
-        }
-    });
-    exLocoID.addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            // Trigger the button element with a click
-            $('#button-getloco').click();
-        }
-    })
+function eventListeners() {
+  var cmdDirect = document.getElementById("cmd-direct");
+  var cmdDirect2 = document.getElementById("cmd-direct2");
+  var exLocoID = document.getElementById("ex-locoid");
+  cmdDirect.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      // Trigger the button element with a click
+      $('#button-sendCmd').click();
+    }
+  });
+  cmdDirect2.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      // Trigger the button element with a click
+      $('#button-sendCmd2').click();
+    }
+  });
+  exLocoID.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      // Trigger the button element with a click
+      $('#button-getloco').click();
+    }
+  })
 }
