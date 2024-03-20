@@ -2,6 +2,7 @@
 - sort Routes/Automation
 - only retrieve the full Roster at connection
 - only retrieve the full Routes/Automation list at connection
+- support for messages
 - bug fixes
 
 # Version 1.3.24

@@ -401,7 +401,7 @@ function parseResponse(cmd) {  // some basic ones only
 
 // --------------------------------------------------------------------
 
-              } else if (cmdArray[0].charAt(2) == 'A')  { //routes/automations
+            } else if (cmdArray[0].charAt(2) == 'A')  { //routes/automations
                 last = cmdArray.length-1;
                 if (cmdArrayClean.length > 1) { // if ==1, then no routes
                     if ( (cmdArrayClean.length == 2 ) || 
@@ -461,9 +461,15 @@ function parseResponse(cmd) {  // some basic ones only
                     routesComplete = true;
                     ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                     ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
-        }
+                }
             }
 
+// *********************************************************************
+
+        } else if (cmdArray[0].charAt(1) == 'm')  { // announcement/messages
+            if (cmdArrayClean.length == 2) { 
+                ToastMaker(cmdArrayClean[1].substring(1,cmdArrayClean[1].length-1), 10000, {valign:'top', align:'center'});
+            }
         }
     }
 }
