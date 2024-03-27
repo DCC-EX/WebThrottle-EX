@@ -558,6 +558,19 @@ function parseResponse(cmd) {  // some basic ones only
     }
 }
 
+function turnoutStateText(state) {
+    console.log(getTimeStamp() + ' Individual turnout state: "' + state + '"');
+    rslt = state;
+    if ((state=="0") || (state=="C")) {
+        rslt = "Closed";
+    } else if ((state=="1") || (state=="T")) {
+        rslt = "Thrown";
+    } else if (state=="X") {
+        rslt = "unknown";
+    }
+    return rslt;
+}
+
 function buildTurnoutJSON() {
     turnoutsJSON = "[";
     for (i=0; i<turnoutsCount;i++) {

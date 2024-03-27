@@ -359,9 +359,9 @@ function loadTurnouts() {
         '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
         '<div class="column-4"><p class="ac-turnout-name column-10">' + value.name + "</p></div>" +
         '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
-        '<div class="column-1"><p>' + value.state + '</p></div>' +
-        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="throw-cur-turnout"> &#9886; Throw </a></div>' +
-        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="close-cur-turnout"> Close &#9887; </a></div>' +
+        '<div class="column-1"><p>' + turnoutStateText(value.state) + '</p></div>' +
+        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="throw-cur-turnout"> Throw </a></div>' +
+        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="close-cur-turnout"> Close </a></div>' +
       "</div>"
     );
   });
