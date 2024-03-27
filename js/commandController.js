@@ -512,15 +512,7 @@ function parseResponse(cmd) {  // some basic ones only
                         }
 
                         if (turnoutsComplete) {
-                            turnoutsJSON = "[";
-                            for (i=0; i<turnoutsCount;i++) {
-                                turnoutsJSON = turnoutsJSON + '{"name":"' + turnoutsNames[i] + '",';
-                                turnoutsJSON = turnoutsJSON + '"id":"' + turnoutsIds[i] + '",';
-                                turnoutsJSON = turnoutsJSON + '"state":"'+turnoutsStates[i]+'"';
-                                turnoutsJSON = turnoutsJSON + '}';
-                                if (i<turnoutsCount-1) turnoutsJSON = turnoutsJSON + ",";
-                            }
-                            turnoutsJSON = turnoutsJSON + "]";
+                            buildTurnoutJSON();
 
                             turnoutsComplete = true;
                             ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
@@ -537,12 +529,45 @@ function parseResponse(cmd) {  // some basic ones only
 
 // *********************************************************************
 
+        } else if (cmd.charAt(1) == 'H') {  // turnout/point update
+
+            console.log(getTimeStamp() + ' Processing individual turnout state change: ' + cmdArrayClean[1]);
+
+            turnoutsComplete = true;
+            for (i=0;i<turnoutsIds.length;i++) {
+                if (turnoutsIds[i] == cmdArrayClean[1]) {
+                    turnoutsStates[i] = cmdArrayClean[2];
+                    if (turnoutsStates[i]=="1") {
+                        turnoutsStates[i] = "T"; 
+                    } else if (turnoutsStates[i]=="0") {
+                        turnoutsStates[i] = "C"; 
+                    }
+                    break;
+                }
+            }
+            buildTurnoutJSON();
+            loadTurnouts();
+
+// *********************************************************************
+
         } else if (cmdArray[0].charAt(1) == 'm')  { // announcement/messages
             if (cmdArrayClean.length == 2) { 
                 ToastMaker(cmdArrayClean[1].substring(1,cmdArrayClean[1].length-1), 10000, {valign:'top', align:'center'});
             }
         }
     }
+}
+
+function buildTurnoutJSON() {
+    turnoutsJSON = "[";
+    for (i=0; i<turnoutsCount;i++) {
+        turnoutsJSON = turnoutsJSON + '{"name":"' + turnoutsNames[i] + '",';
+        turnoutsJSON = turnoutsJSON + '"id":"' + turnoutsIds[i] + '",';
+        turnoutsJSON = turnoutsJSON + '"state":"'+turnoutsStates[i]+'"';
+        turnoutsJSON = turnoutsJSON + '}';
+        if (i<turnoutsCount-1) turnoutsJSON = turnoutsJSON + ",";
+    }
+    turnoutsJSON = turnoutsJSON + "]";
 }
 
 function writeToStream(...lines) {
