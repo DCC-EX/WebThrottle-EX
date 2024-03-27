@@ -201,6 +201,11 @@ hr {
     background: #121212;
     box-shadow: inset 0px 0px 2px #000000;
 }
+.turnouts-group{
+    border: 1px solid #3b3b3b;
+    background: #121212;
+    box-shadow: inset 0px 0px 2px #000000;
+}
 .side-panel {
     border-right: 1px solid #000000;
     box-shadow: 1px 0 #464646; 
@@ -216,7 +221,19 @@ a.edit-cur-loco, a.option-btn{
     box-shadow: 0px 0px 2px #000000;
     color: #ffffff;
 }
-a.run-cur-route, a.option-btn{
+a.run-cur-route{
+    background: #282828;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #ffffff;
+}
+a.throw-cur-turnout{
+    background: #282828;
+    border: 1px solid #3f3f3f;
+    box-shadow: 0px 0px 2px #000000;
+    color: #ffffff;
+}
+a.close-cur-turnout{
     background: #282828;
     border: 1px solid #3f3f3f;
     box-shadow: 0px 0px 2px #000000;
@@ -236,6 +253,11 @@ a.run-cur-route, a.option-btn{
     box-shadow: inset 0px 0px 2px #000000;
 }
 p.ac-route-name{
+    text-shadow: 0 0 1px #000000;
+    color: #00A3B9;
+    padding-top: 4px;  
+}
+p.ac-turnout-name{
     text-shadow: 0 0 1px #000000;
     color: #00A3B9;
     padding-top: 4px;  

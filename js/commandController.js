@@ -142,7 +142,7 @@ function parseResponse(cmd) {  // some basic ones only
         csIsReady = true;
         uiEnableThrottleControlOnReady();
         ToastMaker('Your Command Station has Started.', 4000, {valign:'bottom', align:'left'} );
-        ToastMaker('Checking Roster and Routes/Automations.', 1000, {valign:'bottom', align:'right'} );
+        ToastMaker('Checking Roster and Routes, Turnouts, etc,.', 1000, {valign:'bottom', align:'right'} );
  
         //intialise the roster
         writeToStream("JR");
@@ -407,7 +407,7 @@ function parseResponse(cmd) {  // some basic ones only
                     if ( (cmdArrayClean.length == 2 ) || 
                        ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
                         routesCount = cmdArrayClean.length-1;
-                        console.log(getTimeStamp() + ' Processing routes: ' + rosterCount);
+                        console.log(getTimeStamp() + ' Processing routes: ' + routesCount);
                         try {
                             for (i=1;i<cmdArrayClean.length;i++) {
                                 routesIds[i-1] = cmdArrayClean[i];
@@ -453,15 +453,86 @@ function parseResponse(cmd) {  // some basic ones only
                             routesJSON = routesJSON + "]";
 
                             routesComplete = true;
+                            // ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
+                            // ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
+                            
+                            //intialise the turnouts/points
+                            if (!turnoutsRequested) {
+                                writeToStream("JT");
+                            }
+                        }
+                    }
+                } else {
+                    routesComplete = true;
+                    // ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
+                    // ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
+                }
+
+// --------------------------------------------------------------------
+
+            } else if (cmdArray[0].charAt(2) == 'T')  { //turnouts/points
+                last = cmdArray.length-1;
+                if (cmdArrayClean.length > 1) { // if ==1, then no turnouts
+                    if ( (cmdArrayClean.length == 2 ) || 
+                    ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
+                        turnoutsCount = cmdArrayClean.length-1;
+                        console.log(getTimeStamp() + ' Processing turnouts: ' + turnoutsCount);
+                        try {
+                            for (i=1;i<cmdArrayClean.length;i++) {
+                                turnoutsIds[i-1] = cmdArrayClean[i];
+                                turnoutsStates[i-1] = "";
+                                turnoutsNames[i-1] = "";
+                            }
+                            if (!turnoutsRequested) { // If we havn't already asked
+                                writeToStream("JT " + turnoutsIds[0]);  // get the details for the first
+                                turnoutsRequested = true;
+                            }
+                            ToastMaker('Please wait - Loading Turnouts/Points', 1000, {valign:'bottom', align:'right'});
+                        } catch (e) {
+                            console.log(getTimeStamp() + ' [ERROR] Unable process turnouts: ');
+                        }
+                        
+                    } else { // individual entry
+                        console.log(getTimeStamp() + ' Processing individual turnout entry: ' + cmdArrayClean[1]);
+
+                        turnoutsComplete = true;
+                        for (i=0;i<turnoutsIds.length;i++) {
+                            if (turnoutsIds[i] == cmdArrayClean[1]) {
+                                turnoutsStates[i] = cmdArrayClean[2];
+                                tName = cmdArrayClean[3].substring(1,cmdArrayClean[3].length-1);
+                                turnoutsNames[i] = (tName.length>0) ? tName : "-blank-";
+                            }
+                        }
+                        for (i=0;i<turnoutsIds.length;i++) {
+                            if (turnoutsNames[i].length==0) {
+                                writeToStream("JT " + turnoutsIds[i]);   // get the next
+                                turnoutsComplete = false;
+                                break;
+                            }
+                        }
+
+                        if (turnoutsComplete) {
+                            turnoutsJSON = "[";
+                            for (i=0; i<turnoutsCount;i++) {
+                                turnoutsJSON = turnoutsJSON + '{"name":"' + turnoutsNames[i] + '",';
+                                turnoutsJSON = turnoutsJSON + '"id":"' + turnoutsIds[i] + '",';
+                                turnoutsJSON = turnoutsJSON + '"state":"'+turnoutsStates[i]+'"';
+                                turnoutsJSON = turnoutsJSON + '}';
+                                if (i<turnoutsCount-1) turnoutsJSON = turnoutsJSON + ",";
+                            }
+                            turnoutsJSON = turnoutsJSON + "]";
+
+                            turnoutsComplete = true;
                             ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                             ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                         }
                     }
                 } else {
-                    routesComplete = true;
+                    turnoutsComplete = true;
                     ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                     ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                 }
+
             }
 
 // *********************************************************************
@@ -595,6 +666,7 @@ async function toggleServer(btn) {
     if (success) {
         resetRoster();
         resetRoutes();
+        resetTurnouts();
         ToastMaker('Please wait while information from the Command Station is loaded', 10000);
         btn.attr('aria-state', 'Connected');
         btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');

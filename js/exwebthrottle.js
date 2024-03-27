@@ -102,6 +102,14 @@ window.routesNames = [];
 window.routesTypes = [];
 window.routesJSON = "";
 
+window.turnoutsRequested = false;
+window.turnoutsComplete = false;
+window.turnoutsCount = 0;
+window.turnoutsIds = [];
+window.turnoutsNames = [];
+window.turnoutsStates = [];
+window.turnoutsJSON = "";
+
 window.addEventListener("load", function () {
   ToastMaker('Click the [Connect EX-CS] button to connect to your Command Station!', 8000);
 });
@@ -337,6 +345,23 @@ function loadRoutes() {
         '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
         '<div class="column-1"><p>' + value.type + '</p></div>' +
         '<div class="column-1 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"> &#10151; </a></div>' +
+      "</div>"
+    );
+  });
+}
+
+function loadTurnouts() {
+  turnouts = getTurnoutsList();
+  $("#turnouts-panel").empty();
+  $.each(turnouts, function (key, value) {
+    $("#turnouts-panel").append(
+      '<div class="row turnouts-group" id="' + key + '">' +
+        '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
+        '<div class="column-4"><p class="ac-turnout-name column-10">' + value.name + "</p></div>" +
+        '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
+        '<div class="column-1"><p>' + value.state + '</p></div>' +
+        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="throw-cur-turnout"> &#9754; </a></div>' +
+        '<div class="column-1 prh"><a href="#" turnout-id="' + value.id + '" data-turnout="' + value.name + '" class="close-cur-turnout"> &#9755; </a></div>' +
       "</div>"
     );
   });
@@ -1032,6 +1057,13 @@ $(document).ready(function () {
     loadRoutes();
     $("#nav-close").trigger("click");
   });
+  $("#turnouts-nav").on("click", function () {
+    hideWindows();
+    $("#turnouts-window").show();
+    showNavigationButtons("turnouts");
+    loadTurnouts();
+    $("#nav-close").trigger("click");
+  });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
@@ -1070,6 +1102,12 @@ $(document).ready(function () {
     $("#routes-window").show();
     showNavigationButtons("routes");
     loadRoutes();
+  });
+  $("#turnouts-screen-button").on("click", function () {
+    hideWindows();
+    $("#turnouts-window").show();
+    showNavigationButtons("turnouts");
+    loadTurnouts();
   });
   $("#locos-screen-button").on("click", function () {
     hideWindows();
@@ -1176,6 +1214,14 @@ $(document).on("click", ".run-cur-route", function () {
   writeToStream("/ START "+ $(this).attr("route-id"));
 });
 
+$(document).on("click", ".throw-cur-turnout", function () {
+  writeToStream("T " + $(this).attr("turnout-id") + " 1");
+});
+
+$(document).on("click", ".close-cur-turnout", function () {
+  writeToStream("T " + $(this).attr("turnout-id") + " 0");
+});
+
 function setFunctionMaps() {
   const defaultMap = {
     mname: "Default",
@@ -1195,6 +1241,7 @@ function hideWindows() {
   $("#throttle-window").hide();
   $("#cv-programmer-window").hide();
   $("#routes-window").hide();
+  $("#turnouts-window").hide();
   $("#loco-window").hide();
   $("#fn-map-window").hide();
   $("#settings-window").hide();
@@ -1203,6 +1250,7 @@ function showNavigationButtons(which) {
   $("#throttle-screen-button").show();
   $("#cv-programmer-screen-button").show();
   $("#routes-screen-button").show();
+  $("#turnouts-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
   if(which.length>0) {
