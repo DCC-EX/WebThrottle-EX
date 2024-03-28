@@ -1,8 +1,6 @@
-# Version 1.3.27
-- updated icons
-
 # Version 1.3.26
 - support Turnouts/Points
+- updated icons
 
 # Version 1.3.25
 - sort Routes/Automation
