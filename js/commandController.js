@@ -413,6 +413,8 @@ function parseResponse(cmd) {  // some basic ones only
                                 routesIds[i-1] = cmdArrayClean[i];
                                 routesTypes[i-1] = "";
                                 routesNames[i-1] = "";
+                                routesStates[i-1] = -1;  // unknown
+                                routesLabels[i-1] = "Set";
                             }
                             if (!routesRequested) { // If we havn't already asked
                                 writeToStream("JA " + routesIds[0]);  // get the details for the first
@@ -442,19 +444,8 @@ function parseResponse(cmd) {  // some basic ones only
                         }
 
                         if (routesComplete) {
-                            routesJSON = "[";
-                            for (i=0; i<routesCount;i++) {
-                                routesJSON = routesJSON + '{"name":"' + routesNames[i] + '",';
-                                routesJSON = routesJSON + '"id":"' + routesIds[i] + '",';
-                                routesJSON = routesJSON + '"type":"'+routesTypes[i]+'"';
-                                routesJSON = routesJSON + '}';
-                                if (i<routesCount-1) routesJSON = routesJSON + ",";
-                            }
-                            routesJSON = routesJSON + "]";
-
+                            buildRoutesJSON();
                             routesComplete = true;
-                            // ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
-                            // ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                             
                             //intialise the turnouts/points
                             if (!turnoutsRequested) {
@@ -464,9 +455,28 @@ function parseResponse(cmd) {  // some basic ones only
                     }
                 } else {
                     routesComplete = true;
-                    // ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
-                    // ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                 }
+
+// --------------------------------------------------------------------
+
+            } else if (cmdArray[0].charAt(2) == 'B')  { //routes/automations updates  
+                // <jB id state>    state: 0=inactive 1=active 2=hidden
+
+                
+                console.log(getTimeStamp() + ' Processing individual route entry update: ' + cmdArrayClean[1]);
+
+                routesComplete = true;
+                for (i=0;i<routesIds.length;i++) {
+                    if (routesIds[i] == cmdArrayClean[1]) {
+                        if (cmdArrayClean[2].charAt(0) != '"') { // state change
+                            routesStates[i] = cmdArrayClean[2];
+                        } else { // label change
+                            routesLabels[i] = cmdArrayClean[2].substring(1,cmdArrayClean[2].length-1);
+                        }    
+                    }
+                }
+                buildRoutesJSON();
+                loadRoutes();
 
 // --------------------------------------------------------------------
 
@@ -512,7 +522,7 @@ function parseResponse(cmd) {  // some basic ones only
                         }
 
                         if (turnoutsComplete) {
-                            buildTurnoutJSON();
+                            buildTurnoutsJSON();
 
                             turnoutsComplete = true;
                             ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
@@ -545,7 +555,7 @@ function parseResponse(cmd) {  // some basic ones only
                     break;
                 }
             }
-            buildTurnoutJSON();
+            buildTurnoutsJSON();
             loadTurnouts();
 
 // *********************************************************************
@@ -570,8 +580,21 @@ function turnoutStateText(state) {
     }
     return rslt;
 }
+function buildRoutesJSON() {
+    routesJSON = "[";
+    for (i=0; i<routesCount;i++) {
+        routesJSON = routesJSON + '{"name":"' + routesNames[i] + '",';
+        routesJSON = routesJSON + '"id":"' + routesIds[i] + '",';
+        routesJSON = routesJSON + '"type":"'+routesTypes[i]+'",';
+        routesJSON = routesJSON + '"state":"'+routesStates[i]+'",';
+        routesJSON = routesJSON + '"label":"'+routesLabels[i]+'"';
+        routesJSON = routesJSON + '}';
+        if (i<routesCount-1) routesJSON = routesJSON + ",";
+    }
+    routesJSON = routesJSON + "]";
+}
 
-function buildTurnoutJSON() {
+function buildTurnoutsJSON() {
     turnoutsJSON = "[";
     for (i=0; i<turnoutsCount;i++) {
         turnoutsJSON = turnoutsJSON + '{"name":"' + turnoutsNames[i] + '",';

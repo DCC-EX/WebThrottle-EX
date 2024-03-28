@@ -1,3 +1,6 @@
+# Version 1.3.27
+- support state and label changes for Routes <jB ....>
+
 # Version 1.3.26
 - support Turnouts/Points
 - updated icons
