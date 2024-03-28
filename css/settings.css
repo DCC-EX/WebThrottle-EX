@@ -78,6 +78,14 @@
     margin-bottom: 8px;
 }
 
+.turnouts-group{
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    padding: 0px 20px;
+    background: #fff;
+    margin-bottom: 8px;
+}
+
 .side-panel ul li:hover, .side-panel ul li.active {
     background: rgba(4,4,4, 0.05);
 }
@@ -117,7 +125,7 @@ a.edit-cur-loco{
     margin-top: 6px;
 }
 
-a.run-cur-route, a.option-btn{
+a.run-cur-route, a.throw-cur-turnout, a.close-cur-turnout, a.option-btn{
     float: right;
     text-decoration: none;
     padding: 5px 15px;
@@ -129,9 +137,10 @@ a.run-cur-route, a.option-btn{
     box-shadow: 0 0 3px #e8e8e8;
     margin-left: 5px;
 }
-a.run-cur-route{
+a.run-cur-route, a.throw-cur-turnout, a.close-cur-turnout{
     margin-top: 6px;
 }
+
 .settings-subheading.row .map-name-heading{
     padding-top: 8px;
 }

@@ -598,6 +598,48 @@ function resetRoutes() {
   window.routesJSON = "";
 }
 
+
+/********************************************/
+/**************  Turnouts/Points ************/
+/********************************************/
+
+// retrieve the full list of turnouts
+function getTurnoutsList(){
+  rslt = [];
+  if ( (turnoutsIds.length>0) && (turnoutsComplete) ) {
+    rslt = JSON.parse(turnoutsJSON);
+    rslt = sortResults(rslt,"name",true);
+  }
+  return rslt;
+}
+
+// Returns the TurnoutData of a single turnout
+function getStoredTurnoutData(id) {
+  rslt = null;
+  console.log(id);
+  if (turnoutsIds.length>0) {
+    data = JSON.parse(turnoutsJSON);
+    if (data != null) {
+      rslt = data.find(function (item, i) {
+        if (item.id == id) {
+          return item;
+        }
+      });
+    }
+    return rslt;
+  }
+}
+
+function resetTurnouts() {
+  window.turnoutsRequested = false;
+  window.turnoutsComplete = false;
+  window.turnoutsCount = 0;
+  window.turnoutsIds = [];
+  window.turnoutsNames = [];
+  window.turnoutsStates = [];
+  window.turnoutsJSON = "";
+}
+
 /********************************************/
 /**************  Preferences  ***************/
 /********************************************/
