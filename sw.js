@@ -20,8 +20,6 @@ var filesToCache = [
   'css/fonts/icomoon.svg',
   'css/fonts/icomoon.ttf',
   'css/fonts/icomoon.woff',
-  'css/themes/dark.css',
-  'css/themes/metallic.css',
 ];
 
 self.addEventListener('install', function(e) {

@@ -1,8 +1,14 @@
+# Version 1.3.27
+- updated icons
+
+# Version 1.3.26
+- support Turnouts/Points
+
 # Version 1.3.25
 - sort Routes/Automation
 - only retrieve the full Roster at connection
 - only retrieve the full Routes/Automation list at connection
-- support for messages
+- support for broadcast messages
 - bug fixes
 
 # Version 1.3.24

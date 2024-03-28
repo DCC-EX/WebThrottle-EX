@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.25";
+            var version = "1.3.26";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -81,6 +81,7 @@
                 <li tabindex="0" class="throttle" id="throttle-nav"><span>Throttle</span></li>
                 <li tabindex="0" class="cv-programmer" id="cv-programmer-nav"><span>CV Programmer</span></li>
                 <li tabindex="0" class="routes" id="routes-nav"><span>Routes/Automation</span></li>
+                <li tabindex="0" class="turnouts" id="turnouts-nav"><span>Turnouts/Points</span></li>
                 <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
                 <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
                 <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
@@ -90,11 +91,12 @@
             <div class="row">
                 <div class="column-4 align-left">
                     <button class="nav-btn" id="nav-open">☰</button>
-                    <button class="btn-nav" id="throttle-screen-button" state="ws" title="Throttle Screen" hidden="true"><span class="icon-circle-right"></span></button>
-                    <button class="btn-nav" id="cv-programmer-screen-button" state="ws" title="CV Programmer Screen"><span class="icon-wrench"></span></button>
-                    <button class="btn-nav" id="routes-screen-button" state="ws" title="Routes/Automation Screen"><span class="icon-flag"></span></button>
-                    <button class="btn-nav" id="locos-screen-button" state="ws" title="Edit Locos Screen"><span class="icon-database"></span></button>
-                    <button class="btn-nav" id="function-maps-screen-button" state="ws" title="Edit Function Maps Screen"><span class="icon-equalizer2"></span></button>
+                    <button class="btn-nav" id="throttle-screen-button" state="ws" title="Throttle Screen" hidden="true"><span class="toolbar-button-throttle"></span></button>
+                    <button class="btn-nav" id="cv-programmer-screen-button" state="ws" title="CV Programmer Screen"><span class="toolbar-button-cv-programmer"></span></button>
+                    <button class="btn-nav" id="routes-screen-button" state="ws" title="Routes/Automation Screen"><span class="toolbar-button-routes"></span></button>
+                    <button class="btn-nav" id="turnouts-screen-button" state="ws" title="Turnouts/Points Screen"><span class="toolbar-button-turnouts"></span></button>
+                    <button class="btn-nav" id="locos-screen-button" state="ws" title="Edit Locos Screen"><span class="toolbar-button-locos"></span></button>
+                    <button class="btn-nav" id="function-maps-screen-button" state="ws" title="Edit Function Maps Screen"><span class="toolbar-button-functions"></span></button>
                 </div>
                 <div class="column-2 align-center">
                     <div  class="throttle-heading"> 
@@ -118,6 +120,7 @@
                                 <div class="loco-list-container row">
                                     <div class="column-4 loco-list-ctrl">
                                         <label for="ex-locoid" class="formbuilder-text-label">
+                                            <!-- <span class="toolbar-button-throttle" style="display:inline-block;"></span>  -->
                                             Loco ID<span class="formbuilder-required">*</span>
                                         </label>
                                         <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives" placeholder="Loco ID / DCC Address" title="To Acquire a loco: Type an Address and press [Enter] or Select from the Locos/Roster list. To release: Press [Enter] or click [X]"/>
@@ -268,7 +271,8 @@
                 <section id="cv-programmer-window" class="section" hidden="true">
                     <div class="row settings-heading">
                         <div class="column-7 pl0 hdng">
-                            CV Programmer (PROG track only)
+                            <span class="toolbar-button-cv-programmer" style="display:inline-block;"></span> 
+                            CV Programmer <small><small>(PROG track only)</small></small>
                         </div>
                     </div>
 
@@ -409,8 +413,9 @@
                 
                 <section id="routes-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0 hdng">
-                            Routes/Automation
+                        <div class="column-10 pl0 hdng">
+                            <span class="toolbar-button-routes" style="display:inline-block;"></span> 
+                            Routes / Automation <small><small>(On the EX-CommandStation)</small></small>
                         </div>
                         <div class="column-3 pr0">
                             <div class="option-btns formbuilder-button row">
@@ -429,12 +434,36 @@
                     </div>
                 </section>
 
-                <section id="loco-window" class="section" hidden="true">
+                <section id="turnouts-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0 hdng">
-                            Locomotives
+                        <div class="column-10 pl0 hdng">
+                            <span class="toolbar-button-turnouts" style="display:inline-block;"></span> 
+                            Turnouts / Points <small><small>(On the EX-CommandStation)</small></small>
                         </div>
                         <div class="column-3 pr0">
+                            <div class="option-btns formbuilder-button row">
+                                <div class="column-2">&nbsp;</div> 
+                                <div class="column-4">
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row settings-content">
+                        <div class="settings-panel" id="turnouts-panel">
+                             <div class="settings-group">
+                                 Select a Turnout/Point
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="loco-window" class="section" hidden="true">
+                    <div class="row settings-heading">
+                        <div class="column-6 pl0 hdng">
+                            <span class="toolbar-button-locos" style="display:inline-block;"></span> 
+                            Locomotives <small><small><small><i>(Stored on this computer only)</i></small></small></small>
+                        </div>
+                        <div class="column-4 pr0">
                             <div class="option-btns formbuilder-button row">
                                 <div class="column-2">&nbsp;</div> 
                                 <div class="column-4">
@@ -512,10 +541,11 @@
 
                 <section id="fn-map-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0 hdng">
-                            Function Mappings
+                        <div class="column-6 pl0 hdng">
+                            <span class="toolbar-button-functions" style="display:inline-block;"></span> 
+                            Function Mappings <small><small><small><i>(Stored on this computer only)</i></small></small></small>
                         </div>
-                        <div class="column-3 pr0">
+                        <div class="column-4 pr0">
                             <div class="option-btns formbuilder-button row">
                                 <div class="column-2">&nbsp;</div> 
                                 <div class="column-4">
