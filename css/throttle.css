@@ -1048,3 +1048,67 @@ input:checked + .slider.debug-slider{
       display: block;
     }
 }
+
+/******************************/
+
+.toolbar-button-throttle {
+  background-image: url('../images/toolbar_button_throttle_light.svg');
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  padding-top: 0px;
+  display: block;
+}
+
+.toolbar-button-cv-programmer {
+  background-image: url('../images/toolbar_button_cv_programmer_light.svg');
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  padding-top: 0px;
+  display: block;
+}
+
+.toolbar-button-locos {
+    background-image: url('../images/toolbar_button_locos_light.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+
+.toolbar-button-routes {
+    background-image: url('../images/toolbar_button_routes_light.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+.toolbar-button-turnouts {
+    background-image: url('../images/toolbar_button_turnouts_light.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+.toolbar-button-functions {
+    background-image: url('../images/toolbar_button_functions_light.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+

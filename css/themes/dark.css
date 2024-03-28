@@ -262,3 +262,31 @@ p.ac-turnout-name{
     color: #00A3B9;
     padding-top: 4px;  
 }
+
+
+
+.toolbar-button-throttle {
+    background-image: url('../../images/toolbar_button_throttle.svg');
+  }
+  
+  .toolbar-button-cv-programmer {
+    background-image: url('../../images/toolbar_button_cv_programmer.svg');
+  }
+  
+  .toolbar-button-locos {
+      background-image: url('../../images/toolbar_button_locos.svg');
+  }
+  
+  .toolbar-button-routes {
+      background-image: url('../../images/toolbar_button_routes.svg');
+  }
+  
+  .toolbar-button-turnouts {
+      background-image: url('../../images/toolbar_button_turnouts.svg');
+  }
+  
+  .toolbar-button-functions {
+      background-image: url('../../images/toolbar_button_functions.svg');
+  }
+  
+  
