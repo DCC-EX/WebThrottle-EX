@@ -1,4 +1,4 @@
-var cacheName = 'EX-WebThrottle';
+var cacheName = 'EX-WebThrottle27';
 var filesToCache = [
   'images/favicon.ico',
   'images/carbon_fibre.png',
@@ -35,19 +35,22 @@ self.addEventListener('install', function(e) {
 // });
 
 self.addEventListener('activate', event => {
-  // Remove old caches
-    event.waitUntil(
-      (async () => {
-        const keys = await caches.keys();
-        return keys.map(async (cache) => {
-          if(cache !== cacheName) {
-            console.log('Service Worker: Removing old cache: '+cache);
-            return await caches.delete(cache);
-          }
-        })
-      })()
-    )
-  })
+// Remove old caches
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      return keys.map(async (cache) => {
+        if(cache !== cacheName) {
+          console.log('Service Worker: Removing old cache: '+cache);
+          return await caches.delete(cache);
+        }
+      })
+    })()
+  )
+})
+
+
+
 
 self.addEventListener('fetch', event => {
   event.respondWith(
