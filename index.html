@@ -720,12 +720,12 @@
 <script>
     if('serviceWorker' in navigator) {
         try {
-            if (navigator.serviceWorker.controller!=null) {
+            // if (navigator.serviceWorker.controller!=null) {
                 navigator.serviceWorker.register('sw.js')
                     .then(function() {
                         console.log('Service Worker Registered');
                     });
-            }
+            // }
         } catch (err) {
             console.log("Service Worker Registration failed")
         }
