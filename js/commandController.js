@@ -569,7 +569,7 @@ function parseResponse(cmd) {  // some basic ones only
 
         } else if (cmdArray[0].charAt(1) == '*')  { // alert
             if ((cmdArrayClean.length >= 2) && (cmdArrayClean[1]=="TRACK") && (cmdArrayClean[3]=="ALERT")) { 
-                ToastMaker("OVERCURRENT or SHORT on Track: " + cmdArrayClean[2] + " Response: "+ cmd, 5000, {valign:'top', align:'center'});
+                ToastMaker("FAULT on Track: " + cmdArrayClean[2] + " - Response: "+ cmd, 5000, {valign:'top', align:'center'});
             }
 
 // *********************************************************************
