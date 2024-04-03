@@ -564,6 +564,16 @@ function parseResponse(cmd) {  // some basic ones only
             if (cmdArrayClean.length == 2) { 
                 ToastMaker(cmdArrayClean[1].substring(1,cmdArrayClean[1].length-1), 10000, {valign:'top', align:'center'});
             }
+
+// *********************************************************************
+
+        } else if (cmdArray[0].charAt(1) == '*')  { // alert
+            if ((cmdArrayClean.length >= 2) && (cmdArrayClean[1]=="TRACK") && (cmdArrayClean[3]=="ALERT")) { 
+                ToastMaker("OVERCURRENT or SHORT on Track: " + cmdArrayClean[2] + " Response: "+ cmd, 5000, {valign:'top', align:'center'});
+            }
+
+// *********************************************************************
+
         }
     }
 }
