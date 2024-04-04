@@ -3,9 +3,9 @@
     "name": "DCC-EX EX-WebThrottle",
     "icons": [
         {
-            "src": "images/product-logo-ex-webthrottle",
+            "src": "images/product-logo-ex-webthrottle.png",
             "type": "image/png",
-            "sizes": "176x176"
+            "sizes": "170x40"
         }
     ],
     "start_url": "/WebThrottle-EX/",

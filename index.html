@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.26";
+            var version = "1.3.27";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -417,13 +417,6 @@
                             <span class="toolbar-button-routes" style="display:inline-block;"></span> 
                             Routes / Automation <small><small>(On the EX-CommandStation)</small></small>
                         </div>
-                        <div class="column-3 pr0">
-                            <div class="option-btns formbuilder-button row">
-                                <div class="column-2">&nbsp;</div> 
-                                <div class="column-4">
-                                </div> 
-                            </div>
-                        </div>
                     </div>
                     <div class="row settings-content">
                         <div class="settings-panel" id="routes-panel">
@@ -439,13 +432,6 @@
                         <div class="column-10 pl0 hdng">
                             <span class="toolbar-button-turnouts" style="display:inline-block;"></span> 
                             Turnouts / Points <small><small>(On the EX-CommandStation)</small></small>
-                        </div>
-                        <div class="column-3 pr0">
-                            <div class="option-btns formbuilder-button row">
-                                <div class="column-2">&nbsp;</div> 
-                                <div class="column-4">
-                                </div> 
-                            </div>
                         </div>
                     </div>
                     <div class="row settings-content">
@@ -720,12 +706,10 @@
 <script>
     if('serviceWorker' in navigator) {
         try {
-            if (navigator.serviceWorker.controller!=null) {
-                navigator.serviceWorker.register('sw.js')
-                    .then(function() {
-                        console.log('Service Worker Registered');
-                    });
-            }
+            navigator.serviceWorker.register('sw.js')
+                .then(function() {
+                    console.log('Service Worker Registered');
+                });
         } catch (err) {
             console.log("Service Worker Registration failed")
         }

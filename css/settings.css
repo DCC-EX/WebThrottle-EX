@@ -140,6 +140,14 @@ a.run-cur-route, a.throw-cur-turnout, a.close-cur-turnout, a.option-btn{
 a.run-cur-route, a.throw-cur-turnout, a.close-cur-turnout{
     margin-top: 6px;
 }
+a.run-cur-route{
+    padding: 10px 15px;
+    float:left;
+}
+a.throw-cur-turnout, a.close-cur-turnout{
+    padding: 10px 5px;
+    float:left;
+}
 
 .settings-subheading.row .map-name-heading{
     padding-top: 8px;
