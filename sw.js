@@ -1,19 +1,16 @@
-var cacheName = 'EX-WebThrottle';
+var cacheName = 'EX-WebThrottle27';
 var filesToCache = [
   'images/favicon.ico',
   'images/carbon_fibre.png',
   'images/cover.png',
   'images/darkmkBigBackground.png',
   'images/darkmkBigFront.png',
-  'images/full-logo.png',
   'images/lightBigBackground.png',
   'images/lightBigBackground@2x.png',
   'images/lightBigFront.png',
   'images/lightBigFront@2x.png',
   'images/pattern.png',
-  'images/WebThrottle.png',
   'css/jquery.rotaryswitch.css',
-  'css/layout.css',
   'css/pwa.css',
   'css/roundslider.min.css',
   'css/fonts/icomoon.eot',
@@ -33,9 +30,24 @@ self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install Complete');
 });
 
-self.addEventListener('activate',  event => {
-  event.waitUntil(self.clients.claim());
-});
+// self.addEventListener('activate',  event => {
+//   event.waitUntil(self.clients.claim());
+// });
+
+self.addEventListener('activate', event => {
+// Remove old caches
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      return keys.map(async (cache) => {
+        if(cache !== cacheName) {
+          console.log('Service Worker: Removing old cache: '+cache);
+          return await caches.delete(cache);
+        }
+      })
+    })()
+  )
+})
 
 self.addEventListener('fetch', event => {
   event.respondWith(

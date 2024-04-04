@@ -595,6 +595,8 @@ function resetRoutes() {
   window.routesIds = [];
   window.routesNames = [];
   window.routesTypes = [];
+  window.routesStates = [];
+  window.routesLabels = [];
   window.routesJSON = "";
 }
 
