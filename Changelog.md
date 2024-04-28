@@ -1,3 +1,6 @@
+# Version 1.3.28
+- send actual eStop
+
 # Version 1.3.27
 - support state and label changes for Routes <jB ....>
 - overcurrent and/or short toast message
