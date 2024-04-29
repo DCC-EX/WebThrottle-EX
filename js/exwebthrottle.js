@@ -838,9 +838,11 @@ $(document).ready(function () {
       setSpeed(0);
       setSpeedofControllers();
       sendSpeed(getCV(), -1, dir);
+      writeToStream("!");
     }
     else {
-      console.log("No loco acquired");
+      console.log("No loco acquired, but sending eStop anyway");
+      writeToStream("!");
     }
   });
 
