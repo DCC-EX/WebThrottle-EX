@@ -1,3 +1,6 @@
+# Version 1.3.29
+- bug fix if there ate Turnouts/Points but no Routes
+
 # Version 1.3.28
 - send actual eStop
 

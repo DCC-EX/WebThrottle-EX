@@ -396,7 +396,9 @@ function parseResponse(cmd) {  // some basic ones only
                 } else {
                     //intialise the routes
                     rosterComplete = true;
-                    writeToStream("JA");
+                    if (!routesRequested) { 
+                        writeToStream("JA");
+                    }
                 }
 
 // --------------------------------------------------------------------
@@ -454,6 +456,9 @@ function parseResponse(cmd) {  // some basic ones only
                         }
                     }
                 } else {
+                    if (!turnoutsRequested) {
+                        writeToStream("JT");
+                    }
                     routesComplete = true;
                 }
 
