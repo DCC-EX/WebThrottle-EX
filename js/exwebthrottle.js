@@ -791,6 +791,7 @@ $(document).ready(function () {
   $(".dir-btn").on("click", function () {
     if (getCV() != 0) {
       current = $(this);
+      lastDir = getDirection();
       dir = current.attr("aria-label");
       $(".dir-btn").removeClass("selected");
       current.addClass("selected", 200);
@@ -818,10 +819,10 @@ $(document).ready(function () {
         case "stop": {
           isStopped = true;
           isDirectionToggleStopped = true;
-          dir = getDirection();
+          setDirection(lastDir);
           setSpeed(DIRECTION_FORWARD);
           setSpeedofControllers();
-          sendSpeed(getCV(), 0, dir);
+          sendSpeed(getCV(), 0, lastDir);
           break;
         }
       }

@@ -1,3 +1,10 @@
+# Version 1.3.30
+- bug fix if there are only two Routes
+
+# Version 1.3.29
+- bug fix if there are Turnouts/Points but no Routes
+- fix for the knob still being active in 'Stop'
+
 # Version 1.3.28
 - send actual eStop
 
