@@ -1,3 +1,6 @@
+# Version 1.3.31
+- responses for functions 29, 30, 31 were ignored
+
 # Version 1.3.30
 - bug fix if there are only two Routes
 

@@ -213,7 +213,7 @@ function parseResponse(cmd) {  // some basic ones only
                     } else {
                         console.log('[i] Ignoring Received Speed - too soon since last speed sent.');
                     }
-                    for (i = 0; i <= 28; i++) {
+                    for (i = 0; i <= 31; i++) {
                         fnState = (functMap >> i) & 0x1;
                         fnStateText = (fnState == 1) ? "true" : "false";
                         if (getFunCurrentVal("f" + i) != fnStateText) {
