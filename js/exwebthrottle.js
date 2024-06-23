@@ -638,6 +638,7 @@ $(document).ready(function () {
         acButton.data("acquired", true);
         acButton.html('<span class="icon-cross"></span>');
         toggleThrottleState(!isDirectionToggleStopped);
+        writeToStream('t ' + locoid_input); // request an update for the loco
         // $("#select-map").focus();
         $("#power-switch").focus();
 

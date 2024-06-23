@@ -1,3 +1,6 @@
+# Version 1.3.32
+- request an update for the loco as soon as it is acquired
+
 # Version 1.3.31
 - responses for functions 29, 30, 31 were ignored
 
