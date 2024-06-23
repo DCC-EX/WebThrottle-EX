@@ -436,6 +436,9 @@ function parseResponse(cmd) {  // some basic ones only
                             if (routesIds[i] == cmdArrayClean[1]) {
                                 routesTypes[i] = cmdArrayClean[2];
                                 routesNames[i] = cmdArrayClean[3].substring(1,cmdArrayClean[3].length-1);
+                                if (routesTypes[i]=="A") {
+                                    routesLabels[i] = "Handoff";
+                                }
                             }
                         }
                         for (i=0;i<routesIds.length;i++) {
