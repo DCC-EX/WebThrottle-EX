@@ -258,7 +258,7 @@ label.formbuilder-file-label {
     box-shadow: none;
 }
 .dir-toggle{
-    height: 219px;
+    height: 152px;
     background-color: #cecece;
     width: 48px;
     margin: 8px auto;
@@ -297,7 +297,7 @@ label.formbuilder-file-label {
     background: #da0000;
 }
 .dir-toggle.backward:before{
-    top: 141px;
+    top: 72px;
     background: #00ac4d;
 }
 .dir-btn{

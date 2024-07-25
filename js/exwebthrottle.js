@@ -176,7 +176,7 @@ function uiDisable(status) {
   }
 
   $("#dir-f").prop('disabled', status)
-  $("#dir-S").prop('disabled', status)
+  // $("#dir-S").prop('disabled', status)
   $("#dir-b").prop('disabled', status)
   if (status) {
     //$("#throttle").roundSlider("disable");
