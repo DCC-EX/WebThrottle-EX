@@ -137,6 +137,7 @@ function uiDisable(status) {
     $("#power-switch").parent().addClass("ui-state-disabled")
     $("#dir-f").parent().addClass("ui-state-disabled")
     $("#emergency-stop").addClass("ui-state-disabled")
+    $("#normal-stop").addClass("ui-state-disabled")
     $("#button-right").addClass("ui-state-disabled")
     $("#button-left").addClass("ui-state-disabled")
     for (i = 0; i <= 28; i++) {
@@ -159,6 +160,7 @@ function uiDisable(status) {
     $("#power-switch").parent().removeClass("ui-state-disabled")
     $("#dir-f").parent().removeClass("ui-state-disabled")
     $("#emergency-stop").removeClass("ui-state-disabled")
+    $("#normal-stop").removeClass("ui-state-disabled")
     $("#button-right").removeClass("ui-state-disabled")
     $("#button-left").removeClass("ui-state-disabled")
     for (i = 0; i <= 28; i++) {
@@ -844,6 +846,17 @@ $(document).ready(function () {
     }
     else {
       console.log("No loco acquired, but sending eStop anyway");
+      writeToStream("!");
+    }
+  });
+
+  $("#normal-stop").on("click", function () {
+    if (getCV() != 0) {
+      isStopped = true;
+      dir = getDirection();
+      setSpeed(0);
+      setSpeedofControllers();
+      sendSpeed(getCV(), 0, lastDir);
       writeToStream("!");
     }
   });

@@ -245,16 +245,33 @@ label.formbuilder-file-label {
     width: 44px;
     height: 44px;
     border-radius: 24px;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 9px;
+    outline: none;
+    cursor: pointer;
+    background-color: #d60000;
+    border: 4px solid #ddd;
+    box-shadow: 2px 2px 4px #5d5d5d;
+    margin-bottom: 20px;
+}
+.em-btn button.em-stop:active{
+    box-shadow: none;
+}
+.em-btn button.normal-stop{
+    width: 44px;
+    height: 44px;
+    border-radius: 24px;
     color: #d60000;
     font-size: 18px;
     padding: 9px;
     outline: none;
     cursor: pointer;
     background-color: #c7c7c7;
-    border: 4px solid #ddd;
-    box-shadow: 0 4px 4px #5d5d5d;
+    border: 4px solid #d60000;
+    box-shadow: 2px 2px 4px #5d5d5d;
 }
-.em-btn button.em-stop:active{
+.em-btn button.normal-stop:active{
     box-shadow: none;
 }
 .dir-toggle{

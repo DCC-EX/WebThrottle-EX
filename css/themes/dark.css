@@ -137,7 +137,6 @@ input:checked + .slider.debug-slider:before{
     padding: 12px;
     box-shadow: 0 0 5px 2px #000000;
     border: 1px solid #ececec;
-    background: #ddd;
 }
 
 .rotaryswitchPlugin.big.light { 
