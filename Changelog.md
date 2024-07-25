@@ -1,3 +1,6 @@
+# Version 1.3.34
+- Added separate Stop button
+
 # Version 1.3.33
 - Removed the centre position for the direction toggle
 
