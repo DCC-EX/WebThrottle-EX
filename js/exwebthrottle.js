@@ -857,7 +857,6 @@ $(document).ready(function () {
       setSpeed(0);
       setSpeedofControllers();
       sendSpeed(getCV(), 0, lastDir);
-      writeToStream("!");
     }
   });
 

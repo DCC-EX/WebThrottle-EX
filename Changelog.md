@@ -1,3 +1,6 @@
+# Version 1.3.35
+- bug fix for separate Stop button
+
 # Version 1.3.34
 - Added separate Stop button
 
