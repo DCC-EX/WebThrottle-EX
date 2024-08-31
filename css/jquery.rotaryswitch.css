@@ -141,7 +141,9 @@ div#knobthrottle.disabled:before {
     margin-left: 36px;
     border-radius: 100%;
     margin-top: 36px;
+    pointer-events: none;
 }
 .speedController.disabled{
   position: relative;
+  pointer-events: none;
 }

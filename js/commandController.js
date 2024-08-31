@@ -396,7 +396,9 @@ function parseResponse(cmd) {  // some basic ones only
                 } else {
                     //intialise the routes
                     rosterComplete = true;
-                    writeToStream("JA");
+                    if (!routesRequested) { 
+                        writeToStream("JA");
+                    }
                 }
 
 // --------------------------------------------------------------------
@@ -405,7 +407,8 @@ function parseResponse(cmd) {  // some basic ones only
                 last = cmdArray.length-1;
                 if (cmdArrayClean.length > 1) { // if ==1, then no routes
                     if ( (cmdArrayClean.length == 2 ) || 
-                       ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
+                         (cmdArrayClean.length == 3 ) || 
+                         ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
                         routesCount = cmdArrayClean.length-1;
                         console.log(getTimeStamp() + ' Processing routes: ' + routesCount);
                         try {
@@ -454,6 +457,9 @@ function parseResponse(cmd) {  // some basic ones only
                         }
                     }
                 } else {
+                    if (!turnoutsRequested) {
+                        writeToStream("JT");
+                    }
                     routesComplete = true;
                 }
 
