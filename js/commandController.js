@@ -492,7 +492,7 @@ function parseResponse(cmd) {  // some basic ones only
             } else if (cmdArray[0].charAt(2) == 'T')  { //turnouts/points
                 last = cmdArray.length-1;
                 if (cmdArrayClean.length > 1) { // if ==1, then no turnouts
-                    if ( (cmdArrayClean.length == 2 ) || 
+                    if ( (cmdArrayClean.length == 2 ) || (cmdArrayClean.length == 3 ) || 
                     ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
                         turnoutsCount = cmdArrayClean.length-1;
                         console.log(getTimeStamp() + ' Processing turnouts: ' + turnoutsCount);

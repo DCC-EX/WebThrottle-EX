@@ -1,3 +1,6 @@
+# Version 1.3.36
+- bug fix for only two turnouts/points
+
 # Version 1.3.35
 - bug fix for separate Stop button
 
