@@ -1,3 +1,22 @@
+# Version 1.3.36
+- bug fix for only two turnouts/points
+
+# Version 1.3.35
+- bug fix for separate Stop button
+
+# Version 1.3.34
+- Added separate Stop button
+
+# Version 1.3.33
+- Removed the centre position for the direction toggle
+
+# Version 1.3.32
+- request an update for the loco as soon as it is acquired
+- [Handoff] label for automation buttons
+
+# Version 1.3.31
+- responses for functions 29, 30, 31 were ignored
+
 # Version 1.3.30
 - bug fix if there are only two Routes
 
