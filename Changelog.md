@@ -1,3 +1,6 @@
+# Version 1.3.37
+- allow 31 functions for locos acquired by DCC Address
+
 # Version 1.3.36
 - bug fix for only two turnouts/points
 

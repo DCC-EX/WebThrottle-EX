@@ -55,7 +55,10 @@ window.functions = {
   "f25": 0,
   "f26": 0,
   "f27": 0,
-  "f28": 0
+  "f28": 0,
+  "f29": 0,
+  "f30": 0,
+  "f31": 0
 };
 window.isStopped = true;
 window.isDirectionToggleStopped = false;
@@ -140,7 +143,7 @@ function uiDisable(status) {
     $("#normal-stop").addClass("ui-state-disabled")
     $("#button-right").addClass("ui-state-disabled")
     $("#button-left").addClass("ui-state-disabled")
-    for (i = 0; i <= 28; i++) {
+    for (i = 0; i <= 31; i++) {
       $("#f" + i).addClass("ui-state-disabled")
     }
 
@@ -163,7 +166,7 @@ function uiDisable(status) {
     $("#normal-stop").removeClass("ui-state-disabled")
     $("#button-right").removeClass("ui-state-disabled")
     $("#button-left").removeClass("ui-state-disabled")
-    for (i = 0; i <= 28; i++) {
+    for (i = 0; i <= 31; i++) {
       $("#f" + i).removeClass("ui-state-disabled")
     }
 
@@ -545,7 +548,7 @@ function setPositionOfDirectionSlider(dir) { //1=forward -1=reverse 0=stop
 // This function will generate commands for each type of function
 function generateFnCommand(clickedBtn) {
 
-  func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F28)
+  func = clickedBtn.attr('name'); // Gives function name (F1, F2, .... F31)
   fn = parseInt(func.substring(1));
   eventType = clickedBtn.data("type"); // Gives type of button (Press/Hold or Toggle)
   btnPressed = clickedBtn.attr("aria-pressed");
