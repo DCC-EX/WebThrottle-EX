@@ -13,6 +13,33 @@ $(document).ready(function () {
     console.log("Command Controller loaded");
     emulatorClass = new Emulator({ logger: displayLog });
     uiDisable(true)
+
+    // WEBSOCKET CONNECTION CONTROL
+    // This is triggered by the use of a # tag on the URL 
+    // giving ip address : port 
+    // e.g. when the throttle is addressed as
+    // https://dcc-ex.com/WebThrottle-EX/#DCCEX_CSB1:2560 
+    if (window.location.hash) {
+        // using the websockets 
+        wsaddr="wss://" +window.location.hash.substring(1)
+        socket = new WebSocket(wsaddr,"DCCEX");
+        // message received - parse it
+        socket.onmessage = function(event) {
+          // message received - parse it 
+          var inboundMessage=event.data;
+          displayLog("[R] " + inboundMessage);
+          console.log(getTimeStamp() + " [R] " + inboundMessage);        
+          parseResponse(inboundMessage);
+          }
+        socket.onopen=function(event) {
+            displayLog("[CONNECTION] websock connected")
+            document.getElementById('connection-selector').hidden=true;
+            writeToStream("s"); // introduce us  
+            uiEnableThrottleControlOnReady();
+        }
+    }
+
+
 });
 
 // - Request a port and open an asynchronous connection, 
@@ -640,7 +667,7 @@ function writeToStream(...lines) {
             displayLog("[S] &lt;" + line.toString() + "&gt;");
         }
         const packet = `<${line}>\n`;
-        stream.write(packet)
+        if (socket) socket.send(packet); else stream.write(packet)
         console.log(packet)
     });
     stream.releaseLock();
