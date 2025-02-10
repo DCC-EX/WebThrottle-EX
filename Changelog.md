@@ -1,3 +1,6 @@
+# Version 1.3.38
+- C_Carter's fix for the automations that require a loco
+
 # Version 1.3.37
 - allow 31 functions for locos acquired by DCC Address
 
