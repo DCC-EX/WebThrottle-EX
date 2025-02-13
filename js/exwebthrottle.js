@@ -1237,7 +1237,23 @@ $(document).ready(function () {
 
 $(document).on("click", ".run-cur-route", function () {
   // routesdata = getStoredRouteData($(this).attr("route-id"));
-  writeToStream("/ START "+ $(this).attr("route-id"));
+  // writeToStream("/ START "+ $(this).attr("route-id"));
+  try {
+    for (i=0;i<routesCount;i++) {
+      if (routesIds[i] == $(this).attr("route-id")) {
+        if ((getCV() == 0) || (routesTypes[i] == "R")) {
+            // No loco set *or* ROUTE...
+            writeToStream("/ START "+ $(this).attr("route-id"));
+         } else {
+            // AUTOMATION with loco set...
+            writeToStream("/ START "+ getCV() + " " + $(this).attr("route-id"));
+          }
+        break; 
+        }
+      } 
+  } catch (e) {
+    console.log(getTimeStamp() + ' [ERROR] Unable to process route/automation');
+  }
 });
 
 $(document).on("click", ".throw-cur-turnout", function () {
