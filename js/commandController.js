@@ -752,6 +752,11 @@ async function toggleServer(btn) {
         btn.html('<span class="con-ind connected"></span>Disconnect EX-CS');
     } else {
         selectMethod.disabled = false;
+		if (!("serial" in navigator)) {
+			alert("No serial port found!\nYour browser may not be supported - check in the EX-WebThrottle documentation");
+		} else {
+			alert("Unable to connect - you may need to allow access with a pop-up");
+		}
     }
 }
 
