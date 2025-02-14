@@ -798,7 +798,7 @@ $(document).ready(function () {
     if (getCV() != 0) {
       current = $(this);
       lastDir = getDirection();
-      dir = current.attr("aria-label");
+      dir = current.attr("data-direction");
       $(".dir-btn").removeClass("selected");
       current.addClass("selected", 200);
       console.log(dir);
