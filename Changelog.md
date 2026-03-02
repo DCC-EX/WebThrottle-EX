@@ -1,3 +1,6 @@
+# Version 1.3.41
+- prevent incoming speed changes from creating identical outbound changes
+
 # Version 1.3.40
 - Show the string needed for the CS ROSTER entry if added to a myConfiguration.h file, on the Functions Mapping page 
 
