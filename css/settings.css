@@ -107,7 +107,7 @@
 .maps-content{
     overflow-y: auto;
     font-size: 14px;
-    max-height: calc(100% - 90px);
+    max-height: calc(100% - 110px);
 }
 a.edit-cur-loco, a.option-btn{
     float: right;

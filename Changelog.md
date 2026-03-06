@@ -1,3 +1,9 @@
+# Version 1.3.40
+- Show the string needed for the CS ROSTER entry if added to a myConfiguration.h file, on the Functions Mapping page 
+
+# Version 1.3.39
+- Direction indication changes
+
 # Version 1.3.38
 - C_Carter's fix for the automations that require a loco
 

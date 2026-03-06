@@ -308,6 +308,21 @@ function loadMapData(map, fromRoster) {
     );
   });
 
+  csRosterString = '<p><small>Roster Entry needed if added to your myConfiguration.h file:<br />ROSTER(loco_id,\"loco_name\",\"'
+  i=0;
+  $.each(data.fnData, function (key, value) {
+    if (value[3] == 1) {
+      csRosterString = csRosterString +
+        (value[1] == 1 ? "*" : "") +
+        value[2] +
+        (i<31 ? '/' : '')
+      ;
+    }
+    i++;
+  });
+  csRosterString = csRosterString + '\")' + '</small></p>';
+  container.append(csRosterString);
+
 }
 
 
