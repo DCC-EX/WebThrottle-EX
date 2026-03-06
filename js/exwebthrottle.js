@@ -308,6 +308,21 @@ function loadMapData(map, fromRoster) {
     );
   });
 
+  csRosterString = '<p><small>Roster Entry needed if added to your myConfiguration.h file:<br />ROSTER(loco_id,\"loco_name\",\"'
+  i=0;
+  $.each(data.fnData, function (key, value) {
+    if (value[3] == 1) {
+      csRosterString = csRosterString +
+        (value[1] == 1 ? "*" : "") +
+        value[2] +
+        (i<31 ? '/' : '')
+      ;
+    }
+    i++;
+  });
+  csRosterString = csRosterString + '\")' + '</small></p>';
+  container.append(csRosterString);
+
 }
 
 
@@ -754,16 +769,19 @@ $(document).ready(function () {
     setSpeed(kval);
     // Below condition is to avoid infinite loop
     // that triggers change() event indifinitely
+    console.log("Knob value: " + kval + " , Old Value: " + oldValue);
     if (oldValue != kval) {
+      console.log("Value changed");
       if ((lastLocoReceived != getCV()) || (lastSpeedReceived != getSpeed()) || (lastDirReceived != getDirection())) {
         setSpeedofControllers();
       } else {
         setPositionofControllers();
       }
     } else {
-      // if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
-      sendSpeed(getCV(), getSpeed(), getDirection());
-      // }
+      console.log("Value is same as before. Check it is not due to external change message");
+      if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
+        sendSpeed(getCV(), getSpeed(), getDirection());
+      }
     }
   });
 
