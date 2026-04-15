@@ -325,6 +325,9 @@ function loadMapData(map, fromRoster) {
 
 }
 
+function getWiFiSetupData() {
+  writeToStream('D WIFI SHOW');
+}
 
 function loadLocomotives() {
   locos = getLocoList();
@@ -677,6 +680,27 @@ $(document).ready(function () {
     }
   });
 
+
+  // write Access Point Mode
+  $("#button-wifi-setup-access-point-set").on("click", function () {
+    writeToStream('C WIFI AP "' + $("#wifi-setup-access-point").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+  });
+
+  // write Station Mode
+  $("#button-wifi-setup-station").on("click", function () {
+    writeToStream('C WIFI "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+  });
+
+  // write Hostname
+  $("#button-wifi-setup-hostname").on("click", function () {
+    writeToStream('C WIFI HOSTNAME "' + $("#wifi-setup-hostname").val() + '"');
+  });
+
+  // reset wifi settings
+  $("#button-wifi-setup-reset").on("click", function () {
+    writeToStream('C WIFI DEFAULT');
+  });
+  
   // read DCC address on PROG track
   $("#button-cv-read-loco-id").on("click", function () {
     writeToStream('R');
@@ -1108,6 +1132,13 @@ $(document).ready(function () {
     loadTurnouts();
     $("#nav-close").trigger("click");
   });
+  $("#wifi-setup-nav").on("click", function () {
+    hideWindows();
+    $("#wifi-setup-window").show();
+    showNavigationButtons("wifi-setup");
+    getWiFiSetupData();
+    $("#nav-close").trigger("click");
+  });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
@@ -1152,6 +1183,12 @@ $(document).ready(function () {
     $("#turnouts-window").show();
     showNavigationButtons("turnouts");
     loadTurnouts();
+  });
+  $("#wifi-setup-screen-button").on("click", function () {
+    hideWindows();
+    $("#wifi-setup-window").show();
+    getWiFiSetupData();
+    showNavigationButtons("wifi-setup");
   });
   $("#locos-screen-button").on("click", function () {
     hideWindows();
@@ -1302,6 +1339,7 @@ function hideWindows() {
   $("#cv-programmer-window").hide();
   $("#routes-window").hide();
   $("#turnouts-window").hide();
+  $("#wifi-setup-window").hide();
   $("#loco-window").hide();
   $("#fn-map-window").hide();
   $("#settings-window").hide();
@@ -1311,6 +1349,7 @@ function showNavigationButtons(which) {
   $("#cv-programmer-screen-button").show();
   $("#routes-screen-button").show();
   $("#turnouts-screen-button").show();
+  $("#wifi-setup-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
   if(which.length>0) {

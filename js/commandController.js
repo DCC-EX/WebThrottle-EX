@@ -772,6 +772,9 @@ function displayLog(data) {
 
     $("#log-box2").append(data.toString() + "<br>");
     $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
+
+    $("#log-box3").append(data.toString() + "<br>");
+    $("#log-box3").scrollTop($("#log-box3").prop("scrollHeight"));
 }
 
 
