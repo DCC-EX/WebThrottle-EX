@@ -453,7 +453,7 @@
                     <div class="row settings-heading">
                         <div class="column-7 pl0 hdng">
                             <span class="toolbar-wifi-setup" style="display:inline-block;"></span> 
-                            WiFi Setup <small><small>EX-CSB1 and ESP32 only from verion 5.???</small></small>
+                            WiFi Setup <small><small>EX-CSB1 and ESP32 only from verion 5.5.68</small></small>
                         </div>
                     </div>
 
@@ -473,18 +473,36 @@
 
                         <div class="row">
                             <div class="column-10">
-                                <div class="wifi-setup-access-point-ssid-id-container row">
-                                    <div class="column-4 cv-addr-ctrl">
+                                <div class="wifi-setup-access-point-ssid-container row">
+                                    <div class="column-4 wifi-setup-access-point-ssid-ctrl">
                                         <label for="wifi-access-point-setup-ssid" class="formbuilder-text-label">
                                             SSID
                                         </label>
-                                        <input id="wifi-access-point-setup-ssid" type="text" wifi-setup-access-point-ssid="" name="wifi-setup-access-point-ssid" placeholder="SSID (Network Name)"/>
+                                        <input id="wifi-setup-access-point-ssid" type="text" wifi-setup-access-point-ssid="" name="wifi-setup-access-point-ssid" placeholder="SSID (Network Name)"/>
                                     </div>
-                                    <div class="column-4 cv-addr-ctrl">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-password-container row">
+                                    <div class="column-4 wifi-access-point-password-ctrl">
                                         <label for="wifi-setup-access-point-password" class="formbuilder-text-label">
                                             Password
                                         </label>
-                                        <input id="wifi-setup-access-point-password" type="text" wifi-setup-access-point-password="" name="wifi-setup-access-point-password" placeholder="password (min 8 chars)"/>`
+                                        <input id="wifi-setup-access-point-password" type="text" wifi-setup-access-point-password="" name="wifi-setup-access-point-password" placeholder="password (min 8 chars)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-channel-container row">
+                                    <div class="column-4 wifi-setup-access-point-channel-ctrl">
+                                        <label for="wifi-setup-access-point-channel" class="formbuilder-text-label">
+                                            Channel
+                                        </label>
+                                        <input id="wifi-setup-access-point-channel" type="text" wifi-setup-access-point-channel="" name="wifi-setup-access-point-channel" placeholder="channel"/>
                                     </div>
                                     <div class="column-6">
                                         <div class="formbuilder-button column-5">
@@ -517,17 +535,11 @@
                         <div class="row">
                             <div class="column-10">
                                 <div class="wifi-setup-station-ssid-id-container row">
-                                    <div class="column-4 cv-addr-ctrl">
+                                    <div class="column-4 wifi-setup-station-ssid-ctrl">
                                         <label for="wifi-setup-station-ssid" class="formbuilder-text-label">
                                             SSID
                                         </label>
                                         <input id="wifi-setup-station-ssid" type="text" wifi-setup-station-ssid="" name="wifi-setup-station-ssid" placeholder="SSID (Network Name)"/>
-                                    </div>
-                                    <div class="column-4 station-password-ctrl">
-                                        <label for="wifi-setup-station-password" class="formbuilder-text-label">
-                                            Password
-                                        </label>
-                                        <input id="wifi-setup-station-password" type="text" wifi-setup-ssid="" name="wifi-setup-station-password" placeholder="password (min 8 chars)"/>`
                                     </div>
                                     <div class="column-6">
                                         <div class="formbuilder-button column-5">
@@ -539,12 +551,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-station-ssid-id-container row">
+                                    <div class="column-4 wifi-setup-station-password-ctrl">
+                                        <label for="wifi-setup-station-password" class="formbuilder-text-label">
+                                            Password
+                                        </label>
+                                        <input id="wifi-setup-station-password" type="text" wifi-setup-station-password="" name="wifi-setup-station-password" placeholder="password (min 8 chars)"/>`
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Set TEMP" name="button-wifi-setup-temp" access="false" id="button-wifi-setup-temp">
+                                                Set Temp
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         
                         <div class="row">
                             <div class="column-10">
                                 <div class="wifi-setup-hostname-container row">
-                                    <div class="column-4 cv-addr-ctrl">
+                                    <div class="column-4 wifi-setup-hostname-ctrl">
                                         <label for="wifi-setup-hostname" class="formbuilder-text-label">
                                             Hostname
                                         </label>

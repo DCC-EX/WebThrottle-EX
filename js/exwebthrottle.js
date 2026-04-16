@@ -680,19 +680,69 @@ $(document).ready(function () {
     }
   });
 
+  // ---------------------------------------- //
 
   // write Access Point Mode
-  $("#button-wifi-setup-access-point-set").on("click", function () {
-    writeToStream('C WIFI AP "' + $("#wifi-setup-access-point").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+  $("#button-wifi-setup-access-point").on("click", function () {
+    if( ($("#wifi-setup-access-point-ssid").val() == 0) 
+      || ($("#wifi-setup-access-point-password").val().length < 8)  
+      || ($("#wifi-setup-access-point-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-access-point-ssid").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-access-point-ssid").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+      return;
+    }
+
+    if ($("#wifi-setup-access-point-channel").val().length > 0) {
+      writeToStream('C WIFI AP "' 
+        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-password").val() + '" "' 
+        + $("#wifi-setup-access-point-channel").val() + '"');
+    } else {
+      writeToStream('C WIFI AP "' 
+        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-password").val() + '"');
+    }
   });
 
   // write Station Mode
   $("#button-wifi-setup-station").on("click", function () {
+    if( ($("#wifi-setup-station-ssid").val().length == 0) 
+      || ($("#wifi-setup-station-password").val().length < 8)  
+      || ($("#wifi-setup-station-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      return;
+    }
+
     writeToStream('C WIFI "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+  });
+
+  // write Temp Station Mode
+  $("#button-wifi-setup-temp").on("click", function () {
+    if( ($("#wifi-setup-station-ssid").val().length == 0) 
+      || ($("#wifi-setup-station-password").val().length < 8)
+      || ($("#wifi-setup-station-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      return;
+    }
+
+    writeToStream('C WIFI TEMP "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
   });
 
   // write Hostname
   $("#button-wifi-setup-hostname").on("click", function () {
+    if( ($("#wifi-setup-hostname").val().length == 0) 
+      || ($("#wifi-setup-hostname").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid Hostname: "' + $("#wifi-setup-hostname").val() + '"');
+      displayLog('[i] Invalid Hostname: "' + $("#wifi-setup-hostname").val() + '"');
+      return;
+    }
+
     writeToStream('C WIFI HOSTNAME "' + $("#wifi-setup-hostname").val() + '"');
   });
 
@@ -700,6 +750,8 @@ $(document).ready(function () {
   $("#button-wifi-setup-reset").on("click", function () {
     writeToStream('C WIFI DEFAULT');
   });
+
+  // ---------------------------------------- //
   
   // read DCC address on PROG track
   $("#button-cv-read-loco-id").on("click", function () {
@@ -1044,6 +1096,7 @@ $(document).ready(function () {
   $("#button-clearLog").on("click", function () {
     $("#log-box").html("");
     $("#log-box2").html("");
+    $("#log-box3").html("");
   });
 
   // Clear the console log window
