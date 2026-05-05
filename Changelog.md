@@ -1,3 +1,6 @@
+# Version 1.3.42
+- addition of the WiFi setup page
+
 # Version 1.3.41
 - prevent incoming speed changes from creating identical outbound changes
 
