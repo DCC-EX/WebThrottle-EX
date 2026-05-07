@@ -88,6 +88,8 @@ window.csVersion = 5;
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
+window.wasLocoIdRequested = false;
+
 window.rosterRequested = false;
 window.rosterComplete = false;
 window.rosterCount = 0;
@@ -755,7 +757,12 @@ $(document).ready(function () {
   
   // read DCC address on PROG track
   $("#button-cv-read-loco-id").on("click", function () {
-    writeToStream('R');
+    if (csVersion < 5.004046) {
+      writeToStream('R');
+    } else {
+      writeToStream('R LOCOID');
+      wasLocoIdRequested = true;
+    }
   });
 
   // write DCC address on PROG track

@@ -245,8 +245,12 @@ function parseResponse(cmd) {  // some basic ones only
                     locoAddr = parseInt(cmdArray[2]);
                     if (locoAddr > 0) {
                         $("#cv-locoid").val(locoAddr);
+                        if (window.wasLocoIdRequested) {
+                            writeToStream('R CONSIST');
+                        }
                     } else {
                         displayLog("[i] DCC Address Read Failed!");
+                        window.wasLocoIdRequested = false;
                     }
                 } catch (e) {
                     console.log(getTimeStamp + '[ERROR] Unable to process read address response');
@@ -262,8 +266,8 @@ function parseResponse(cmd) {  // some basic ones only
                 } catch (e) {
                     console.log(getTimeStamp + '[ERROR] Unable to process read consist address response');
                 }
+                window.wasLocoIdRequested = false;
             }
-
 
 // --------------------------------------------------------------------
               
