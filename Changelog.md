@@ -1,3 +1,6 @@
+# Version 1.3.43
+- support the <r CONSIST x> and <r LOCOID x> responses
+
 # Version 1.3.42
 - addition of the WiFi setup page
 

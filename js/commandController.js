@@ -239,6 +239,32 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + '[ERROR] Unable to process read address response');
             }
 
+        } else if ((cmd.charAt(1) == 'r') && (cmdArray.length == 3)) {
+            if (cmdArray[1] == 'LOCOID') {
+                try {
+                    locoAddr = parseInt(cmdArray[2]);
+                    if (locoAddr > 0) {
+                        $("#cv-locoid").val(locoAddr);
+                    } else {
+                        displayLog("[i] DCC Address Read Failed!");
+                    }
+                } catch (e) {
+                    console.log(getTimeStamp + '[ERROR] Unable to process read address response');
+                }
+            } else if (cmdArray[1] == 'CONSIST') {
+                try {
+                    consistAddr = parseInt(cmdArray[2]);
+                    if (consistAddr > 0) {
+                        displayLog("[i] Consist Address: " + consistAddr);
+                    } else {
+                        displayLog("[i] Consist Address Read Failed!");
+                    }
+                } catch (e) {
+                    console.log(getTimeStamp + '[ERROR] Unable to process read consist address response');
+                }
+            }
+
+
 // --------------------------------------------------------------------
               
         } else if (cmd.charAt(1) == 'w') {
