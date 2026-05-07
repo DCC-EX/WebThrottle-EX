@@ -254,7 +254,11 @@ function parseResponse(cmd) {  // some basic ones only
             } else if (cmdArray[1] == 'CONSIST') {
                 try {
                     consistAddr = parseInt(cmdArray[2]);
-                    displayLog("[i] Consist Address: " + consistAddr);
+                    if (consistAddr >= 0) {
+                        displayLog("[i] Consist Address: " + consistAddr);
+                    } else {
+                        displayLog("[i] Consist Address Read Failed!");
+                    }
                 } catch (e) {
                     console.log(getTimeStamp + '[ERROR] Unable to process read consist address response');
                 }
