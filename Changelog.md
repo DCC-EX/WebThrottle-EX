@@ -1,4 +1,4 @@
-# Version 1.3.43
+# Version 1.3.43, 1.3.44
 - support the <r CONSIST x> and <r LOCOID x> responses
 
 # Version 1.3.42
