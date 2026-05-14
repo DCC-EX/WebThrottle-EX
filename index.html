@@ -451,20 +451,34 @@
 
                 <section id="wifi-setup-window" class="section" hidden="true">
                     <div class="row settings-heading">
-                        <div class="column-7 pl0 hdng">
+                        <div class="column-8 pl0 hdng">
                             <span class="toolbar-wifi-setup" style="display:inline-block;"></span> 
-                            WiFi Setup <small><small>EX-CSB1 and ESP32 only from verion 5.7.0</small></small>
+                            WiFi Setup <small><small><small></small>EX-CSB1 and ESP32 only from verion 5.7.0</small></small></small>
                         </div>
                     </div>
-
                     
+                    <div Class="details-panel" id="wifi-setup-notes-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-container row">
+                                    <div class="column-8">
+                                        <label class="formbuilder-text-label">
+                                            NOTE: from verion 5.7.0, config.h options for WiFi configuration from previous versions are now ignored by CSB1 or ESP32 EX-CommandStations.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
                     <div Class="details-panel" id="wifi-setup-details-panel">
                         <div class="row">
                             <div class="column-10">
                                 <div class="wifi-setup-access-point-container row">
-                                    <div class="column-4 cv-addr-ctrl">
+                                    <div class="column-8">
                                         <label class="formbuilder-text-label">
-                                            Access Point Mode
+                                            <b>Access Point Mode</b> - EX-CommandStation will act as its own private WiFi network
                                         </label>
                                     </div>
                                 </div>
@@ -502,12 +516,12 @@
                                         <label for="wifi-setup-access-point-channel" class="formbuilder-text-label">
                                             Channel
                                         </label>
-                                        <input id="wifi-setup-access-point-channel" type="text" wifi-setup-access-point-channel="" name="wifi-setup-access-point-channel" placeholder="channel"/>
+                                        <input id="wifi-setup-access-point-channel" type="text" wifi-setup-access-point-channel="" name="wifi-setup-access-point-channel" placeholder="channel (optional)"/>
                                     </div>
                                     <div class="column-6">
                                         <div class="formbuilder-button column-5">
                                             <button type="button" class="btn-default btn" title="Set SSID" name="button-wifi-setup-access-point" access="false" id="button-wifi-setup-access-point">
-                                                Set Access Point
+                                                Set Access Point Mode
                                             </button>
                                         </div>
                                     </div>
@@ -523,9 +537,9 @@
                         <div class="row">
                             <div class="column-10">
                                 <div class="wifi-setup-station-container row">
-                                    <div class="column-4 wifi-setup-station-ctrl">
+                                    <div class="column-8">
                                         <label class="formbuilder-text-label">
-                                            Station Mode
+                                            <b>Station Mode</b> - EX-CommandStation connects to your WiFi router and appears as a device on that network
                                         </label>
                                     </div>
                                 </div>
@@ -544,7 +558,7 @@
                                     <div class="column-6">
                                         <div class="formbuilder-button column-5">
                                             <button type="button" class="btn-default btn" title="Set SSID" name="button-wifi-setup-station" access="false" id="button-wifi-setup-station">
-                                                Set Station
+                                                Set Station Mode
                                             </button>
                                         </div>
                                     </div>
@@ -563,7 +577,7 @@
                                     <div class="column-6">
                                         <div class="formbuilder-button column-5">
                                             <button type="button" class="btn-default btn" title="Set TEMP" name="button-wifi-setup-temp" access="false" id="button-wifi-setup-temp">
-                                                Set Temp
+                                                Set Temporary Station Mode
                                             </button>
                                         </div>
                                     </div>
@@ -592,8 +606,6 @@
                             </div>
                         </div>
                         <hr>
-                    </div>
-
                                             
                         <div class="row">
                             <div class="column-10">
