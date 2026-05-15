@@ -1,3 +1,12 @@
+# Version 1.3.45
+- Read address button modified to send `<R LOCOID>` then `<R ONSIST>` for CV versions greater than 5.5.45 
+
+# Version 1.3.43, 1.3.44
+- support the `<r CONSIST x>` and `<r LOCOID x>` responses
+
+# Version 1.3.42
+- addition of the WiFi setup page
+
 # Version 1.3.41
 - prevent incoming speed changes from creating identical outbound changes
 
