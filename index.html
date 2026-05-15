@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.40";
+            var version = "1.3.45";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -82,6 +82,7 @@
                 <li tabindex="0" class="cv-programmer" id="cv-programmer-nav"><span>CV Programmer</span></li>
                 <li tabindex="0" class="routes" id="routes-nav"><span>Routes/Automation</span></li>
                 <li tabindex="0" class="turnouts" id="turnouts-nav"><span>Turnouts/Points</span></li>
+                <li tabindex="0" class="wifi-setup" id="wifi-setup-nav"><span>Wifi Setup</span></li>
                 <li tabindex="0" class="locomotives" id="loco-nav"><span>Locomotives</span></li>
                 <li tabindex="0" class="function-maps" id="fn-map-nav"><span>Function Maps</span></li>
                 <li tabindex="0" class="settings" id="settings-nav"><span>Settings</span></li>
@@ -446,6 +447,191 @@
                              </div>
                         </div>
                     </div>
+                </section>
+
+                <section id="wifi-setup-window" class="section" hidden="true">
+                    <div class="row settings-heading">
+                        <div class="column-8 pl0 hdng">
+                            <span class="toolbar-wifi-setup" style="display:inline-block;"></span> 
+                            WiFi Setup <small><small><small></small>EX-CSB1 and ESP32 only from version 5.7.0</small></small></small>
+                        </div>
+                    </div>
+                    
+                    <div Class="details-panel" id="wifi-setup-notes-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-container row">
+                                    <div class="column-8">
+                                        <label class="formbuilder-text-label">
+                                            NOTE: from version 5.7.0, config.h options for WiFi configuration from previous versions are now ignored by CSB1 or ESP32 EX-CommandStations. Refer to <a href="https://dcc-ex.com/mkdocs-test/products/ex-commandstation/config-wifi-esp32/" target="_blank" rel="noopener noreferrer">the web site</a> for more information.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div Class="details-panel" id="wifi-setup-details-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-container row">
+                                    <div class="column-8">
+                                        <label class="formbuilder-text-label">
+                                            <b>Access Point Mode</b> - EX-CommandStation will act as its own private WiFi network
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-ssid-container row">
+                                    <div class="column-4 wifi-setup-access-point-ssid-ctrl">
+                                        <label for="wifi-access-point-setup-ssid" class="formbuilder-text-label">
+                                            SSID
+                                        </label>
+                                        <input id="wifi-setup-access-point-ssid" type="text" wifi-setup-access-point-ssid="" name="wifi-setup-access-point-ssid" placeholder="SSID (Network Name)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-password-container row">
+                                    <div class="column-4 wifi-access-point-password-ctrl">
+                                        <label for="wifi-setup-access-point-password" class="formbuilder-text-label">
+                                            Password
+                                        </label>
+                                        <input id="wifi-setup-access-point-password" type="text" wifi-setup-access-point-password="" name="wifi-setup-access-point-password" placeholder="password (min 8 chars)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-access-point-channel-container row">
+                                    <div class="column-4 wifi-setup-access-point-channel-ctrl">
+                                        <label for="wifi-setup-access-point-channel" class="formbuilder-text-label">
+                                            Channel
+                                        </label>
+                                        <input id="wifi-setup-access-point-channel" type="text" wifi-setup-access-point-channel="" name="wifi-setup-access-point-channel" placeholder="channel (optional)"/>
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Set SSID" name="button-wifi-setup-access-point" access="false" id="button-wifi-setup-access-point">
+                                                Set Access Point Mode
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                    </div>
+
+                    
+                    <div Class="details-panel" id="wifi-setup-details-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-station-container row">
+                                    <div class="column-8">
+                                        <label class="formbuilder-text-label">
+                                            <b>Station Mode</b> - EX-CommandStation connects to your WiFi router and appears as a device on that network
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-station-ssid-id-container row">
+                                    <div class="column-4 wifi-setup-station-ssid-ctrl">
+                                        <label for="wifi-setup-station-ssid" class="formbuilder-text-label">
+                                            SSID
+                                        </label>
+                                        <input id="wifi-setup-station-ssid" type="text" wifi-setup-station-ssid="" name="wifi-setup-station-ssid" placeholder="SSID (Network Name)"/>
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Set SSID" name="button-wifi-setup-station" access="false" id="button-wifi-setup-station">
+                                                Set Station Mode
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-station-ssid-id-container row">
+                                    <div class="column-4 wifi-setup-station-password-ctrl">
+                                        <label for="wifi-setup-station-password" class="formbuilder-text-label">
+                                            Password
+                                        </label>
+                                        <input id="wifi-setup-station-password" type="text" wifi-setup-station-password="" name="wifi-setup-station-password" placeholder="password (min 8 chars)"/>
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Set TEMP" name="button-wifi-setup-temp" access="false" id="button-wifi-setup-temp">
+                                                Set Temporary Station Mode
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-hostname-container row">
+                                    <div class="column-4 wifi-setup-hostname-ctrl">
+                                        <label for="wifi-setup-hostname" class="formbuilder-text-label">
+                                            Hostname
+                                        </label>
+                                        <input id="wifi-setup-hostname" type="text" wifi-hostname="" name="wifi-setup-hostname" placeholder="Hostname"/>
+                                    </div>
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Set Hostname" name="button_wifi-setup-hostname" access="false" id="button-wifi-setup-hostname">
+                                                Set Hostname
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                                            
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="wifi-setup-reset-container row">
+ 
+                                    <div class="column-6">
+                                        <div class="formbuilder-button column-5">
+                                            <button type="button" class="btn-default btn" title="Reset WiFi" name="button-wifi-setup-reset" access="false" id="button-wifi-setup-reset">
+                                                Reset WiFi
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <div id="debug-console3">
+                            <div class="column-100 mobile-100">
+                                <div class="log-msg log-msg3" id="log-box3">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </section>
 
                 <section id="loco-window" class="section" hidden="true">

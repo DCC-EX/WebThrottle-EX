@@ -239,6 +239,36 @@ function parseResponse(cmd) {  // some basic ones only
                 console.log(getTimeStamp + '[ERROR] Unable to process read address response');
             }
 
+        } else if ((cmd.charAt(1) == 'r') && (cmdArray.length == 3)) {
+            if (cmdArray[1] == 'LOCOID') {
+                try {
+                    locoAddr = parseInt(cmdArray[2]);
+                    if (locoAddr > 0) {
+                        $("#cv-locoid").val(locoAddr);
+                        if (window.wasLocoIdRequested) {
+                            writeToStream('R CONSIST');
+                        }
+                    } else {
+                        displayLog("[i] DCC Address Read Failed!");
+                        window.wasLocoIdRequested = false;
+                    }
+                } catch (e) {
+                    console.log(getTimeStamp + '[ERROR] Unable to process read address response');
+                }
+            } else if (cmdArray[1] == 'CONSIST') {
+                try {
+                    consistAddr = parseInt(cmdArray[2]);
+                    if (consistAddr >= 0) {
+                        displayLog("[i] Consist Address: " + consistAddr);
+                    } else {
+                        displayLog("[i] Consist Address Read Failed!");
+                    }
+                } catch (e) {
+                    console.log(getTimeStamp + '[ERROR] Unable to process read consist address response');
+                }
+                window.wasLocoIdRequested = false;
+            }
+
 // --------------------------------------------------------------------
               
         } else if (cmd.charAt(1) == 'w') {
@@ -772,6 +802,9 @@ function displayLog(data) {
 
     $("#log-box2").append(data.toString() + "<br>");
     $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
+
+    $("#log-box3").append(data.toString() + "<br>");
+    $("#log-box3").scrollTop($("#log-box3").prop("scrollHeight"));
 }
 
 

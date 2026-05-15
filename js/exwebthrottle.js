@@ -88,6 +88,8 @@ window.csVersion = 5;
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
+window.wasLocoIdRequested = false;
+
 window.rosterRequested = false;
 window.rosterComplete = false;
 window.rosterCount = 0;
@@ -325,6 +327,9 @@ function loadMapData(map, fromRoster) {
 
 }
 
+function getWiFiSetupData() {
+  writeToStream('D WIFI SHOW');
+}
 
 function loadLocomotives() {
   locos = getLocoList();
@@ -677,9 +682,87 @@ $(document).ready(function () {
     }
   });
 
+  // ---------------------------------------- //
+
+  // write Access Point Mode
+  $("#button-wifi-setup-access-point").on("click", function () {
+    if( ($("#wifi-setup-access-point-ssid").val() == 0) 
+      || ($("#wifi-setup-access-point-password").val().length < 8)  
+      || ($("#wifi-setup-access-point-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-access-point-ssid").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-access-point-ssid").val() + '" "' + $("#wifi-setup-access-point-password").val() + '"');
+      return;
+    }
+
+    if ($("#wifi-setup-access-point-channel").val().length > 0) {
+      writeToStream('C WIFI AP "' 
+        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-password").val() + '" "' 
+        + $("#wifi-setup-access-point-channel").val() + '"');
+    } else {
+      writeToStream('C WIFI AP "' 
+        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-password").val() + '"');
+    }
+  });
+
+  // write Station Mode
+  $("#button-wifi-setup-station").on("click", function () {
+    if( ($("#wifi-setup-station-ssid").val().length == 0) 
+      || ($("#wifi-setup-station-password").val().length < 8)  
+      || ($("#wifi-setup-station-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      return;
+    }
+
+    writeToStream('C WIFI "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+  });
+
+  // write Temp Station Mode
+  $("#button-wifi-setup-temp").on("click", function () {
+    if( ($("#wifi-setup-station-ssid").val().length == 0) 
+      || ($("#wifi-setup-station-password").val().length < 8)
+      || ($("#wifi-setup-station-ssid").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      displayLog('[i] Invalid SSID or Password: "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+      return;
+    }
+
+    writeToStream('C WIFI TEMP "' + $("#wifi-setup-station-ssid").val() + '" "' + $("#wifi-setup-station-password").val() + '"');
+  });
+
+  // write Hostname
+  $("#button-wifi-setup-hostname").on("click", function () {
+    if( ($("#wifi-setup-hostname").val().length == 0) 
+      || ($("#wifi-setup-hostname").val().indexOf(" ") >= 0) 
+    ) {
+      console.log('Invalid Hostname: "' + $("#wifi-setup-hostname").val() + '"');
+      displayLog('[i] Invalid Hostname: "' + $("#wifi-setup-hostname").val() + '"');
+      return;
+    }
+
+    writeToStream('C WIFI HOSTNAME "' + $("#wifi-setup-hostname").val() + '"');
+  });
+
+  // reset wifi settings
+  $("#button-wifi-setup-reset").on("click", function () {
+    writeToStream('C WIFI DEFAULT');
+  });
+
+  // ---------------------------------------- //
+  
   // read DCC address on PROG track
   $("#button-cv-read-loco-id").on("click", function () {
-    writeToStream('R');
+    if (csVersion < 5.004046) {
+      writeToStream('R');
+    } else {
+      writeToStream('R LOCOID');
+      wasLocoIdRequested = true;
+    }
   });
 
   // write DCC address on PROG track
@@ -769,16 +852,19 @@ $(document).ready(function () {
     setSpeed(kval);
     // Below condition is to avoid infinite loop
     // that triggers change() event indifinitely
+    console.log("Knob value: " + kval + " , Old Value: " + oldValue);
     if (oldValue != kval) {
+      console.log("Value changed");
       if ((lastLocoReceived != getCV()) || (lastSpeedReceived != getSpeed()) || (lastDirReceived != getDirection())) {
         setSpeedofControllers();
       } else {
         setPositionofControllers();
       }
     } else {
-      // if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
-      sendSpeed(getCV(), getSpeed(), getDirection());
-      // }
+      console.log("Value is same as before. Check it is not due to external change message");
+      if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
+        sendSpeed(getCV(), getSpeed(), getDirection());
+      }
     }
   });
 
@@ -1017,6 +1103,7 @@ $(document).ready(function () {
   $("#button-clearLog").on("click", function () {
     $("#log-box").html("");
     $("#log-box2").html("");
+    $("#log-box3").html("");
   });
 
   // Clear the console log window
@@ -1105,6 +1192,13 @@ $(document).ready(function () {
     loadTurnouts();
     $("#nav-close").trigger("click");
   });
+  $("#wifi-setup-nav").on("click", function () {
+    hideWindows();
+    $("#wifi-setup-window").show();
+    showNavigationButtons("wifi-setup");
+    getWiFiSetupData();
+    $("#nav-close").trigger("click");
+  });
   $("#loco-nav").on("click", function () {
     hideWindows();
     $("#loco-window").show();
@@ -1149,6 +1243,12 @@ $(document).ready(function () {
     $("#turnouts-window").show();
     showNavigationButtons("turnouts");
     loadTurnouts();
+  });
+  $("#wifi-setup-screen-button").on("click", function () {
+    hideWindows();
+    $("#wifi-setup-window").show();
+    getWiFiSetupData();
+    showNavigationButtons("wifi-setup");
   });
   $("#locos-screen-button").on("click", function () {
     hideWindows();
@@ -1299,6 +1399,7 @@ function hideWindows() {
   $("#cv-programmer-window").hide();
   $("#routes-window").hide();
   $("#turnouts-window").hide();
+  $("#wifi-setup-window").hide();
   $("#loco-window").hide();
   $("#fn-map-window").hide();
   $("#settings-window").hide();
@@ -1308,6 +1409,7 @@ function showNavigationButtons(which) {
   $("#cv-programmer-screen-button").show();
   $("#routes-screen-button").show();
   $("#turnouts-screen-button").show();
+  $("#wifi-setup-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
   if(which.length>0) {
