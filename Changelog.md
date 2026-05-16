@@ -1,4 +1,7 @@
 # Version 1.3.46
+- disable some buttons if not connected
+
+# Version 1.3.46
 - Don't hide the toolbar buttons
 
 # Version 1.3.45
