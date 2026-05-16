@@ -1412,9 +1412,19 @@ function showNavigationButtons(which) {
   $("#wifi-setup-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
-  // if(which.length>0) {
-  //   $("#"+which+"-screen-button").hide()
-  // }
+
+  $("#throttle-screen-button-disabled").hide();
+  $("#cv-programmer-screen-button-disabled").hide();
+  $("#routes-screen-button-disabled").hide();
+  $("#turnouts-screen-button-disabled").hide();
+  $("#wifi-setup-screen-button-disabled").hide();
+  $("#locos-screen-button-disabled").hide();
+  $("#function-maps-screen-button-disabled").hide();
+
+  if(which.length>0) {
+     $("#"+which+"-screen-button").hide()
+     $("#"+which+"-screen-button-disabled").show()
+  }
 }
 
 function hideSettings() {
