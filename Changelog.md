@@ -1,3 +1,6 @@
+# Version 1.3.46
+- Don't hide the toolbar buttons
+
 # Version 1.3.45
 - Read address button modified to send `<R LOCOID>` then `<R ONSIST>` for CV versions greater than 5.5.45 
 

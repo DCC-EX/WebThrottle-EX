@@ -1412,9 +1412,9 @@ function showNavigationButtons(which) {
   $("#wifi-setup-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
-  if(which.length>0) {
-    $("#"+which+"-screen-button").hide()
-  }
+  // if(which.length>0) {
+  //   $("#"+which+"-screen-button").hide()
+  // }
 }
 
 function hideSettings() {
