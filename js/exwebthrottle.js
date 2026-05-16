@@ -157,6 +157,23 @@ function uiDisable(status) {
     $("#button-cv-read-cv").addClass("ui-state-disabled")
     $("#button-cv-write-cv").prop('disabled', status)
     $("#button-cv-write-cv").addClass("ui-state-disabled")
+
+    $("#button-wifi-setup-access-point").prop('disabled', status)
+    $("#button-wifi-setup-access-point").addClass("ui-state-disabled")
+    $("#button-wifi-setup-station").prop('disabled', status)
+    $("#button-wifi-setup-station").addClass("ui-state-disabled")
+    $("#button-wifi-setup-temp").prop('disabled', status)
+    $("#button-wifi-setup-temp").addClass("ui-state-disabled")
+    $("#button-wifi-setup-hostname").prop('disabled', status)
+    $("#button-wifi-setup-hostname").addClass("ui-state-disabled")
+    $("#button-wifi-setup-reset").prop('disabled', status)
+    $("#button-wifi-setup-reset").addClass("ui-state-disabled")
+
+    $("#sendCmd").prop('disabled', status)
+    $("#sendCmd").addClass("ui-state-disabled")
+    $("#button-sendCmd2").prop('disabled', status)
+    $("#button-sendCmd2").addClass("ui-state-disabled")
+    
   } else {
     // $("#button-getloco").removeClass("ui-state-disabled")
     // $("#button-sendCmd").removeClass("ui-state-disabled")
@@ -180,6 +197,15 @@ function uiDisable(status) {
     // $("#button-cv-read-cv").removeClass("ui-state-disabled")
     // $("#button-cv-write-cv").prop('disabled', status)
     // $("#button-cv-write-cv").removeClass("ui-state-disabled")
+    
+    $("#button-wifi-setup-access-point").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-station").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-temp").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-hostname").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-reset").removeClass("ui-state-disabled")
+
+    $("#sendCmd").removeClass("ui-state-disabled")
+    $("#button-sendCmd2").removeClass("ui-state-disabled")
   }
 
   $("#dir-f").prop('disabled', status)
@@ -404,6 +430,7 @@ function setThrottleScreenUI() {
   loadmaps();
   loadButtons({ mname: "default", fnData: fnMasterData });
   uiDisable(true);
+  showNavigationButtons("throttle");
   controller = getPreference("scontroller");
   $("#throttle-selector").val(controller).trigger("change");
   setspeedControllerType(controller);
@@ -1422,8 +1449,9 @@ function showNavigationButtons(which) {
   $("#function-maps-screen-button-disabled").hide();
 
   if(which.length>0) {
-     $("#"+which+"-screen-button").hide()
-     $("#"+which+"-screen-button-disabled").show()
+     $("#"+which+"-screen-button").hide();
+     $("#"+which+"-screen-button-disabled").show();
+     $("#"+which+"-screen-button-disabled").addClass("ui-state-disabled");
   }
 }
 
