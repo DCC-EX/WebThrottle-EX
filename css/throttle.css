@@ -1129,3 +1129,65 @@ input:checked + .slider.debug-slider{
     display: block;
 }
 
+
+.toolbar-button-throttle-disabled {
+  background-image: url('../images/toolbar_button_throttle_disabled.svg');
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  padding-top: 0px;
+  display: block;
+}
+
+.toolbar-button-cv-programmer-disabled {
+  background-image: url('../images/toolbar_button_cv_programmer_disabled.svg');
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  padding-top: 0px;
+  display: block;
+}
+
+.toolbar-button-locos-disabled {
+    background-image: url('../images/toolbar_button_locos_disabled.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+
+.toolbar-button-routes-disabled {
+    background-image: url('../images/toolbar_button_routes_disabled.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+.toolbar-button-turnouts-disabled {
+    background-image: url('../images/toolbar_button_turnouts_disabled.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+.toolbar-button-functions-disabled {
+    background-image: url('../images/toolbar_button_functions_disabled.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
