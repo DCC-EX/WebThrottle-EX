@@ -29,7 +29,7 @@
  
         <link rel="manifest" href="manifest.json">
         <script>
-            var version = "1.3.47";
+            var version = "1.3.48";
         </script>
 
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -284,7 +284,26 @@
                     <div class="row settings-heading">
                         <div class="column-7 pl0 hdng">
                             <span class="toolbar-button-cv-programmer" style="display:inline-block;"></span> 
-                            CV Programmer <small><small>(PROG track only)</small></small>
+                            CV Programmer
+                        </div>
+                    </div>
+
+                    <div Class="details-panel" id="cv-programmer-setup-notes-panel">
+                        <div class="row">
+                            <div class="column-10">
+                                <div class="row setting-entry">
+                                        <label class="setting-label">
+                                            &nbsp; &nbsp; Mode
+                                        </label>
+                                        <div class="setting-content">
+                                            <select id="progmode-selector" class="btn progmode-selector select-control" name="progmodeselector" title="Change Programming Mode">
+                                                <option value="ServiceMode"> Service Mode (PROG Track)</option>
+                                                <option value="OpsMode"> Operations Mode (Program on the MAIN - PoM)</option>
+                                            </select> 
+                                        </div> 
+									</div>
+                            </div>
+                            <hr>
                         </div>
                     </div>
 
