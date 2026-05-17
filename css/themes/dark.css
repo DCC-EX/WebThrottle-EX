@@ -292,4 +292,12 @@ p.ac-turnout-name{
       background-image: url('../../images/toolbar_button_wifi.svg');
   }
   
-  
+  a:link {
+  color: rgb(102, 102, 255);
+  text-decoration: underline;
+}
+
+/* Visited link */
+a:visited {
+  color: rgb(155, 47, 155);
+}
