@@ -4,6 +4,8 @@
 
 - provide for PoM
 - fix the formatting in ChangeLog.md
+- added a TODO list doc (todo.md)
+- added toolbar button for the WiFi setup
 
 ## Version 1.3.47
 
