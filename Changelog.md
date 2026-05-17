@@ -6,6 +6,7 @@
 - fix the formatting in ChangeLog.md
 - added a TODO list doc (todo.md)
 - added toolbar button for the WiFi setup
+- version check for the WiFi setup page
 
 ## Version 1.3.47
 

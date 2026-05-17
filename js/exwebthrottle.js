@@ -84,7 +84,7 @@ window.lastDirReceived = -1;
 window.DIRECTION_FORWARD = 1;
 window.DIRECTION_REVERSED = 0;
 
-window.csVersion = 5;
+window.csVersion = 5.06;
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
@@ -376,7 +376,10 @@ function loadMapData(map, fromRoster) {
 }
 
 function getWiFiSetupData() {
-  writeToStream('D WIFI SHOW');
+  if (csIsReady) {
+    writeToStream('s');
+    writeToStream('D WIFI SHOW');
+  }
 }
 
 function loadLocomotives() {
@@ -837,7 +840,7 @@ $(document).ready(function () {
   
   // read DCC address on PROG track
   $("#button-cv-read-loco-id").on("click", function () {
-    if (csVersion < 5.004046) {
+    if (csVersion < 5.04046) {
       writeToStream('R');
     } else {
       writeToStream('R LOCOID');
@@ -1218,6 +1221,7 @@ $(document).ready(function () {
   $("#button-clearLog2").on("click", function () {
     $("#log-box").html("");
     $("#log-box2").html("");
+    $("#log-box3").html("");
   });
 
   // Clear the console log window
@@ -1501,11 +1505,20 @@ function hideWindows() {
   $("#settings-window").hide();
 }
 function showNavigationButtons(which) {
+  if ( (which==null) || (which == "") ) {
+    which = "throttle";
+  }
+
+  $("#cv-programmer-nav").show();
+  $("#routes-nav").show();
+  $("#turnouts-nav").show();
+  if (csVersion >= 5.07) $("#wifi-setup-nav").show();
+
   $("#throttle-screen-button").show();
   $("#cv-programmer-screen-button").show();
   $("#routes-screen-button").show();
   $("#turnouts-screen-button").show();
-  $("#wifi-setup-screen-button").show();
+  if (csVersion >= 5.07) $("#wifi-setup-screen-button").show();
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
 
@@ -1513,7 +1526,7 @@ function showNavigationButtons(which) {
   $("#cv-programmer-screen-button-disabled").hide();
   $("#routes-screen-button-disabled").hide();
   $("#turnouts-screen-button-disabled").hide();
-  $("#wifi-setup-screen-button-disabled").hide();
+  if (csVersion >= 5.07) $("#wifi-setup-screen-button-disabled").hide();
   $("#locos-screen-button-disabled").hide();
   $("#function-maps-screen-button-disabled").hide();
 
@@ -1522,6 +1535,31 @@ function showNavigationButtons(which) {
      $("#"+which+"-screen-button-disabled").show();
      $("#"+which+"-screen-button-disabled").addClass("ui-state-disabled");
   }
+
+  if (!csIsReady) {
+    $("#cv-programmer-nav").hide();
+    $("#routes-nav").hide();
+    $("#turnouts-nav").hide();
+    $("#wifi-setup-nav").hide();
+
+    $("#cv-programmer-screen-button").hide();
+    $("#cv-programmer-screen-button-disabled").show();
+    $("#cv-programmer-screen-button-disabled").addClass("ui-state-disabled");
+
+    $("#routes-screen-button").hide();
+    $("#routes-screen-button-disabled").show();
+    $("#routes-screen-button-disabled").addClass("ui-state-disabled");
+
+    $("#turnouts-screen-button").hide();
+    $("#turnouts-screen-button-disabled").show();
+    $("#turnouts-screen-button-disabled").addClass("ui-state-disabled");
+
+    if (csVersion < 5.07) {
+      $("#wifi-setup-screen-button").hide();
+      $("#wifi-setup-screen-button-disabled").show();
+      $("#wifi-setup-screen-button-disabled").addClass("ui-state-disabled");
+    }
+  }    
 }
 
 function hideSettings() {
