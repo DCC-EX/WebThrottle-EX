@@ -7,6 +7,7 @@
 - added a TODO list doc (todo.md)
 - added toolbar button for the WiFi setup
 - version check for the WiFi setup page
+- added deprication notes for the locos and functions
 
 ## Version 1.3.47
 
