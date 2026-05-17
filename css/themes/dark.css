@@ -287,5 +287,9 @@ p.ac-turnout-name{
   .toolbar-button-functions {
       background-image: url('../../images/toolbar_button_functions.svg');
   }
+    
+  .toolbar-button-wifi-setup {
+      background-image: url('../../images/toolbar_button_wifi.svg');
+  }
   
   

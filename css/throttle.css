@@ -400,7 +400,7 @@ label.formbuilder-file-label {
     resize: vertical;
 }
 .log-msg2 {    
-    height: 400px;
+    height: 320px;
 }
 .note-msg{
     padding: 10px 10px;
@@ -1129,6 +1129,15 @@ input:checked + .slider.debug-slider{
     display: block;
 }
 
+.toolbar-button-wifi-setup {
+    background-image: url('../images/toolbar_button_wifi_light.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
 
 .toolbar-button-throttle-disabled {
   background-image: url('../images/toolbar_button_throttle_disabled.svg');
@@ -1183,6 +1192,16 @@ input:checked + .slider.debug-slider{
 
 .toolbar-button-functions-disabled {
     background-image: url('../images/toolbar_button_functions_disabled.svg');
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    padding-top: 0px;
+    display: block;
+}
+
+.toolbar-button-wifi-setup-disabled {
+    background-image: url('../images/toolbar_button_wifi_disabled.svg');
     background-position-y: bottom;
     background-repeat: no-repeat;
     width: 24px;

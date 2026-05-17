@@ -206,6 +206,8 @@ function uiDisable(status) {
 
     $("#sendCmd").removeClass("ui-state-disabled")
     $("#button-sendCmd2").removeClass("ui-state-disabled")
+
+    uiEnableCVProgramerControlOnReady();
   }
 
   $("#dir-f").prop('disabled', status)
@@ -227,16 +229,36 @@ function uiEnableThrottleControlOnReady() {
   $("#button-getloco").removeClass("ui-state-disabled");
   $("#button-sendCmd").removeClass("ui-state-disabled");
   $("#ex-locoid").prop('disabled', false)
-  $("#button-getloco").prop('disabled', false)
-  $("#button-cv-read-loco-id").prop('disabled', false)
-  $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
-  $("#button-cv-write-loco-id").prop('disabled', false)
-  $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
-  $("#button-cv-read-cv").prop('disabled', false)
-  $("#button-cv-read-cv").removeClass("ui-state-disabled")
+
+  uiEnableCVProgramerControlOnReady();
+}
+
+function uiEnableCVProgramerControlOnReady() {
+  setprogModeType(getPreference("progmode"));
+  var serviceMode = getPreference("progmode") == "ServiceMode";
+  if (serviceMode) {
+    // PROG only track CV read/write buttons
+    $("#button-cv-read-loco-id").prop('disabled', false)
+    $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
+    $("#button-cv-write-loco-id").prop('disabled', false)
+    $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
+    $("#button-cv-read-cv").prop('disabled', false)
+    $("#button-cv-read-cv").removeClass("ui-state-disabled")
+  } else {
+    $("#button-cv-read-loco-id").prop('disabled', true)
+    $("#button-cv-read-loco-id").addClass("ui-state-disabled")
+    $("#button-cv-write-loco-id").prop('disabled', true)
+    $("#button-cv-write-loco-id").addClass("ui-state-disabled")
+    $("#button-cv-read-cv").prop('disabled', true)
+    $("#button-cv-read-cv").addClass("ui-state-disabled")
+  }
+
+  // PROG and MAIN track loco id and CV write buttons
   $("#button-cv-write-cv").prop('disabled', false)
   $("#button-cv-write-cv").removeClass("ui-state-disabled")
+  
 }
+
 
 // Returns given function current value (0-disable/1-enable)
 function getFunCurrentVal(fun) {
@@ -429,6 +451,11 @@ function loadTurnouts() {
 function setThrottleScreenUI() {
   loadmaps();
   loadButtons({ mname: "default", fnData: fnMasterData });
+
+  if (getPreference("progmode") == null) {
+    setPreference("progmode", "ServiceMode");
+  }
+
   uiDisable(true);
   showNavigationButtons("throttle");
   controller = getPreference("scontroller");
@@ -449,6 +476,7 @@ function setThrottleScreenUI() {
   if (getPreference("timestamp") == null) {
     setPreference("timestamp", "off");
   }
+  
   $("#timestamp-selector").val(getPreference("timestamp")).trigger("change");
 
   $(".dir-toggle").addClass("forward");
@@ -496,6 +524,22 @@ function setspeedControllerType(pref) {
       $("#vertical-throttle").show();
       setPreference("scontroller", "vertical");
       $("#throttle-selector").val("vertical").trigger("change");
+  }
+}
+
+function setprogModeType(pref){
+  switch (pref) {
+    case "OpsMode":
+      console.log("Set OpsMode programming");
+      break;
+    case "default":
+    case null:
+    case undefined:
+      console.log("Fallback Prog Mode Type");
+      $("#progmode-selector").val("ServiceMode").trigger("change");
+      setPreference("progmode", "ServiceMode");
+    case "ServiceMode":
+      console.log("Set Service mode programming");
   }
 }
 
@@ -632,6 +676,15 @@ $(document).ready(function () {
       my: "left top",
       at: "left bottom",
     },
+  });
+
+  // Change programming mode type
+  $("#progmode-selector").on("change", function (e) {
+    selectedval = $(this).val();
+    console.log(selectedval);
+    setprogModeType(selectedval);
+    setPreference("progmode", selectedval);
+    uiEnableCVProgramerControlOnReady();
   });
 
   // Load function map, buttons throttle etc
@@ -802,7 +855,7 @@ $(document).ready(function () {
     }
   });
 
-  // read cv address on PROG track
+  // read DCC Address on PROG track
   $("#button-cv-read-cv").on("click", function () {
     cv_cvid_input = 0;
     if ($("#cv-cvid").val().length > 0) cv_cvid_input = parseInt($("#cv-cvid").val());
@@ -812,15 +865,31 @@ $(document).ready(function () {
     }
   });
 
-  // write DCC address on PROG track
+  // write CV on PROG track or MAIN track based on programming mode
   $("#button-cv-write-cv").on("click", function () {
     cv_cvid_input = 0;
     if ($("#cv-cvid").val().length > 0) cv_cvid_input = parseInt($("#cv-cvid").val());
     cv_cvvalue_input = -1;
     if ($("#cv-cvvalue").val().length > 0) cv_cvvalue_input = parseInt($("#cv-cvvalue").val());
 
-    if ((cv_cvid_input != 0) && (cv_cvvalue_input >= 0)) {
-      writeToStream('W ' + cv_cvid_input + " " + cv_cvvalue_input);
+    var serviceMode = getPreference("progmode") == "ServiceMode";
+    if (serviceMode) {
+      if ((cv_cvid_input != 0) && (cv_cvvalue_input >= 0)) {
+        writeToStream('W ' + cv_cvid_input + " " + cv_cvvalue_input);
+      } else {
+        console.log("Invalid input(s) for writing CV on PROG track. Please check CV id and CV value.");
+        ToastMaker('Invalid input(s) for writing CV on PROG track. Please check CV and Value.', 4000, {valign:'bottom', align:'center'});
+      }
+    } else {  // PoM
+      cv_locoid_input = 0;
+      if ($("#cv-locoid").val().length > 0) cv_locoid_input = parseInt($("#cv-locoid").val());
+
+      if ( (cv_cvid_input != 0) && (cv_cvvalue_input >= 0) && (cv_locoid_input != 0) ) {
+        writeToStream('w ' + cv_locoid_input + " " + cv_cvid_input + " " + cv_cvvalue_input);
+      } else {
+        console.log("Invalid input(s) for writing CV on MAIN track. Please check loco address, CV id and CV value.");
+        ToastMaker('Invalid input(s) for writing CV on MAIN track. Please check loco address, CV and Value.', 4000, {valign:'bottom', align:'center'});
+      }
     }
   });
 
