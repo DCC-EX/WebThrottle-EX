@@ -130,87 +130,87 @@ function uiDisable(status) {
   document.getElementById('dir-f').disabled = status
   document.getElementById('dir-S').disabled = status*/
   //document.getElementById('dir-b').disabled = status
-  $("#power-switch").prop('disabled', status)
-  $("#button-sendCmd").prop('disabled', status)
+  $("#power-switch").prop('disabled', status);
+  $("#button-sendCmd").prop('disabled', status);
   if (status) {
-    $("#ex-locoid").prop('disabled', status)
-    $("#button-getloco").prop('disabled', status)
-    $("#button-getloco").addClass("ui-state-disabled")
-    $("#button-sendCmd").addClass("ui-state-disabled")
-    $("#cmd-direct").addClass("ui-state-disabled")
-    $("#ex-locoid").addClass("ui-state-disabled")
-    $("#power-switch").parent().addClass("ui-state-disabled")
-    $("#dir-f").parent().addClass("ui-state-disabled")
-    $("#emergency-stop").addClass("ui-state-disabled")
-    $("#normal-stop").addClass("ui-state-disabled")
-    $("#button-right").addClass("ui-state-disabled")
-    $("#button-left").addClass("ui-state-disabled")
+    $("#ex-locoid").prop('disabled', status);
+    $("#button-getloco").prop('disabled', status);
+    $("#button-getloco").addClass("ui-state-disabled");
+    $("#button-sendCmd").addClass("ui-state-disabled");
+    $("#cmd-direct").addClass("ui-state-disabled");
+    $("#ex-locoid").addClass("ui-state-disabled");
+    $("#power-switch").parent().addClass("ui-state-disabled");
+    $("#dir-f").parent().addClass("ui-state-disabled");
+    $("#emergency-stop").addClass("ui-state-disabled");
+    $("#normal-stop").addClass("ui-state-disabled");
+    $("#button-right").addClass("ui-state-disabled");
+    $("#button-left").addClass("ui-state-disabled");
     for (i = 0; i <= 31; i++) {
-      $("#f" + i).addClass("ui-state-disabled")
+      $("#f" + i).addClass("ui-state-disabled");
     }
 
-    $("#button-cv-read-loco-id").prop('disabled', status)
-    $("#button-cv-read-loco-id").addClass("ui-state-disabled")
-    $("#button-cv-write-loco-id").prop('disabled', status)
-    $("#button-cv-write-loco-id").addClass("ui-state-disabled")
-    $("#button-cv-read-cv").prop('disabled', status)
-    $("#button-cv-read-cv").addClass("ui-state-disabled")
-    $("#button-cv-write-cv").prop('disabled', status)
-    $("#button-cv-write-cv").addClass("ui-state-disabled")
+    $("#button-cv-read-loco-id").prop('disabled', status);
+    $("#button-cv-read-loco-id").addClass("ui-state-disabled");
+    $("#button-cv-write-loco-id").prop('disabled', status);
+    $("#button-cv-write-loco-id").addClass("ui-state-disabled");
+    $("#button-cv-read-cv").prop('disabled', status);
+    $("#button-cv-read-cv").addClass("ui-state-disabled");
+    $("#button-cv-write-cv").prop('disabled', status);
+    $("#button-cv-write-cv").addClass("ui-state-disabled");
 
-    $("#button-wifi-setup-access-point").prop('disabled', status)
-    $("#button-wifi-setup-access-point").addClass("ui-state-disabled")
-    $("#button-wifi-setup-station").prop('disabled', status)
-    $("#button-wifi-setup-station").addClass("ui-state-disabled")
-    $("#button-wifi-setup-temp").prop('disabled', status)
-    $("#button-wifi-setup-temp").addClass("ui-state-disabled")
-    $("#button-wifi-setup-hostname").prop('disabled', status)
-    $("#button-wifi-setup-hostname").addClass("ui-state-disabled")
-    $("#button-wifi-setup-reset").prop('disabled', status)
-    $("#button-wifi-setup-reset").addClass("ui-state-disabled")
+    $("#button-wifi-setup-access-point").prop('disabled', status);
+    $("#button-wifi-setup-access-point").addClass("ui-state-disabled");
+    $("#button-wifi-setup-station").prop('disabled', status);
+    $("#button-wifi-setup-station").addClass("ui-state-disabled");
+    $("#button-wifi-setup-temp").prop('disabled', status);
+    $("#button-wifi-setup-temp").addClass("ui-state-disabled");
+    $("#button-wifi-setup-hostname").prop('disabled', status);
+    $("#button-wifi-setup-hostname").addClass("ui-state-disabled");
+    $("#button-wifi-setup-reset").prop('disabled', status);
+    $("#button-wifi-setup-reset").addClass("ui-state-disabled");
 
-    $("#sendCmd").prop('disabled', status)
-    $("#sendCmd").addClass("ui-state-disabled")
-    $("#button-sendCmd2").prop('disabled', status)
-    $("#button-sendCmd2").addClass("ui-state-disabled")
+    $("#sendCmd").prop('disabled', status);
+    $("#sendCmd").addClass("ui-state-disabled");
+    $("#button-sendCmd2").prop('disabled', status);
+    $("#button-sendCmd2").addClass("ui-state-disabled");
     
   } else {
-    // $("#button-getloco").removeClass("ui-state-disabled")
-    // $("#button-sendCmd").removeClass("ui-state-disabled")
-    $("#cmd-direct").removeClass("ui-state-disabled")
-    $("#ex-locoid").removeClass("ui-state-disabled")
-    $("#power-switch").parent().removeClass("ui-state-disabled")
-    $("#dir-f").parent().removeClass("ui-state-disabled")
-    $("#emergency-stop").removeClass("ui-state-disabled")
-    $("#normal-stop").removeClass("ui-state-disabled")
-    $("#button-right").removeClass("ui-state-disabled")
-    $("#button-left").removeClass("ui-state-disabled")
+    // $("#button-getloco").removeClass("ui-state-disabled");
+    // $("#button-sendCmd").removeClass("ui-state-disabled");
+    $("#cmd-direct").removeClass("ui-state-disabled");
+    $("#ex-locoid").removeClass("ui-state-disabled");
+    $("#power-switch").parent().removeClass("ui-state-disabled");
+    $("#dir-f").parent().removeClass("ui-state-disabled");
+    $("#emergency-stop").removeClass("ui-state-disabled");
+    $("#normal-stop").removeClass("ui-state-disabled");
+    $("#button-right").removeClass("ui-state-disabled");
+    $("#button-left").removeClass("ui-state-disabled");
     for (i = 0; i <= 31; i++) {
       $("#f" + i).removeClass("ui-state-disabled")
     }
 
-    // $("#button-cv-read-loco-id").prop('disabled', status)
-    // $("#button-cv-read-loco-id").removeClass("ui-state-disabled")
-    // $("#button-cv-write-loco-id").prop('disabled', status)
-    // $("#button-cv-write-loco-id").removeClass("ui-state-disabled")
-    // $("#button-cv-read-cv").prop('disabled', status)
-    // $("#button-cv-read-cv").removeClass("ui-state-disabled")
-    // $("#button-cv-write-cv").prop('disabled', status)
-    // $("#button-cv-write-cv").removeClass("ui-state-disabled")
+    // $("#button-cv-read-loco-id").prop('disabled', status);
+    // $("#button-cv-read-loco-id").removeClass("ui-state-disabled");
+    // $("#button-cv-write-loco-id").prop('disabled', status);
+    // $("#button-cv-write-loco-id").removeClass("ui-state-disabled");
+    // $("#button-cv-read-cv").prop('disabled', status);
+    // $("#button-cv-read-cv").removeClass("ui-state-disabled");
+    // $("#button-cv-write-cv").prop('disabled', status);
+    // $("#button-cv-write-cv").removeClass("ui-state-disabled");
     
-    $("#button-wifi-setup-access-point").prop('disabled', status)
-    $("#button-wifi-setup-access-point").removeClass("ui-state-disabled")
-    $("#button-wifi-setup-station").prop('disabled', status)
-    $("#button-wifi-setup-station").removeClass("ui-state-disabled")
-    $("#button-wifi-setup-temp").prop('disabled', status)
-    $("#button-wifi-setup-temp").removeClass("ui-state-disabled")
-    $("#button-wifi-setup-hostname").prop('disabled', status)
-    $("#button-wifi-setup-hostname").removeClass("ui-state-disabled")
-    $("#button-wifi-setup-reset").prop('disabled', status)
-    $("#button-wifi-setup-reset").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-access-point").prop('disabled', status);
+    $("#button-wifi-setup-access-point").removeClass("ui-state-disabled");
+    $("#button-wifi-setup-station").prop('disabled', status);
+    $("#button-wifi-setup-station").removeClass("ui-state-disabled");
+    $("#button-wifi-setup-temp").prop('disabled', status);
+    $("#button-wifi-setup-temp").removeClass("ui-state-disabled");
+    $("#button-wifi-setup-hostname").prop('disabled', status);
+    $("#button-wifi-setup-hostname").removeClass("ui-state-disabled");
+    $("#button-wifi-setup-reset").prop('disabled', status);
+    $("#button-wifi-setup-reset").removeClass("ui-state-disabled");
 
-    $("#sendCmd").removeClass("ui-state-disabled")
-    $("#button-sendCmd2").removeClass("ui-state-disabled")
+    $("#sendCmd").removeClass("ui-state-disabled");
+    $("#button-sendCmd2").removeClass("ui-state-disabled");
 
     uiEnableCVProgramerControlOnReady();
   }
