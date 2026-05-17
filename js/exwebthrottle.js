@@ -198,10 +198,15 @@ function uiDisable(status) {
     // $("#button-cv-write-cv").prop('disabled', status)
     // $("#button-cv-write-cv").removeClass("ui-state-disabled")
     
+    $("#button-wifi-setup-access-point").prop('disabled', status)
     $("#button-wifi-setup-access-point").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-station").prop('disabled', status)
     $("#button-wifi-setup-station").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-temp").prop('disabled', status)
     $("#button-wifi-setup-temp").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-hostname").prop('disabled', status)
     $("#button-wifi-setup-hostname").removeClass("ui-state-disabled")
+    $("#button-wifi-setup-reset").prop('disabled', status)
     $("#button-wifi-setup-reset").removeClass("ui-state-disabled")
 
     $("#sendCmd").removeClass("ui-state-disabled")
@@ -769,7 +774,7 @@ $(document).ready(function () {
 
   // write Access Point Mode
   $("#button-wifi-setup-access-point").on("click", function () {
-    if( ($("#wifi-setup-access-point-ssid").val() == 0) 
+    if( ($("#wifi-setup-access-point-ssid").val().length == 0) 
       || ($("#wifi-setup-access-point-password").val().length < 8)  
       || ($("#wifi-setup-access-point-ssid").val().indexOf(" ") >= 0) 
     ) {
@@ -780,12 +785,12 @@ $(document).ready(function () {
 
     if ($("#wifi-setup-access-point-channel").val().length > 0) {
       writeToStream('C WIFI AP "' 
-        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-ssid").val() + '" "' 
         + $("#wifi-setup-access-point-password").val() + '" "' 
         + $("#wifi-setup-access-point-channel").val() + '"');
     } else {
       writeToStream('C WIFI AP "' 
-        + $("#wifi-setup-access-point").val() + '" "' 
+        + $("#wifi-setup-access-point-ssid").val() + '" "' 
         + $("#wifi-setup-access-point-password").val() + '"');
     }
   });
