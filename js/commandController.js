@@ -137,8 +137,10 @@ function parseResponse(cmd) {  // some basic ones only
     if (!csIsReadyRequestSent) {
         writeToStream("s");
         csIsReadyRequestSent = true;
+
     } else if ( ((cmd.includes("<iDCC")) || (cmd.includes("RAM=")))  
                 && (!csIsReady) ) {
+        parseCsVersion(cmd.split(" "));
         csIsReady = true;
         uiEnableThrottleControlOnReady();
         ToastMaker('Your Command Station has Started.', 4000, {valign:'bottom', align:'left'} );
@@ -146,6 +148,7 @@ function parseResponse(cmd) {  // some basic ones only
  
         //intialise the roster
         writeToStream("JR");
+        
 
     } else if (cmd.charAt(0) == '<') {
 
@@ -164,18 +167,24 @@ function parseResponse(cmd) {  // some basic ones only
 // --------------------------------------------------------------------
               
         } else if (cmd.charAt(1) == 'i') {
-            versionText = "";
-            if (cmdArray[1].charAt(0) == 'V') //version
-                try {
-                    versionText = cmdArray[1].substring(2, cmdArray[1].length);
-                    versionArray = versionText.split(".");
-                    csVersion = parseInt(versionArray[0])
-                        + parseInt(versionArray[1]) / 100
-                        + parseInt(versionArray[2]) / 100000;
-                    displayLog('[i] Version:' + csVersion);
-                } catch (e) {
-                    console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
-                }
+            // displayLog('[i] processing CS info: ' + cmd);
+            // versionText = "";
+            // if (cmdArray[1].charAt(0) == 'V') { //version
+            //     try {
+            //         versionText = cmdArray[1].substring(2, cmdArray[1].length);
+            //         displayLog('[i] processing version: ' + versionText);
+            //         versionArray = versionText.split(".");
+            //         version = parseInt(versionArray[0])
+            //             + parseInt(versionArray[1]) / 100
+            //             + parseInt(versionArray[2]) / 100000;
+            //             csVersion = version;
+            //         displayLog('[i] EX-CommandStation Version: ' + csVersion + " : " + version);
+            //     } catch (e) {
+            //         console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
+            //         displayLog('[ERROR] Unable process version: ' + versionText);
+            //     }
+            // }
+            parseCsVersion(cmdArray);
 
 // --------------------------------------------------------------------
                   
@@ -573,7 +582,7 @@ function parseResponse(cmd) {  // some basic ones only
                     ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                     ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                 }
-
+                showNavigationButtons("throttle");
             }
 
 // *********************************************************************
@@ -613,6 +622,25 @@ function parseResponse(cmd) {  // some basic ones only
 
 // *********************************************************************
 
+        }
+    }
+}
+
+function parseCsVersion(cmdArray) {
+    versionText = "";
+    if (cmdArray[1].charAt(0) == 'V') { //version
+        try {
+            versionText = cmdArray[1].substring(2, cmdArray[1].length);
+            displayLog('[i] processing version: ' + versionText);
+            versionArray = versionText.split(".");
+            version = parseInt(versionArray[0])
+                + parseInt(versionArray[1]) / 100
+                + parseInt(versionArray[2]) / 100000;
+                csVersion = version;
+            displayLog('[i] EX-CommandStation Version: ' + csVersion + " : " + version);
+        } catch (e) {
+            console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
+            displayLog('[ERROR] Unable process version: ' + versionText);
         }
     }
 }
@@ -726,8 +754,11 @@ async function disconnectServer() {
         $("#power-status").html('Off');
     }
     csIsReady = false;
+    csVersion = 4.0
     csIsReadyRequestSent = false;
-    uiDisable(true)
+    uiDisable(true);
+    showNavigationButtons(""); 
+
     if (port) {
         // Close the input stream (reader).
         if (reader) {
