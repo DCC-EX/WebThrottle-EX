@@ -140,7 +140,12 @@ function parseResponse(cmd) {  // some basic ones only
 
     } else if ( ((cmd.includes("<iDCC")) || (cmd.includes("RAM=")))  
                 && (!csIsReady) ) {
+    
         parseCsVersion(cmd.split(" "));
+        parseCsType(cmd.split(" "));
+            if (csVersion >= 5.07 && (csType == "EXCSB1" || csType == "ESP32")) 
+            writeToStream("D WIFI SHOW");
+
         csIsReady = true;
         uiEnableThrottleControlOnReady();
         ToastMaker('Your Command Station has Started.', 4000, {valign:'bottom', align:'left'} );
@@ -167,24 +172,10 @@ function parseResponse(cmd) {  // some basic ones only
 // --------------------------------------------------------------------
               
         } else if (cmd.charAt(1) == 'i') {
-            // displayLog('[i] processing CS info: ' + cmd);
-            // versionText = "";
-            // if (cmdArray[1].charAt(0) == 'V') { //version
-            //     try {
-            //         versionText = cmdArray[1].substring(2, cmdArray[1].length);
-            //         displayLog('[i] processing version: ' + versionText);
-            //         versionArray = versionText.split(".");
-            //         version = parseInt(versionArray[0])
-            //             + parseInt(versionArray[1]) / 100
-            //             + parseInt(versionArray[2]) / 100000;
-            //             csVersion = version;
-            //         displayLog('[i] EX-CommandStation Version: ' + csVersion + " : " + version);
-            //     } catch (e) {
-            //         console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
-            //         displayLog('[ERROR] Unable process version: ' + versionText);
-            //     }
-            // }
             parseCsVersion(cmdArray);
+            parseCsType(cmdArray);
+            if (csVersion >= 5.07 && (csType == "EXCSB1" || csType == "ESP32")) 
+                writeToStream("D WIFI SHOW");
 
 // --------------------------------------------------------------------
                   
@@ -631,18 +622,26 @@ function parseCsVersion(cmdArray) {
     if (cmdArray[1].charAt(0) == 'V') { //version
         try {
             versionText = cmdArray[1].substring(2, cmdArray[1].length);
-            displayLog('[i] processing version: ' + versionText);
+            displayLog('[i] processing version text: ' + versionText);
             versionArray = versionText.split(".");
             version = parseInt(versionArray[0])
                 + parseInt(versionArray[1]) / 100
                 + parseInt(versionArray[2]) / 100000;
-                csVersion = version;
-            displayLog('[i] EX-CommandStation Version: ' + csVersion + " : " + version);
+            csVersion = version;
+            displayLog('[i] EX-CommandStation Version: ' + csVersion);
         } catch (e) {
             console.log(getTimeStamp() + '[ERROR] Unable process version: ' + versionText + '  - ' + csVersion);
             displayLog('[ERROR] Unable process version: ' + versionText);
         }
     }
+}
+
+function parseCsType(cmdArray) {
+    csType = cmdArray[3];
+    if (cmdArray[5] == "EXCSB1") {
+        csType = "EXCSB1";
+    }
+    displayLog('[i] EX-CommandStation Type: ' + csType);
 }
 
 function turnoutStateText(state) {
@@ -755,6 +754,7 @@ async function disconnectServer() {
     }
     csIsReady = false;
     csVersion = 4.0
+    csType = "unknwon";
     csIsReadyRequestSent = false;
     uiDisable(true);
     showNavigationButtons(""); 
@@ -832,6 +832,18 @@ function displayLog(data) {
     data = data.replaceAll("<", "&lt;");
     data = data.replaceAll(">", "&gt;");
     data = data.replaceAll("\n", "<br>");
+    if (data.indexOf("iDCC-EX") > 0 ) {
+        data = "<span style='background-color: green; color: black;'>" + data + "</span>";
+    }
+    
+    if ( (data.indexOf("AT+") > 0 ) || (data.indexOf(" C WIFI ") > 0 ) ) {
+        data = "<span style='background-color: aquamarine; color: black;'>" + data + "</span>";
+    }
+    
+    if (data.indexOf("I2C:") > 0 ) {
+        data = "<span style='background-color: cornsilk; color: black;'>" + data + "</span>";
+    }
+    
     if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
     $("#log-box").append(data.toString() + "<br>");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
