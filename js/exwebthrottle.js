@@ -85,6 +85,7 @@ window.DIRECTION_FORWARD = 1;
 window.DIRECTION_REVERSED = 0;
 
 window.csVersion = 5.06;
+window.csTYPE = "unknown";
 window.csIsReady = false;
 window.csIsReadyRequestSent = false;
 
@@ -1512,20 +1513,24 @@ function hideWindows() {
   $("#settings-window").hide();
 }
 function showNavigationButtons(which) {
-  if ( (which==null) || (which == "") ) {
-    which = "throttle";
-  }
+  // if ( (which==null) || (which == "") ) {
+  //   which = "throttle";
+  // }
 
   $("#cv-programmer-nav").show();
   $("#routes-nav").show();
   $("#turnouts-nav").show();
-  if (csVersion >= 5.07) $("#wifi-setup-nav").show();
+  if ( (csVersion >= 5.07) && ((csType == "EXCSB1") || (csType == "ESP32")) ) {
+    $("#wifi-setup-nav").show();
+  }
 
   $("#throttle-screen-button").show();
   $("#cv-programmer-screen-button").show();
   $("#routes-screen-button").show();
   $("#turnouts-screen-button").show();
-  if (csVersion >= 5.07) $("#wifi-setup-screen-button").show();
+  if ( (csVersion >= 5.07) && ((csType == "EXCSB1") || (csType == "ESP32")) ) {
+     $("#wifi-setup-screen-button").show();
+  }
   $("#locos-screen-button").show();
   $("#function-maps-screen-button").show();
 
@@ -1533,7 +1538,9 @@ function showNavigationButtons(which) {
   $("#cv-programmer-screen-button-disabled").hide();
   $("#routes-screen-button-disabled").hide();
   $("#turnouts-screen-button-disabled").hide();
-  if (csVersion >= 5.07) $("#wifi-setup-screen-button-disabled").hide();
+  if ( (csVersion >= 5.07) && ((csType == "EXCSB1") || (csType == "ESP32")) ) {
+    $("#wifi-setup-screen-button-disabled").hide();
+  }
   $("#locos-screen-button-disabled").hide();
   $("#function-maps-screen-button-disabled").hide();
 
@@ -1561,7 +1568,7 @@ function showNavigationButtons(which) {
     $("#turnouts-screen-button-disabled").show();
     $("#turnouts-screen-button-disabled").addClass("ui-state-disabled");
 
-    if (csVersion < 5.07) {
+    if ( (csVersion < 5.07) || ((csType != "EXCSB1") && (csType != "ESP32")) ) {
       $("#wifi-setup-screen-button").hide();
       $("#wifi-setup-screen-button-disabled").show();
       $("#wifi-setup-screen-button-disabled").addClass("ui-state-disabled");
