@@ -231,7 +231,9 @@ function uiDisable(status) {
 
 function uiEnableThrottleControlOnReady() {
   displayLog('<br><br>[i] EX-CommandStation is READY<br>');
+  $("#button-getloco").prop('disabled', false);
   $("#button-getloco").removeClass("ui-state-disabled");
+  $("#button-sendCmd").prop('disabled', false);
   $("#button-sendCmd").removeClass("ui-state-disabled");
   $("#ex-locoid").prop('disabled', false)
 
@@ -686,15 +688,6 @@ $(document).ready(function () {
     },
   });
 
-  // Change programming mode type
-  $("#progmode-selector").on("change", function (e) {
-    selectedval = $(this).val();
-    console.log(selectedval);
-    setprogModeType(selectedval);
-    setPreference("progmode", selectedval);
-    uiEnableCVProgramerControlOnReady();
-  });
-
   // Load function map, buttons throttle etc
   setThrottleScreenUI();
   $("#throttle-selector").on("change", function (e) {
@@ -768,6 +761,15 @@ $(document).ready(function () {
         $("#select-map").val("default").trigger("change");
       }
     }
+  });
+
+  // Change programming mode type
+  $("#progmode-selector").on("change", function (e) {
+    selectedval = $(this).val();
+    console.log(selectedval);
+    setprogModeType(selectedval);
+    setPreference("progmode", selectedval);
+    uiEnableCVProgramerControlOnReady();
   });
 
   // ---------------------------------------- //
