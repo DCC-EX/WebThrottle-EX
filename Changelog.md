@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 1.3.50
+
+- hide the WiFi Setup if the CS type is not an ESP32 or EXCSB1
+- colour some of the output
+- bug fix for the toolbar buttons when you go into settings
+
 ## Version 1.3.49
 
 - Bug fix for the Select loco button
