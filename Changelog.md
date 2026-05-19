@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.3.49
+
+- Bug fix for the Select loco button
+
 ## Version 1.3.48
 
 - provide for PoM
