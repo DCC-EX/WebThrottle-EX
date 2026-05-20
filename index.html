@@ -125,33 +125,46 @@
                 <section id="throttle-window" class="section">
                     <div Class="details-panel" id="details-panel">
                         <div class="row">
-                            <div class="column-6">
+                            <div class="column-4">
                                 <div class="loco-list-container row">
-                                    <div class="column-4 loco-list-ctrl">
+                                    <div class="column-6 loco-list-ctrl">
                                         <label for="ex-locoid" class="formbuilder-text-label">
                                             <!-- <span class="toolbar-button-throttle" style="display:inline-block;"></span>  -->
                                             Loco ID<span class="formbuilder-required">*</span>
                                         </label>
                                         <input id="ex-locoid" type="text" loco-cv="0" name="Locomotives" placeholder="Loco ID / DCC Address" title="To Acquire a loco: Type an Address and press [Enter] or Select from the Locos/Roster list. To release: Press [Enter] or click [X]"/>
                                     </div>
-                                    <div class="column-2 formbuilder-button acquire-wrap">
+                                    <div class="column-3 formbuilder-button acquire-wrap">
                                         <button id="button-getloco" class="acq-loco-btn btn" data-acquired="false"> 
                                             <span class="icon-circle-right"></span> 
                                         </button>
-                                    </div>
-                                    <div class="column-2 formbuilder-button acquire-wrap">
-                                    </div>                                   
+                                    </div>                                
                                 </div>
                             </div>
-                            <div class="server-button column-4">
-                                <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
-                                    <option value="serial">Serial (USB)</option>
-                                    <option value="emulator">Emulator</option>
-                                </select>
-                                <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
-                                    <span class="con-ind"></span>Connect EX-CS
-                                </button>
-                                <!-- <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button> -->
+
+                            <div class="power-slider column-3 ">
+                                <div class="column-10 formbuilder-button " id="power-switch-div" title="Enable track power">
+                                    <span class="pow-status">
+                                        Track Power <span id="power-status">is Off</span>
+                                    </span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="power-switch">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div> 
+                            </div>
+
+                            <div class="server-button column-3">
+                                <div class="column-10 ">
+                                    <select id="select-method" class="select-control select-xl" name="selectMethod" title="Change the connection method">
+                                        <option value="serial">Serial (USB)</option>
+                                        <option value="emulator">Emulator</option>
+                                    </select>
+                                    <button type="button" class="btn-default btn" title="Connect to the Command Station" aria-state="connected" name="button-connect" access="false" id="button-connect">
+                                        <span class="con-ind"></span>Connect EX-CS
+                                    </button>
+                                    <!-- <button class="btn-grey" id="fs-toggle" state="ws" title="Fullscreen">&#10530;</button> -->
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -216,7 +229,7 @@
                             </div>
                             <div class="functionKeys column-5 mobile-100">
                                 <div class="row mobile-100">
-                                    <div class="power-slider column-4 formbuilder-button " id="power-switch-div" title="Enable track power">
+                                    <!-- <div class="power-slider column-4 formbuilder-button " id="power-switch-div" title="Enable track power">
                                         <label class="switch">
                                             <input type="checkbox" id="power-switch">
                                             <span class="slider round"></span>
@@ -224,8 +237,8 @@
                                         <span class="pow-status">
                                             Track Power <span id="power-status">is Off</span>
                                         </span>
-                                    </div> 
-                                    <div class="note-msg column-6">
+                                    </div>  -->
+                                    <div class="note-msg column-10">
                                         <select id="select-map" class="btn select-map select-control" name="selectMap" title="Load a Saved Map">
                                         </select>                                   
                                     </div>

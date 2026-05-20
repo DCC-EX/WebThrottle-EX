@@ -414,7 +414,8 @@ label.formbuilder-file-label {
     vertical-align: middle;
 }
 .power-slider{
-    padding: 0 7px;
+    text-align: right;
+    padding: 26px 7px 0 0;
     font-size: 13px;
 } 
 .switch {

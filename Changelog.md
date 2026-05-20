@@ -3,6 +3,7 @@
 ## Version 1.3.51
 
 - bug fix.  Don't try to process any of the lists a second time after initial connection.
+- Moved the power button
 
 ## Version 1.3.50
 
