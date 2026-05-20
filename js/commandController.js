@@ -143,8 +143,9 @@ function parseResponse(cmd) {  // some basic ones only
     
         parseCsVersion(cmd.split(" "));
         parseCsType(cmd.split(" "));
-            if (csVersion >= 5.07 && (csType == "EXCSB1" || csType == "ESP32")) 
+        if ( (csVersion >= 5.07) && (csType == "EXCSB1" || csType == "ESP32") ) {
             writeToStream("D WIFI SHOW");
+        }
 
         csIsReady = true;
         uiEnableThrottleControlOnReady();
@@ -174,8 +175,9 @@ function parseResponse(cmd) {  // some basic ones only
         } else if (cmd.charAt(1) == 'i') {
             parseCsVersion(cmdArray);
             parseCsType(cmdArray);
-            if (csVersion >= 5.07 && (csType == "EXCSB1" || csType == "ESP32")) 
+            if ( (csVersion >= 5.07) && (csType == "EXCSB1" || csType == "ESP32") ) { 
                 writeToStream("D WIFI SHOW");
+            }
 
 // --------------------------------------------------------------------
                   
@@ -845,13 +847,13 @@ function displayLog(data) {
     }
     
     if (data.length > 0) data = getTimeStamp() + " <b>" + data + "</b>";
-    $("#log-box").append(data.toString() + "<br>");
+    $("#log-box").append(data.toString() + "<br>\n");
     $("#log-box").scrollTop($("#log-box").prop("scrollHeight"));
 
-    $("#log-box2").append(data.toString() + "<br>");
+    $("#log-box2").append(data.toString() + "<br>\n");
     $("#log-box2").scrollTop($("#log-box2").prop("scrollHeight"));
 
-    $("#log-box3").append(data.toString() + "<br>");
+    $("#log-box3").append(data.toString() + "<br>\n");
     $("#log-box3").scrollTop($("#log-box3").prop("scrollHeight"));
 }
 
