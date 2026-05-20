@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.3.51
+
+- bug fix.  Don't try to process any of the lists a second time after initial connection.
+
 ## Version 1.3.50
 
 - hide the WiFi Setup if the CS type is not an ESP32 or EXCSB1
