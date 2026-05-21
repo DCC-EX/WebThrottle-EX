@@ -8,14 +8,19 @@ body{
 hr{
     border-bottom: 1px solid #ffffff;
 }
+.column-0p5{
+    float: left;
+    width: 5%;
+    padding: 5px 15px;
+}
 .column-1{
     float: left;
     width: 10%;
     padding: 5px 15px;
 }
-.column-2p5 {
+.column-1p5 {
     float: left;
-    width: 25%;
+    width: 15%;
     padding: 5px 15px;
 }
 .column-2 {
@@ -23,9 +28,19 @@ hr{
     width: 20%;
     padding: 5px 15px;
 }
+.column-2p5 {
+    float: left;
+    width: 25%;
+    padding: 5px 15px;
+}
 .column-3 {
     float: left;
     width: 30%;
+    padding: 5px 15px;
+}
+.column-3p5 {
+    float: left;
+    width: 35%;
     padding: 5px 15px;
 }
 .column-4 {
@@ -50,6 +65,16 @@ hr{
 }
 .column-8{
     width: 80%;
+    float: left;
+    padding: 5px 15px;
+}
+.column-9{
+    width: 90%;
+    float: left;
+    padding: 5px 15px;
+}
+.column-10{
+    width: 100%;
     float: left;
     padding: 5px 15px;
 }

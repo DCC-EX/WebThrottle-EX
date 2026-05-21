@@ -116,7 +116,7 @@ input:checked + .slider.debug-slider:before{
         text-shadow: 0 0px 1px #000000, 0px 0px 4px #31d9f3;
 }
 .log-msg{
-    color: cyan;
+    color: rgb(214, 248, 248);
     border: 1px solid #3b3b3b;
     background: #121212;
     box-shadow: inset 0px 0px 2px #000000;
@@ -221,22 +221,22 @@ a.edit-cur-loco, a.option-btn{
     color: #ffffff;
 }
 a.run-cur-route{
-    background: #282828;
+    background: #00A3B9;
     border: 1px solid #3f3f3f;
     box-shadow: 0px 0px 2px #000000;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 a.throw-cur-turnout{
-    background: #282828;
+    background: #00A3B9;
     border: 1px solid #3f3f3f;
     box-shadow: 0px 0px 2px #000000;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 a.close-cur-turnout{
-    background: #282828;
+    background: #00A3B9;
     border: 1px solid #3f3f3f;
     box-shadow: 0px 0px 2px #000000;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 .loco-details p.ac-loco-name{
     text-shadow: 0 0 1px #000000;
