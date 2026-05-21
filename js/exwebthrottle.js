@@ -434,6 +434,8 @@ function loadRoutes() {
         rslt =rslt + '<div class="column-1 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"';
         if (value.state=="1") // enabled
           rslt = rslt + ' style="color:#00A3B9;"'
+        if (value.state=="4") // disabled
+          rslt = rslt + ' style="visibility: hidden;"'
         rslt = rslt + '>' + value.label + '</a></div>';
         rslt = rslt + "</div>"
         $("#routes-panel").append(rslt);

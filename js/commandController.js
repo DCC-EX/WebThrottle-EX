@@ -510,7 +510,7 @@ function parseResponse(cmd) {  // some basic ones only
 // --------------------------------------------------------------------
 
             } else if (cmdArray[0].charAt(2) == 'B')  { //routes/automations updates  
-                // <jB id state>    state: 0=inactive 1=active 2=hidden
+                // <jB id state>    state: 0=inactive 1=active 2=hidden 4=disabled
 
                 
                 console.log(getTimeStamp() + ' Processing individual route entry update: ' + cmdArrayClean[1]);

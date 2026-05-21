@@ -4,6 +4,7 @@
 
 - bug fix.  Don't try to process any of the lists a second time after initial connection.
 - Moved the power button
+- process 'disabled' state of route/automation correctly
 
 ## Version 1.3.50
 
