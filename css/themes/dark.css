@@ -293,11 +293,10 @@ p.ac-turnout-name{
   }
   
   a:link {
-  color: rgb(102, 102, 255);
-  text-decoration: underline;
+  color: #22a3b4;
 }
 
 /* Visited link */
 a:visited {
-  color: rgb(155, 47, 155);
+  color: #22a3b4;
 }
