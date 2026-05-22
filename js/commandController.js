@@ -344,25 +344,29 @@ function parseResponse(cmd) {  // some basic ones only
                 if (cmdArrayClean.length > 1) { // if ==1, then no roster
                     if ( (cmdArrayClean.length == 2 ) || 
                        ( (cmdArrayClean.length > 2 ) && (cmdArrayClean[2].charAt(0) != '"' ) ) ) {
-                        rosterCount = cmdArrayClean.length-1;
-                        console.log(getTimeStamp() + ' Processing roster: ' + rosterCount);
-                        try {
-                            for (i=1;i<cmdArrayClean.length;i++) {
-                                rosterIds[i-1] = cmdArrayClean[i];
-                                rosterNames[i-1] = "";
-                                rosterFunctions[i-1] = "";
-                                rosterFunctionsJSON[i-1] = "";
-                                // writeToStream("JR " + cmdArrayClean[i]);                          
+                        if (!rosterComplete) {
+                            rosterCount = cmdArrayClean.length-1;
+                            console.log(getTimeStamp() + ' Processing roster: ' + rosterCount);
+                            try {
+                                for (i=1;i<cmdArrayClean.length;i++) {
+                                    rosterIds[i-1] = cmdArrayClean[i];
+                                    rosterNames[i-1] = "";
+                                    rosterFunctions[i-1] = "";
+                                    rosterFunctionsJSON[i-1] = "";
+                                    // writeToStream("JR " + cmdArrayClean[i]);                          
+                                }
+                                if (!rosterRequested) {
+                                    writeToStream("JR " + rosterIds[0]);  // get the details for the first
+                                    ToastMaker('Please wait - Loading Roster', 1000, {valign:'bottom', align:'center'});
+                                    rosterRequested = true;
+                                }
+                            } catch (e) {
+                                console.log(getTimeStamp() + ' [ERROR] Unable process roster: ');
                             }
-                            if (!rosterRequested) {
-                                writeToStream("JR " + rosterIds[0]);  // get the details for the first
-                                ToastMaker('Please wait - Loading Roster', 1000, {valign:'bottom', align:'center'});
-                                rosterRequested = true;
-                            }
-                        } catch (e) {
-                            console.log(getTimeStamp() + ' [ERROR] Unable process roster: ');
+                        } else {
+                            console.log(getTimeStamp() + ' Roster list already processed. Ignoring.');
+                            displayLog('[i] Roster list already processed. Ignoring.');
                         }
-                        
                     } else { // individual roster entry
                         console.log(getTimeStamp() + ' Processing individual roster entry: ' + cmdArrayClean[1]);
 
@@ -441,23 +445,28 @@ function parseResponse(cmd) {  // some basic ones only
                     if ( (cmdArrayClean.length == 2 ) || 
                          (cmdArrayClean.length == 3 ) || 
                          ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
-                        routesCount = cmdArrayClean.length-1;
-                        console.log(getTimeStamp() + ' Processing routes: ' + routesCount);
-                        try {
-                            for (i=1;i<cmdArrayClean.length;i++) {
-                                routesIds[i-1] = cmdArrayClean[i];
-                                routesTypes[i-1] = "";
-                                routesNames[i-1] = "";
-                                routesStates[i-1] = -1;  // unknown
-                                routesLabels[i-1] = "Set";
+                        if (!routesComplete) {
+                            routesCount = cmdArrayClean.length-1;
+                            console.log(getTimeStamp() + ' Processing routes: ' + routesCount);
+                            try {
+                                for (i=1;i<cmdArrayClean.length;i++) {
+                                    routesIds[i-1] = cmdArrayClean[i];
+                                    routesTypes[i-1] = "";
+                                    routesNames[i-1] = "";
+                                    routesStates[i-1] = -1;  // unknown
+                                    routesLabels[i-1] = "Set";
+                                }
+                                if (!routesRequested) { // If we havn't already asked
+                                    writeToStream("JA " + routesIds[0]);  // get the details for the first
+                                    routesRequested = true;
+                                }
+                                ToastMaker('Please wait - Loading Routes/Automations', 1000, {valign:'bottom', align:'right'});
+                            } catch (e) {
+                                console.log(getTimeStamp() + ' [ERROR] Unable process routes: ');
                             }
-                            if (!routesRequested) { // If we havn't already asked
-                                writeToStream("JA " + routesIds[0]);  // get the details for the first
-                                routesRequested = true;
-                            }
-                            ToastMaker('Please wait - Loading Routes/Automations', 1000, {valign:'bottom', align:'right'});
-                        } catch (e) {
-                            console.log(getTimeStamp() + ' [ERROR] Unable process routes: ');
+                        } else {
+                            console.log(getTimeStamp() + ' Routes list already processed. Ignoring.');
+                            displayLog('[i] Routes list already processed. Ignoring.');
                         }
                         
                     } else { // individual entry
@@ -483,7 +492,7 @@ function parseResponse(cmd) {  // some basic ones only
 
                         if (routesComplete) {
                             buildRoutesJSON();
-                            routesComplete = true;
+                            // routesComplete = true;
                             
                             //intialise the turnouts/points
                             if (!turnoutsRequested) {
@@ -501,12 +510,12 @@ function parseResponse(cmd) {  // some basic ones only
 // --------------------------------------------------------------------
 
             } else if (cmdArray[0].charAt(2) == 'B')  { //routes/automations updates  
-                // <jB id state>    state: 0=inactive 1=active 2=hidden
+                // <jB id state>    state: 0=inactive 1=active 2=hidden 4=disabled
 
                 
                 console.log(getTimeStamp() + ' Processing individual route entry update: ' + cmdArrayClean[1]);
 
-                routesComplete = true;
+                // routesComplete = true;
                 for (i=0;i<routesIds.length;i++) {
                     if (routesIds[i] == cmdArrayClean[1]) {
                         if (cmdArrayClean[2].charAt(0) != '"') { // state change
@@ -526,21 +535,26 @@ function parseResponse(cmd) {  // some basic ones only
                 if (cmdArrayClean.length > 1) { // if ==1, then no turnouts
                     if ( (cmdArrayClean.length == 2 ) || (cmdArrayClean.length == 3 ) || 
                     ( (cmdArrayClean.length > 3 ) && (cmdArrayClean[3].charAt(0) != '"' ) ) ) {
-                        turnoutsCount = cmdArrayClean.length-1;
-                        console.log(getTimeStamp() + ' Processing turnouts: ' + turnoutsCount);
-                        try {
-                            for (i=1;i<cmdArrayClean.length;i++) {
-                                turnoutsIds[i-1] = cmdArrayClean[i];
-                                turnoutsStates[i-1] = "";
-                                turnoutsNames[i-1] = "";
+                        if (!turnoutsComplete) {
+                            turnoutsCount = cmdArrayClean.length-1;
+                            console.log(getTimeStamp() + ' Processing turnouts: ' + turnoutsCount);
+                            try {
+                                for (i=1;i<cmdArrayClean.length;i++) {
+                                    turnoutsIds[i-1] = cmdArrayClean[i];
+                                    turnoutsStates[i-1] = "";
+                                    turnoutsNames[i-1] = "";
+                                }
+                                if (!turnoutsRequested) { // If we havn't already asked
+                                    writeToStream("JT " + turnoutsIds[0]);  // get the details for the first
+                                    turnoutsRequested = true;
+                                }
+                                ToastMaker('Please wait - Loading Turnouts/Points', 1000, {valign:'bottom', align:'right'});
+                            } catch (e) {
+                                console.log(getTimeStamp() + ' [ERROR] Unable process turnouts: ');
                             }
-                            if (!turnoutsRequested) { // If we havn't already asked
-                                writeToStream("JT " + turnoutsIds[0]);  // get the details for the first
-                                turnoutsRequested = true;
-                            }
-                            ToastMaker('Please wait - Loading Turnouts/Points', 1000, {valign:'bottom', align:'right'});
-                        } catch (e) {
-                            console.log(getTimeStamp() + ' [ERROR] Unable process turnouts: ');
+                        } else {
+                            console.log(getTimeStamp() + ' Turnouts list already processed. Ignoring.');
+                            displayLog('[i] Turnouts list already processed. Ignoring.');
                         }
                         
                     } else { // individual entry
@@ -565,7 +579,7 @@ function parseResponse(cmd) {  // some basic ones only
                         if (turnoutsComplete) {
                             buildTurnoutsJSON();
 
-                            turnoutsComplete = true;
+                            // turnoutsComplete = true;
                             ToastMaker('Your Command Station is ready.', 15000, {valign:'bottom', align:'left'} );
                             ToastMaker('Use the [Loco ID] field select a Loco.', 10000, {valign:'bottom', align:'right'} );
                         }
@@ -584,7 +598,7 @@ function parseResponse(cmd) {  // some basic ones only
 
             console.log(getTimeStamp() + ' Processing individual turnout state change: ' + cmdArrayClean[1]);
 
-            turnoutsComplete = true;
+            // turnoutsComplete = true;
             for (i=0;i<turnoutsIds.length;i++) {
                 if (turnoutsIds[i] == cmdArrayClean[1]) {
                     turnoutsStates[i] = cmdArrayClean[2];
@@ -754,10 +768,7 @@ async function disconnectServer() {
         $("#power-switch").prop('checked', false)
         $("#power-status").html('Off');
     }
-    csIsReady = false;
-    csVersion = 4.0
-    csType = "unknwon";
-    csIsReadyRequestSent = false;
+    resetServerDetails();
     uiDisable(true);
     showNavigationButtons(""); 
 
@@ -821,6 +832,13 @@ async function toggleServer(btn) {
 			alert("Unable to connect - you may need to allow access with a pop-up");
 		}
     }
+}
+
+function resetServerDetails() {
+    csIsReady = false;
+    csVersion = 4.0
+    csType = "unknown";
+    csIsReadyRequestSent = false;
 }
 
 // Display log of events
