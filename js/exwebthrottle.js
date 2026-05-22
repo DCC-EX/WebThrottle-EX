@@ -427,13 +427,15 @@ function loadRoutes() {
     if (value.state!="2") { // not hiddden
       rslt = 
         '<div class="row routes-group" id="' + key + '">' +
-          '<div class="column-1 sno"><p>' + (key + 1) + "</p></div>" +
+          '<div class="column-0p5 sno"><p>' + (key + 1) + "</p></div>" +
           '<div class="column-5"><p class="ac-route-name column-10">' + value.name + "</p></div>" +
-          '<div class="column-2 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
-          '<div class="column-1"><p>' + value.type + '</p></div>';
-        rslt =rslt + '<div class="column-1 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"';
+          '<div class="column-1 cv-num"><p><small>Id </small>' + value.id + "</p></div>" +
+          '<div class="column-0p5"><p>' + value.type + '</p></div>';
+        rslt =rslt + '<div class="column-2p5 prh"><a href="#" route-id="' + value.id + '" data-route="' + value.name + '" class="run-cur-route"';
         if (value.state=="1") // enabled
           rslt = rslt + ' style="color:#00A3B9;"'
+        if (value.state=="4") // disabled
+          rslt = rslt + ' style="visibility: hidden;"'
         rslt = rslt + '>' + value.label + '</a></div>';
         rslt = rslt + "</div>"
         $("#routes-panel").append(rslt);
