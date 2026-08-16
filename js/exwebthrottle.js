@@ -615,12 +615,13 @@ function setPositionofControllers() {
 
 function sendSpeed(locoId, speed, dir) {
   // displayLog('sendSpeed() locoId: ' + locoId);
-  if (locoId <= 0) return;
+  const command = buildSpeedCommand(locoId, speed, dir);
+  if (command == null) return;
 
   if ((locoId != lastLocoSent) || (speed != lastSpeedSent) || (dir != lastDirSent)) {
     setSpeed(speed);
     setDirection(dir);
-    writeToStream("t " + locoId + " " + speed + " " + dir);
+    writeToStream(command);
     lastLocoSent = locoId;
     lastSpeedSent = speed;
     lastDirSent = dir;

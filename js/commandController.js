@@ -9,6 +9,53 @@
 */
 let commandString = "";
 
+/**
+ * Consume complete DCC-EX response frames from a stream chunk.
+ *
+ * Web Serial chunks are not guaranteed to line up with command responses, so
+ * keep an incomplete frame for the next chunk and return every complete frame
+ * that is available now. Text outside a frame is returned for logging without
+ * being passed to the command parser.
+ */
+function consumeDccExResponses(buffer, chunk) {
+    let pending = (buffer == null ? "" : String(buffer)) + (chunk == null ? "" : String(chunk));
+    const responses = [];
+
+    while (pending.length > 0) {
+        const start = pending.indexOf("<");
+
+        if (start < 0) {
+            if (pending.trim().length > 0) responses.push(pending);
+            pending = "";
+            break;
+        }
+
+        if (start > 0) {
+            const prefix = pending.substring(0, start);
+            if (prefix.trim().length > 0) responses.push(prefix);
+            pending = pending.substring(start);
+        }
+
+        const end = pending.indexOf(">");
+        if (end < 0) break;
+
+        responses.push(pending.substring(0, end + 1));
+        pending = pending.substring(end + 1);
+    }
+
+    return { responses: responses, remainder: pending };
+}
+
+function buildFunctionCommand(locoId, functionNumber, state) {
+    return "F " + locoId + " " + functionNumber + " " + state;
+}
+
+function buildSpeedCommand(locoId, speed, direction) {
+    const numericLocoId = Number(locoId);
+    if (!Number.isFinite(numericLocoId) || numericLocoId <= 0) return null;
+    return "t " + locoId + " " + speed + " " + direction;
+}
+
 $(document).ready(function () {
     console.log("Command Controller loaded");
     emulatorClass = new Emulator({ logger: displayLog });
@@ -86,43 +133,22 @@ async function readLoop() {
         // if (value && value.button) { // alternate check and calling a function
         // buttonPushed(value);
 
-        let thisCommandString = "";
-
         if (value) {
+            const parsedResponses = consumeDccExResponses(commandString, value);
+            commandString = parsedResponses.remainder;
 
-            commandString = commandString + value;
-
-            var moreToProcess = true;
-            while (moreToProcess) {
-                // displayLog('[RECEIVE] '+ value);
-                // console.log('[RECEIVE] '+ value);
-
-                let end = -1;
-
-                for (i = 0; i < commandString.length; i++) {
-                    if ((commandString.charAt(i) == '\n') && (i > 0)) {
-                        end = i;
-                        break;
-                    }
-                }
-
-                if (end >= 0) {
-                    thisCommandString = commandString.substring(0, end);
-                    if (end > 0) {
-                        commandString = commandString.substring(end);
-                        moreToProcess = true;
-                    } else {
-                        moreToProcess = false;
-                    }
-                    displayLog("[R] " + thisCommandString);
-                    console.log(getTimeStamp() + " [R] " + thisCommandString);
-                    parseResponse(thisCommandString);
-                } else {
-                    moreToProcess = false;
-                }
-            }
+            parsedResponses.responses.forEach(function (response) {
+                displayLog("[R] " + response);
+                console.log(getTimeStamp() + " [R] " + response);
+                if (response.charAt(0) == '<') parseResponse(response);
+            });
         }
         if (done) {
+            if (commandString.trim().length > 0) {
+                displayLog("[R] " + commandString);
+                console.log(getTimeStamp() + " [R] " + commandString);
+            }
+            commandString = "";
             console.log(getTimeStamp() + ' [readLoop] DONE ' + done.toString());
             reader.releaseLock();
             break;
@@ -876,11 +902,12 @@ function displayLog(data) {
 }
 
 
-// Function to generate commands for functions F0 to F28
+// Function to generate commands for functions F0 to F31
 function sendCommandForFunction(fn, opr) {
     setFunCurrentVal("f" + fn, opr);
-    writeToStream("F " + getCV() + " " + fn + " " + getFunCurrentVal("f" + fn));
-    console.log("Command: " + "F " + getCV() + " " + fn + " " + getFunCurrentVal("f" + fn));
+    const command = buildFunctionCommand(getCV(), fn, getFunCurrentVal("f" + fn));
+    writeToStream(command);
+    console.log("Command: " + command);
 }
 
 
