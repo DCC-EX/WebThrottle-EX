@@ -44,6 +44,10 @@ The circular control or vertical slider (chosen by the throttle select slider) c
 
 The options button lets you save labels to go on your function buttons for each of your locos. We will be updating this document soon to give you more information on this and other new features.
 
+## Physical controls
+
+When the throttle screen is active, keyboard and macropad controls are available without taking focus from a form field: Arrow Up/Down increase or decrease speed, F/B select forward or reverse, Space performs a normal stop, and Escape performs an emergency stop. A connected standard-mapping gamepad uses the left stick vertical axis for speed, A for normal stop, B for emergency stop, and D-pad left/right for reverse/forward. The on-screen button labels expose the keyboard shortcuts to assist screen-reader and sighted keyboard users.
+
 **Note:** The emulator doesn't fully replicate the Command station yet. This means that although the software works, not all the responses will be shown in
 the debug console. We are currently working on this, so it is something that will be fixed.
 

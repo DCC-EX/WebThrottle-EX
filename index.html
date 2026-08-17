@@ -53,6 +53,7 @@
         <script  type="text/javascript" src="js/addloco.js"></script> 
         <script  type="text/javascript" src="js/emulator.js"></script>
         <script  type="text/javascript" src="js/exwebthrottle.js"></script>
+        <script  type="text/javascript" src="js/inputControls.js"></script>
         <script type="text/javascript" src="js/pwa.js"></script>
 
 <!--
@@ -181,7 +182,7 @@
                             <div class="row mobile-100  width100 flexx">
                                 <div class="column-7 flexx">
                                     <div class="flexx btns">
-                                        <button type="button" title="Decrease speed" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
+                                        <button type="button" title="Decrease speed (Arrow Down)" aria-label="Decrease speed, keyboard shortcut Arrow Down" class="btn-default btn btn btn-speed btn-left" name="button-left" access="false" id="button-left">
                                             <span class="left" style="line-height: 12px;">&nbsp;-&nbsp;</span>
                                         </button>
                                     </div> 
@@ -202,7 +203,7 @@
                                             </div>
                                         </div>
                                         <div class="flexx btns">
-                                            <button type="button" title="Increase speed" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
+                                            <button type="button" title="Increase speed (Arrow Up)" aria-label="Increase speed, keyboard shortcut Arrow Up" class="btn-default btn btn-speed btn-right" name="button-right" access="false" id="button-right">
                                                 <span class="right">&nbsp;+&nbsp;</span>
                                             </button> 
                                         </div>
@@ -210,17 +211,17 @@
                                     
                                     <div class=" column-2">
                                         <div class="em-btn">
-                                            <button class="em-stop" id="emergency-stop" title="Emergency Stop">
+                                            <button class="em-stop" id="emergency-stop" title="Emergency Stop (Escape)" aria-label="Emergency Stop, keyboard shortcut Escape">
                                                 <span class="icon-stop2"></span>
                                             </button>
                                         </div>
                                         <div class="dir-toggle">
-                                            <button class="dir-btn forward selected" id="dir-f" data-direction="forward" aria-label="forward" ><span class="arrow-up icon-up"></span></button>
+                                            <button class="dir-btn forward selected" id="dir-f" data-direction="forward" aria-label="Forward, keyboard shortcut F" ><span class="arrow-up icon-up"></span></button>
                                             <!-- <button class="dir-btn stop" id="dir-S" aria-label="stop"> <span class="stop"></span></button> -->
-                                            <button class="dir-btn backward" id="dir-b" data-direction="backward" aria-label="backward"> <span class="arrow-down icon-down"></button>        
+                                            <button class="dir-btn backward" id="dir-b" data-direction="backward" aria-label="Backward, keyboard shortcut B"> <span class="arrow-down icon-down"></button>
                                         </div>
                                         <div class="em-btn">
-                                            <button class="normal-stop" id="normal-stop" title="Stop">
+                                            <button class="normal-stop" id="normal-stop" title="Stop (Space)" aria-label="Stop, keyboard shortcut Space">
                                                 <span class="icon-stop2"></span>
                                             </button>
                                         </div>
