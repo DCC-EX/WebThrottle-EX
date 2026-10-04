@@ -618,6 +618,7 @@ function sendSpeed(locoId, speed, dir) {
   if (locoId <= 0) return;
 
   if ((locoId != lastLocoSent) || (speed != lastSpeedSent) || (dir != lastDirSent)) {
+    displayLog('sendSpeed() locoId: ' + locoId);
     setSpeed(speed);
     setDirection(dir);
     writeToStream("t " + locoId + " " + speed + " " + dir);
@@ -1067,9 +1068,9 @@ $(document).ready(function () {
     if (getCV() != 0) {
       isStopped = true;
       dir = getDirection();
+      sendSpeed(getCV(), 0, dir);
       setSpeed(0);
       setSpeedofControllers();
-      sendSpeed(getCV(), 0, lastDir);
     }
   });
 
