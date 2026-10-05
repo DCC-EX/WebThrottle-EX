@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.3.52
+
+- bug fix. Normal stop button odd behaviour.
+
 ## Version 1.3.51
 
 - bug fix.  Don't try to process any of the lists a second time after initial connection.
