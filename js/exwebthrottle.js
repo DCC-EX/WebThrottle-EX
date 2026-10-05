@@ -591,7 +591,7 @@ function setSpeedofControllers() {
 
   if (!isStopped) {
     // writeToStream("t " + getCV() + " " + spd + " " + getDirection());
-    sendSpeed(getCV(), spd, getDirection());
+    sendSpeed(getCV(), spd, getDirection(), false);
   }
   setPositionofControllers();
 }
@@ -613,11 +613,12 @@ function setPositionofControllers() {
   knob.val(spd).change();
 }
 
-function sendSpeed(locoId, speed, dir) {
+function sendSpeed(locoId, speed, dir, force) {
   // displayLog('sendSpeed() locoId: ' + locoId);
   if (locoId <= 0) return;
 
-  if ((locoId != lastLocoSent) || (speed != lastSpeedSent) || (dir != lastDirSent)) {
+  if ( (locoId != lastLocoSent) || (speed != lastSpeedSent) || (dir != lastDirSent) || (force) ) {
+    // displayLog('sendSpeed() locoId: ' + locoId);
     setSpeed(speed);
     setDirection(dir);
     writeToStream("t " + locoId + " " + speed + " " + dir);
@@ -972,7 +973,7 @@ $(document).ready(function () {
     } else {
       console.log("Value is same as before. Check it is not due to external change message");
       if ( (lastLocoReceived!=getCV()) || (lastSpeedReceived!=getSpeed()) || (lastDirReceived!=getDirection()) ) {
-        sendSpeed(getCV(), getSpeed(), getDirection());
+        sendSpeed(getCV(), getSpeed(), getDirection(), false);
       }
     }
   });
@@ -1021,7 +1022,7 @@ $(document).ready(function () {
           isDirectionToggleStopped = false;
           setDirection(DIRECTION_FORWARD);
           setSpeedofControllers();
-          sendSpeed(getCV(), getSpeed(), 1);
+          sendSpeed(getCV(), getSpeed(), 1, false);
           break;
         }
         case "backward": {
@@ -1029,7 +1030,7 @@ $(document).ready(function () {
           isDirectionToggleStopped = false;
           setDirection(DIRECTION_REVERSED);
           setSpeedofControllers();
-          sendSpeed(getCV(), getSpeed(), 0);
+          sendSpeed(getCV(), getSpeed(), 0, false);
           break;
         }
         case "stop": {
@@ -1038,7 +1039,7 @@ $(document).ready(function () {
           setDirection(lastDir);
           setSpeed(DIRECTION_FORWARD);
           setSpeedofControllers();
-          sendSpeed(getCV(), 0, lastDir);
+          sendSpeed(getCV(), 0, lastDir, false);
           break;
         }
       }
@@ -1054,7 +1055,7 @@ $(document).ready(function () {
       dir = getDirection();
       setSpeed(0);
       setSpeedofControllers();
-      sendSpeed(getCV(), -1, dir);
+      sendSpeed(getCV(), -1, dir, true);
       writeToStream("!");
     }
     else {
@@ -1065,11 +1066,12 @@ $(document).ready(function () {
 
   $("#normal-stop").on("click", function () {
     if (getCV() != 0) {
+      // displayLog('normal-stop click: locoId: ' + getCV());
       isStopped = true;
       dir = getDirection();
+      sendSpeed(getCV(), 0, dir, true);
       setSpeed(0);
       setSpeedofControllers();
-      sendSpeed(getCV(), 0, lastDir);
     }
   });
 
@@ -1112,7 +1114,7 @@ $(document).ready(function () {
       if (sp <= 125 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp + speedStep);
         setSpeedofControllers();
-        sendSpeed(getCV(), getSpeed(), getDirection());
+        sendSpeed(getCV(), getSpeed(), getDirection(), false);
         sp = 0;
       }
     });
@@ -1127,7 +1129,7 @@ $(document).ready(function () {
         if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
           setSpeed(sp - speedStep);
           setSpeedofControllers();
-          sendSpeed(getCV(), getSpeed(), getDirection());
+          sendSpeed(getCV(), getSpeed(), getDirection(), false);
           sp = 0;
         }
       }, 100);
@@ -1141,7 +1143,7 @@ $(document).ready(function () {
       if (sp >= 1 && getDirection() != -1 && getCV() != 0) {
         setSpeed(sp - speedStep);
         setSpeedofControllers();
-        sendSpeed(getCV(), getSpeed(), getDirection());
+        sendSpeed(getCV(), getSpeed(), getDirection(), false);
         sp = 0;
       }
     });
